@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Syne } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geist = Geist({
@@ -36,7 +37,6 @@ export const metadata: Metadata = {
     siteName: "Route 9 Web",
     locale: "en_US",
     type: "website",
-    // Replace with a real OG image at /public/og-image.png before launch
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
@@ -45,10 +45,32 @@ export const metadata: Metadata = {
     description: "Custom websites and maintenance for independent shops along Route 9.",
     images: ["/og-image.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
+  robots: { index: true, follow: true },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Route 9 Web",
+  description:
+    "Custom websites and ongoing maintenance for independent businesses along Route 9 in central Massachusetts.",
+  url: "https://route9web.com",
+  email: "hello@route9web.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Shrewsbury",
+    addressRegion: "MA",
+    addressCountry: "US",
   },
+  areaServed: [
+    "Shrewsbury, MA",
+    "Westborough, MA",
+    "Northborough, MA",
+    "Worcester, MA",
+    "Framingham, MA",
+  ],
+  serviceType: "Web Design and Development",
+  priceRange: "$$",
 };
 
 export default function RootLayout({
@@ -63,7 +85,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Prevent flash of wrong theme on load */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');var d=document.documentElement;if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){d.classList.add('dark');}else{d.classList.remove('dark');}}catch(e){}})();`,
@@ -72,6 +97,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-bg text-fg grain">
         {children}
+        <Analytics />
       </body>
     </html>
   );

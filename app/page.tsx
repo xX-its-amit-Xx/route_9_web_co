@@ -5,6 +5,7 @@ import { QualityPillars } from "@/components/QualityPillars";
 import { Pricing } from "@/components/Pricing";
 import { MaintenanceFAQ } from "@/components/MaintenanceFAQ";
 import { Portfolio } from "@/components/Portfolio";
+import { Testimonials } from "@/components/Testimonials";
 import { Process } from "@/components/Process";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
@@ -21,6 +22,7 @@ export default function Home() {
         <Pricing />
         <MaintenanceFAQ />
         <Portfolio />
+        <Testimonials />
         <Process />
         <About />
         <Contact />

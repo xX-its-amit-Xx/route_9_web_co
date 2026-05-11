@@ -1,53 +1,60 @@
 import { ArrowRight } from "lucide-react";
-import { HERO } from "@/lib/content";
+import { HERO, WHO } from "@/lib/content";
+import { Marquee } from "./Marquee";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden bg-[#0D2118]"
       aria-label="Hero"
     >
-      {/* Background: subtle radial green tint + dot grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_10%,rgba(27,107,62,0.08)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_90%,rgba(27,107,62,0.05)_0%,transparent_50%)]" />
-        {/* Subtle dot grid */}
+      {/* Animated blobs */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div
-          className="absolute inset-0 opacity-[0.3]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, var(--border) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
+          className="blob-a absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] rounded-full bg-[#1B6B3E] opacity-30 blur-[80px]"
+        />
+        <div
+          className="blob-b absolute bottom-[10%] left-[-10%] w-[35vw] h-[35vw] max-w-[500px] max-h-[500px] rounded-full bg-[#4DC970] opacity-10 blur-[100px]"
+        />
+        <div
+          className="blob-c absolute top-[40%] left-[30%] w-[20vw] h-[20vw] max-w-[300px] max-h-[300px] rounded-full bg-[#2A9A56] opacity-15 blur-[60px]"
         />
       </div>
 
-      {/* Decorative "9" — the visual anchor */}
+      {/* Dot grid overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.15]"
+        aria-hidden
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(77,201,112,0.4) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* Decorative "9" */}
       <div
         aria-hidden
-        className="absolute right-[-0.1em] top-1/2 -translate-y-1/2 select-none pointer-events-none"
+        className="absolute right-[-0.05em] top-1/2 -translate-y-1/2 select-none pointer-events-none"
         style={{
           fontFamily: "var(--font-syne)",
-          fontSize: "clamp(16rem, 40vw, 36rem)",
+          fontSize: "clamp(14rem, 38vw, 34rem)",
           fontWeight: 800,
           lineHeight: 1,
-          color: "var(--accent)",
-          opacity: 0.045,
+          color: "#4DC970",
+          opacity: 0.05,
           letterSpacing: "-0.04em",
         }}
       >
         9
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 pt-28 pb-20 w-full">
-        {/* Location label */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs font-medium text-muted tracking-wide mb-8">
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 pt-28 pb-8 w-full">
+        {/* Location badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(77,201,112,0.3)] bg-[rgba(77,201,112,0.08)] text-xs font-medium text-[#87A891] tracking-wide mb-8">
           <span
-            className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"
+            className="w-1.5 h-1.5 rounded-full bg-[#4DC970] flex-shrink-0 animate-pulse"
             aria-hidden
           />
           {HERO.label}
@@ -55,15 +62,15 @@ export function Hero() {
 
         {/* Headline */}
         <h1
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6 text-fg"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7rem] font-extrabold tracking-tight leading-[0.92] mb-6"
           style={{ fontFamily: "var(--font-syne)" }}
         >
-          <span className="block">{HERO.headlineA}</span>
-          <span className="block text-accent">{HERO.headlineB}</span>
+          <span className="block text-[#F0E8D0]">{HERO.headlineA}</span>
+          <span className="block text-gradient">{HERO.headlineB}</span>
         </h1>
 
         {/* Subhead */}
-        <p className="max-w-xl text-lg md:text-xl text-muted leading-relaxed mb-10">
+        <p className="max-w-xl text-lg md:text-xl text-[#87A891] leading-relaxed mb-10">
           {HERO.subhead}
         </p>
 
@@ -71,31 +78,29 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row gap-3">
           <a
             href={HERO.ctaPrimary.href}
-            className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-accent hover:bg-accent-hover text-accent-fg font-medium text-sm transition-all duration-150 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-px"
+            className="glow-btn inline-flex items-center justify-center gap-2 h-13 px-7 rounded-xl bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] font-bold text-sm transition-all duration-150 hover:-translate-y-0.5"
+            style={{ height: "52px" }}
           >
             {HERO.ctaPrimary.text}
             <ArrowRight size={15} strokeWidth={2.5} />
           </a>
           <a
             href={HERO.ctaSecondary.href}
-            className="inline-flex items-center justify-center h-12 px-6 rounded-lg border border-border bg-surface-raised hover:bg-surface hover:border-border text-fg font-medium text-sm transition-all duration-150 hover:-translate-y-px"
+            className="inline-flex items-center justify-center h-[52px] px-7 rounded-xl border border-[rgba(240,232,208,0.15)] bg-[rgba(240,232,208,0.06)] hover:bg-[rgba(240,232,208,0.1)] text-[#F0E8D0] font-medium text-sm transition-all duration-150 hover:-translate-y-0.5"
           >
             {HERO.ctaSecondary.text}
           </a>
         </div>
 
-        {/* Social proof hint */}
-        <p className="mt-10 text-xs text-muted-light">
-          No contracts. No lock-in. Free preview before you pay anything.
+        {/* Trust line */}
+        <p className="mt-8 text-xs text-[#87A891]/60">
+          No contracts · No lock-in · Free preview before you pay anything
         </p>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-muted-light"
-        aria-hidden
-      >
-        <div className="w-px h-8 bg-gradient-to-b from-transparent to-border" />
+      {/* Marquee — business types ticker */}
+      <div className="relative mt-8 border-t border-[rgba(77,201,112,0.1)] pt-6 pb-6">
+        <Marquee items={WHO.businessTypes} />
       </div>
     </section>
   );

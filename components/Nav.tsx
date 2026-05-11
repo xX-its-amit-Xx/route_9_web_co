@@ -18,8 +18,9 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -30,21 +31,18 @@ export function Nav() {
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-bg/90 backdrop-blur-md border-b border-border-subtle shadow-sm"
+            ? "bg-[rgba(13,33,24,0.92)] backdrop-blur-md border-b border-[rgba(77,201,112,0.1)] shadow-lg shadow-black/20"
             : "bg-transparent"
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 group"
-            onClick={close}
-          >
-            <span className="flex items-center justify-center w-7 h-7 rounded-md bg-accent text-accent-fg text-xs font-bold font-display tracking-tight select-none">
+          <Link href="/" className="flex items-center gap-2.5 group" onClick={close}>
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#4DC970] text-[#0D2118] text-xs font-extrabold select-none"
+              style={{ fontFamily: "var(--font-syne)" }}>
               R9
             </span>
-            <span className="text-sm font-semibold tracking-tight hidden sm:block">
+            <span className="text-sm font-semibold tracking-tight text-[#F0E8D0] hidden sm:block">
               {SITE.name}
             </span>
           </Link>
@@ -55,7 +53,7 @@ export function Nav() {
               <li key={href}>
                 <a
                   href={href}
-                  className="px-3 py-1.5 text-sm text-muted hover:text-fg rounded-md hover:bg-surface transition-colors duration-150"
+                  className="px-3 py-1.5 text-sm text-[#87A891] hover:text-[#F0E8D0] rounded-lg hover:bg-[rgba(240,232,208,0.06)] transition-colors duration-150"
                 >
                   {label}
                 </a>
@@ -63,18 +61,17 @@ export function Nav() {
             ))}
           </ul>
 
-          {/* Right: theme toggle + CTA */}
+          {/* Right */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center h-8 px-4 rounded-md bg-accent hover:bg-accent-hover text-accent-fg text-sm font-medium transition-colors duration-150"
+              className="hidden sm:inline-flex items-center h-8 px-4 rounded-lg bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] text-xs font-bold transition-colors duration-150"
             >
               Get in touch
             </a>
-            {/* Mobile menu button */}
             <button
-              className="md:hidden flex items-center justify-center w-8 h-8 rounded-md text-muted hover:text-fg hover:bg-surface transition-colors duration-150 ml-1"
+              className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[#87A891] hover:text-[#F0E8D0] hover:bg-[rgba(240,232,208,0.06)] transition-colors duration-150 ml-1"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
@@ -87,7 +84,7 @@ export function Nav() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-bg/95 backdrop-blur-sm flex flex-col pt-20 px-6 md:hidden transition-all duration-200 ${
+        className={`fixed inset-0 z-40 bg-[#0D2118]/97 backdrop-blur-sm flex flex-col pt-20 px-6 md:hidden transition-all duration-200 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!open}
@@ -98,18 +95,18 @@ export function Nav() {
               <a
                 href={href}
                 onClick={close}
-                className="block px-3 py-3 text-lg font-medium text-fg hover:text-accent rounded-lg hover:bg-surface transition-colors duration-150"
+                className="block px-3 py-3.5 text-lg font-medium text-[#F0E8D0] hover:text-[#4DC970] rounded-xl hover:bg-[rgba(77,201,112,0.08)] transition-colors duration-150"
               >
                 {label}
               </a>
             </li>
           ))}
         </ul>
-        <div className="mt-6 pt-6 border-t border-border">
+        <div className="mt-6 pt-6 border-t border-[rgba(77,201,112,0.1)]">
           <a
             href="#contact"
             onClick={close}
-            className="flex items-center justify-center h-12 w-full rounded-lg bg-accent hover:bg-accent-hover text-accent-fg text-base font-medium transition-colors duration-150"
+            className="flex items-center justify-center h-12 w-full rounded-xl bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] text-base font-bold transition-colors duration-150"
           >
             Get in touch
           </a>

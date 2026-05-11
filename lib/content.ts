@@ -224,6 +224,52 @@ export const PROCESS = [
   },
 ] as const;
 
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+// Replace placeholder copy with real client quotes when you have them.
+// Set isPlaceholder: false once each quote is real — the section is always shown.
+export const TESTIMONIALS = [
+  {
+    quote: "My old website looked like it was built in 2009 by someone who owed my nephew a favor. Now it actually looks like I know what I'm doing. Which, as it turns out, is exactly what happened.",
+    author: "Tony M.",
+    business: "Tony's Auto & Tire",
+    town: "Shrewsbury, MA",
+    initials: "TM",
+    isPlaceholder: true,
+  },
+  {
+    quote: "I asked for a website. I got a website, a QR code for my menu, and a very patient explanation of what a meta tag is. Two out of three have directly increased my sales. I'll let you guess which two.",
+    author: "Maria C.",
+    business: "Westborough Bakery",
+    town: "Westborough, MA",
+    initials: "MC",
+    isPlaceholder: true,
+  },
+  {
+    quote: "Customers actually find me on Google now. I used to think that was just for big chains with marketing departments. Turns out the internet works for everyone, including barbershops on Route 9.",
+    author: "Dave K.",
+    business: "Dave's Barbershop",
+    town: "Northborough, MA",
+    initials: "DK",
+    isPlaceholder: true,
+  },
+  {
+    quote: "He came in, looked around the shop, and actually understood what we do. I've had web designers quote me $8,000 who couldn't explain what a hair salon was. This was not that.",
+    author: "Linda T.",
+    business: "The Pressed Bloom",
+    town: "Shrewsbury, MA",
+    initials: "LT",
+    isPlaceholder: true,
+  },
+  {
+    quote: "The site was live in under a week. My previous web guy took four months and then sent me a PDF of a screenshot. I genuinely wish I was making that up.",
+    author: "Ray F.",
+    business: "Framingham Framing Co.",
+    town: "Framingham, MA",
+    initials: "RF",
+    isPlaceholder: true,
+  },
+] as const;
+
 // ─── About ────────────────────────────────────────────────────────────────────
 export const ABOUT = {
   paragraphs: [

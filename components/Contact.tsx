@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Mail, Phone } from "lucide-react";
+import { Send, Mail, Phone, MessageCircle } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SITE } from "@/lib/content";
 
@@ -9,20 +9,12 @@ export function Contact() {
   const headingRef = useScrollReveal();
   const formRef = useScrollReveal();
 
-  const [fields, setFields] = useState({
-    name: "",
-    shop: "",
-    email: "",
-    message: "",
-  });
+  const [fields, setFields] = useState({ name: "", shop: "", email: "", message: "" });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Builds a mailto link — swap this handler for a serverless function + Resend later
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(
@@ -35,63 +27,70 @@ export function Contact() {
   };
 
   const inputClass =
-    "w-full h-11 px-4 rounded-lg border border-border bg-surface-raised text-fg text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150";
+    "w-full h-11 px-4 rounded-xl border border-[rgba(77,201,112,0.2)] bg-[rgba(240,232,208,0.05)] text-[#F0E8D0] text-sm placeholder:text-[#87A891]/60 focus:outline-none focus:ring-2 focus:ring-[#4DC970]/30 focus:border-[#4DC970]/50 transition-colors duration-150";
 
   return (
     <section
       id="contact"
-      className="py-24 md:py-32 bg-surface border-t border-border-subtle"
+      className="py-24 md:py-32 bg-[#0D2118] border-t border-[rgba(77,201,112,0.08)]"
       aria-label="Contact"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-          {/* Left: heading + contact info */}
+          {/* Left */}
           <div ref={headingRef} className="reveal">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+            <p className="text-xs font-semibold tracking-widest uppercase text-[#4DC970] mb-3">
               Contact
             </p>
             <h2
-              className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
+              className="text-3xl md:text-4xl font-bold tracking-tight text-[#F0E8D0] leading-tight mb-4"
               style={{ fontFamily: "var(--font-syne)" }}
             >
               Let&apos;s talk about<br />your shop.
             </h2>
-            <p className="text-muted leading-relaxed mb-8">
-              Fill out the form and I&apos;ll reply within a few hours. Or just text — it&apos;s
-              the fastest way to reach me.
+            <p className="text-[#87A891] leading-relaxed mb-8">
+              Fill out the form and I&apos;ll reply within a few hours. Or text — fastest
+              way to reach me, and I actually respond.
             </p>
 
             <div className="space-y-4">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="flex items-center gap-3 group"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-light text-accent group-hover:bg-accent group-hover:text-accent-fg transition-colors duration-150">
-                  <Mail size={16} />
+              <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 group">
+                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(77,201,112,0.1)] text-[#4DC970] group-hover:bg-[#4DC970] group-hover:text-[#0D2118] transition-all duration-150">
+                  <Mail size={17} />
                 </div>
                 <div>
-                  <p className="text-xs text-muted mb-0.5">Email</p>
-                  <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-150">
+                  <p className="text-xs text-[#87A891] mb-0.5">Email</p>
+                  <p className="text-sm font-medium text-[#F0E8D0] group-hover:text-[#4DC970] transition-colors duration-150">
                     {SITE.email}
                   </p>
                 </div>
               </a>
 
               {SITE.phone !== "PLACEHOLDER_PHONE" && (
-                <a
-                  href={`tel:${SITE.phone}`}
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-light text-accent group-hover:bg-accent group-hover:text-accent-fg transition-colors duration-150">
-                    <Phone size={16} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted mb-0.5">Phone / Text</p>
-                    <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-150">
-                      {SITE.phone}
-                    </p>
-                  </div>
-                </a>
+                <>
+                  <a href={`tel:${SITE.phone}`} className="flex items-center gap-3 group">
+                    <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(77,201,112,0.1)] text-[#4DC970] group-hover:bg-[#4DC970] group-hover:text-[#0D2118] transition-all duration-150">
+                      <Phone size={17} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-[#87A891] mb-0.5">Call</p>
+                      <p className="text-sm font-medium text-[#F0E8D0] group-hover:text-[#4DC970] transition-colors duration-150">
+                        {SITE.phone}
+                      </p>
+                    </div>
+                  </a>
+                  <a href={`sms:${SITE.phone}`} className="flex items-center gap-3 group">
+                    <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(77,201,112,0.1)] text-[#4DC970] group-hover:bg-[#4DC970] group-hover:text-[#0D2118] transition-all duration-150">
+                      <MessageCircle size={17} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-[#87A891] mb-0.5">Text (fastest)</p>
+                      <p className="text-sm font-medium text-[#F0E8D0] group-hover:text-[#4DC970] transition-colors duration-150">
+                        {SITE.phone}
+                      </p>
+                    </div>
+                  </a>
+                </>
               )}
             </div>
           </div>
@@ -101,89 +100,56 @@ export function Contact() {
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-medium text-muted mb-1.5">
-                    Your name <span className="text-accent">*</span>
+                  <label htmlFor="name" className="block text-xs font-medium text-[#87A891] mb-1.5">
+                    Your name <span className="text-[#4DC970]">*</span>
                   </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    placeholder="Jane Smith"
-                    value={fields.name}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
+                  <input id="name" name="name" type="text" required autoComplete="name"
+                    placeholder="Jane Smith" value={fields.name} onChange={handleChange}
+                    className={inputClass} />
                 </div>
                 <div>
-                  <label htmlFor="shop" className="block text-xs font-medium text-muted mb-1.5">
+                  <label htmlFor="shop" className="block text-xs font-medium text-[#87A891] mb-1.5">
                     Shop name
                   </label>
-                  <input
-                    id="shop"
-                    name="shop"
-                    type="text"
-                    autoComplete="organization"
-                    placeholder="Smith's Pizzeria"
-                    value={fields.shop}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
+                  <input id="shop" name="shop" type="text" autoComplete="organization"
+                    placeholder="Smith's Pizzeria" value={fields.shop} onChange={handleChange}
+                    className={inputClass} />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs font-medium text-muted mb-1.5">
-                  Email address <span className="text-accent">*</span>
+                <label htmlFor="email" className="block text-xs font-medium text-[#87A891] mb-1.5">
+                  Email address <span className="text-[#4DC970]">*</span>
                 </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="jane@smithspizzeria.com"
-                  value={fields.email}
-                  onChange={handleChange}
-                  className={inputClass}
-                />
+                <input id="email" name="email" type="email" required autoComplete="email"
+                  placeholder="jane@smithspizzeria.com" value={fields.email} onChange={handleChange}
+                  className={inputClass} />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs font-medium text-muted mb-1.5">
+                <label htmlFor="message" className="block text-xs font-medium text-[#87A891] mb-1.5">
                   Message
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  placeholder="Tell me a bit about your business and what you're looking for..."
-                  value={fields.message}
-                  onChange={handleChange}
-                  className={`${inputClass} h-auto py-3 resize-none`}
-                />
+                <textarea id="message" name="message" rows={5}
+                  placeholder="Tell me about your business and what you're looking for..."
+                  value={fields.message} onChange={handleChange}
+                  className={`${inputClass} h-auto py-3 resize-none`} />
               </div>
 
               <button
                 type="submit"
-                className="flex items-center justify-center gap-2 w-full h-11 rounded-lg bg-accent hover:bg-accent-hover text-accent-fg text-sm font-medium transition-all duration-150 hover:-translate-y-px hover:shadow-md hover:shadow-accent/20"
+                className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] text-sm font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[rgba(77,201,112,0.3)]"
               >
                 <Send size={14} strokeWidth={2.5} />
                 Send message
               </button>
 
-              <p className="text-xs text-center text-muted-light">
-                This opens your email client. Prefer to just text?{" "}
+              <p className="text-xs text-center text-[#87A891]/60">
+                Opens your email app. Prefer to just text?{" "}
                 {SITE.phone !== "PLACEHOLDER_PHONE" ? (
-                  <a
-                    href={`sms:${SITE.phone}`}
-                    className="text-accent hover:underline"
-                  >
-                    {SITE.phone}
-                  </a>
+                  <a href={`sms:${SITE.phone}`} className="text-[#4DC970] hover:underline">{SITE.phone}</a>
                 ) : (
-                  <span>Add your phone number in lib/content.ts</span>
+                  <span>Add phone in lib/content.ts</span>
                 )}
               </p>
             </form>

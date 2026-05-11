@@ -1,0 +1,120 @@
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useScrollReveal } from "@/lib/useScrollReveal";
+import { TESTIMONIALS } from "@/lib/content";
+
+export function Testimonials() {
+  const items = TESTIMONIALS;
+  const [current, setCurrent] = useState(0);
+  const [key, setKey] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const headingRef = useScrollReveal<HTMLDivElement>();
+
+  const advance = useCallback(
+    (dir: 1 | -1) => {
+      setCurrent((c) => (c + dir + items.length) % items.length);
+      setKey((k) => k + 1);
+    },
+    [items.length]
+  );
+
+  useEffect(() => {
+    if (paused || items.length <= 1) return;
+    const id = setInterval(() => advance(1), 5500);
+    return () => clearInterval(id);
+  }, [paused, advance, items.length]);
+
+  const t = items[current];
+
+  return (
+    <section
+      id="testimonials"
+      className="py-24 md:py-32 bg-[#0D2118] overflow-hidden"
+      aria-label="Client testimonials"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        {/* Heading */}
+        <div ref={headingRef} className="reveal mb-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-[#4DC970] mb-3">
+              What clients say
+            </p>
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#F0E8D0] leading-tight"
+              style={{ fontFamily: "var(--font-syne)" }}
+            >
+              Real shops.<br />Real results.
+            </h2>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => advance(-1)}
+              aria-label="Previous testimonial"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[#1D3525] bg-[#142B1D] hover:border-[#4DC970]/40 hover:bg-[#1A3828] text-[#87A891] hover:text-[#F0E8D0] transition-all duration-150"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={() => advance(1)}
+              aria-label="Next testimonial"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[#1D3525] bg-[#142B1D] hover:border-[#4DC970]/40 hover:bg-[#1A3828] text-[#87A891] hover:text-[#F0E8D0] transition-all duration-150"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Card */}
+        <div
+          key={key}
+          className="testimonial-enter glass rounded-3xl p-8 md:p-12 max-w-3xl"
+        >
+          {/* Stars */}
+          <div className="flex gap-1 mb-6">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} size={16} className="fill-[#4DC970] text-[#4DC970]" />
+            ))}
+          </div>
+
+          <blockquote className="text-xl md:text-2xl text-[#F0E8D0] font-medium leading-relaxed mb-8 italic">
+            &ldquo;{t.quote}&rdquo;
+          </blockquote>
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#4DC970] text-[#0D2118] font-bold text-sm flex-shrink-0">
+              {t.initials}
+            </div>
+            <div>
+              <p className="font-semibold text-[#F0E8D0]">{t.author}</p>
+              <p className="text-sm text-[#87A891]">
+                {t.business} · {t.town}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Dots */}
+        <div className="flex items-center gap-2 mt-8">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setCurrent(i); setKey((k) => k + 1); }}
+              aria-label={`Go to testimonial ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === current
+                  ? "w-6 bg-[#4DC970]"
+                  : "w-1.5 bg-[#1D3525] hover:bg-[#4DC970]/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
