@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* ── Dark mode: toggle via .dark class on <html> ── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Design tokens ── */
+:root {
+  --bg:             #F9F9F7;
+  --fg:             #0F0F0E;
+  --accent:         #1B6B3E;
+  --accent-hover:   #14532E;
+  --accent-fg:      #FFFFFF;
+  --accent-light:   #EDF7F2;
+  --muted:          #6B6B64;
+  --muted-light:    #9B9B94;
+  --surface:        #F2F2EF;
+  --surface-raised: #FFFFFF;
+  --border:         #E4E4E0;
+  --border-subtle:  #EEEEE9;
+}
+
+.dark {
+  --bg:             #0C0C0B;
+  --fg:             #EDEDE9;
+  --accent:         #2DB862;
+  --accent-hover:   #27A356;
+  --accent-fg:      #0C0C0B;
+  --accent-light:   #0D2116;
+  --muted:          #8A8A82;
+  --muted-light:    #5A5A52;
+  --surface:        #171716;
+  --surface-raised: #1E1E1C;
+  --border:         #2B2B27;
+  --border-subtle:  #222220;
+}
+
+/* ── Tailwind token registration ── */
+@theme inline {
+  --color-bg:             var(--bg);
+  --color-fg:             var(--fg);
+  --color-accent:         var(--accent);
+  --color-accent-hover:   var(--accent-hover);
+  --color-accent-fg:      var(--accent-fg);
+  --color-accent-light:   var(--accent-light);
+  --color-muted:          var(--muted);
+  --color-muted-light:    var(--muted-light);
+  --color-surface:        var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border:         var(--border);
+  --color-border-subtle:  var(--border-subtle);
+
+  --font-display: var(--font-syne);
+  --font-body:    var(--font-geist);
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children inside a .reveal parent */
+.reveal-stagger > *:nth-child(1) { transition-delay:   0ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay:  90ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 180ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 270ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 360ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 450ms; }
+
+/* ── Subtle noise grain overlay (purely decorative) ── */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
