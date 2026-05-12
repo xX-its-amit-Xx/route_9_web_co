@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
-/* ── Dark mode: toggle via .dark class on <html> ── */
+/* ── Dark mode toggle via .dark class on <html> ── */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Design tokens — Warm espresso + terracotta ── */
+/* ── Design tokens ── */
 :root {
+  /* Light-mode: warm cream */
   --bg:             #FEFBF5;
   --fg:             #1C1209;
   --accent:         #D4682A;
@@ -18,12 +19,10 @@
   --border:         #E8D9C4;
   --border-subtle:  #F0E4D2;
 
-  --dark-bg:        #110B07;
-  --dark-mid:       #1C1209;
-  --dark-surface:   #241810;
-  --dark-border:    rgba(212,104,42,0.15);
-  --dark-fg:        #F3E9D5;
-  --dark-muted:     #9B8C7D;
+  /* Warm section tones used inline */
+  --section-warm-a: #FFF8F3;   /* slight terracotta wash */
+  --section-warm-b: #FEFBF5;   /* cream */
+  --section-mid:    #F5EDE0;   /* warm surface */
 }
 
 .dark {
@@ -66,7 +65,7 @@
 }
 
 html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  scroll-behavior: auto; /* Lenis handles this */
 }
 
 body {
@@ -78,15 +77,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Hide default cursor on desktop when custom cursor is active */
 @media (pointer: fine) {
   * { cursor: none !important; }
 }
 
-/* ───────────────────────────────────────────────
-   SPLIT TEXT REVEAL SYSTEM
-   Words clip-slide up on scroll enter
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   SPLIT TEXT REVEAL
+   Words rise up from hidden overflow
+══════════════════════════════════════════════ */
 .word-clip {
   display: inline-block;
   overflow: hidden;
@@ -96,28 +94,28 @@ body {
 
 .word-inner {
   display: inline-block;
-  transform: translateY(108%) rotate(2deg);
+  transform: translateY(106%);
   opacity: 0;
   transition:
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   0.5s ease;
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity   0.6s ease;
   will-change: transform, opacity;
 }
 
 .word-inner.word-visible {
-  transform: translateY(0) rotate(0deg);
+  transform: translateY(0);
   opacity: 1;
 }
 
-/* ───────────────────────────────────────────────
-   SCROLL REVEAL SYSTEM (for non-split elements)
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL (non-split elements)
+══════════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
+  transform: translateY(28px);
   transition:
-    opacity  0.85s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity   0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.visible {
@@ -125,10 +123,9 @@ body {
   transform: translateY(0);
 }
 
-/* Clip-path reveal variant */
 .reveal-clip {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: clip-path 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-clip.visible {
@@ -142,16 +139,16 @@ body {
 .reveal-stagger > *:nth-child(5) { transition-delay: 440ms; }
 .reveal-stagger > *:nth-child(6) { transition-delay: 550ms; }
 
-/* ───────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    GRADIENT TEXT
-─────────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 .text-gradient {
-  background: linear-gradient(135deg, #D4682A 0%, #F0A060 50%, #D4682A 100%);
+  background: linear-gradient(135deg, #D4682A 0%, #F0A060 55%, #D4682A 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 4s ease-in-out infinite;
+  animation: gradient-shift 5s ease-in-out infinite;
 }
 
 @keyframes gradient-shift {
@@ -159,16 +156,16 @@ body {
   50%       { background-position: 100% center; }
 }
 
-/* ───────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    MARQUEE
-─────────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 @keyframes marquee-left {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .marquee-track {
-  animation: marquee-left 36s linear infinite;
+  animation: marquee-left 40s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -177,9 +174,9 @@ body {
   animation-play-state: paused;
 }
 
-/* ───────────────────────────────────────────────
-   ANIMATED BLOBS (hero background)
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   HERO BLOBS
+══════════════════════════════════════════════ */
 @keyframes blob-a {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -212,26 +209,26 @@ body {
 .blob-b { animation: blob-b 18s ease-in-out infinite; }
 .blob-c { animation: blob-c 22s ease-in-out infinite; }
 
-/* ───────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    BUTTON GLOW
-─────────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 22px rgba(212,104,42,0.4), 0 0 44px rgba(212,104,42,0.18); }
-  50%       { box-shadow: 0 0 36px rgba(212,104,42,0.6), 0 0 70px rgba(212,104,42,0.28); }
+  0%, 100% { box-shadow: 0 0 20px rgba(212,104,42,0.35), 0 0 40px rgba(212,104,42,0.15); }
+  50%       { box-shadow: 0 0 32px rgba(212,104,42,0.55), 0 0 64px rgba(212,104,42,0.22); }
 }
 
 .glow-btn {
-  animation: pulse-glow 3s ease-in-out infinite;
+  animation: pulse-glow 3.5s ease-in-out infinite;
 }
 
-/* ───────────────────────────────────────────────
-   GLASSMORPHISM
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   GLASS (dark sections only)
+══════════════════════════════════════════════ */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(243, 233, 213, 0.08);
+  border: 1px solid rgba(243, 233, 213, 0.09);
 }
 
 .glass-warm {
@@ -241,9 +238,29 @@ body {
   border: 1px solid rgba(212, 104, 42, 0.15);
 }
 
-/* ───────────────────────────────────────────────
-   CARD SHINE SWEEP (on hover)
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   LIGHT CARD (warm sections)
+   Clean white card with soft warmth
+══════════════════════════════════════════════ */
+.card-light {
+  background: #FFFFFF;
+  border: 1px solid #E8D9C4;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(28, 18, 9, 0.06);
+  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease,
+              transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-light:hover {
+  box-shadow: 0 8px 32px rgba(212, 104, 42, 0.12), 0 2px 8px rgba(28, 18, 9, 0.06);
+  border-color: rgba(212, 104, 42, 0.35);
+  transform: translateY(-3px);
+}
+
+/* ═══════════════════════════════════════════════
+   SHINE SWEEP (hover effect)
+══════════════════════════════════════════════ */
 .shine {
   position: relative;
   overflow: hidden;
@@ -259,7 +276,7 @@ body {
   background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(243,233,213,0.06) 50%,
+    rgba(255,255,255,0.12) 50%,
     transparent 100%
   );
   transform: skewX(-20deg);
@@ -272,56 +289,43 @@ body {
   left: 140%;
 }
 
-/* ───────────────────────────────────────────────
-   LINE DRAW SVG (decorative paths that animate in)
-─────────────────────────────────────────────── */
-.line-draw {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.line-draw.visible {
-  stroke-dashoffset: 0;
-}
-
-/* ───────────────────────────────────────────────
-   ANIMATED COUNTER POP
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   ANIMATED COUNTER
+══════════════════════════════════════════════ */
 @keyframes count-pop {
-  from { opacity: 0; transform: scale(0.8) translateY(10px); }
+  from { opacity: 0; transform: scale(0.85) translateY(8px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.count-pop { animation: count-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.count-pop { animation: count-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 
-/* ───────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    TESTIMONIAL ENTER
-─────────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 @keyframes fade-slide-in {
-  from { opacity: 0; transform: translateX(28px); }
+  from { opacity: 0; transform: translateX(24px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.testimonial-enter { animation: fade-slide-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.testimonial-enter { animation: fade-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 
-/* ───────────────────────────────────────────────
-   GRAIN OVERLAY
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   GRAIN (subtle film texture)
+══════════════════════════════════════════════ */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.025;
+  opacity: 0.018;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ───────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    HORIZONTAL SCROLL PORTFOLIO
-─────────────────────────────────────────────── */
+══════════════════════════════════════════════ */
 .h-scroll-section {
   overflow: hidden;
 }
@@ -332,16 +336,9 @@ body {
   will-change: transform;
 }
 
-/* ───────────────────────────────────────────────
-   PARALLAX
-─────────────────────────────────────────────── */
-.parallax-layer {
-  will-change: transform;
-}
-
-/* ───────────────────────────────────────────────
-   MISC UTILITIES
-─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   MISC
+══════════════════════════════════════════════ */
 @keyframes spin-slow {
   to { transform: rotate(360deg); }
 }
@@ -350,17 +347,11 @@ body {
 
 @keyframes float-up-down {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-12px); }
+  50%       { transform: translateY(-10px); }
 }
 
 .float { animation: float-up-down 4s ease-in-out infinite; }
 
-/* SVG path drawing animation */
-@keyframes draw-path {
-  to { stroke-dashoffset: 0; }
-}
-
-/* Underline grow */
 .underline-grow {
   position: relative;
 }
@@ -373,17 +364,31 @@ body {
   width: 0;
   height: 1px;
   background: currentColor;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .underline-grow:hover::after {
   width: 100%;
 }
 
-/* Appear from scale-0 */
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1); }
+/* Warm section dot pattern */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(212,104,42,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-.scale-in { animation: scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+/* Accent band used for section labels */
+.label-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(212,104,42,0.08);
+  border: 1px solid rgba(212,104,42,0.2);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #D4682A;
+}

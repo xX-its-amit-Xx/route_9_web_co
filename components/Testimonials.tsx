@@ -30,8 +30,8 @@ export function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-24 md:py-32 overflow-hidden border-t border-[rgba(212,104,42,0.1)]"
-      style={{ background: "#1C1209" }}
+      className="py-24 md:py-32 overflow-hidden border-t border-[#E8D9C4]"
+      style={{ background: "#FFF8F3" }}
       aria-label="Client testimonials"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -40,12 +40,10 @@ export function Testimonials() {
         {/* Heading */}
         <div className="mb-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-[#D4682A] mb-3 reveal">
-              What clients say
-            </p>
+            <div className="label-pill mb-4 reveal">What clients say</div>
             <SplitTextReveal
               as="h2"
-              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#F3E9D5] leading-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1209] leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
               stagger={80}
             >
@@ -58,14 +56,14 @@ export function Testimonials() {
             <button
               onClick={() => advance(-1)}
               aria-label="Previous testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-[rgba(212,104,42,0.2)] bg-[rgba(212,104,42,0.06)] hover:border-[rgba(212,104,42,0.5)] hover:bg-[rgba(212,104,42,0.12)] text-[#9B8C7D] hover:text-[#F3E9D5] transition-all duration-150"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[#E8D9C4] bg-white hover:border-[rgba(212,104,42,0.4)] hover:bg-[rgba(212,104,42,0.06)] text-[#7A6B5C] hover:text-[#D4682A] transition-all duration-150 shadow-sm"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={() => advance(1)}
               aria-label="Next testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-[rgba(212,104,42,0.2)] bg-[rgba(212,104,42,0.06)] hover:border-[rgba(212,104,42,0.5)] hover:bg-[rgba(212,104,42,0.12)] text-[#9B8C7D] hover:text-[#F3E9D5] transition-all duration-150"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[#E8D9C4] bg-white hover:border-[rgba(212,104,42,0.4)] hover:bg-[rgba(212,104,42,0.06)] text-[#7A6B5C] hover:text-[#D4682A] transition-all duration-150 shadow-sm"
             >
               <ChevronRight size={18} />
             </button>
@@ -75,7 +73,8 @@ export function Testimonials() {
         {/* Card */}
         <div
           key={key}
-          className="testimonial-enter shine glass-warm rounded-3xl p-8 md:p-12 max-w-3xl"
+          className="testimonial-enter card-light rounded-3xl p-8 md:p-12 max-w-3xl"
+          style={{ borderLeft: "4px solid #D4682A" }}
         >
           {/* Stars */}
           <div className="flex gap-1 mb-6">
@@ -85,19 +84,19 @@ export function Testimonials() {
           </div>
 
           <blockquote
-            className="text-xl md:text-2xl text-[#F3E9D5] font-medium leading-relaxed mb-8 italic"
+            className="text-xl md:text-2xl text-[#1C1209] font-medium leading-relaxed mb-8 italic"
             style={{ fontFamily: "var(--font-display)" }}
           >
             &ldquo;{t.quote}&rdquo;
           </blockquote>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#D4682A] text-[#FEFBF5] font-bold text-sm flex-shrink-0">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#D4682A] text-white font-bold text-sm flex-shrink-0">
               {t.initials}
             </div>
             <div>
-              <p className="font-semibold text-[#F3E9D5]" style={{ fontFamily: "var(--font-display)" }}>{t.author}</p>
-              <p className="text-sm text-[#9B8C7D]">
+              <p className="font-semibold text-[#1C1209]" style={{ fontFamily: "var(--font-display)" }}>{t.author}</p>
+              <p className="text-sm text-[#7A6B5C]">
                 {t.business} · {t.town}
               </p>
             </div>
@@ -114,7 +113,7 @@ export function Testimonials() {
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === current
                   ? "w-6 bg-[#D4682A]"
-                  : "w-1.5 bg-[rgba(212,104,42,0.2)] hover:bg-[rgba(212,104,42,0.4)]"
+                  : "w-1.5 bg-[rgba(212,104,42,0.3)] hover:bg-[rgba(212,104,42,0.5)]"
               }`}
             />
           ))}

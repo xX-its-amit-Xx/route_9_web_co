@@ -44,7 +44,7 @@ export function Pricing() {
               <article
                 className={`relative flex flex-col h-full rounded-2xl p-7 border transition-all duration-200 ${
                   tier.highlighted
-                    ? "bg-[#110B07] border-[rgba(212,104,42,0.3)] shadow-2xl shadow-[rgba(212,104,42,0.12)]"
+                    ? "bg-[#1C1209] border-[rgba(212,104,42,0.35)] shadow-2xl shadow-[rgba(212,104,42,0.15)]"
                     : "bg-surface-raised border-border hover:border-accent/30 hover:shadow-lg"
                 }`}
               >
@@ -130,18 +130,18 @@ export function Pricing() {
 
         {/* Founding offer */}
         <div ref={offerRef} className="reveal">
-          <div className="relative overflow-hidden rounded-2xl border border-[#D4682A]/20 bg-[#110B07] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="relative overflow-hidden rounded-2xl border border-[#D4682A]/25 bg-[#FDF0E8] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="absolute inset-0 opacity-5"
               style={{
                 backgroundImage: "radial-gradient(circle at 20% 50%, #D4682A 0%, transparent 50%)",
               }}
             />
-            <div className="relative flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#D4682A] text-[#110B07] text-xl select-none">
+            <div className="relative flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#D4682A] text-white text-xl select-none">
               ★
             </div>
             <div className="relative">
-              <p className="font-bold text-[#F3E9D5] text-sm">{FOUNDING_OFFER.headline}</p>
-              <p className="text-[#9B8C7D] text-sm mt-0.5">{FOUNDING_OFFER.body}</p>
+              <p className="font-bold text-[#1C1209] text-sm">{FOUNDING_OFFER.headline}</p>
+              <p className="text-[#7A6B5C] text-sm mt-0.5">{FOUNDING_OFFER.body}</p>
             </div>
           </div>
         </div>

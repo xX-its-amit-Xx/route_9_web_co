@@ -41,6 +41,7 @@ export function SplitTextReveal({
           spans.forEach((span, i) => {
             span.style.transitionDelay = `${delay + i * stagger}ms`;
             span.style.transitionDuration = `${duration}ms`;
+            span.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
             span.classList.add("word-visible");
           });
           if (once) observer.disconnect();
