@@ -24,7 +24,7 @@ export function Pricing() {
           </p>
           <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Transparent pricing.<br />No surprises.
           </h2>
@@ -60,7 +60,7 @@ export function Pricing() {
                 <div className="mb-6">
                   <h3
                     className={`font-bold text-xl mb-1 ${tier.highlighted ? "text-[#F3E9D5]" : "text-fg"}`}
-                    style={{ fontFamily: "var(--font-playfair)" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {tier.name}
                   </h3>
@@ -76,7 +76,7 @@ export function Pricing() {
                   <div className="flex items-end gap-1.5 mb-1">
                     <span
                       className={`text-4xl font-extrabold tracking-tight ${tier.highlighted ? "text-gradient" : "text-fg"}`}
-                      style={{ fontFamily: "var(--font-playfair)" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {tier.setup}
                     </span>

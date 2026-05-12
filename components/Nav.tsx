@@ -40,7 +40,7 @@ export function Nav() {
           <Link href="/" className="flex items-center gap-2.5 group" onClick={close}>
             <span
               className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#D4682A] text-[#FEFBF5] text-xs font-extrabold select-none"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               R9
             </span>

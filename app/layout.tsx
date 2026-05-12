@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { CursorGlow } from "@/components/CursorGlow";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
+import { Cursor } from "@/components/Cursor";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
 const geist = Geist({
@@ -10,10 +13,11 @@ const geist = Geist({
   variable: "--font-geist",
 });
 
-const playfair = Playfair_Display({
+// Instrument Serif — editorial old-style serif, distinctive and premium
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-display",
+  weight: "400",
   style: ["normal", "italic"],
 });
 
@@ -83,7 +87,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${playfair.variable} h-full antialiased`}
+      className={`${geist.variable} ${instrumentSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -97,9 +101,13 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg grain">
-        <CursorGlow />
-        {children}
+      <body className="min-h-full flex flex-col bg-bg text-fg grain" style={{ cursor: "none" }}>
+        <SmoothScrollProvider>
+          <ScrollProgress />
+          <Cursor />
+          <RevealObserver />
+          {children}
+        </SmoothScrollProvider>
         <Analytics />
       </body>
     </html>

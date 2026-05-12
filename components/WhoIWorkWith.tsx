@@ -1,10 +1,10 @@
 "use client";
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
+import { SplitTextReveal } from "./SplitTextReveal";
 import { WHO } from "@/lib/content";
 
 export function WhoIWorkWith() {
-  const headingRef = useScrollReveal();
   const reasonsRef = useScrollReveal();
   const typesRef = useScrollReveal();
 
@@ -16,17 +16,19 @@ export function WhoIWorkWith() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section label */}
-        <div ref={headingRef} className="reveal mb-12">
-          <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+        <div className="mb-12">
+          <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3 reveal">
             Who I work with
           </p>
-          <h2
+          <SplitTextReveal
+            as="h2"
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight mb-4"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-display)" }}
+            stagger={80}
           >
             {WHO.heading}
-          </h2>
-          <p className="max-w-2xl text-lg text-muted leading-relaxed">
+          </SplitTextReveal>
+          <p className="max-w-2xl text-lg text-muted leading-relaxed reveal" style={{ transitionDelay: "400ms" }}>
             {WHO.subhead}
           </p>
         </div>
@@ -43,7 +45,7 @@ export function WhoIWorkWith() {
                   <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-fg mb-1">{heading}</h3>
+                  <h3 className="font-semibold text-fg mb-1" style={{ fontFamily: "var(--font-display)" }}>{heading}</h3>
                   <p className="text-muted leading-relaxed text-sm">{body}</p>
                 </div>
               </div>
@@ -58,7 +60,7 @@ export function WhoIWorkWith() {
                 {WHO.towns.map((town) => (
                   <span
                     key={town}
-                    className="px-3 py-1 text-xs font-medium rounded-full border border-border bg-surface text-muted"
+                    className="px-3 py-1 text-xs font-medium rounded-full border border-border bg-surface text-muted hover:border-accent/40 hover:text-accent transition-colors duration-200"
                   >
                     {town}
                   </span>
@@ -79,7 +81,7 @@ export function WhoIWorkWith() {
               {WHO.businessTypes.map((type) => (
                 <li
                   key={type}
-                  className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-border bg-surface text-sm text-fg hover:border-accent/40 hover:bg-accent-light transition-colors duration-150"
+                  className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-border bg-surface text-sm text-fg hover:border-accent/40 hover:bg-accent-light hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"

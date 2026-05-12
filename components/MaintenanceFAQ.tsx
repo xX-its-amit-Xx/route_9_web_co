@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { SplitTextReveal } from "./SplitTextReveal";
 import { FAQ } from "@/lib/content";
 
 function FAQItem({ q, a }: { q: string; a: string }) {
@@ -54,12 +55,14 @@ export function MaintenanceFAQ() {
             <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
               Maintenance
             </p>
-            <h2
+            <SplitTextReveal
+              as="h2"
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-display)" }}
+              stagger={80}
             >
-              What&apos;s included<br />after launch.
-            </h2>
+              What&apos;s included after launch.
+            </SplitTextReveal>
             <p className="text-muted leading-relaxed mb-8">
               The monthly fee isn&apos;t a software subscription. It&apos;s a retainer on
               a person — one who already knows your site inside and out.
@@ -74,7 +77,7 @@ export function MaintenanceFAQ() {
                 >
                   <div
                     className="text-3xl font-extrabold text-accent mb-1 group-hover:scale-105 transition-transform duration-200 inline-block"
-                    style={{ fontFamily: "var(--font-playfair)" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {label === "Uptime" ? (
                       <><AnimatedCounter to={value} />

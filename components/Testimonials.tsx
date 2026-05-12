@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { useScrollReveal } from "@/lib/useScrollReveal";
+import { SplitTextReveal } from "./SplitTextReveal";
 import { TESTIMONIALS } from "@/lib/content";
 
 export function Testimonials() {
@@ -10,7 +10,6 @@ export function Testimonials() {
   const [current, setCurrent] = useState(0);
   const [key, setKey] = useState(0);
   const [paused, setPaused] = useState(false);
-  const headingRef = useScrollReveal<HTMLDivElement>();
 
   const advance = useCallback(
     (dir: 1 | -1) => {
@@ -39,21 +38,23 @@ export function Testimonials() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Heading */}
-        <div ref={headingRef} className="reveal mb-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+        <div className="mb-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-[#D4682A] mb-3">
+            <p className="text-xs font-semibold tracking-widest uppercase text-[#D4682A] mb-3 reveal">
               What clients say
             </p>
-            <h2
+            <SplitTextReveal
+              as="h2"
               className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#F3E9D5] leading-tight"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-display)" }}
+              stagger={80}
             >
-              Real shops.<br />Real results.
-            </h2>
+              Real shops. Real results.
+            </SplitTextReveal>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 reveal" style={{ transitionDelay: "200ms" }}>
             <button
               onClick={() => advance(-1)}
               aria-label="Previous testimonial"
@@ -85,7 +86,7 @@ export function Testimonials() {
 
           <blockquote
             className="text-xl md:text-2xl text-[#F3E9D5] font-medium leading-relaxed mb-8 italic"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             &ldquo;{t.quote}&rdquo;
           </blockquote>
@@ -95,7 +96,7 @@ export function Testimonials() {
               {t.initials}
             </div>
             <div>
-              <p className="font-semibold text-[#F3E9D5]">{t.author}</p>
+              <p className="font-semibold text-[#F3E9D5]" style={{ fontFamily: "var(--font-display)" }}>{t.author}</p>
               <p className="text-sm text-[#9B8C7D]">
                 {t.business} · {t.town}
               </p>

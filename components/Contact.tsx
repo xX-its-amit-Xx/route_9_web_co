@@ -66,7 +66,7 @@ export function Contact() {
             </p>
             <h2
               className="text-3xl md:text-4xl font-bold tracking-tight text-[#F3E9D5] leading-tight mb-4"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Let&apos;s talk about<br />your shop.
             </h2>
@@ -124,7 +124,7 @@ export function Contact() {
                 <div className="w-16 h-16 rounded-full bg-[rgba(212,104,42,0.15)] flex items-center justify-center mb-4">
                   <CheckCircle size={32} className="text-[#D4682A]" />
                 </div>
-                <h3 className="text-xl font-bold text-[#F3E9D5] mb-2" style={{ fontFamily: "var(--font-playfair)" }}>
+                <h3 className="text-xl font-bold text-[#F3E9D5] mb-2" style={{ fontFamily: "var(--font-display)" }}>
                   Message sent!
                 </h3>
                 <p className="text-[#9B8C7D] text-sm leading-relaxed mb-6">

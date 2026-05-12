@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
+import { SplitTextReveal } from "./SplitTextReveal";
 import { PILLARS } from "@/lib/content";
 
 const ICON_MAP = {
@@ -12,7 +13,6 @@ const ICON_MAP = {
 } as const;
 
 export function QualityPillars() {
-  const headingRef = useScrollReveal();
   const gridRef = useScrollReveal(0.05);
 
   return (
@@ -24,17 +24,20 @@ export function QualityPillars() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Heading */}
-        <div ref={headingRef} className="reveal mb-14">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[#D4682A] mb-3">
+        <div className="mb-14">
+          <p className="text-xs font-semibold tracking-widest uppercase text-[#D4682A] mb-3 reveal">
             How I build
           </p>
-          <h2
+          <SplitTextReveal
+            as="h2"
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#F3E9D5] leading-tight"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-display)" }}
+            delay={0}
+            stagger={70}
           >
-            Six things every site<br />gets right. No exceptions.
-          </h2>
-          <p className="mt-4 max-w-xl text-[#9B8C7D] text-lg">
+            Six things every site gets right.
+          </SplitTextReveal>
+          <p className="mt-4 max-w-xl text-[#9B8C7D] text-lg reveal" style={{ transitionDelay: "400ms" }}>
             These aren&apos;t upsells. They&apos;re the baseline.
           </p>
         </div>
@@ -60,7 +63,7 @@ export function QualityPillars() {
                   <div>
                     <h3
                       className="font-bold text-[#F3E9D5] mb-2"
-                      style={{ fontFamily: "var(--font-playfair)" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {pillar.heading}
                     </h3>
