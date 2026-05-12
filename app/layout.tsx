@@ -3,7 +3,6 @@ import { Geist } from "next/font/google";
 import { Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
-import { Cursor } from "@/components/Cursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
@@ -101,10 +100,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg grain" style={{ cursor: "none" }}>
+      <body className="min-h-full flex flex-col bg-bg text-fg grain">
         <SmoothScrollProvider>
           <ScrollProgress />
-          <Cursor />
           <RevealObserver />
           {children}
         </SmoothScrollProvider>
