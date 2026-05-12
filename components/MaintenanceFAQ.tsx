@@ -31,10 +31,63 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 const STATS = [
-  { label: "Response time", value: 2, suffix: " hrs", display: "≤2 hrs" },
-  { label: "Uptime", value: 99, suffix: ".9%+", display: "99.9%+" },
-  { label: "Contracts", value: 0, suffix: "", display: "Zero" },
-  { label: "Ownership", value: 100, suffix: "%", display: "100%" },
+  {
+    label: "Response time",
+    value: 2,
+    suffix: " hrs",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+        <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M10 6.5V10.5L12.5 12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15.5 4.5L18 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M16 2h2v2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    prefix: "≤",
+    color: "#D4682A",
+  },
+  {
+    label: "Uptime SLA",
+    value: 99.9,
+    suffix: "%+",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+        <path d="M3 11l4 4 10-9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.4" />
+      </svg>
+    ),
+    prefix: "",
+    color: "#10B981",
+  },
+  {
+    label: "Contracts",
+    value: 0,
+    suffix: "",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+        <rect x="4" y="3" width="12" height="15" rx="2" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        <path d="M13 14l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="14" cy="15" r="3" stroke="currentColor" strokeWidth="1.2" />
+        <path d="M13.3 15.3l.6.6 1.1-1.1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    prefix: "",
+    displayText: "Zero",
+    color: "#D4682A",
+  },
+  {
+    label: "You own it",
+    value: 100,
+    suffix: "%",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+        <path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      </svg>
+    ),
+    prefix: "",
+    color: "#D4682A",
+  },
 ] as const;
 
 export function MaintenanceFAQ() {
@@ -70,27 +123,38 @@ export function MaintenanceFAQ() {
 
             {/* Stats */}
             <div ref={statsRef} className="reveal reveal-stagger grid grid-cols-2 gap-3">
-              {STATS.map(({ label, value, suffix }) => (
+              {STATS.map((stat) => (
                 <div
-                  key={label}
-                  className="group p-5 rounded-2xl border border-border bg-surface-raised hover:border-accent/40 hover:shadow-md transition-all duration-200"
+                  key={stat.label}
+                  className="group p-5 rounded-2xl border transition-all duration-200 hover:-translate-y-1"
+                  style={{
+                    background: "linear-gradient(160deg, #FFFFFF 0%, #FDFAF7 100%)",
+                    border: "1px solid #E8D9C4",
+                    boxShadow: "0 2px 8px rgba(28,18,9,0.05), 0 8px 24px rgba(28,18,9,0.03), inset 0 1px 0 rgba(255,255,255,0.9)",
+                  }}
                 >
+                  {/* Icon */}
                   <div
-                    className="text-3xl font-extrabold text-accent mb-1 group-hover:scale-105 transition-transform duration-200 inline-block"
-                    style={{ fontFamily: "var(--font-display)" }}
+                    className="flex items-center justify-center w-8 h-8 rounded-xl mb-3 transition-all duration-200 group-hover:scale-110"
+                    style={{
+                      background: `rgba(${stat.color === "#10B981" ? "16,185,129" : "212,104,42"},0.1)`,
+                      border: `1px solid rgba(${stat.color === "#10B981" ? "16,185,129" : "212,104,42"},0.2)`,
+                      color: stat.color,
+                    }}
                   >
-                    {label === "Uptime" ? (
-                      <><AnimatedCounter to={value} />
-                        <span>{suffix}</span></>
-                    ) : label === "Response time" ? (
-                      <>≤<AnimatedCounter to={value} />{suffix}</>
-                    ) : label === "Contracts" ? (
-                      "Zero"
+                    {stat.icon}
+                  </div>
+                  <div
+                    className="text-3xl font-extrabold mb-1 transition-transform duration-200 inline-block"
+                    style={{ fontFamily: "var(--font-display)", color: stat.color }}
+                  >
+                    {"displayText" in stat && stat.displayText ? (
+                      stat.displayText
                     ) : (
-                      <><AnimatedCounter to={value} />{suffix}</>
+                      <>{stat.prefix}<AnimatedCounter to={stat.value} />{stat.suffix}</>
                     )}
                   </div>
-                  <div className="text-xs text-muted font-medium">{label}</div>
+                  <div className="text-xs text-muted font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
