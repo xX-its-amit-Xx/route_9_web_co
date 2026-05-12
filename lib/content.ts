@@ -20,10 +20,10 @@ export const SITE = {
 // Option C: "Websites for businesses on Route 9. Built locally, built right."
 export const HERO = {
   label: "Shrewsbury, MA · Route 9",
-  headlineA: "Your neighbors",
-  headlineB: "are searching.",
+  headlineA: "Small shops.",
+  headlineB: "Big presence.",
   subhead:
-    "Custom websites and ongoing maintenance for independent businesses along Route 9 — mobile-first, fast, and maintained by someone who answers the phone.",
+    "Route 9 Web builds websites for the barbers, bakers, and family restaurants that make Shrewsbury worth stopping for. Fast, mobile-first, and maintained by someone who actually knows your neighborhood.",
   ctaPrimary: { text: "See pricing", href: "#pricing" },
   ctaSecondary: { text: "Get in touch", href: "#contact" },
 } as const;
@@ -32,7 +32,7 @@ export const HERO = {
 export const WHO = {
   heading: "Independent shops. Not chains.",
   subhead:
-    "I work with the places that make a neighborhood worth living in — the kind of businesses where the owner is usually behind the counter.",
+    "I work with the places that make Shrewsbury worth stopping for — the kind of business where the owner is usually behind the counter, not answering a support ticket.",
   businessTypes: [
     "Restaurants & Pizzerias",
     "Cafes & Coffee Shops",
@@ -42,6 +42,8 @@ export const WHO = {
     "Specialty Retail",
     "Auto Repair",
     "Boutiques",
+    "Nail Salons",
+    "Florists",
   ],
   towns: ["Shrewsbury", "Westborough", "Northborough", "Worcester", "Framingham"],
   reasons: [
@@ -149,7 +151,7 @@ export const PRICING = [
 ] as const;
 
 export const FOUNDING_OFFER = {
-  headline: "Founding pricing for the first three Shrewsbury clients",
+  headline: "Founding pricing — first three Shrewsbury shops only",
   body: "$300 one-time + $30/month for life on the Starter tier. Mention this when we talk.",
 } as const;
 
@@ -273,7 +275,7 @@ export const TESTIMONIALS = [
 // ─── About ────────────────────────────────────────────────────────────────────
 export const ABOUT = {
   paragraphs: [
-    "Route 9 Web is a small, local web design practice for independent businesses along Route 9 in central Massachusetts. Built by a developer with years of experience shipping software — from computational biology research to indie games — now focused on the thing local shops actually need: websites that work in 2026 instead of looking like they were made in 2014.",
+    "Route 9 Web is a one-person web design practice based in Shrewsbury, Massachusetts — right on the Route 9 corridor between Worcester and the Pike. Built by a developer with years of experience shipping software, now focused on the thing independent shops actually need: websites that work in 2026 instead of looking like they were made in 2014.",
     "We're not an agency. There's no salesperson, no account manager, and no markup for fancy office space. Just real work, done locally, by someone who lives here.",
   ],
   aiNote:

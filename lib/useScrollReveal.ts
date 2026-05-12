@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
-  threshold = 0.12
+  threshold = 0.08
 ) {
   const ref = useRef<T>(null);
 

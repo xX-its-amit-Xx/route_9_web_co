@@ -21,7 +21,7 @@ export function SplitTextReveal({
   as: Tag = "div",
   delay = 0,
   stagger = 70,
-  duration = 900,
+  duration = 750,
   once = true,
   style,
 }: Props) {
@@ -52,7 +52,7 @@ export function SplitTextReveal({
           });
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.08 }
     );
 
     observer.observe(el);
