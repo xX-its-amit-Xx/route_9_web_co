@@ -240,22 +240,32 @@ body {
 
 /* ═══════════════════════════════════════════════
    LIGHT CARD (warm sections)
-   Clean white card with soft warmth
+   3D glass card with inset highlight
 ══════════════════════════════════════════════ */
 .card-light {
-  background: #FFFFFF;
+  background: linear-gradient(160deg, #FFFFFF 0%, #FDFAF7 100%);
   border: 1px solid #E8D9C4;
   border-radius: 1.25rem;
-  box-shadow: 0 2px 12px rgba(28, 18, 9, 0.06);
+  box-shadow:
+    0 2px 4px rgba(28, 18, 9, 0.04),
+    0 6px 20px rgba(28, 18, 9, 0.06),
+    0 16px 48px rgba(28, 18, 9, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(232, 217, 196, 0.4);
   transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
               border-color 0.35s ease,
               transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card-light:hover {
-  box-shadow: 0 8px 32px rgba(212, 104, 42, 0.12), 0 2px 8px rgba(28, 18, 9, 0.06);
-  border-color: rgba(212, 104, 42, 0.35);
-  transform: translateY(-3px);
+  box-shadow:
+    0 4px 8px rgba(212, 104, 42, 0.06),
+    0 16px 48px rgba(212, 104, 42, 0.12),
+    0 32px 80px rgba(28, 18, 9, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(212, 104, 42, 0.18);
+  border-color: rgba(212, 104, 42, 0.3);
+  transform: translateY(-4px);
 }
 
 /* ═══════════════════════════════════════════════
@@ -526,5 +536,143 @@ body {
   background-image:
     radial-gradient(circle at 20% 80%, rgba(212,104,42,0.04) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(212,104,42,0.03) 0%, transparent 45%);
+}
+
+/* ═══════════════════════════════════════════════
+   NAV GLASS
+   Dark glassmorphism for scrolled nav state
+══════════════════════════════════════════════ */
+.nav-glass {
+  background: rgba(9, 6, 3, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(212, 104, 42, 0.06);
+}
+
+/* CTA shimmer sweep */
+@keyframes nav-shimmer {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(350%) skewX(-15deg); }
+}
+
+.nav-cta-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-cta-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  animation: nav-shimmer 3s ease-in-out infinite 1.5s;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   QUALITY PILLARS MINI-DEMO KEYFRAMES
+══════════════════════════════════════════════ */
+
+/* Speed: slow progress bar (fills to 62% over 4s) */
+@keyframes demo-slow-bar {
+  0%   { width: 0%; }
+  90%  { width: 62%; }
+  100% { width: 62%; }
+}
+
+/* Speed: fast progress bar (fills to 100% instantly) */
+@keyframes demo-fast-bar {
+  0%   { width: 0%; }
+  12%  { width: 100%; }
+  100% { width: 100%; }
+}
+
+/* Skeleton shimmer pulse */
+@keyframes demo-skeleton-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.65; }
+}
+
+/* Content appears after fast load */
+@keyframes demo-content-appear {
+  0%, 8%    { opacity: 0; transform: translateY(5px); }
+  22%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile: bad side scrolls horizontally */
+@keyframes demo-scroll-bad {
+  0%, 15%  { transform: translateX(0); }
+  35%      { transform: translateX(-26px); }
+  60%      { transform: translateX(0); }
+  80%      { transform: translateX(-16px); }
+  100%     { transform: translateX(0); }
+}
+
+/* Convert: cursor wanders aimlessly */
+@keyframes demo-cursor-wander {
+  0%   { top: 12%; left: 18%; }
+  20%  { top: 52%; left: 62%; }
+  40%  { top: 22%; left: 42%; }
+  60%  { top: 62%; left: 12%; }
+  80%  { top: 38%; left: 58%; }
+  100% { top: 12%; left: 18%; }
+}
+
+/* Convert: cursor goes directly to CTA */
+@keyframes demo-cursor-direct {
+  0%   { top: 12%; left: 18%; opacity: 0; }
+  8%   { opacity: 1; }
+  85%  { top: 68%; left: 32%; opacity: 1; }
+  95%  { opacity: 0; }
+  100% { top: 68%; left: 32%; opacity: 0; }
+}
+
+/* CTA button pulse glow */
+@keyframes demo-btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0px rgba(212, 104, 42, 0); }
+  50%       { box-shadow: 0 0 0 4px rgba(212, 104, 42, 0.22); }
+}
+
+/* SEO: #1 result ambient glow */
+@keyframes demo-result-glow {
+  0%, 100% { background: rgba(212, 104, 42, 0.04); }
+  50%       { background: rgba(212, 104, 42, 0.11); }
+}
+
+/* Accessible: focus ring cycles — field 1 active at 0–25% */
+@keyframes demo-focus-el1 {
+  0%, 22%   { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.7); border-color: rgba(59,130,246,0.5); }
+  30%, 100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
+}
+
+/* Accessible: focus ring — field 2 active at 33–58% */
+@keyframes demo-focus-el2 {
+  0%, 30%   { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
+  35%, 55%  { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.7); border-color: rgba(59,130,246,0.5); }
+  63%, 100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
+}
+
+/* Accessible: focus ring — field 3 active at 66–90% */
+@keyframes demo-focus-el3 {
+  0%, 63%  { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
+  68%, 88% { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.7); border-color: rgba(59,130,246,0.5); }
+  95%, 100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
+}
+
+/* Maintainable: old text struck through */
+@keyframes demo-text-strike {
+  0%, 38%   { text-decoration: none; color: #6b7280; }
+  52%, 90%  { text-decoration: line-through; color: #d1d5db; }
+  98%, 100% { text-decoration: none; color: #6b7280; }
+}
+
+/* Maintainable: new updated text reveals */
+@keyframes demo-text-reveal {
+  0%, 46%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+  60%, 90%  { clip-path: inset(0 0% 0 0); opacity: 1; }
+  98%, 100% { clip-path: inset(0 100% 0 0); opacity: 0; }
 }
 

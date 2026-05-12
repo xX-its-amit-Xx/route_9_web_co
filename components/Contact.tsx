@@ -86,7 +86,7 @@ export function Contact() {
                 </div>
               </a>
 
-              {SITE.phone !== "PLACEHOLDER_PHONE" && (
+              {(SITE.phone as string) !== "PLACEHOLDER_PHONE" && (
                 <>
                   <a href={`tel:${SITE.phone}`} className="flex items-center gap-3 group">
                     <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-150 shadow-sm">
@@ -208,7 +208,7 @@ export function Contact() {
 
                 <p className="text-xs text-center text-[#B0A090]">
                   Prefer to just text?{" "}
-                  {SITE.phone !== "PLACEHOLDER_PHONE" ? (
+                  {(SITE.phone as string) !== "PLACEHOLDER_PHONE" ? (
                     <a href={`sms:${SITE.phone}`} className="text-[#D4682A] hover:underline">{SITE.phone}</a>
                   ) : (
                     <a href={`mailto:${SITE.email}`} className="text-[#D4682A] hover:underline">{SITE.email}</a>

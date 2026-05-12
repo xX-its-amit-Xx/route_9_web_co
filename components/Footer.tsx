@@ -26,7 +26,7 @@ export function Footer() {
 
           {/* Right: links */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[#9B8C7D]">
-            {SITE.personalSite !== "PLACEHOLDER_PERSONAL_SITE" && (
+            {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
               <a
                 href={SITE.personalSite}
                 target="_blank"
@@ -36,7 +36,7 @@ export function Footer() {
                 {ABOUT.moreLinkText}
               </a>
             )}
-            {SITE.github !== "PLACEHOLDER_GITHUB_REPO" && (
+            {(SITE.github as string) !== "PLACEHOLDER_GITHUB_REPO" && (
               <a
                 href={SITE.github}
                 target="_blank"

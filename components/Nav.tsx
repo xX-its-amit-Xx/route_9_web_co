@@ -1,22 +1,25 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SITE } from "@/lib/content";
 
 const NAV_LINKS = [
-  { label: "How I Build", href: "#pillars" },
-  { label: "Services", href: "#pricing" },
-  { label: "Process", href: "#process" },
-  { label: "About", href: "#about" },
+  { label: "How I Build",       href: "#pillars", section: "pillars"  },
+  { label: "Services & Pricing", href: "#pricing",  section: "pricing"  },
+  { label: "Process",           href: "#process",  section: "process"  },
+  { label: "About",             href: "#about",    section: "about"    },
 ] as const;
 
-export function Nav() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+type Section = (typeof NAV_LINKS)[number]["section"];
 
+export function Nav() {
+  const [open, setOpen]       = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive]   = useState<Section | null>(null);
+
+  // Scroll detection
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -24,56 +27,132 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Active section via IntersectionObserver
+  useEffect(() => {
+    const sections = NAV_LINKS.map(({ section }) =>
+      document.getElementById(section)
+    ).filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id as Section);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: "-15% 0px -70% 0px" }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToTop = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setOpen(false);
+  }, []);
+
   const close = () => setOpen(false);
 
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[rgba(17,11,7,0.93)] backdrop-blur-md border-b border-[rgba(212,104,42,0.12)] shadow-lg shadow-black/30"
-            : "bg-transparent"
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+          scrolled ? "nav-glass" : "bg-transparent"
         }`}
       >
+        {/* Gradient glow line at bottom (scrolled only) */}
+        <div
+          aria-hidden
+          className="absolute bottom-0 inset-x-0 h-px pointer-events-none transition-opacity duration-500"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(212,104,42,0.35) 20%, rgba(212,104,42,0.65) 50%, rgba(212,104,42,0.35) 80%, transparent 100%)",
+            opacity: scrolled ? 1 : 0,
+          }}
+        />
+
         <nav className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group" onClick={close}>
+
+          {/* ── Logo ── */}
+          <a
+            href="#"
+            onClick={scrollToTop}
+            className="flex items-center gap-2.5 group select-none"
+            aria-label="Back to top"
+          >
             <span
-              className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#D4682A] text-[#FEFBF5] text-xs font-extrabold select-none"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg]"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontStyle: "italic",
+                fontSize: "15px",
+                letterSpacing: "0.02em",
+                background: "linear-gradient(145deg, #E07838 0%, #C05A20 55%, #A04010 100%)",
+                boxShadow:
+                  "0 0 0 1px rgba(212,104,42,0.55), 0 0 20px rgba(212,104,42,0.38), 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.15)",
+              }}
             >
               R9
             </span>
-            <span className="text-sm font-semibold tracking-tight text-[#F3E9D5] hidden sm:block">
+            <span
+              className="text-sm font-semibold tracking-tight text-[#F3E9D5] hidden sm:block transition-colors duration-200 group-hover:text-white"
+            >
               {SITE.name}
             </span>
-          </Link>
+          </a>
 
-          {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="px-3 py-1.5 text-sm text-[#9B8C7D] hover:text-[#F3E9D5] rounded-lg hover:bg-[rgba(243,233,213,0.06)] transition-colors duration-150"
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+          {/* ── Desktop nav links ── */}
+          <ul className="hidden md:flex items-center gap-0.5">
+            {NAV_LINKS.map(({ label, href, section }) => {
+              const isActive = active === section;
+              return (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className="relative px-3.5 py-2 text-sm rounded-lg transition-all duration-200 flex flex-col items-center gap-0.5 hover:bg-[rgba(243,233,213,0.06)]"
+                    style={{ color: isActive ? "#F3E9D5" : "rgba(243,233,213,0.48)" }}
+                  >
+                    {label}
+                    {/* Active indicator dot */}
+                    <span
+                      className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-0.5 rounded-full transition-all duration-300"
+                      style={{
+                        width: isActive ? "1.5rem" : "0",
+                        background: "#D4682A",
+                        opacity: isActive ? 1 : 0,
+                      }}
+                    />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
-          {/* Right */}
+          {/* ── Right cluster ── */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
+
+            {/* CTA with shimmer */}
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center h-8 px-4 rounded-lg bg-[#D4682A] hover:bg-[#C05A20] text-[#FEFBF5] text-xs font-bold transition-colors duration-150"
+              className="nav-cta-shimmer hidden sm:inline-flex items-center h-9 px-5 rounded-xl text-white text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03]"
+              style={{
+                background:
+                  "linear-gradient(135deg, #D4682A 0%, #C05A20 55%, #B04C18 100%)",
+                boxShadow:
+                  "0 0 0 1px rgba(212,104,42,0.45), 0 4px 16px rgba(212,104,42,0.38), 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)",
+                letterSpacing: "0.025em",
+              }}
             >
               Get in touch
             </a>
+
+            {/* Hamburger */}
             <button
-              className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[#9B8C7D] hover:text-[#F3E9D5] hover:bg-[rgba(243,233,213,0.06)] transition-colors duration-150 ml-1"
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl text-[#9B8C7D] hover:text-[#F3E9D5] hover:bg-[rgba(243,233,213,0.08)] transition-colors duration-150"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
@@ -84,31 +163,59 @@ export function Nav() {
         </nav>
       </header>
 
-      {/* Mobile overlay */}
+      {/* ── Mobile overlay ── */}
       <div
-        className={`fixed inset-0 z-40 bg-[#110B07]/97 backdrop-blur-sm flex flex-col pt-20 px-6 md:hidden transition-all duration-200 ${
+        className={`fixed inset-0 z-40 flex flex-col pt-20 px-6 md:hidden transition-all duration-250 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{
+          background: "rgba(9,6,3,0.97)",
+          backdropFilter: "blur(28px)",
+          WebkitBackdropFilter: "blur(28px)",
+        }}
         aria-hidden={!open}
       >
         <ul className="flex flex-col gap-1">
-          {NAV_LINKS.map(({ label, href }) => (
-            <li key={href}>
-              <a
-                href={href}
-                onClick={close}
-                className="block px-3 py-3.5 text-lg font-medium text-[#F3E9D5] hover:text-[#D4682A] rounded-xl hover:bg-[rgba(212,104,42,0.08)] transition-colors duration-150"
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          {NAV_LINKS.map(({ label, href, section }) => {
+            const isActive = active === section;
+            return (
+              <li key={href}>
+                <a
+                  href={href}
+                  onClick={close}
+                  className="flex items-center justify-between px-4 py-4 text-lg font-medium rounded-2xl transition-all duration-150"
+                  style={{
+                    color: isActive ? "#D4682A" : "#F3E9D5",
+                    background: isActive
+                      ? "rgba(212,104,42,0.08)"
+                      : "transparent",
+                    borderLeft: isActive ? "2px solid #D4682A" : "2px solid transparent",
+                  }}
+                >
+                  {label}
+                  {isActive && (
+                    <span
+                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ background: "#D4682A" }}
+                    />
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
-        <div className="mt-6 pt-6 border-t border-[rgba(212,104,42,0.12)]">
+
+        <div className="mt-6 pt-6 border-t border-[rgba(212,104,42,0.14)]">
           <a
             href="#contact"
             onClick={close}
-            className="flex items-center justify-center h-12 w-full rounded-xl bg-[#D4682A] hover:bg-[#C05A20] text-[#FEFBF5] text-base font-bold transition-colors duration-150"
+            className="flex items-center justify-center h-12 w-full rounded-2xl text-white text-base font-bold transition-colors duration-150"
+            style={{
+              background:
+                "linear-gradient(135deg, #D4682A 0%, #C05A20 100%)",
+              boxShadow:
+                "0 0 24px rgba(212,104,42,0.45), inset 0 1px 0 rgba(255,255,255,0.15)",
+            }}
           >
             Get in touch
           </a>

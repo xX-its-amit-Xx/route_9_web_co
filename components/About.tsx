@@ -108,7 +108,7 @@ export function About() {
               </p>
             </div>
 
-            {SITE.personalSite !== "PLACEHOLDER_PERSONAL_SITE" && (
+            {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
               <a
                 href={SITE.personalSite}
                 target="_blank"
