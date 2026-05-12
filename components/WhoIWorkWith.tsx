@@ -172,6 +172,17 @@ export function WhoIWorkWith() {
 
           {/* ── Right: bento photo mosaic ── */}
           <div className="reveal" style={{ transitionDelay: "180ms" }}>
+            {/* Neighborhood label */}
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className="text-[9px] font-semibold tracking-[0.18em] uppercase"
+                style={{ color: "#B0A090" }}
+              >
+                Route 9 shops, Shrewsbury &amp; beyond
+              </span>
+              <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(212,104,42,0.2), transparent)" }} />
+            </div>
+
             <div
               className="grid grid-cols-3 gap-2"
               style={{
@@ -189,7 +200,7 @@ export function WhoIWorkWith() {
                   <img
                     src={`https://images.unsplash.com/photo-${id}?w=${i === 0 ? 500 : 280}&auto=format&fit=crop&q=80`}
                     alt={label}
-                    loading="lazy"
+                    loading="eager"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
                   {/* Gradient overlay */}
@@ -205,8 +216,29 @@ export function WhoIWorkWith() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-[#B0A090] mt-3 text-center">
-              Not on the list? Independent shop owners are always welcome.
+
+            {/* Shop window strip — hand-drawn ma-and-pa feel */}
+            <div
+              className="mt-3 flex items-center justify-between px-1"
+              aria-hidden
+            >
+              {[
+                { icon: "🍕", label: "Pizzeria" },
+                { icon: "✂️", label: "Barber" },
+                { icon: "☕", label: "Café" },
+                { icon: "🥐", label: "Bakery" },
+                { icon: "💅", label: "Salon" },
+                { icon: "🔧", label: "Auto" },
+              ].map(({ icon, label }) => (
+                <div key={label} className="flex flex-col items-center gap-0.5 opacity-50 hover:opacity-80 transition-opacity duration-200">
+                  <span className="text-base leading-none">{icon}</span>
+                  <span className="text-[8px] text-[#B0A090] font-medium tracking-wide">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-[#B0A090] mt-2 text-center italic" style={{ fontFamily: "var(--font-display)" }}>
+              Not on the list? Every independent shop is welcome.
             </p>
           </div>
 

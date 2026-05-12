@@ -89,6 +89,9 @@ export function Testimonials() {
             >
               Real shops. Real results.
             </SplitTextReveal>
+            <p className="text-sm text-[#B0A090] mt-2 italic reveal" style={{ fontFamily: "var(--font-display)", transitionDelay: "300ms" }}>
+              From Shrewsbury to Framingham, along Route 9.
+            </p>
           </div>
 
           {/* Navigation */}

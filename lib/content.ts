@@ -207,7 +207,7 @@ export const PROCESS = [
   {
     step: 1,
     heading: "Free 20-minute meeting",
-    body: "In person at your shop or by phone — whichever you prefer. We talk about what you need, I answer questions, and neither of us wastes time if it's not a fit.",
+    body: "In person at your shop on Route 9, or by phone — whichever's easier. We talk about what you need, I answer questions, and neither of us wastes time if it's not a fit.",
   },
   {
     step: 2,

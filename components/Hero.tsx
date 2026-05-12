@@ -399,9 +399,22 @@ export function Hero() {
                 className="text-xs"
                 style={{ color: "rgba(243,233,213,0.38)" }}
               >
-                Restaurants, cafes, salons &amp; more along Route 9
+                Barbershops, bakeries, cafes &amp; restaurants along Route 9
               </p>
             </div>
+
+            {/* Local shop names — subtle directory feel */}
+            <p
+              className="text-[10px] italic mb-3"
+              style={{
+                color: "rgba(243,233,213,0.2)",
+                fontFamily: "var(--font-display)",
+                lineHeight: 1.7,
+                animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.88s both",
+              }}
+            >
+              Arturo&apos;s Pizzeria &nbsp;·&nbsp; Lake Shore Barbers &nbsp;·&nbsp; Town Common Bakery &nbsp;·&nbsp; Fresh Bloom Florist &nbsp;·&nbsp; Route 9 Auto
+            </p>
 
             {/* Trust line */}
             <p
@@ -409,7 +422,7 @@ export function Hero() {
               style={{
                 color: "rgba(243,233,213,0.28)",
                 animation:
-                  "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.92s both",
+                  "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.96s both",
               }}
             >
               No contracts · No lock-in · Free preview before you pay anything

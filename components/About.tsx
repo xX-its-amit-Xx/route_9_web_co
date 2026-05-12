@@ -18,30 +18,36 @@ export function About() {
         {/* ── Atmospheric street photo ── */}
         <div className="relative w-full h-44 md:h-60 rounded-3xl overflow-hidden mb-14 reveal">
           <img
-            src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1400&auto=format&fit=crop&q=80"
-            alt="Route 9 neighborhood, Shrewsbury MA"
-            loading="lazy"
+            src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1400&auto=format&fit=crop&q=80"
+            alt="A warm café along Route 9, Shrewsbury MA"
+            loading="eager"
             className="w-full h-full object-cover object-center"
           />
           {/* Dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1209]/75 via-[#1C1209]/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1209]/80 via-[#1C1209]/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/45 to-transparent" />
           {/* Text overlay */}
           <div className="absolute left-8 top-1/2 -translate-y-1/2">
-            <p className="text-white/50 text-[10px] tracking-[0.22em] uppercase mb-2 font-semibold">
+            <p className="text-white/45 text-[10px] tracking-[0.22em] uppercase mb-2 font-semibold">
               Route 9 · Shrewsbury, MA
             </p>
             <p
               className="text-white text-2xl md:text-3xl font-bold italic leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Local work,<br />done locally.
+              Your neighborhood.<br />My backyard.
+            </p>
+            <p className="text-white/35 text-[11px] mt-2 tracking-wide">
+              Lake Quinsigamond · Shrewsbury Center · Route 9
             </p>
           </div>
           {/* MA·9 badge */}
           <div
             className="absolute right-7 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 border-white/20"
-            style={{ background: "rgba(212,104,42,0.88)" }}
+            style={{
+              background: "linear-gradient(145deg, rgba(212,104,42,0.92), rgba(176,76,24,0.96))",
+              boxShadow: "0 4px 20px rgba(212,104,42,0.5), inset 0 1px 0 rgba(255,220,140,0.25)",
+            }}
             aria-hidden
           >
             <span className="text-[8px] font-bold text-white/70 tracking-widest leading-none">MA</span>

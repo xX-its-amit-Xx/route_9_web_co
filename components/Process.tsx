@@ -142,10 +142,16 @@ export function Process() {
         </div>
 
         {/* CTA */}
-        <div className="mt-14 pt-10 border-t border-[#E8D9C4] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[#7A6B5C] max-w-md reveal">
-            Ready to see what your site could look like? The meeting is free. The preview is free. You only pay when you&apos;re happy.
-          </p>
+        <div className="mt-14 pt-10 border-t border-[#E8D9C4] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="max-w-md">
+            <p className="text-[#7A6B5C] reveal mb-2">
+              Ready to see what your site could look like? The meeting is free. The preview is free. You only pay when you&apos;re happy.
+            </p>
+            {/* Local detail */}
+            <p className="text-[11px] text-[#B0A090] italic reveal" style={{ fontFamily: "var(--font-display)", transitionDelay: "80ms" }}>
+              I can meet you at your shop on Route 9 — Shrewsbury Center, near the lake, wherever you are.
+            </p>
+          </div>
           <a
             href="#contact"
             className="reveal flex-shrink-0 inline-flex items-center h-12 px-7 rounded-xl bg-[#D4682A] hover:bg-[#C05A20] text-white text-sm font-semibold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[rgba(212,104,42,0.3)]"
