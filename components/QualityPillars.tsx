@@ -85,17 +85,38 @@ function DemoShell({ children }: { children: React.ReactNode }) {
     <div
       className="h-full flex flex-col overflow-hidden relative"
       style={{
-        background: "linear-gradient(170deg, #181210 0%, #0F0C09 100%)",
+        background: "linear-gradient(175deg, #16100A 0%, #0D0905 55%, #100D08 100%)",
       }}
     >
-      {/* Subtle horizontal scan-line texture for screen feel */}
+      {/* Subtle dot matrix (premium display feel, not scanlines) */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 3px)",
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.022) 1px, transparent 1px)",
+          backgroundSize: "5px 5px",
           zIndex: 0,
+        }}
+      />
+      {/* Top gloss — simulates a real screen reflection */}
+      <div
+        aria-hidden
+        className="absolute top-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: "1px",
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.09) 25%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0.09) 75%, transparent 100%)",
+          zIndex: 2,
+        }}
+      />
+      {/* Side vignettes for depth */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.22) 0%, transparent 7%, transparent 93%, rgba(0,0,0,0.22) 100%)",
+          zIndex: 1,
         }}
       />
       <div className="relative z-10 flex flex-col h-full">{children}</div>
@@ -106,43 +127,53 @@ function DemoShell({ children }: { children: React.ReactNode }) {
 function DemoChrome({ url = "yoursite.com" }: { url?: string }) {
   return (
     <div
-      className="flex items-center gap-2 px-3 flex-shrink-0"
+      className="flex items-center gap-2 px-3 flex-shrink-0 relative overflow-hidden"
       style={{
         height: "28px",
-        background: "linear-gradient(180deg, #231B14 0%, #1A1410 100%)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        boxShadow: "0 1px 0 rgba(0,0,0,0.4)",
+        background: "linear-gradient(180deg, #2C1F14 0%, #1E1510 100%)",
+        borderBottom: "1px solid rgba(0,0,0,0.55)",
+        boxShadow: "0 1px 0 rgba(255,255,255,0.04), 0 2px 10px rgba(0,0,0,0.5)",
       }}
     >
-      {/* macOS traffic lights */}
-      <div className="flex gap-1.5 flex-shrink-0">
-        <div
-          className="w-[9px] h-[9px] rounded-full"
-          style={{ background: "#FF5F57", boxShadow: "0 0 4px rgba(255,95,87,0.5)" }}
-        />
-        <div
-          className="w-[9px] h-[9px] rounded-full"
-          style={{ background: "#FEBC2E", boxShadow: "0 0 4px rgba(254,188,46,0.4)" }}
-        />
-        <div
-          className="w-[9px] h-[9px] rounded-full"
-          style={{ background: "#28C840", boxShadow: "0 0 4px rgba(40,200,64,0.4)" }}
-        />
+      {/* Top gloss band */}
+      <div
+        aria-hidden
+        className="absolute top-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: "50%",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%)",
+        }}
+      />
+      {/* macOS traffic lights — 3D sphere effect */}
+      <div className="flex gap-1.5 flex-shrink-0 relative">
+        {(["#FF5F57", "#FEBC2E", "#28C840"] as const).map((color, i) => (
+          <div
+            key={i}
+            className="w-[9px] h-[9px] rounded-full"
+            style={{
+              background: `radial-gradient(circle at 38% 32%, ${
+                i === 0 ? "#FF9995" : i === 1 ? "#FFD875" : "#6FE88A"
+              } 0%, ${color} 60%)`,
+              boxShadow: `0 0 5px ${color}88, 0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.35)`,
+            }}
+          />
+        ))}
       </div>
       {/* URL bar */}
       <div
         className="flex-1 flex items-center justify-center rounded-md overflow-hidden"
         style={{
           height: "16px",
-          background: "rgba(255,255,255,0.07)",
-          border: "1px solid rgba(255,255,255,0.05)",
+          background: "rgba(0,0,0,0.32)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.5), inset 0 -0.5px 0 rgba(255,255,255,0.03)",
         }}
       >
         <span
           className="truncate px-2"
           style={{
             fontSize: "6.5px",
-            color: "rgba(255,255,255,0.3)",
+            color: "rgba(255,255,255,0.26)",
             fontFamily: "monospace",
             letterSpacing: "0.02em",
           }}
@@ -159,17 +190,19 @@ function PanelBadge({ bad }: { bad?: boolean }) {
     <div
       className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full px-2 py-[3px]"
       style={{
-        background: bad ? "rgba(239,68,68,0.14)" : "rgba(16,185,129,0.14)",
-        border: `1px solid ${bad ? "rgba(239,68,68,0.35)" : "rgba(16,185,129,0.35)"}`,
+        background: bad
+          ? "linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(220,38,38,0.12) 100%)"
+          : "linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(5,150,105,0.12) 100%)",
+        border: `1px solid ${bad ? "rgba(239,68,68,0.4)" : "rgba(16,185,129,0.45)"}`,
         color: bad ? "#f87171" : "#34d399",
         fontSize: "6px",
         fontWeight: 700,
-        letterSpacing: "0.06em",
-        backdropFilter: "blur(6px)",
-        WebkitBackdropFilter: "blur(6px)",
+        letterSpacing: "0.07em",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
         boxShadow: bad
-          ? "0 2px 8px rgba(239,68,68,0.2), inset 0 1px 0 rgba(255,255,255,0.05)"
-          : "0 2px 8px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
+          ? "0 2px 10px rgba(239,68,68,0.25), inset 0 1px 0 rgba(255,100,100,0.12)"
+          : "0 2px 10px rgba(16,185,129,0.3), inset 0 1px 0 rgba(100,255,180,0.15)",
       }}
     >
       <span>{bad ? "✗" : "✓"}</span>
@@ -181,21 +214,36 @@ function PanelBadge({ bad }: { bad?: boolean }) {
 function VSDivider() {
   return (
     <div
-      className="flex-shrink-0 relative"
-      style={{ width: "1px", background: "rgba(255,255,255,0.05)" }}
+      className="flex-shrink-0 relative flex items-center justify-center"
+      style={{ width: "22px" }}
     >
+      {/* Gradient divider line */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full z-10"
+        className="absolute inset-y-0 left-1/2 -translate-x-1/2"
         style={{
-          width: "16px",
-          height: "16px",
-          background: "linear-gradient(135deg, #E07838, #C05A20)",
-          boxShadow:
-            "0 0 12px rgba(212,104,42,0.7), 0 0 0 2px rgba(212,104,42,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+          width: "1px",
+          background:
+            "linear-gradient(180deg, transparent 0%, rgba(212,104,42,0.25) 25%, rgba(212,104,42,0.3) 50%, rgba(212,104,42,0.25) 75%, transparent 100%)",
+        }}
+      />
+      {/* VS pill — more prominent */}
+      <div
+        className="relative flex items-center justify-center rounded-full z-10"
+        style={{
+          width: "20px",
+          height: "20px",
+          background: "linear-gradient(145deg, #E87C3E 0%, #D4682A 50%, #B85520 100%)",
+          boxShadow: [
+            "0 0 18px rgba(212,104,42,0.8)",
+            "0 0 6px rgba(212,104,42,0.55)",
+            "0 3px 10px rgba(0,0,0,0.7)",
+            "inset 0 1.5px 0 rgba(255,220,140,0.3)",
+            "inset 0 -1px 0 rgba(0,0,0,0.25)",
+          ].join(", "),
           fontSize: "5px",
-          color: "white",
+          color: "rgba(255,255,255,0.95)",
           fontWeight: 800,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.03em",
         }}
       >
         VS
@@ -277,7 +325,7 @@ function MobileFirstDemo() {
         <VSDivider />
 
         {/* GOOD — mobile-first */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#F7F5F3" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FBF8F4 0%, #F6F0E8 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col">
             {/* Compact hero image strip */}
@@ -412,7 +460,7 @@ function SpeedDemo() {
         <VSDivider />
 
         {/* GOOD — instant */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FBF8F4 0%, #F5EFE7 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px" }}>
             {/* URL bar loaded */}
@@ -543,7 +591,7 @@ function ConvertDemo() {
         <VSDivider />
 
         {/* GOOD — single clear CTA with cursor that clicks */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FBF8F4 0%, #F5EFE7 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col">
 
@@ -680,7 +728,7 @@ function LocalSEODemo() {
         <VSDivider />
 
         {/* GOOD — #1 ranking */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FEFCF9 0%, #FAF5ED 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 6px 5px" }}>
             {/* Mini search bar */}
@@ -694,27 +742,33 @@ function LocalSEODemo() {
             <div
               className="flex-shrink-0"
               style={{
-                borderRadius: "5px",
-                padding: "4px 5px",
+                borderRadius: "6px",
+                padding: "5px 6px",
                 marginBottom: "3px",
-                border: "1.5px solid rgba(212,104,42,0.3)",
-                background: "rgba(212,104,42,0.05)",
+                border: "1.5px solid rgba(212,104,42,0.38)",
+                background: "linear-gradient(135deg, rgba(212,104,42,0.1) 0%, rgba(212,104,42,0.04) 100%)",
+                boxShadow: "0 2px 10px rgba(212,104,42,0.18), 0 0 0 3px rgba(212,104,42,0.06), inset 0 1px 0 rgba(255,220,140,0.12)",
                 animation: "demo-result-glow 3s ease-in-out infinite",
               }}
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 <div
                   className="flex items-center justify-center flex-shrink-0"
-                  style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#D4682A", fontSize: "5.5px", color: "white", fontWeight: 800 }}
+                  style={{
+                    width: "13px", height: "13px", borderRadius: "50%",
+                    background: "linear-gradient(145deg, #E07838, #C05A20)",
+                    fontSize: "6px", color: "white", fontWeight: 800,
+                    boxShadow: "0 1px 4px rgba(212,104,42,0.6), inset 0 1px 0 rgba(255,255,255,0.25)",
+                  }}
                 >
                   1
                 </div>
-                <div style={{ fontSize: "7px", color: "#1a0dab", fontWeight: 700, lineHeight: 1.2 }}>Dave&apos;s Barbershop</div>
+                <div style={{ fontSize: "7.5px", color: "#1a0dab", fontWeight: 700, lineHeight: 1.2 }}>Dave&apos;s Barbershop</div>
               </div>
-              <div style={{ fontSize: "6px", color: "#D97706", paddingLeft: "13px", marginTop: "1px" }}>★★★★★ 4.9</div>
-              <div style={{ fontSize: "5.5px", color: "#166534", paddingLeft: "13px", fontWeight: 700, display: "flex", alignItems: "center", gap: "2px" }}>
-                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#16a34a", flexShrink: 0, display: "inline-block", animation: "demo-skeleton-pulse 1.3s ease-in-out infinite" }} />
-                Open Now · Shrewsbury
+              <div style={{ fontSize: "6.5px", color: "#D97706", paddingLeft: "16px", marginTop: "1.5px", letterSpacing: "0.02em" }}>★★★★★ <span style={{ fontWeight: 700 }}>4.9</span> <span style={{ color: "#9CA3AF", fontWeight: 400 }}>(127)</span></div>
+              <div style={{ fontSize: "5.5px", color: "#166534", paddingLeft: "16px", fontWeight: 700, display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
+                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#16a34a", flexShrink: 0, display: "inline-block", boxShadow: "0 0 5px rgba(22,163,74,0.7)", animation: "demo-skeleton-pulse 1.3s ease-in-out infinite" }} />
+                Open Now · Shrewsbury, MA
               </div>
             </div>
             {[
@@ -784,7 +838,7 @@ function AccessibleDemo() {
         <VSDivider />
 
         {/* GOOD — animated focus rings */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FBF8F4 0%, #F5EFE7 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
             <div style={{ fontSize: "9px", fontWeight: 700, color: "#374151", marginBottom: "6px" }} className="flex-shrink-0">
@@ -877,7 +931,7 @@ function MaintainableDemo() {
         <VSDivider />
 
         {/* GOOD — live update */}
-        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+        <div className="flex-1 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #FBF8F4 0%, #F5EFE7 100%)" }}>
           <PanelBadge />
           <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
             {/* Live indicator */}
@@ -1019,10 +1073,24 @@ export function QualityPillars() {
 
                   {/* ── Animated demo area ── */}
                   <div
-                    className="h-[182px] overflow-hidden flex-shrink-0"
-                    style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}
+                    className="h-[182px] overflow-hidden flex-shrink-0 relative"
+                    style={{
+                      borderBottom: "1px solid rgba(0,0,0,0.09)",
+                      boxShadow: "inset 0 -4px 12px rgba(0,0,0,0.06)",
+                    }}
                   >
                     <DemoComp />
+                    {/* Subtle inner-shadow lip at the bottom edge */}
+                    <div
+                      aria-hidden
+                      className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                      style={{
+                        height: "8px",
+                        background:
+                          "linear-gradient(180deg, transparent, rgba(0,0,0,0.07))",
+                        zIndex: 30,
+                      }}
+                    />
                   </div>
 
                   {/* ── Card content ── */}
