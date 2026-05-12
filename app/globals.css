@@ -157,6 +157,15 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
+   HERO LINE-UP ANIMATION
+   Used on hero h1 spans (no overflow:hidden, no clipping)
+══════════════════════════════════════════════ */
+@keyframes hero-line-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════
    MARQUEE
 ══════════════════════════════════════════════ */
 @keyframes marquee-left {
@@ -164,8 +173,13 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-3px); }
+}
+
 .marquee-track {
-  animation: marquee-left 40s linear infinite;
+  animation: marquee-left 44s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -173,6 +187,14 @@ body {
 .marquee-track:hover {
   animation-play-state: paused;
 }
+
+/* Staggered float animation on individual pills */
+.marquee-pill {
+  animation: marquee-float 3.2s ease-in-out infinite;
+}
+.marquee-pill:nth-child(3n)   { animation-delay: 0.4s; animation-duration: 3.8s; }
+.marquee-pill:nth-child(3n+1) { animation-delay: 1.1s; animation-duration: 4.1s; }
+.marquee-pill:nth-child(3n+2) { animation-delay: 0.7s; animation-duration: 3.5s; }
 
 /* ═══════════════════════════════════════════════
    HERO BLOBS

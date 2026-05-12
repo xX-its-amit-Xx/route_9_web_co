@@ -5,9 +5,9 @@
 export const SITE = {
   name: "Route 9 Web",
   email: "hello@route9web.com",
-  phone: "PLACEHOLDER_PHONE",          // e.g. "(508) 555-0123" — fill in before launch
-  github: "PLACEHOLDER_GITHUB_REPO",   // e.g. "https://github.com/yourusername/route9web"
-  personalSite: "PLACEHOLDER_PERSONAL_SITE", // e.g. "https://yourname.dev"
+  phone: "508 864 5532",          // e.g. "(508) 555-0123" — fill in before launch
+  github: "xX-its-amit-Xx",   // e.g. "https://github.com/yourusername/route9web"
+  personalSite: "https://xx-its-amit-xx.github.io/amit-sh/", // e.g. "https://yourname.dev"
   domain: "https://route9web.com",
   location: "Shrewsbury, MA",
   founded: "2026",
