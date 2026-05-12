@@ -6,44 +6,11 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { PORTFOLIO } from "@/lib/content";
 import { SplitTextReveal } from "./SplitTextReveal";
 
-// SVG illustrations for each portfolio card placeholder
-const CardIllustrations = [
-  // Restaurant/food
-  () => (
-    <svg viewBox="0 0 300 200" fill="none" className="w-full h-full" aria-hidden>
-      <rect width="300" height="200" fill="#1C1209" />
-      <circle cx="150" cy="90" r="55" stroke="rgba(212,104,42,0.25)" strokeWidth="1.5" fill="rgba(212,104,42,0.05)" />
-      <circle cx="150" cy="90" r="38" stroke="rgba(212,104,42,0.15)" strokeWidth="1" fill="none" />
-      <path d="M128 90 Q150 65 172 90" stroke="rgba(212,104,42,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <line x1="150" y1="60" x2="150" y2="120" stroke="rgba(212,104,42,0.3)" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="150" cy="90" r="6" fill="rgba(212,104,42,0.5)" />
-      <text x="150" y="158" textAnchor="middle" fontSize="11" fontFamily="var(--font-geist)" fill="rgba(243,233,213,0.3)" letterSpacing="3">RESTAURANT</text>
-    </svg>
-  ),
-  // Salon/Spa
-  () => (
-    <svg viewBox="0 0 300 200" fill="none" className="w-full h-full" aria-hidden>
-      <rect width="300" height="200" fill="#1C1209" />
-      <path d="M80 140 Q150 40 220 140" stroke="rgba(212,104,42,0.25)" strokeWidth="1.5" fill="rgba(212,104,42,0.05)" />
-      <path d="M100 140 Q150 60 200 140" stroke="rgba(212,104,42,0.15)" strokeWidth="1" fill="none" />
-      <circle cx="150" cy="95" r="20" stroke="rgba(212,104,42,0.4)" strokeWidth="1.5" fill="none" />
-      <circle cx="150" cy="95" r="5" fill="rgba(212,104,42,0.5)" />
-      <line x1="90" y1="150" x2="210" y2="150" stroke="rgba(212,104,42,0.15)" strokeWidth="1" />
-      <text x="150" y="170" textAnchor="middle" fontSize="11" fontFamily="var(--font-geist)" fill="rgba(243,233,213,0.3)" letterSpacing="3">SALON &amp; SPA</text>
-    </svg>
-  ),
-  // Retail shop
-  () => (
-    <svg viewBox="0 0 300 200" fill="none" className="w-full h-full" aria-hidden>
-      <rect width="300" height="200" fill="#1C1209" />
-      <rect x="90" y="60" width="120" height="85" rx="4" stroke="rgba(212,104,42,0.25)" strokeWidth="1.5" fill="rgba(212,104,42,0.04)" />
-      <rect x="112" y="100" width="30" height="45" rx="2" stroke="rgba(212,104,42,0.3)" strokeWidth="1" fill="rgba(212,104,42,0.08)" />
-      <rect x="158" y="100" width="30" height="45" rx="2" stroke="rgba(212,104,42,0.3)" strokeWidth="1" fill="rgba(212,104,42,0.08)" />
-      <path d="M90 75 L150 52 L210 75" stroke="rgba(212,104,42,0.35)" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-      <rect x="112" y="70" width="76" height="22" rx="2" fill="rgba(212,104,42,0.12)" />
-      <text x="150" y="170" textAnchor="middle" fontSize="11" fontFamily="var(--font-geist)" fill="rgba(243,233,213,0.3)" letterSpacing="3">RETAIL SHOP</text>
-    </svg>
-  ),
+// Real Unsplash photos for each portfolio card
+const PORTFOLIO_PHOTOS = [
+  "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&auto=format&fit=crop&q=80",
 ];
 
 export function Portfolio() {
@@ -169,7 +136,6 @@ export function Portfolio() {
 
         {/* ── Portfolio cards ── */}
         {PORTFOLIO.map((item, idx) => {
-          const Illustration = CardIllustrations[idx % CardIllustrations.length];
           return (
             <article
               key={item.label}
@@ -182,14 +148,35 @@ export function Portfolio() {
                 height: "460px",
               }}
             >
-              {/* Illustration area */}
-              <div className="relative h-52 overflow-hidden flex-shrink-0 bg-[#110B07]">
-                <div className="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out">
-                  <Illustration />
+              {/* Browser chrome + real photo */}
+              <div className="h-52 flex flex-col overflow-hidden flex-shrink-0">
+                {/* Chrome bar */}
+                <div className="h-7 flex-shrink-0 bg-[#1C1209] flex items-center px-3 gap-1.5 border-b border-white/[0.04]">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-300/60" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/60" />
+                  </div>
+                  <div className="ml-2 flex-1 h-4 rounded bg-white/[0.06] flex items-center px-2 overflow-hidden">
+                    <span className="text-[8px] text-white/20 font-mono truncate">
+                      route9web.com/preview
+                    </span>
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#110B07]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 px-2.5 py-1 rounded-full bg-[#D4682A]/20 backdrop-blur-sm border border-[#D4682A]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-[10px] font-semibold text-[#F3E9D5] tracking-wide">Preview coming</span>
+                {/* Photo */}
+                <div className="flex-1 relative overflow-hidden">
+                  <img
+                    src={PORTFOLIO_PHOTOS[idx % PORTFOLIO_PHOTOS.length]}
+                    alt={item.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-3 left-3 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="px-2.5 py-1 rounded-full bg-[rgba(212,104,42,0.85)] backdrop-blur-sm text-[10px] font-semibold text-white tracking-wide">
+                      Preview coming soon
+                    </span>
+                  </div>
                 </div>
               </div>
 

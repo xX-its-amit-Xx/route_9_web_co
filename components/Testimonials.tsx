@@ -5,6 +5,15 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { TESTIMONIALS } from "@/lib/content";
 
+// Maps business names → Unsplash photo IDs
+const SHOP_PHOTOS: Record<string, string> = {
+  "Westborough Bakery":     "1509440159596-0249088772ff",
+  "Dave's Barbershop":      "1585747860715-2ba37e788b70",
+  "The Pressed Bloom":      "1522337360788-8b13dee7a37e",
+  "Framingham Framing Co.": "1472851294608-062f824d29cc",
+  "Tony's Auto & Tire":     "1517248135467-4c7edcad34c4",
+};
+
 export function Testimonials() {
   const items = TESTIMONIALS;
   const [current, setCurrent] = useState(0);
@@ -73,9 +82,21 @@ export function Testimonials() {
         {/* Card */}
         <div
           key={key}
-          className="testimonial-enter card-light rounded-3xl p-8 md:p-12 max-w-3xl"
+          className="testimonial-enter card-light rounded-3xl p-8 md:p-12 max-w-3xl relative overflow-hidden"
           style={{ borderLeft: "4px solid #D4682A" }}
         >
+          {/* Business type photo (top-right accent) */}
+          {SHOP_PHOTOS[t.business] && (
+            <div className="absolute top-6 right-6 md:top-8 md:right-10 w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#E8D9C4] shadow-md flex-shrink-0 opacity-70">
+              <img
+                src={`https://images.unsplash.com/photo-${SHOP_PHOTOS[t.business]}?w=120&auto=format&fit=crop&q=80`}
+                alt={t.business}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
           {/* Stars */}
           <div className="flex gap-1 mb-6">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -84,7 +105,7 @@ export function Testimonials() {
           </div>
 
           <blockquote
-            className="text-xl md:text-2xl text-[#1C1209] font-medium leading-relaxed mb-8 italic"
+            className="text-xl md:text-2xl text-[#1C1209] font-medium leading-relaxed mb-8 italic pr-20"
             style={{ fontFamily: "var(--font-display)" }}
           >
             &ldquo;{t.quote}&rdquo;

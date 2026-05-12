@@ -14,6 +14,46 @@ export function About() {
       aria-label="About"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
+
+        {/* ── Atmospheric street photo ── */}
+        <div className="relative w-full h-44 md:h-60 rounded-3xl overflow-hidden mb-14 reveal">
+          <img
+            src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1400&auto=format&fit=crop&q=80"
+            alt="Route 9 neighborhood, Shrewsbury MA"
+            loading="lazy"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1209]/75 via-[#1C1209]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/40 to-transparent" />
+          {/* Text overlay */}
+          <div className="absolute left-8 top-1/2 -translate-y-1/2">
+            <p className="text-white/50 text-[10px] tracking-[0.22em] uppercase mb-2 font-semibold">
+              Route 9 · Shrewsbury, MA
+            </p>
+            <p
+              className="text-white text-2xl md:text-3xl font-bold italic leading-tight"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Local work,<br />done locally.
+            </p>
+          </div>
+          {/* MA·9 badge */}
+          <div
+            className="absolute right-7 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 border-white/20"
+            style={{ background: "rgba(212,104,42,0.88)" }}
+            aria-hidden
+          >
+            <span className="text-[8px] font-bold text-white/70 tracking-widest leading-none">MA</span>
+            <span
+              className="text-xl font-bold text-white italic leading-none"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              9
+            </span>
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
           {/* Left */}
           <div>

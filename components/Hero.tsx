@@ -119,6 +119,17 @@ export function Hero() {
         <div className="blob-b absolute bottom-[4%] left-[-10%] w-[38vw] h-[38vw] max-w-[520px] max-h-[520px] rounded-full opacity-12 blur-[110px]" style={{ background: "radial-gradient(circle, #D4682A 0%, #7A3010 60%, transparent 100%)" }} />
       </div>
 
+      {/* ── Background photo texture (very subtle — adds real-world depth) ── */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <img
+          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&auto=format&fit=crop&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.055, mixBlendMode: "luminosity" }}
+          loading="eager"
+        />
+      </div>
+
       {/* ── Road path ── */}
       <div ref={roadRef} className="absolute inset-0 pointer-events-none will-change-transform" aria-hidden style={{ zIndex: 0 }}>
         <RoadPath />
@@ -183,8 +194,38 @@ export function Hero() {
           </MagneticButton>
         </div>
 
+        {/* Shop proof strip */}
+        <div className="flex items-center gap-3 mt-8 mb-1 reveal" style={{ transitionDelay: "860ms" }}>
+          <div className="flex -space-x-2.5">
+            {[
+              "1517248135467-4c7edcad34c4",
+              "1493857671505-72967e2e2760",
+              "1585747860715-2ba37e788b70",
+              "1509440159596-0249088772ff",
+              "1472851294608-062f824d29cc",
+            ].map((id, i) => (
+              <div
+                key={i}
+                className="w-8 h-8 rounded-full border-2 border-[#1C1209] overflow-hidden flex-shrink-0"
+                style={{ zIndex: 5 - i }}
+              >
+                <img
+                  src={`https://images.unsplash.com/photo-${id}?w=80&auto=format&fit=crop&q=80`}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+          <p className="text-xs" style={{ color: "rgba(243,233,213,0.45)" }}>
+            Restaurants, cafes, salons &amp; more along Route 9
+          </p>
+        </div>
+
         {/* Trust line */}
-        <p className="mt-8 text-xs tracking-wide reveal" style={{ color: "rgba(243,233,213,0.35)", transitionDelay: "860ms" }}>
+        <p className="mt-3 text-xs tracking-wide reveal" style={{ color: "rgba(243,233,213,0.35)", transitionDelay: "980ms" }}>
           No contracts · No lock-in · Free preview before you pay anything
         </p>
       </div>

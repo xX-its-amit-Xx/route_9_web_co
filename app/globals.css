@@ -392,3 +392,139 @@ body {
   text-transform: uppercase;
   color: #D4682A;
 }
+
+/* ═══════════════════════════════════════════════
+   PHOTO TREATMENTS
+   Consistent image styles across the site
+══════════════════════════════════════════════ */
+
+/* Bento cell hover ring */
+.bento-cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.bento-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bento-cell:hover img {
+  transform: scale(1.08);
+}
+
+/* Proof strip avatars */
+.proof-avatar {
+  border-radius: 9999px;
+  border: 2.5px solid #0E0905;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   BROWSER CHROME MOCKUP
+   Used in Portfolio cards
+══════════════════════════════════════════════ */
+.browser-chrome {
+  background: #1C1209;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+
+.browser-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.browser-url {
+  flex: 1;
+  height: 16px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 8px;
+  color: rgba(255,255,255,0.2);
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════
+   3D DEPTH ENHANCEMENTS
+   Extra depth beyond TiltCard
+══════════════════════════════════════════════ */
+
+/* Deep shadow for hero elements */
+.shadow-depth {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.08),
+    0 4px 16px rgba(0,0,0,0.08),
+    0 12px 40px rgba(0,0,0,0.06),
+    0 32px 80px rgba(0,0,0,0.04);
+}
+
+/* Warm glow shadow for accent elements */
+.shadow-warm {
+  box-shadow:
+    0 4px 16px rgba(212,104,42,0.15),
+    0 12px 40px rgba(212,104,42,0.08),
+    0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Photo hover lift */
+.photo-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.photo-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(28,18,9,0.15);
+}
+
+/* Mosaic photo ring on hover */
+.mosaic-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px transparent;
+  transition: box-shadow 0.3s ease;
+  pointer-events: none;
+}
+
+.group:hover .mosaic-ring {
+  box-shadow: inset 0 0 0 2px rgba(212,104,42,0.5);
+}
+
+/* ═══════════════════════════════════════════════
+   MA & PA SHOP DETAILS
+   Small touches that feel locally crafted
+══════════════════════════════════════════════ */
+
+/* Handwritten-style italic accent (used via className="shop-accent") */
+.shop-accent {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: #D4682A;
+}
+
+/* Subtle paper/warm texture for section backgrounds */
+.section-paper {
+  background-color: #FFF8F3;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(212,104,42,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212,104,42,0.03) 0%, transparent 45%);
+}
+
