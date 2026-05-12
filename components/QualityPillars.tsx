@@ -24,12 +24,7 @@ function IconMobile() {
 function IconSpeed() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path
-        d="M13 2L4 14h7l-1 8 10-12h-7z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
+      <path d="M13 2L4 14h7l-1 8 10-12h-7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -37,19 +32,8 @@ function IconSpeed() {
 function IconConvert() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path
-        d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M14 7L21 12L14 17"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M14 7L21 12L14 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M21 12H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
@@ -58,11 +42,7 @@ function IconConvert() {
 function IconMapPin() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path
-        d="M12 2C8.686 2 6 4.686 6 8C6 13 12 22 12 22C12 22 18 13 18 8C18 4.686 15.314 2 12 2Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
+      <path d="M12 2C8.686 2 6 4.686 6 8C6 13 12 22 12 22C12 22 18 13 18 8C18 4.686 15.314 2 12 2Z" stroke="currentColor" strokeWidth="1.5" />
       <circle cx="12" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.25" />
       <path d="M20.5 4C21.8 5.8 22.5 8 22.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
       <path d="M3.5 4C2.2 5.8 1.5 8 1.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -91,435 +71,802 @@ function IconMaintain() {
       <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
       <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5" />
       <path d="M8 3V7M16 3V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M8 14.5L11 17.5L16 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// ══════════════════════════════════════════════
+// DEMO INFRASTRUCTURE COMPONENTS
+// ══════════════════════════════════════════════
+
+function DemoShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="h-full flex flex-col overflow-hidden relative"
+      style={{
+        background: "linear-gradient(170deg, #181210 0%, #0F0C09 100%)",
+      }}
+    >
+      {/* Subtle horizontal scan-line texture for screen feel */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 3px)",
+          zIndex: 0,
+        }}
+      />
+      <div className="relative z-10 flex flex-col h-full">{children}</div>
+    </div>
+  );
+}
+
+function DemoChrome({ url = "yoursite.com" }: { url?: string }) {
+  return (
+    <div
+      className="flex items-center gap-2 px-3 flex-shrink-0"
+      style={{
+        height: "28px",
+        background: "linear-gradient(180deg, #231B14 0%, #1A1410 100%)",
+        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        boxShadow: "0 1px 0 rgba(0,0,0,0.4)",
+      }}
+    >
+      {/* macOS traffic lights */}
+      <div className="flex gap-1.5 flex-shrink-0">
+        <div
+          className="w-[9px] h-[9px] rounded-full"
+          style={{ background: "#FF5F57", boxShadow: "0 0 4px rgba(255,95,87,0.5)" }}
+        />
+        <div
+          className="w-[9px] h-[9px] rounded-full"
+          style={{ background: "#FEBC2E", boxShadow: "0 0 4px rgba(254,188,46,0.4)" }}
+        />
+        <div
+          className="w-[9px] h-[9px] rounded-full"
+          style={{ background: "#28C840", boxShadow: "0 0 4px rgba(40,200,64,0.4)" }}
+        />
+      </div>
+      {/* URL bar */}
+      <div
+        className="flex-1 flex items-center justify-center rounded-md overflow-hidden"
+        style={{
+          height: "16px",
+          background: "rgba(255,255,255,0.07)",
+          border: "1px solid rgba(255,255,255,0.05)",
+        }}
+      >
+        <span
+          className="truncate px-2"
+          style={{
+            fontSize: "6.5px",
+            color: "rgba(255,255,255,0.3)",
+            fontFamily: "monospace",
+            letterSpacing: "0.02em",
+          }}
+        >
+          {url}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function PanelBadge({ bad }: { bad?: boolean }) {
+  return (
+    <div
+      className="absolute top-2 right-2 z-20 flex items-center gap-1 rounded-full px-2 py-[3px]"
+      style={{
+        background: bad ? "rgba(239,68,68,0.14)" : "rgba(16,185,129,0.14)",
+        border: `1px solid ${bad ? "rgba(239,68,68,0.35)" : "rgba(16,185,129,0.35)"}`,
+        color: bad ? "#f87171" : "#34d399",
+        fontSize: "6px",
+        fontWeight: 700,
+        letterSpacing: "0.06em",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
+        boxShadow: bad
+          ? "0 2px 8px rgba(239,68,68,0.2), inset 0 1px 0 rgba(255,255,255,0.05)"
+          : "0 2px 8px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
+      }}
+    >
+      <span>{bad ? "✗" : "✓"}</span>
+      <span>{bad ? "Before" : "After"}</span>
+    </div>
+  );
+}
+
+function VSDivider() {
+  return (
+    <div
+      className="flex-shrink-0 relative"
+      style={{ width: "1px", background: "rgba(255,255,255,0.05)" }}
+    >
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full z-10"
+        style={{
+          width: "16px",
+          height: "16px",
+          background: "linear-gradient(135deg, #E07838, #C05A20)",
+          boxShadow:
+            "0 0 12px rgba(212,104,42,0.7), 0 0 0 2px rgba(212,104,42,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+          fontSize: "5px",
+          color: "white",
+          fontWeight: 800,
+          letterSpacing: "0.04em",
+        }}
+      >
+        VS
+      </div>
+    </div>
+  );
+}
+
+// Cursor SVG for ConvertDemo
+function Cursor({ dark }: { dark?: boolean }) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" style={{ width: "100%", height: "100%", filter: dark ? "drop-shadow(0 1px 2px rgba(0,0,0,0.5))" : "none" }}>
       <path
-        d="M8 14.5L11 17.5L16 12.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
+        d="M3 2L3 11.5L5.8 9L7.8 14L9.2 13.4L7.2 8.5L11 8.5Z"
+        fill={dark ? "#1C1209" : "#374151"}
+        stroke="white"
+        strokeWidth="0.8"
         strokeLinejoin="round"
       />
     </svg>
   );
 }
 
-// ── Demo label badge ──────────────────────────────────────────────────────────
-function DemoLabel({ text, bad }: { text: string; bad?: boolean }) {
-  return (
-    <div
-      className="text-[7px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full inline-block mb-1 flex-shrink-0"
-      style={{
-        color: bad ? "#ef4444" : "#10b981",
-        background: bad ? "rgba(239,68,68,0.1)" : "rgba(16,185,129,0.1)",
-        border: `1px solid ${bad ? "rgba(239,68,68,0.2)" : "rgba(16,185,129,0.2)"}`,
-      }}
-    >
-      {text}
-    </div>
-  );
-}
-
-// Shared cursor SVG
-function CursorSVG() {
-  return (
-    <svg viewBox="0 0 12 12" fill="none" style={{ width: "100%", height: "100%" }}>
-      <path
-        d="M1 1L1 9L3.5 7L5 11L6 10.5L4.5 6.5L7.5 6.5Z"
-        fill="#374151"
-        stroke="white"
-        strokeWidth="0.5"
-      />
-    </svg>
-  );
-}
-
-// ── 1. MobileFirstDemo ────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// DEMO 1 — MOBILE FIRST
+// ══════════════════════════════════════════════
 function MobileFirstDemo() {
   return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="No Mobile" bad />
-        <div className="flex-1 relative rounded-xl border-2 border-red-200 bg-white overflow-hidden">
-          {/* Overflowing content with horizontal scroll wobble */}
+    <DemoShell>
+      <DemoChrome url="example-shop.com" />
+      <div className="flex flex-1 min-h-0">
+
+        {/* BAD — desktop site crammed onto mobile */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F7F5F3" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0" style={{ paddingTop: "6px" }}>
+            {/* Overflowing nav with horizontal wobble */}
+            <div
+              style={{
+                width: "175%",
+                height: "18px",
+                background: "#1C1209",
+                display: "flex",
+                alignItems: "center",
+                gap: "3px",
+                padding: "0 6px",
+                animation: "demo-scroll-bad 5s ease-in-out infinite",
+              }}
+            >
+              <span style={{ fontSize: "5.5px", color: "#FEBC2E", fontWeight: 700, whiteSpace: "nowrap", marginRight: "2px" }}>Shop</span>
+              {["Home", "About", "Gallery", "Services", "Menu", "Pricing", "Contact"].map((t) => (
+                <span key={t} style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>{t}</span>
+              ))}
+            </div>
+            {/* Body overflowing */}
+            <div
+              style={{
+                width: "160%",
+                padding: "5px 6px 0",
+                animation: "demo-scroll-bad 5s ease-in-out infinite 0.08s",
+              }}
+            >
+              <div style={{ height: "6px", background: "#D1D5DB", borderRadius: "2px", marginBottom: "3px" }} />
+              <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "90%", marginBottom: "2px" }} />
+              <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "75%" }} />
+            </div>
+            {/* Horizontal scrollbar at bottom */}
+            <div
+              className="absolute bottom-0 left-0 right-0"
+              style={{ height: "5px", background: "#E5E7EB" }}
+            >
+              <div style={{ height: "100%", width: "30%", marginLeft: "42%", background: "#9CA3AF", borderRadius: "2px" }} />
+            </div>
+          </div>
+          {/* Red tint overlay */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
+        </div>
+
+        <VSDivider />
+
+        {/* GOOD — mobile-first */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F7F5F3" }}>
+          <PanelBadge />
           <div
-            className="absolute top-1.5 left-1.5"
-            style={{ width: "165%", animation: "demo-scroll-bad 5s ease-in-out infinite" }}
+            className="absolute inset-0 flex flex-col"
+            style={{ padding: "6px 7px 6px" }}
           >
-            <div className="h-2 bg-gray-200 rounded mb-1" />
-            <div className="h-1.5 bg-gray-100 rounded mb-0.5 w-full" />
-            <div className="h-1.5 bg-gray-100 rounded mb-0.5 w-5/6" />
-            <div className="flex gap-0.5 mt-1 flex-nowrap">
-              {["About", "Gallery", "Services", "Menu", "Contact"].map((t) => (
+            {/* Clean mobile nav */}
+            <div
+              className="flex items-center justify-between px-2 flex-shrink-0"
+              style={{
+                height: "18px",
+                background: "#1C1209",
+                borderRadius: "3px",
+                marginBottom: "5px",
+              }}
+            >
+              <span style={{ fontSize: "6px", color: "#FEBC2E", fontWeight: 700 }}>Shop</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                <div style={{ width: "12px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
+                <div style={{ width: "9px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
+                <div style={{ width: "7px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
+              </div>
+            </div>
+            {/* Hero */}
+            <div style={{ fontSize: "10px", fontWeight: 800, color: "#1C1209", lineHeight: 1.1 }} className="flex-shrink-0">
+              Fresh Cuts
+            </div>
+            <div style={{ fontSize: "6.5px", color: "#9CA3AF", marginTop: "2px", marginBottom: "4px" }} className="flex-shrink-0">
+              Shrewsbury, MA
+            </div>
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "100%", marginBottom: "2px" }} className="flex-shrink-0" />
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "70%" }} className="flex-shrink-0" />
+            {/* Big CTA */}
+            <div
+              className="mt-auto flex items-center justify-center flex-shrink-0"
+              style={{
+                height: "20px",
+                background: "linear-gradient(135deg, #D4682A, #C05A20)",
+                borderRadius: "4px",
+                fontSize: "7px",
+                color: "white",
+                fontWeight: 700,
+                animation: "demo-btn-pulse 2.2s ease-in-out infinite",
+                boxShadow: "0 3px 10px rgba(212,104,42,0.45), inset 0 1px 0 rgba(255,255,255,0.15)",
+              }}
+            >
+              📅 Book Now →
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+        </div>
+
+      </div>
+    </DemoShell>
+  );
+}
+
+// ══════════════════════════════════════════════
+// DEMO 2 — SPEED
+// ══════════════════════════════════════════════
+function SpeedDemo() {
+  return (
+    <DemoShell>
+      <DemoChrome url="yoursite.com" />
+      <div className="flex flex-1 min-h-0">
+
+        {/* BAD — slow */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px" }}>
+            {/* URL bar with spinner */}
+            <div
+              className="flex items-center gap-1.5 flex-shrink-0"
+              style={{ height: "14px", background: "#F3F4F6", borderRadius: "4px", padding: "0 6px", marginBottom: "4px", border: "1px solid #E5E7EB" }}
+            >
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  border: "1.5px solid #D1D5DB",
+                  borderTopColor: "#9CA3AF",
+                  flexShrink: 0,
+                  animation: "demo-spinner 0.8s linear infinite",
+                }}
+              />
+              <div style={{ flex: 1, height: "4px", background: "#E5E7EB", borderRadius: "2px" }} />
+            </div>
+            {/* Progress bar — slow */}
+            <div
+              className="flex-shrink-0"
+              style={{ height: "2px", background: "#F3F4F6", borderRadius: "9999px", overflow: "hidden", marginBottom: "5px" }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  background: "linear-gradient(90deg, #f87171, #ef4444)",
+                  borderRadius: "9999px",
+                  width: "0%",
+                  animation: "demo-slow-bar 5s ease-out infinite",
+                }}
+              />
+            </div>
+            {/* Skeleton content */}
+            {[
+              { w: "100%", h: 11 },
+              { w: "72%", h: 6 },
+              { w: "88%", h: 6 },
+              { w: "100%", h: 28 },
+            ].map(({ w, h }, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0"
+                style={{
+                  width: w,
+                  height: `${h}px`,
+                  background: "#E5E7EB",
+                  borderRadius: "3px",
+                  marginBottom: "4px",
+                  animation: `demo-skeleton-pulse 1.5s ease-in-out infinite ${i * 0.08}s`,
+                }}
+              />
+            ))}
+            <div
+              className="mt-auto text-center flex-shrink-0"
+              style={{ fontSize: "7.5px", fontWeight: 700, color: "#f87171" }}
+            >
+              4.8s ⏳
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.035)" }} />
+        </div>
+
+        <VSDivider />
+
+        {/* GOOD — instant */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px" }}>
+            {/* URL bar loaded */}
+            <div
+              className="flex items-center gap-1.5 flex-shrink-0"
+              style={{ height: "14px", background: "#F3F4F6", borderRadius: "4px", padding: "0 6px", marginBottom: "4px", border: "1px solid #E5E7EB" }}
+            >
+              <div
+                className="flex items-center justify-center flex-shrink-0"
+                style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#D1FAE5", fontSize: "5.5px", color: "#10B981", fontWeight: 700 }}
+              >
+                ✓
+              </div>
+              <div style={{ flex: 1, height: "4px", background: "#E5E7EB", borderRadius: "2px" }} />
+            </div>
+            {/* Progress bar — instant */}
+            <div
+              className="flex-shrink-0"
+              style={{ height: "2px", background: "#F3F4F6", borderRadius: "9999px", overflow: "hidden", marginBottom: "5px" }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  background: "linear-gradient(90deg, #34d399, #10b981)",
+                  borderRadius: "9999px",
+                  width: "0%",
+                  animation: "demo-fast-bar 5s ease-out infinite",
+                }}
+              />
+            </div>
+            {/* Content appears */}
+            <div style={{ animation: "demo-content-appear 5s ease-out infinite" }}>
+              <div style={{ height: "11px", background: "#292524", borderRadius: "3px", marginBottom: "4px" }} />
+              <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "3px", width: "72%", marginBottom: "4px" }} />
+              <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "3px", width: "88%", marginBottom: "4px" }} />
+              <div
+                style={{
+                  height: "28px",
+                  borderRadius: "3px",
+                  background: "linear-gradient(135deg, rgba(212,104,42,0.18), rgba(212,104,42,0.08))",
+                  border: "1px solid rgba(212,104,42,0.15)",
+                }}
+              />
+            </div>
+            <div
+              className="mt-auto text-center flex-shrink-0"
+              style={{ fontSize: "7.5px", fontWeight: 700, color: "#10b981" }}
+            >
+              ⚡ 0.7s
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+        </div>
+
+      </div>
+    </DemoShell>
+  );
+}
+
+// ══════════════════════════════════════════════
+// DEMO 3 — CONVERT
+// ══════════════════════════════════════════════
+function ConvertDemo() {
+  return (
+    <DemoShell>
+      <DemoChrome url="shop-site.com/book" />
+      <div className="flex flex-1 min-h-0">
+
+        {/* BAD — scattered CTAs, confused visitor */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0" style={{ padding: "7px 7px 5px" }}>
+            <div style={{ height: "7px", background: "#374151", borderRadius: "2px", width: "65%", marginBottom: "4px" }} />
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", marginBottom: "3px" }} />
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "85%", marginBottom: "5px" }} />
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "3px" }}>
+              {["Call Us", "Menu", "About", "Gallery", "Book", "Info", "Reserve", "Map", "Hours"].map((t) => (
                 <div
                   key={t}
-                  className="h-3.5 px-1 rounded bg-gray-100 text-[4.5px] text-gray-400 flex items-center flex-shrink-0"
+                  style={{
+                    fontSize: "4.5px",
+                    padding: "2px 4px",
+                    borderRadius: "2px",
+                    background: "#F3F4F6",
+                    color: "#6B7280",
+                    border: "1px solid #E5E7EB",
+                    lineHeight: 1.4,
+                    whiteSpace: "nowrap",
+                  }}
                 >
                   {t}
                 </div>
               ))}
             </div>
           </div>
-          {/* Horizontal scrollbar */}
-          <div className="absolute bottom-1.5 left-1.5 right-1.5 h-1 bg-gray-100 rounded-full">
-            <div className="h-full w-1/3 bg-gray-300 rounded-full" style={{ marginLeft: "45%" }} />
-          </div>
-          {/* Red badge */}
-          <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[7px] font-bold flex items-center justify-center flex-shrink-0">
-            ✕
-          </div>
-        </div>
-      </div>
-
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
-
-      {/* Good */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Mobile-First" />
-        <div className="flex-1 relative rounded-xl border-2 border-emerald-200 bg-white overflow-hidden">
-          <div className="absolute inset-1.5 flex flex-col gap-1">
-            {/* Nav bar */}
-            <div className="h-2.5 bg-orange-50 border border-orange-100 rounded flex items-center px-1 gap-1">
-              <div className="w-3 h-1 bg-orange-300 rounded" />
-              <div className="flex-1" />
-              <div className="w-2 h-1 bg-orange-200 rounded" />
-            </div>
-            {/* Headline */}
-            <div className="h-3 bg-gray-800 rounded text-[5px] text-white font-bold flex items-center px-1.5 flex-shrink-0">
-              Fresh Cuts – Shrewsbury
-            </div>
-            <div className="h-1.5 bg-gray-100 rounded flex-shrink-0" />
-            <div className="h-1.5 bg-gray-100 rounded w-3/4 flex-shrink-0" />
-            {/* Big CTA */}
-            <div
-              className="mt-auto rounded text-[5.5px] text-white font-bold flex items-center justify-center py-2 flex-shrink-0"
-              style={{
-                background: "linear-gradient(135deg,#D4682A,#C05A20)",
-                animation: "demo-btn-pulse 2.2s ease-in-out infinite",
-              }}
-            >
-              📅 Book Now →
-            </div>
-          </div>
-          {/* Green badge */}
-          <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[8px] font-bold flex items-center justify-center flex-shrink-0">
-            ✓
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── 2. SpeedDemo ──────────────────────────────────────────────────────────────
-function SpeedDemo() {
-  return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad: slow */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="4.8s load" bad />
-        <div className="flex-1 rounded-xl border border-red-200 bg-white overflow-hidden p-1.5 flex flex-col gap-1">
-          <div className="h-3 bg-gray-100 rounded flex items-center px-1.5 gap-1 flex-shrink-0">
-            <div className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0" />
-            <div className="flex-1 h-1 bg-gray-200 rounded" />
-          </div>
-          <div className="h-0.5 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-            <div
-              className="h-full bg-red-400 rounded"
-              style={{ animation: "demo-slow-bar 4s ease-out infinite", width: "0%" }}
-            />
-          </div>
-          <div
-            className="h-3 bg-gray-100 rounded flex-shrink-0"
-            style={{ animation: "demo-skeleton-pulse 1.5s ease-in-out infinite" }}
-          />
-          <div
-            className="h-1.5 bg-gray-100 rounded w-5/6 flex-shrink-0"
-            style={{ animation: "demo-skeleton-pulse 1.5s ease-in-out infinite 0.1s" }}
-          />
-          <div
-            className="h-1.5 bg-gray-100 rounded w-4/6 flex-shrink-0"
-            style={{ animation: "demo-skeleton-pulse 1.5s ease-in-out infinite 0.2s" }}
-          />
-          <div
-            className="flex-1 bg-gray-50 rounded min-h-0"
-            style={{ animation: "demo-skeleton-pulse 1.5s ease-in-out infinite 0.3s" }}
-          />
-          <div className="text-[5px] text-red-400 text-center flex-shrink-0">Loading…</div>
-        </div>
-      </div>
-
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
-
-      {/* Good: fast */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="0.7s load" />
-        <div className="flex-1 rounded-xl border border-emerald-200 bg-white overflow-hidden p-1.5 flex flex-col gap-1">
-          <div className="h-3 bg-gray-100 rounded flex items-center px-1.5 gap-1 flex-shrink-0">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-300 flex-shrink-0" />
-            <div className="flex-1 h-1 bg-gray-200 rounded" />
-          </div>
-          <div className="h-0.5 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-            <div
-              className="h-full bg-emerald-400 rounded"
-              style={{ animation: "demo-fast-bar 4s ease-out infinite", width: "0%" }}
-            />
-          </div>
-          <div style={{ animation: "demo-content-appear 4s ease-out infinite" }}>
-            <div className="h-3 bg-gray-800 rounded" />
-            <div className="h-1.5 bg-gray-200 rounded w-5/6 mt-1" />
-            <div className="h-1.5 bg-gray-200 rounded w-4/6 mt-0.5" />
-            <div className="h-6 rounded mt-1" style={{ background: "rgba(212,104,42,0.12)" }} />
-          </div>
-          <div className="text-[5px] text-emerald-600 text-center mt-auto flex-shrink-0">⚡ Instant</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── 3. ConvertDemo ────────────────────────────────────────────────────────────
-function ConvertDemo() {
-  return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad: scattered buttons, lost cursor */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="No Direction" bad />
-        <div className="flex-1 rounded-xl border border-red-200 bg-white overflow-hidden p-1.5 relative">
-          <div className="h-2 bg-gray-800 rounded w-2/3 mb-1" />
-          <div className="h-1 bg-gray-100 rounded mb-0.5" />
-          <div className="h-1 bg-gray-100 rounded w-5/6 mb-1" />
-          <div className="flex flex-wrap gap-0.5">
-            {["Call Us", "Learn More", "Menu", "Gallery", "Book", "Reserve", "Info"].map((t) => (
-              <div
-                key={t}
-                className="text-[4px] px-1 py-0.5 rounded bg-gray-100 text-gray-400 border border-gray-200 leading-tight"
-              >
-                {t}
-              </div>
-            ))}
-          </div>
           {/* Wandering cursor */}
           <div
-            className="absolute w-3 h-3 pointer-events-none"
-            style={{ animation: "demo-cursor-wander 5s linear infinite" }}
+            className="absolute pointer-events-none"
+            style={{ width: "14px", height: "14px", animation: "demo-cursor-wander 5.5s linear infinite", top: "10%", left: "15%", zIndex: 10 }}
           >
-            <CursorSVG />
+            <Cursor />
           </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
         </div>
-      </div>
 
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
+        <VSDivider />
 
-      {/* Good: one clear CTA */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Clear CTA" />
-        <div className="flex-1 rounded-xl border border-emerald-200 bg-white overflow-hidden p-1.5 relative">
-          <div className="h-2 bg-gray-800 rounded w-2/3 mb-0.5" />
-          <div className="h-1 bg-gray-100 rounded mb-0.5" />
-          <div className="h-1 bg-gray-100 rounded w-4/5 mb-2" />
-          <div
-            className="rounded text-[5px] text-white font-bold flex items-center justify-center py-2.5"
-            style={{
-              background: "linear-gradient(135deg,#D4682A,#C05A20)",
-              animation: "demo-btn-pulse 2.2s ease-in-out infinite",
-            }}
-          >
-            📅 Book Your Appointment →
+        {/* GOOD — single clear CTA */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge />
+          <div className="absolute inset-0" style={{ padding: "7px 7px 5px" }}>
+            <div style={{ height: "7px", background: "#374151", borderRadius: "2px", width: "65%", marginBottom: "4px" }} />
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", marginBottom: "3px" }} />
+            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "85%", marginBottom: "6px" }} />
+            <div
+              className="flex items-center justify-center"
+              style={{
+                height: "22px",
+                background: "linear-gradient(135deg, #D4682A, #C05A20)",
+                borderRadius: "5px",
+                fontSize: "7.5px",
+                color: "white",
+                fontWeight: 700,
+                animation: "demo-btn-pulse 2.2s ease-in-out infinite",
+                boxShadow: "0 3px 12px rgba(212,104,42,0.45), inset 0 1px 0 rgba(255,255,255,0.18)",
+              }}
+            >
+              📅 Book Appointment →
+            </div>
           </div>
           {/* Direct cursor */}
           <div
-            className="absolute w-3 h-3 pointer-events-none"
-            style={{ animation: "demo-cursor-direct 4s ease-in-out infinite" }}
+            className="absolute pointer-events-none"
+            style={{ width: "14px", height: "14px", animation: "demo-cursor-direct 4.5s ease-in-out infinite", top: "10%", left: "15%", zIndex: 10 }}
           >
-            <CursorSVG />
+            <Cursor dark />
           </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
         </div>
+
       </div>
-    </div>
+    </DemoShell>
   );
 }
 
-// ── 4. LocalSEODemo ───────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// DEMO 4 — LOCAL SEO
+// ══════════════════════════════════════════════
 function LocalSEODemo() {
   return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad: buried */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Page 2" bad />
-        <div className="flex-1 rounded-xl border border-red-200 bg-white overflow-hidden p-1.5 flex flex-col gap-0.5">
-          <div className="h-3 bg-gray-100 rounded flex items-center px-1.5 mb-0.5 flex-shrink-0">
-            <div className="text-[4.5px] text-gray-400 truncate">barber Shrewsbury MA</div>
-          </div>
-          {["City Cuts", "Elite Hair", "Pro Salon", "Style Co."].map((n, i) => (
-            <div
-              key={n}
-              className="h-4 rounded border border-gray-100 p-0.5 flex items-center gap-1 flex-shrink-0"
-              style={{ background: "rgba(249,250,251,1)" }}
-            >
-              <div className="w-2.5 h-2.5 rounded bg-gray-100 flex items-center justify-center text-[4px] text-gray-400 flex-shrink-0">
-                {i + 1}
-              </div>
-              <div className="text-[4.5px] text-blue-500 truncate">{n}</div>
-            </div>
-          ))}
-          <div className="text-[4.5px] text-gray-300 text-center mt-auto flex-shrink-0">
-            → Your shop: Page 2
-          </div>
-        </div>
-      </div>
+    <DemoShell>
+      <DemoChrome url="google.com/search" />
+      <div className="flex flex-1 min-h-0">
 
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
-
-      {/* Good: #1 result */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="You're #1" />
-        <div className="flex-1 rounded-xl border border-emerald-200 bg-white overflow-hidden p-1.5 flex flex-col gap-0.5">
-          <div className="h-3 bg-gray-100 rounded flex items-center px-1.5 mb-0.5 flex-shrink-0">
-            <div className="text-[4.5px] text-gray-400 truncate">barber Shrewsbury MA</div>
-          </div>
-          {/* #1 highlighted */}
-          <div
-            className="rounded border border-emerald-200 p-0.5 flex flex-col gap-0.5 flex-shrink-0"
-            style={{ animation: "demo-result-glow 3s ease-in-out infinite" }}
-          >
-            <div className="flex items-center gap-0.5">
-              <div
-                className="w-2.5 h-2.5 rounded text-[4px] font-bold text-emerald-600 flex items-center justify-center flex-shrink-0"
-                style={{ background: "rgba(16,185,129,0.15)" }}
-              >
-                1
-              </div>
-              <div className="text-[4.5px] font-bold text-blue-600">Dave&apos;s Barbershop</div>
-            </div>
-            <div className="text-[4px] text-amber-500 ml-3">★★★★★ 4.9</div>
-            <div className="text-[4px] text-emerald-600 ml-3 font-bold">● Open Now</div>
-          </div>
-          {["City Cuts", "Elite Hair"].map((n) => (
+        {/* BAD — buried */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 6px 5px" }}>
+            {/* Mini search bar */}
             <div
-              key={n}
-              className="h-4 rounded border border-gray-100 p-0.5 flex items-center gap-1 flex-shrink-0"
-              style={{ background: "rgba(249,250,251,1)" }}
+              className="flex items-center flex-shrink-0"
+              style={{ height: "13px", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "0 7px", marginBottom: "5px" }}
             >
-              <div className="text-[4.5px] text-blue-400 truncate">{n}</div>
+              <span style={{ fontSize: "4.5px", color: "#6B7280" }}>barber shop Shrewsbury MA</span>
             </div>
-          ))}
+            {/* Competitor results */}
+            {[
+              { name: "City Cuts", addr: "Worcester" },
+              { name: "Elite Hair Co.", addr: "Northboro" },
+              { name: "Pro Style Salon", addr: "Westboro" },
+              { name: "Modern Cuts", addr: "Marlboro" },
+            ].map((r, i) => (
+              <div key={r.name} className="flex-shrink-0" style={{ marginBottom: "4px" }}>
+                <div style={{ fontSize: "6.5px", color: "#1a0dab", lineHeight: 1.2 }}>{r.name}</div>
+                <div style={{ fontSize: "5px", color: "#188038", lineHeight: 1.2 }}>{r.addr} · #{i + 1}</div>
+              </div>
+            ))}
+            <div
+              className="mt-auto text-center flex-shrink-0"
+              style={{ fontSize: "5.5px", color: "#9CA3AF" }}
+            >
+              Your shop → Page 2
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
         </div>
+
+        <VSDivider />
+
+        {/* GOOD — #1 ranking */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+          <PanelBadge />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 6px 5px" }}>
+            {/* Mini search bar */}
+            <div
+              className="flex items-center flex-shrink-0"
+              style={{ height: "13px", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "0 7px", marginBottom: "5px" }}
+            >
+              <span style={{ fontSize: "4.5px", color: "#6B7280" }}>barber shop Shrewsbury MA</span>
+            </div>
+            {/* YOUR shop at #1 */}
+            <div
+              className="flex-shrink-0"
+              style={{
+                borderRadius: "5px",
+                padding: "4px 5px",
+                marginBottom: "3px",
+                border: "1.5px solid rgba(212,104,42,0.3)",
+                background: "rgba(212,104,42,0.05)",
+                animation: "demo-result-glow 3s ease-in-out infinite",
+              }}
+            >
+              <div className="flex items-center gap-1">
+                <div
+                  className="flex items-center justify-center flex-shrink-0"
+                  style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#D4682A", fontSize: "5.5px", color: "white", fontWeight: 800 }}
+                >
+                  1
+                </div>
+                <div style={{ fontSize: "7px", color: "#1a0dab", fontWeight: 700, lineHeight: 1.2 }}>Dave&apos;s Barbershop</div>
+              </div>
+              <div style={{ fontSize: "6px", color: "#D97706", paddingLeft: "13px", marginTop: "1px" }}>★★★★★ 4.9</div>
+              <div style={{ fontSize: "5.5px", color: "#166534", paddingLeft: "13px", fontWeight: 700 }}>● Open Now · Shrewsbury</div>
+            </div>
+            {[
+              { name: "City Cuts", addr: "Worcester" },
+              { name: "Elite Hair Co.", addr: "Northboro" },
+            ].map((r) => (
+              <div key={r.name} className="flex-shrink-0" style={{ marginBottom: "3px" }}>
+                <div style={{ fontSize: "6px", color: "#1a0dab" }}>{r.name}</div>
+                <div style={{ fontSize: "4.5px", color: "#188038" }}>{r.addr}</div>
+              </div>
+            ))}
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+        </div>
+
       </div>
-    </div>
+    </DemoShell>
   );
 }
 
-// ── 5. AccessibleDemo ─────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// DEMO 5 — ACCESSIBLE
+// ══════════════════════════════════════════════
 function AccessibleDemo() {
-  const fields = ["Name", "Email", "Phone"] as const;
   return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad: no focus indication */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="No Keyboard" bad />
-        <div className="flex-1 rounded-xl border border-red-200 bg-white overflow-hidden p-1.5 flex flex-col gap-1">
-          <div className="text-[5px] text-gray-500 font-semibold flex-shrink-0">Book Appointment</div>
-          {fields.map((label) => (
-            <div key={label} className="flex-shrink-0">
-              <div className="text-[4px] text-gray-400 mb-0.5">{label}</div>
-              <div className="h-4 border border-gray-200 rounded bg-gray-50" />
-            </div>
-          ))}
-          <div
-            className="h-4 rounded text-[5px] font-bold text-white flex items-center justify-center mt-auto flex-shrink-0"
-            style={{ background: "#D4682A" }}
-          >
-            Send
-          </div>
-        </div>
-      </div>
+    <DemoShell>
+      <DemoChrome url="book-appointment.com" />
+      <div className="flex flex-1 min-h-0">
 
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
-
-      {/* Good: animated focus rings cycle through fields */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Accessible" />
-        <div className="flex-1 rounded-xl border border-emerald-200 bg-white overflow-hidden p-1.5 flex flex-col gap-1">
-          <div className="text-[5px] text-gray-500 font-semibold flex-shrink-0">Book Appointment</div>
-          {fields.map((label, i) => (
-            <div key={label} className="flex-shrink-0">
-              <div className="text-[4px] text-gray-400 mb-0.5">{label}</div>
-              <div
-                className="h-4 border border-gray-200 rounded bg-gray-50"
-                style={{ animation: `demo-focus-el${i + 1} 4.2s ease-in-out infinite` }}
-              />
+        {/* BAD — no focus indicators */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
+            <div style={{ fontSize: "9px", fontWeight: 700, color: "#374151", marginBottom: "6px" }} className="flex-shrink-0">
+              Book Appointment
             </div>
-          ))}
-          <div
-            className="h-4 rounded text-[5px] font-bold text-white flex items-center justify-center mt-auto flex-shrink-0"
-            style={{ background: "#D4682A" }}
-          >
-            Send
+            {["Name", "Email", "Phone"].map((label) => (
+              <div key={label} className="flex-shrink-0" style={{ marginBottom: "5px" }}>
+                <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginBottom: "2px" }}>{label}</div>
+                <div
+                  style={{
+                    height: "12px",
+                    borderRadius: "3px",
+                    border: "1px solid #E5E7EB",
+                    background: "#FFFFFF",
+                  }}
+                />
+              </div>
+            ))}
+            <div
+              className="mt-auto flex items-center justify-center flex-shrink-0"
+              style={{ height: "15px", borderRadius: "4px", background: "#D4682A", fontSize: "7px", color: "white", fontWeight: 700 }}
+            >
+              Send
+            </div>
           </div>
+          {/* Tab = nothing indicator */}
+          <div
+            className="absolute bottom-2 right-1.5 flex items-center gap-0.5 rounded"
+            style={{ padding: "2px 4px", background: "#FEF2F2", border: "1px solid #FECACA" }}
+          >
+            <span style={{ fontSize: "5px", color: "#EF4444", fontWeight: 700 }}>⇥ Tab = nothing</span>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
         </div>
+
+        <VSDivider />
+
+        {/* GOOD — animated focus rings */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
+            <div style={{ fontSize: "9px", fontWeight: 700, color: "#374151", marginBottom: "6px" }} className="flex-shrink-0">
+              Book Appointment
+            </div>
+            {(["Name", "Email", "Phone"] as const).map((label, i) => (
+              <div key={label} className="flex-shrink-0" style={{ marginBottom: "5px" }}>
+                <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginBottom: "2px" }}>{label}</div>
+                <div
+                  style={{
+                    height: "12px",
+                    borderRadius: "3px",
+                    border: "1px solid #E5E7EB",
+                    background: "#FFFFFF",
+                    animation: `demo-focus-el${i + 1} 4.2s ease-in-out infinite`,
+                  }}
+                />
+              </div>
+            ))}
+            <div
+              className="mt-auto flex items-center justify-center flex-shrink-0"
+              style={{ height: "15px", borderRadius: "4px", background: "#D4682A", fontSize: "7px", color: "white", fontWeight: 700 }}
+            >
+              Send
+            </div>
+          </div>
+          {/* Tab works indicator */}
+          <div
+            className="absolute bottom-2 right-1.5 flex items-center gap-0.5 rounded"
+            style={{ padding: "2px 4px", background: "#EFF6FF", border: "1px solid #BFDBFE" }}
+          >
+            <span style={{ fontSize: "5px", color: "#3B82F6", fontWeight: 700 }}>⇥ Tab ✓ works</span>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+        </div>
+
       </div>
-    </div>
+    </DemoShell>
   );
 }
 
-// ── 6. MaintainableDemo ───────────────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// DEMO 6 — MAINTAINABLE
+// ══════════════════════════════════════════════
 function MaintainableDemo() {
   return (
-    <div className="flex gap-2 p-3 h-full items-stretch">
-      {/* Bad: stale content */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Outdated" bad />
-        <div className="flex-1 rounded-xl border border-red-200 bg-white overflow-hidden p-1.5 flex flex-col gap-0.5">
-          <div className="text-[5px] text-gray-600 font-semibold flex-shrink-0">Tony&apos;s Auto</div>
-          <div className="text-[4px] text-gray-300 font-medium flex-shrink-0">Hours:</div>
-          <div className="text-[4.5px] text-gray-400 flex-shrink-0">Mon–Fri: 9am–5pm</div>
-          <div className="text-[4px] text-gray-300 flex-shrink-0">
-            Menu: <span className="text-blue-300 underline">menu2019.pdf</span>
-          </div>
-          <div className="h-px bg-gray-100 my-0.5 flex-shrink-0" />
-          <div className="text-[4px] text-red-400 flex-shrink-0">&quot;Call to confirm hours&quot;</div>
-          <div className="text-[4px] text-gray-300 mt-auto flex-shrink-0">
-            Last updated: 3 years ago
-          </div>
-        </div>
-      </div>
+    <DemoShell>
+      <DemoChrome url="tonysauto.com" />
+      <div className="flex flex-1 min-h-0">
 
-      <div className="w-px bg-[#E8D9C4] self-stretch flex-shrink-0" />
-
-      {/* Good: live update animation */}
-      <div className="flex-1 flex flex-col">
-        <DemoLabel text="Always Fresh" />
-        <div className="flex-1 rounded-xl border border-emerald-200 bg-white overflow-hidden p-1.5 flex flex-col gap-0.5">
-          <div className="text-[5px] text-gray-600 font-semibold flex-shrink-0">Tony&apos;s Auto</div>
-          <div className="text-[4px] text-gray-300 font-medium flex-shrink-0">Hours:</div>
-          {/* Old line struck through */}
-          <div
-            className="text-[4.5px] flex-shrink-0"
-            style={{ animation: "demo-text-strike 5s ease-in-out infinite" }}
-          >
-            Mon–Fri: 9am–5pm
-          </div>
-          {/* New text reveals */}
-          <div
-            className="text-[4.5px] text-emerald-600 font-medium flex-shrink-0 overflow-hidden"
-            style={{ animation: "demo-text-reveal 5s ease-in-out infinite" }}
-          >
-            Mon–Sat: 8am–6pm ✓
-          </div>
-          <div className="h-px bg-gray-100 my-0.5 flex-shrink-0" />
-          <div className="text-[4px] text-gray-300 flex-shrink-0">
-            Specials: <span className="text-orange-400">Oil Change $39</span>
-          </div>
-          <div className="flex items-center gap-0.5 mt-auto flex-shrink-0">
+        {/* BAD — stale content */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge bad />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
+            {/* Stale warning */}
             <div
-              className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0"
-              style={{ animation: "demo-skeleton-pulse 1.5s ease-in-out infinite" }}
-            />
-            <div className="text-[4px] text-emerald-500">Live · Updated today</div>
+              className="flex items-center gap-1 flex-shrink-0"
+              style={{
+                height: "13px",
+                borderRadius: "3px",
+                padding: "0 5px",
+                background: "rgba(239,68,68,0.08)",
+                border: "1px solid rgba(239,68,68,0.2)",
+                marginBottom: "5px",
+              }}
+            >
+              <span style={{ fontSize: "5.5px", color: "#EF4444" }}>⚠ Last updated: 2019</span>
+            </div>
+            <div style={{ fontSize: "9px", fontWeight: 800, color: "#1C1209" }} className="flex-shrink-0">Tony&apos;s Auto</div>
+            <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginTop: "3px" }} className="flex-shrink-0">Hours:</div>
+            <div style={{ fontSize: "6px", color: "#6B7280", marginTop: "1px" }} className="flex-shrink-0">Mon–Fri: 9am–5pm</div>
+            <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginTop: "3px" }} className="flex-shrink-0">
+              Specials: <span style={{ color: "#60A5FA", textDecoration: "underline" }}>specials2019.pdf</span>
+            </div>
+            <div
+              className="mt-auto flex items-center justify-center flex-shrink-0"
+              style={{
+                height: "12px",
+                background: "#F3F4F6",
+                border: "1px solid #E5E7EB",
+                borderRadius: "3px",
+              }}
+            >
+              <span style={{ fontSize: "5px", color: "#9CA3AF" }}>&quot;Call to confirm hours&quot;</span>
+            </div>
           </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
         </div>
+
+        <VSDivider />
+
+        {/* GOOD — live update */}
+        <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
+          <PanelBadge />
+          <div className="absolute inset-0 flex flex-col" style={{ padding: "6px 7px 5px" }}>
+            {/* Live indicator */}
+            <div
+              className="flex items-center gap-1 flex-shrink-0"
+              style={{
+                height: "13px",
+                borderRadius: "3px",
+                padding: "0 5px",
+                background: "rgba(16,185,129,0.08)",
+                border: "1px solid rgba(16,185,129,0.25)",
+                marginBottom: "5px",
+              }}
+            >
+              <div
+                style={{
+                  width: "5px",
+                  height: "5px",
+                  borderRadius: "50%",
+                  background: "#10B981",
+                  flexShrink: 0,
+                  animation: "demo-skeleton-pulse 1.4s ease-in-out infinite",
+                }}
+              />
+              <span style={{ fontSize: "5.5px", color: "#10B981", fontWeight: 700 }}>Live · Updated today</span>
+            </div>
+            <div style={{ fontSize: "9px", fontWeight: 800, color: "#1C1209" }} className="flex-shrink-0">Tony&apos;s Auto</div>
+            <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginTop: "3px" }} className="flex-shrink-0">Hours:</div>
+            {/* Old text struck through */}
+            <div
+              className="flex-shrink-0"
+              style={{ fontSize: "6px", marginTop: "1px", animation: "demo-text-strike 5s ease-in-out infinite" }}
+            >
+              Mon–Fri: 9am–5pm
+            </div>
+            {/* New text appears */}
+            <div
+              className="flex-shrink-0 overflow-hidden"
+              style={{
+                fontSize: "6px",
+                color: "#10B981",
+                fontWeight: 700,
+                animation: "demo-text-reveal 5s ease-in-out infinite",
+                clipPath: "inset(0 100% 0 0)",
+              }}
+            >
+              Mon–Sat: 8am–6pm ✓
+            </div>
+            <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginTop: "3px" }} className="flex-shrink-0">
+              Specials: <span style={{ color: "#D4682A", fontWeight: 700 }}>Oil Change $39 🔧</span>
+            </div>
+            <div
+              className="mt-auto flex items-center justify-center flex-shrink-0"
+              style={{
+                height: "12px",
+                background: "linear-gradient(135deg, rgba(212,104,42,0.12), rgba(212,104,42,0.06))",
+                border: "1px solid rgba(212,104,42,0.2)",
+                borderRadius: "3px",
+              }}
+            >
+              <span style={{ fontSize: "5.5px", color: "#D4682A", fontWeight: 700 }}>Book online — no calls needed</span>
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+        </div>
+
       </div>
-    </div>
+    </DemoShell>
   );
 }
 
@@ -582,7 +929,7 @@ export function QualityPillars() {
         {/* Grid */}
         <div
           ref={gridRef}
-          className="reveal reveal-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="reveal reveal-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {PILLARS.map((pillar) => {
             const Icon = ICON_MAP[pillar.icon];
@@ -593,12 +940,8 @@ export function QualityPillars() {
 
                   {/* ── Animated demo area ── */}
                   <div
-                    className="h-44 overflow-hidden relative flex-shrink-0"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, #F8F0E8 0%, #FFF8F3 100%)",
-                      borderBottom: "1px solid #E8D9C4",
-                    }}
+                    className="h-[182px] overflow-hidden flex-shrink-0"
+                    style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}
                   >
                     <DemoComp />
                   </div>
@@ -606,10 +949,17 @@ export function QualityPillars() {
                   {/* ── Card content ── */}
                   <div className="flex flex-col gap-3 p-5 flex-1">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-200">
+                      <div
+                        className="flex items-center justify-center w-10 h-10 rounded-xl text-[#D4682A] group-hover:text-white transition-all duration-300"
+                        style={{
+                          background: "rgba(212,104,42,0.1)",
+                        }}
+                      >
                         <Icon />
                       </div>
-                      <div className="w-5 h-5 rounded-full border border-[rgba(212,104,42,0.3)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div
+                        className="w-5 h-5 rounded-full border border-[rgba(212,104,42,0.3)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
                         <div className="w-1.5 h-1.5 rounded-full bg-[#D4682A]" />
                       </div>
                     </div>
