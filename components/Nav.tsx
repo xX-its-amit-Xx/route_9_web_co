@@ -31,18 +31,20 @@ export function Nav() {
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[rgba(13,33,24,0.92)] backdrop-blur-md border-b border-[rgba(77,201,112,0.1)] shadow-lg shadow-black/20"
+            ? "bg-[rgba(17,11,7,0.93)] backdrop-blur-md border-b border-[rgba(212,104,42,0.12)] shadow-lg shadow-black/30"
             : "bg-transparent"
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group" onClick={close}>
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#4DC970] text-[#0D2118] text-xs font-extrabold select-none"
-              style={{ fontFamily: "var(--font-syne)" }}>
+            <span
+              className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#D4682A] text-[#FEFBF5] text-xs font-extrabold select-none"
+              style={{ fontFamily: "var(--font-playfair)" }}
+            >
               R9
             </span>
-            <span className="text-sm font-semibold tracking-tight text-[#F0E8D0] hidden sm:block">
+            <span className="text-sm font-semibold tracking-tight text-[#F3E9D5] hidden sm:block">
               {SITE.name}
             </span>
           </Link>
@@ -53,7 +55,7 @@ export function Nav() {
               <li key={href}>
                 <a
                   href={href}
-                  className="px-3 py-1.5 text-sm text-[#87A891] hover:text-[#F0E8D0] rounded-lg hover:bg-[rgba(240,232,208,0.06)] transition-colors duration-150"
+                  className="px-3 py-1.5 text-sm text-[#9B8C7D] hover:text-[#F3E9D5] rounded-lg hover:bg-[rgba(243,233,213,0.06)] transition-colors duration-150"
                 >
                   {label}
                 </a>
@@ -66,12 +68,12 @@ export function Nav() {
             <ThemeToggle />
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center h-8 px-4 rounded-lg bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] text-xs font-bold transition-colors duration-150"
+              className="hidden sm:inline-flex items-center h-8 px-4 rounded-lg bg-[#D4682A] hover:bg-[#C05A20] text-[#FEFBF5] text-xs font-bold transition-colors duration-150"
             >
               Get in touch
             </a>
             <button
-              className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[#87A891] hover:text-[#F0E8D0] hover:bg-[rgba(240,232,208,0.06)] transition-colors duration-150 ml-1"
+              className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[#9B8C7D] hover:text-[#F3E9D5] hover:bg-[rgba(243,233,213,0.06)] transition-colors duration-150 ml-1"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
@@ -84,7 +86,7 @@ export function Nav() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-[#0D2118]/97 backdrop-blur-sm flex flex-col pt-20 px-6 md:hidden transition-all duration-200 ${
+        className={`fixed inset-0 z-40 bg-[#110B07]/97 backdrop-blur-sm flex flex-col pt-20 px-6 md:hidden transition-all duration-200 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!open}
@@ -95,18 +97,18 @@ export function Nav() {
               <a
                 href={href}
                 onClick={close}
-                className="block px-3 py-3.5 text-lg font-medium text-[#F0E8D0] hover:text-[#4DC970] rounded-xl hover:bg-[rgba(77,201,112,0.08)] transition-colors duration-150"
+                className="block px-3 py-3.5 text-lg font-medium text-[#F3E9D5] hover:text-[#D4682A] rounded-xl hover:bg-[rgba(212,104,42,0.08)] transition-colors duration-150"
               >
                 {label}
               </a>
             </li>
           ))}
         </ul>
-        <div className="mt-6 pt-6 border-t border-[rgba(77,201,112,0.1)]">
+        <div className="mt-6 pt-6 border-t border-[rgba(212,104,42,0.12)]">
           <a
             href="#contact"
             onClick={close}
-            className="flex items-center justify-center h-12 w-full rounded-xl bg-[#4DC970] hover:bg-[#5EDA82] text-[#0D2118] text-base font-bold transition-colors duration-150"
+            className="flex items-center justify-center h-12 w-full rounded-xl bg-[#D4682A] hover:bg-[#C05A20] text-[#FEFBF5] text-base font-bold transition-colors duration-150"
           >
             Get in touch
           </a>

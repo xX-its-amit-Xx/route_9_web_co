@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { Syne } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { CursorGlow } from "@/components/CursorGlow";
 import "./globals.css";
 
 const geist = Geist({
@@ -9,10 +10,11 @@ const geist = Geist({
   variable: "--font-geist",
 });
 
-const syne = Syne({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -81,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${syne.variable} h-full antialiased`}
+      className={`${geist.variable} ${playfair.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -96,6 +98,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-fg grain">
+        <CursorGlow />
         {children}
         <Analytics />
       </body>

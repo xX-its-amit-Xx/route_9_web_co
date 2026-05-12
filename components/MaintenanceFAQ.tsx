@@ -56,7 +56,7 @@ export function MaintenanceFAQ() {
             </p>
             <h2
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
-              style={{ fontFamily: "var(--font-syne)" }}
+              style={{ fontFamily: "var(--font-playfair)" }}
             >
               What&apos;s included<br />after launch.
             </h2>
@@ -74,7 +74,7 @@ export function MaintenanceFAQ() {
                 >
                   <div
                     className="text-3xl font-extrabold text-accent mb-1 group-hover:scale-105 transition-transform duration-200 inline-block"
-                    style={{ fontFamily: "var(--font-syne)" }}
+                    style={{ fontFamily: "var(--font-playfair)" }}
                   >
                     {label === "Uptime" ? (
                       <><AnimatedCounter to={value} />

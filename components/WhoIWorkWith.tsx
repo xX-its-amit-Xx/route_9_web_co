@@ -22,7 +22,7 @@ export function WhoIWorkWith() {
           </p>
           <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight mb-4"
-            style={{ fontFamily: "var(--font-syne)" }}
+            style={{ fontFamily: "var(--font-playfair)" }}
           >
             {WHO.heading}
           </h2>

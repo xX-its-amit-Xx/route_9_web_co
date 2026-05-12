@@ -3,35 +3,43 @@
 /* ── Dark mode: toggle via .dark class on <html> ── */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Design tokens ── */
+/* ── Design tokens — Warm espresso + terracotta ── */
 :root {
-  --bg:             #F9F9F7;
-  --fg:             #0F0F0E;
-  --accent:         #1B6B3E;
-  --accent-hover:   #14532E;
-  --accent-fg:      #FFFFFF;
-  --accent-light:   #EDF7F2;
-  --muted:          #6B6B64;
-  --muted-light:    #9B9B94;
-  --surface:        #F2F2EF;
+  --bg:             #FEFBF5;
+  --fg:             #1C1209;
+  --accent:         #D4682A;
+  --accent-hover:   #C05A20;
+  --accent-fg:      #FEFBF5;
+  --accent-light:   #FDF0E8;
+  --muted:          #7A6B5C;
+  --muted-light:    #B0A090;
+  --surface:        #F5EDE0;
   --surface-raised: #FFFFFF;
-  --border:         #E4E4E0;
-  --border-subtle:  #EEEEE9;
+  --border:         #E8D9C4;
+  --border-subtle:  #F0E4D2;
+
+  /* Dark section colors (used inline) */
+  --dark-bg:        #110B07;
+  --dark-mid:       #1C1209;
+  --dark-surface:   #241810;
+  --dark-border:    rgba(212,104,42,0.15);
+  --dark-fg:        #F3E9D5;
+  --dark-muted:     #9B8C7D;
 }
 
 .dark {
-  --bg:             #0C0C0B;
-  --fg:             #EDEDE9;
-  --accent:         #2DB862;
-  --accent-hover:   #27A356;
-  --accent-fg:      #0C0C0B;
-  --accent-light:   #0D2116;
-  --muted:          #8A8A82;
-  --muted-light:    #5A5A52;
-  --surface:        #171716;
-  --surface-raised: #1E1E1C;
-  --border:         #2B2B27;
-  --border-subtle:  #222220;
+  --bg:             #110B07;
+  --fg:             #F3E9D5;
+  --accent:         #D4682A;
+  --accent-hover:   #E07838;
+  --accent-fg:      #1C1209;
+  --accent-light:   #2A1508;
+  --muted:          #9B8C7D;
+  --muted-light:    #5A4B3C;
+  --surface:        #1C1209;
+  --surface-raised: #241810;
+  --border:         #3A2818;
+  --border-subtle:  #2E1E10;
 }
 
 /* ── Tailwind token registration ── */
@@ -49,7 +57,7 @@
   --color-border:         var(--border);
   --color-border-subtle:  var(--border-subtle);
 
-  --font-display: var(--font-syne);
+  --font-display: var(--font-playfair);
   --font-body:    var(--font-geist);
 }
 
@@ -69,10 +77,10 @@ body {
 /* ── Scroll reveal ── */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(28px);
   transition:
-    opacity  0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity  0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {
@@ -81,11 +89,11 @@ body {
 }
 
 .reveal-stagger > *:nth-child(1) { transition-delay:   0ms; }
-.reveal-stagger > *:nth-child(2) { transition-delay:  90ms; }
-.reveal-stagger > *:nth-child(3) { transition-delay: 180ms; }
-.reveal-stagger > *:nth-child(4) { transition-delay: 270ms; }
-.reveal-stagger > *:nth-child(5) { transition-delay: 360ms; }
-.reveal-stagger > *:nth-child(6) { transition-delay: 450ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 100ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 200ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 300ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 400ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 500ms; }
 
 /* ── Marquee ── */
 @keyframes marquee-left {
@@ -94,7 +102,7 @@ body {
 }
 
 .marquee-track {
-  animation: marquee-left 32s linear infinite;
+  animation: marquee-left 36s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -103,7 +111,7 @@ body {
   animation-play-state: paused;
 }
 
-/* ── Hero blobs ── */
+/* ── Hero blobs (warm terracotta) ── */
 @keyframes blob-a {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -127,52 +135,53 @@ body {
 }
 
 @keyframes blob-c {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(20px, 30px) scale(1.04);
-  }
-  66% {
-    transform: translate(-20px, -10px) scale(0.97);
-  }
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(20px, 30px) scale(1.04); }
+  66%       { transform: translate(-20px, -10px) scale(0.97); }
 }
 
-.blob-a { animation: blob-a 12s ease-in-out infinite; }
-.blob-b { animation: blob-b 15s ease-in-out infinite; }
-.blob-c { animation: blob-c 18s ease-in-out infinite; }
+.blob-a { animation: blob-a 14s ease-in-out infinite; }
+.blob-b { animation: blob-b 18s ease-in-out infinite; }
+.blob-c { animation: blob-c 22s ease-in-out infinite; }
 
-/* ── Button glow ── */
+/* ── Button glow (terracotta) ── */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(77,201,112,0.35), 0 0 40px rgba(77,201,112,0.15); }
-  50%       { box-shadow: 0 0 30px rgba(77,201,112,0.55), 0 0 60px rgba(77,201,112,0.25); }
+  0%, 100% { box-shadow: 0 0 22px rgba(212,104,42,0.4), 0 0 44px rgba(212,104,42,0.18); }
+  50%       { box-shadow: 0 0 36px rgba(212,104,42,0.6), 0 0 70px rgba(212,104,42,0.28); }
 }
 
 .glow-btn {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
-/* ── Gradient text ── */
+/* ── Gradient text (warm) ── */
 .text-gradient {
-  background: linear-gradient(135deg, #4DC970 0%, #8FE8AA 100%);
+  background: linear-gradient(135deg, #D4682A 0%, #F0A060 50%, #D4682A 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 4s ease-in-out infinite;
 }
 
-/* ── Glassmorphism ── */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50%       { background-position: 100% center; }
+}
+
+/* ── Glassmorphism (dark warm) ── */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-dark {
-  background: rgba(13, 33, 24, 0.7);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(77, 201, 112, 0.12);
+  border: 1px solid rgba(243, 233, 213, 0.08);
+}
+
+.glass-warm {
+  background: rgba(28, 18, 9, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 104, 42, 0.15);
 }
 
 /* ── Floating number animation ── */
@@ -185,20 +194,62 @@ body {
 
 /* ── Testimonials fade ── */
 @keyframes fade-slide-in {
-  from { opacity: 0; transform: translateX(20px); }
+  from { opacity: 0; transform: translateX(24px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 .testimonial-enter { animation: fade-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-/* ── Subtle noise grain overlay ── */
+/* ── Cursor glow ── */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,104,42,0.09) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Card shine on hover ── */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(243,233,213,0.06) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shine:hover::before {
+  left: 140%;
+}
+
+/* ── Subtle grain ── */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.02;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
@@ -209,3 +260,42 @@ body {
 }
 
 .spin-slow { animation: spin-slow 20s linear infinite; }
+
+/* ── Wavy divider ── */
+.wave-top {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-bottom {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+/* ── Stagger text reveal ── */
+@keyframes text-rise {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.text-rise {
+  overflow: hidden;
+}
+
+.text-rise > span {
+  display: block;
+  animation: text-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* ── Parallax helper ── */
+.parallax-slow { will-change: transform; }

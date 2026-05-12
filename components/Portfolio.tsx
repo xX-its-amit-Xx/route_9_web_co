@@ -23,7 +23,7 @@ export function Portfolio() {
           </p>
           <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
-            style={{ fontFamily: "var(--font-syne)" }}
+            style={{ fontFamily: "var(--font-playfair)" }}
           >
             Portfolio loading.<br />Quality already here.
           </h2>

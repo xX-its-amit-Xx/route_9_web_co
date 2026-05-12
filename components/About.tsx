@@ -22,7 +22,7 @@ export function About() {
             </p>
             <h2
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-8"
-              style={{ fontFamily: "var(--font-syne)" }}
+              style={{ fontFamily: "var(--font-playfair)" }}
             >
               Local work,<br />done locally.
             </h2>
@@ -30,14 +30,14 @@ export function About() {
             {/* Route 9 sign element */}
             <div className="inline-flex items-center gap-4 p-4 rounded-2xl border border-border bg-surface">
               <div
-                className="flex items-center justify-center w-14 h-14 rounded-xl bg-[#0D2118] flex-shrink-0"
+                className="flex items-center justify-center w-14 h-14 rounded-xl bg-[#110B07] flex-shrink-0"
                 aria-hidden
               >
                 <div className="text-center">
-                  <div className="text-[9px] font-bold text-[#4DC970] tracking-widest leading-tight">MA</div>
+                  <div className="text-[9px] font-bold text-[#D4682A] tracking-widest leading-tight">MA</div>
                   <div
-                    className="text-2xl font-extrabold text-[#F0E8D0] leading-none"
-                    style={{ fontFamily: "var(--font-syne)" }}
+                    className="text-2xl font-extrabold text-[#F3E9D5] leading-none"
+                    style={{ fontFamily: "var(--font-playfair)" }}
                   >
                     9
                   </div>

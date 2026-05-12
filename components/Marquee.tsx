@@ -15,9 +15,9 @@ export function Marquee({ items, className = "" }: Props) {
         {doubled.map((item, i) => (
           <span
             key={i}
-            className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(77,201,112,0.25)] bg-[rgba(77,201,112,0.08)] text-[#87A891] text-sm font-medium whitespace-nowrap"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(212,104,42,0.25)] bg-[rgba(212,104,42,0.08)] text-[#9B8C7D] text-sm font-medium whitespace-nowrap"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4DC970] flex-shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4682A] flex-shrink-0" />
             {item}
           </span>
         ))}
