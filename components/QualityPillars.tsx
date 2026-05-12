@@ -279,54 +279,53 @@ function MobileFirstDemo() {
         {/* GOOD — mobile-first */}
         <div className="flex-1 relative overflow-hidden" style={{ background: "#F7F5F3" }}>
           <PanelBadge />
-          <div
-            className="absolute inset-0 flex flex-col"
-            style={{ padding: "6px 7px 6px" }}
-          >
-            {/* Clean mobile nav */}
+          <div className="absolute inset-0 flex flex-col">
+            {/* Compact hero image strip */}
             <div
-              className="flex items-center justify-between px-2 flex-shrink-0"
+              className="flex-shrink-0 relative overflow-hidden"
               style={{
-                height: "18px",
-                background: "#1C1209",
-                borderRadius: "3px",
-                marginBottom: "5px",
+                height: "36px",
+                background: "linear-gradient(135deg, #1C1209 0%, #2A1810 60%, #3A2215 100%)",
               }}
             >
-              <span style={{ fontSize: "6px", color: "#FEBC2E", fontWeight: 700 }}>Shop</span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                <div style={{ width: "12px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
-                <div style={{ width: "9px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
-                <div style={{ width: "7px", height: "1.5px", background: "rgba(255,255,255,0.5)", borderRadius: "1px" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(212,104,42,0.3) 0%, transparent 65%)", pointerEvents: "none" }} />
+              <div
+                className="flex items-center justify-between"
+                style={{ padding: "4px 6px 0", position: "relative", zIndex: 1 }}
+              >
+                <span style={{ fontSize: "7px", color: "#FEBC2E", fontWeight: 800 }}>✂ Fresh Cuts</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.5px" }}>
+                  <div style={{ width: "11px", height: "1.5px", background: "rgba(255,255,255,0.55)", borderRadius: "1px" }} />
+                  <div style={{ width: "8px", height: "1.5px", background: "rgba(255,255,255,0.55)", borderRadius: "1px" }} />
+                  <div style={{ width: "6px", height: "1.5px", background: "rgba(255,255,255,0.55)", borderRadius: "1px" }} />
+                </div>
+              </div>
+              <div style={{ padding: "2px 6px 0", position: "relative", zIndex: 1, fontSize: "5px", color: "rgba(243,233,213,0.45)" }}>Shrewsbury, MA · Walk-ins welcome</div>
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col flex-1" style={{ padding: "5px 7px 6px" }}>
+              <div style={{ height: "4px", background: "#D1D5DB", borderRadius: "2px", width: "100%", marginBottom: "2px" }} className="flex-shrink-0" />
+              <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "72%" }} className="flex-shrink-0" />
+              {/* Big CTA */}
+              <div
+                className="mt-auto flex items-center justify-center flex-shrink-0"
+                style={{
+                  height: "22px",
+                  background: "linear-gradient(135deg, #E07838 0%, #D4682A 45%, #C05A20 100%)",
+                  borderRadius: "5px",
+                  fontSize: "7px",
+                  color: "white",
+                  fontWeight: 700,
+                  animation: "demo-btn-pulse 2.2s ease-in-out infinite",
+                  boxShadow: "0 3px 10px rgba(212,104,42,0.5), inset 0 1.5px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.12)",
+                }}
+              >
+                📅 Book Now →
               </div>
             </div>
-            {/* Hero */}
-            <div style={{ fontSize: "10px", fontWeight: 800, color: "#1C1209", lineHeight: 1.1 }} className="flex-shrink-0">
-              Fresh Cuts
-            </div>
-            <div style={{ fontSize: "6.5px", color: "#9CA3AF", marginTop: "2px", marginBottom: "4px" }} className="flex-shrink-0">
-              Shrewsbury, MA
-            </div>
-            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "100%", marginBottom: "2px" }} className="flex-shrink-0" />
-            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "70%" }} className="flex-shrink-0" />
-            {/* Big CTA */}
-            <div
-              className="mt-auto flex items-center justify-center flex-shrink-0"
-              style={{
-                height: "20px",
-                background: "linear-gradient(135deg, #D4682A, #C05A20)",
-                borderRadius: "4px",
-                fontSize: "7px",
-                color: "white",
-                fontWeight: 700,
-                animation: "demo-btn-pulse 2.2s ease-in-out infinite",
-                boxShadow: "0 3px 10px rgba(212,104,42,0.45), inset 0 1px 0 rgba(255,255,255,0.15)",
-              }}
-            >
-              📅 Book Now →
-            </div>
           </div>
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.02)" }} />
         </div>
 
       </div>
@@ -444,19 +443,41 @@ function SpeedDemo() {
                 }}
               />
             </div>
-            {/* Content appears */}
+            {/* Content appears — richer real-site layout */}
             <div style={{ animation: "demo-content-appear 5s ease-out infinite" }}>
-              <div style={{ height: "11px", background: "#292524", borderRadius: "3px", marginBottom: "4px" }} />
-              <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "3px", width: "72%", marginBottom: "4px" }} />
-              <div style={{ height: "6px", background: "#E5E7EB", borderRadius: "3px", width: "88%", marginBottom: "4px" }} />
+              {/* Hero strip */}
               <div
                 style={{
-                  height: "28px",
+                  height: "18px",
+                  background: "linear-gradient(135deg, #1C1209 0%, #2E1A0E 60%, #3A2215 100%)",
                   borderRadius: "3px",
-                  background: "linear-gradient(135deg, rgba(212,104,42,0.18), rgba(212,104,42,0.08))",
-                  border: "1px solid rgba(212,104,42,0.15)",
+                  marginBottom: "3px",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
-              />
+              >
+                <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(212,104,42,0.35) 0%, transparent 55%)" }} />
+                <div style={{ padding: "4px 5px", position: "relative", fontSize: "7px", fontWeight: 800, color: "#F3E9D5" }}>Fresh Cuts ✂</div>
+              </div>
+              <div style={{ height: "4px", background: "#D1D5DB", borderRadius: "2px", width: "72%", marginBottom: "3px" }} />
+              <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "88%", marginBottom: "4px" }} />
+              {/* CTA */}
+              <div
+                style={{
+                  height: "20px",
+                  borderRadius: "4px",
+                  background: "linear-gradient(135deg, #E07838, #D4682A)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "6.5px",
+                  color: "white",
+                  fontWeight: 700,
+                  boxShadow: "0 2px 8px rgba(212,104,42,0.5), inset 0 1px 0 rgba(255,255,255,0.18)",
+                }}
+              >
+                Book Now →
+              </div>
             </div>
             <div
               className="mt-auto text-center flex-shrink-0"
@@ -465,7 +486,7 @@ function SpeedDemo() {
               ⚡ 0.7s
             </div>
           </div>
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.02)" }} />
         </div>
 
       </div>
@@ -521,37 +542,92 @@ function ConvertDemo() {
 
         <VSDivider />
 
-        {/* GOOD — single clear CTA */}
+        {/* GOOD — single clear CTA with cursor that clicks */}
         <div className="flex-1 relative overflow-hidden" style={{ background: "#F9F8F7" }}>
           <PanelBadge />
-          <div className="absolute inset-0" style={{ padding: "7px 7px 5px" }}>
-            <div style={{ height: "7px", background: "#374151", borderRadius: "2px", width: "65%", marginBottom: "4px" }} />
-            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", marginBottom: "3px" }} />
-            <div style={{ height: "4px", background: "#E5E7EB", borderRadius: "2px", width: "85%", marginBottom: "6px" }} />
+          <div className="absolute inset-0 flex flex-col">
+
+            {/* Mini dark hero header */}
             <div
-              className="flex items-center justify-center"
+              className="flex-shrink-0 relative overflow-hidden"
               style={{
-                height: "22px",
-                background: "linear-gradient(135deg, #D4682A, #C05A20)",
-                borderRadius: "5px",
-                fontSize: "7.5px",
-                color: "white",
-                fontWeight: 700,
-                animation: "demo-btn-pulse 2.2s ease-in-out infinite",
-                boxShadow: "0 3px 12px rgba(212,104,42,0.45), inset 0 1px 0 rgba(255,255,255,0.18)",
+                height: "44px",
+                background: "linear-gradient(135deg, #1C1209 0%, #2E1A0E 55%, #3D2515 100%)",
               }}
             >
-              📅 Book Appointment →
+              {/* Warm ambient glow */}
+              <div aria-hidden style={{
+                position: "absolute",
+                bottom: "-16px",
+                right: "-4px",
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(212,104,42,0.5) 0%, transparent 65%)",
+                pointerEvents: "none",
+              }} />
+              <div style={{ padding: "8px 8px 0", position: "relative", zIndex: 1 }}>
+                <div style={{ fontSize: "9px", fontWeight: 800, color: "#F3E9D5", letterSpacing: "0.015em" }}>Fresh Cuts</div>
+                <div style={{ fontSize: "5px", color: "rgba(243,233,213,0.5)", marginTop: "2px" }}>Shrewsbury · Walk-ins welcome</div>
+              </div>
+            </div>
+
+            {/* CTA body */}
+            <div style={{ padding: "8px 7px 6px", flex: 1, display: "flex", flexDirection: "column" }}>
+              <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginBottom: "6px", fontWeight: 500 }}>
+                Ready to book your next visit?
+              </div>
+
+              {/* Book Appointment button — reacts to cursor click */}
+              <div
+                className="relative flex items-center justify-center overflow-hidden flex-shrink-0"
+                style={{
+                  height: "26px",
+                  background: "linear-gradient(135deg, #E07838 0%, #D4682A 45%, #C05A20 100%)",
+                  borderRadius: "5px",
+                  fontSize: "7.5px",
+                  color: "white",
+                  fontWeight: 700,
+                  letterSpacing: "0.01em",
+                  animation: "demo-btn-click 4.5s ease-out infinite",
+                }}
+              >
+                📅 Book Appointment →
+                {/* Click ripple */}
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    width: "130%",
+                    aspectRatio: "1",
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.45)",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%) scale(0)",
+                    animation: "demo-click-ripple 4.5s ease-out infinite",
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
+
+              {/* Social proof micro-line */}
+              <div style={{ marginTop: "4px", fontSize: "5px", color: "#9CA3AF", textAlign: "center" }}>
+                <span style={{ color: "#D97706" }}>★★★★★</span>
+                <span style={{ fontWeight: 600, color: "#6B7280" }}> 4.9</span>
+                <span> · 127 reviews</span>
+              </div>
             </div>
           </div>
-          {/* Direct cursor */}
+
+          {/* Cursor moves straight to button and clicks */}
           <div
             className="absolute pointer-events-none"
-            style={{ width: "14px", height: "14px", animation: "demo-cursor-direct 4.5s ease-in-out infinite", top: "10%", left: "15%", zIndex: 10 }}
+            style={{ width: "14px", height: "14px", animation: "demo-cursor-direct 4.5s ease-in-out infinite", top: "82%", left: "10%", zIndex: 10 }}
           >
             <Cursor dark />
           </div>
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.025)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.018)" }} />
         </div>
 
       </div>
@@ -636,7 +712,10 @@ function LocalSEODemo() {
                 <div style={{ fontSize: "7px", color: "#1a0dab", fontWeight: 700, lineHeight: 1.2 }}>Dave&apos;s Barbershop</div>
               </div>
               <div style={{ fontSize: "6px", color: "#D97706", paddingLeft: "13px", marginTop: "1px" }}>★★★★★ 4.9</div>
-              <div style={{ fontSize: "5.5px", color: "#166534", paddingLeft: "13px", fontWeight: 700 }}>● Open Now · Shrewsbury</div>
+              <div style={{ fontSize: "5.5px", color: "#166534", paddingLeft: "13px", fontWeight: 700, display: "flex", alignItems: "center", gap: "2px" }}>
+                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#16a34a", flexShrink: 0, display: "inline-block", animation: "demo-skeleton-pulse 1.3s ease-in-out infinite" }} />
+                Open Now · Shrewsbury
+              </div>
             </div>
             {[
               { name: "City Cuts", addr: "Worcester" },

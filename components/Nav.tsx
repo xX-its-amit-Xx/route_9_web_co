@@ -97,11 +97,10 @@ export function Nav() {
             >
               R9
             </span>
-            <span
-              className="text-sm font-semibold tracking-tight text-[#F3E9D5] hidden sm:block transition-colors duration-200 group-hover:text-white"
-            >
-              {SITE.name}
-            </span>
+            <div className="hidden sm:flex flex-col leading-none gap-[1px] transition-opacity duration-200 group-hover:opacity-90">
+              <span style={{ fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(243,233,213,0.48)" }}>Route 9</span>
+              <span style={{ fontSize: "14px", fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 400, color: "#F3E9D5", letterSpacing: "-0.01em" }}>Web</span>
+            </div>
           </a>
 
           {/* ── Desktop nav links ── */}
@@ -112,19 +111,19 @@ export function Nav() {
                 <li key={href}>
                   <a
                     href={href}
-                    className="relative px-3.5 py-2 text-sm rounded-lg transition-all duration-200 flex flex-col items-center gap-0.5 hover:bg-[rgba(243,233,213,0.06)]"
-                    style={{ color: isActive ? "#F3E9D5" : "rgba(243,233,213,0.48)" }}
+                    className="relative px-3.5 py-1.5 text-sm rounded-lg transition-all duration-250"
+                    style={{
+                      color: isActive ? "#F3E9D5" : "rgba(243,233,213,0.48)",
+                      background: isActive
+                        ? "linear-gradient(135deg, rgba(212,104,42,0.18) 0%, rgba(160,64,12,0.1) 100%)"
+                        : "transparent",
+                      border: isActive ? "1px solid rgba(212,104,42,0.25)" : "1px solid transparent",
+                      boxShadow: isActive
+                        ? "0 1px 8px rgba(212,104,42,0.15), inset 0 1px 0 rgba(255,210,140,0.1)"
+                        : "none",
+                    }}
                   >
                     {label}
-                    {/* Active indicator dot */}
-                    <span
-                      className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-0.5 rounded-full transition-all duration-300"
-                      style={{
-                        width: isActive ? "1.5rem" : "0",
-                        background: "#D4682A",
-                        opacity: isActive ? 1 : 0,
-                      }}
-                    />
                   </a>
                 </li>
               );
