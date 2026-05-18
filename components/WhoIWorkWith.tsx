@@ -189,7 +189,7 @@ export function WhoIWorkWith() {
                         )}
                       </span>
                       <span
-                        className="text-center leading-tight transition-colors duration-200 group-hover:text-[#D4682A] whitespace-nowrap"
+                        className="text-center leading-tight transition-colors duration-200 group-hover:text-accent whitespace-nowrap"
                         style={{
                           fontSize: "9px",
                           fontWeight: town === "Shrewsbury" ? 700 : 500,

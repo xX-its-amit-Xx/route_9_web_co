@@ -134,8 +134,8 @@ export function Contact() {
                 <path d="M9 1.5C6.5 1.5 4.5 3.5 4.5 6c0 3.5 4.5 10.5 4.5 10.5s4.5-7 4.5-10.5c0-2.5-2-4.5-4.5-4.5z" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1.2" />
                 <circle cx="9" cy="6" r="1.5" fill="currentColor" />
               </svg>
-              <span className="text-xs font-semibold text-[#D4682A]">Shrewsbury, MA</span>
-              <span className="text-[#D4682A]/30">·</span>
+              <span className="text-xs font-semibold text-accent">Shrewsbury, MA</span>
+              <span className="text-accent/30">·</span>
               <span className="text-xs text-muted">Replies in ≤ 2 hrs</span>
               <span className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4682A] animate-pulse" aria-hidden />
@@ -277,7 +277,7 @@ export function Contact() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-xs font-medium text-muted mb-1.5">
-                      Your name <span className="text-[#D4682A]">*</span>
+                      Your name <span className="text-accent">*</span>
                     </label>
                     <input id="name" name="name" type="text" required autoComplete="name"
                       placeholder="Jane Smith" value={fields.name} onChange={handleChange}
@@ -297,7 +297,7 @@ export function Contact() {
 
                 <div>
                   <label htmlFor="email" className="block text-xs font-medium text-muted mb-1.5">
-                    Email address <span className="text-[#D4682A]">*</span>
+                    Email address <span className="text-accent">*</span>
                   </label>
                   <input id="email" name="email" type="email" required autoComplete="email"
                     placeholder="jane@smithspizzeria.com" value={fields.email} onChange={handleChange}
@@ -344,9 +344,9 @@ export function Contact() {
                 <p className="text-xs text-center text-muted">
                   Prefer to just text?{" "}
                   {(SITE.phone as string) !== "PLACEHOLDER_PHONE" ? (
-                    <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="text-[#D4682A] hover:underline">{SITE.phone}</a>
+                    <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="text-accent hover:underline">{SITE.phone}</a>
                   ) : (
-                    <a href={`mailto:${SITE.email}`} className="text-[#D4682A] hover:underline">{SITE.email}</a>
+                    <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a>
                   )}
                 </p>
               </form>

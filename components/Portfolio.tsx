@@ -127,12 +127,12 @@ export function Portfolio() {
           </SplitTextReveal>
           <p className="text-muted leading-relaxed mb-6 reveal max-w-sm" style={{ transitionDelay: "300ms" }}>
             First clients are being onboarded now.{" "}
-            <a href="#contact" className="text-[#D4682A] underline-grow">
+            <a href="#contact" className="text-accent underline-grow">
               Ask for a live preview
             </a>{" "}
             of what I&apos;d build for your shop.
           </p>
-          <div className="flex items-center gap-2 text-[#D4682A] text-sm font-medium reveal" style={{ transitionDelay: "400ms" }}>
+          <div className="flex items-center gap-2 text-accent text-sm font-medium reveal" style={{ transitionDelay: "400ms" }}>
             <span>Scroll to explore</span>
             <span aria-hidden style={{ display: "inline-flex", animation: "arrow-nudge 1.8s ease-in-out infinite" }}>
               <ArrowRight size={14} />
