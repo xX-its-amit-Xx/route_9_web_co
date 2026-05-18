@@ -1259,6 +1259,19 @@ body.cursor-active * {
     display: none;
   }
 
+  /* Neon sign flicker / mote drift: keyframe ends match the natural
+     resting state (full opacity, no transform), so killing the animation
+     leaves the sign fully lit — exactly what we want for motion-sensitive
+     users. Just lock them explicitly so resting state is predictable. */
+  .neon-flicker, .open-pulse {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .neon-mote {
+    animation: none !important;
+    opacity: 0.35 !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1368,6 +1381,38 @@ body.cursor-active * {
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
 }
+
+/* ═══════════════════════════════════════════════
+   NEON SIGN — realistic vintage neon flicker
+══════════════════════════════════════════════ */
+@keyframes neon-flicker {
+  0%, 100%   { opacity: 1; }
+  42%        { opacity: 1; }
+  43%        { opacity: 0.55; }
+  44%        { opacity: 1; }
+  68%        { opacity: 1; }
+  69%        { opacity: 0.7; }
+  70%        { opacity: 1; }
+  82%        { opacity: 0.9; }
+  83%        { opacity: 1; }
+}
+.neon-flicker      { animation: neon-flicker 5.5s ease-in-out infinite; }
+.neon-flicker-slow { animation-duration: 7.2s; animation-delay: 0.4s; }
+
+@keyframes open-pulse {
+  0%, 100% { opacity: 1; }
+  48%      { opacity: 1; }
+  49%      { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+.open-pulse { animation: open-pulse 2.2s ease-in-out infinite 1.3s; }
+
+@keyframes neon-mote-drift {
+  0%   { transform: translate(0, 0);    opacity: 0.2; }
+  50%  { transform: translate(8px, -6px); opacity: 0.55; }
+  100% { transform: translate(0, 0);    opacity: 0.2; }
+}
+.neon-mote { animation: neon-mote-drift 6s ease-in-out infinite; }
 
 /* ═══════════════════════════════════════════════
    ROUTE 9 SCENE — car drives across the scene

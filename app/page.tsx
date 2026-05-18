@@ -15,6 +15,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { IntroSplash } from "@/components/IntroSplash";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { Route9Scene } from "@/components/Route9Scene";
+import { NeonSign } from "@/components/NeonSign";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
         <WhoIWorkWith />
         <QualityPillars />
         <Pricing />
+        <NeonSign />
         <MaintenanceFAQ />
         <Portfolio />
         <Testimonials />
