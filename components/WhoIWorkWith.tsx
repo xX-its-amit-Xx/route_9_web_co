@@ -2,6 +2,7 @@
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { BarberPole } from "./BarberPole";
 import { WHO } from "@/lib/content";
 
 // ── Custom icons for the three reasons ───────────────────────────────────────
@@ -84,6 +85,16 @@ export function WhoIWorkWith() {
           zIndex: 0,
         }}
       />
+
+      {/* Decorative barber pole "mounted" against the left wall of the
+          section. Desktop only — would clutter mobile and overlap text. */}
+      <div
+        aria-hidden
+        className="hidden xl:block absolute pointer-events-none"
+        style={{ top: "120px", left: "16px", zIndex: 1 }}
+      >
+        <BarberPole height={300} />
+      </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-14 md:gap-20 items-center">
 
