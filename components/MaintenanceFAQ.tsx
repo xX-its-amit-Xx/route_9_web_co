@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { MaintenanceLog } from "./MaintenanceLog";
 import { FAQ } from "@/lib/content";
 
 function FAQItem({ q, a }: { q: string; a: string }) {
@@ -199,6 +200,11 @@ export function MaintenanceFAQ() {
                 </div>
                 </div>
               ))}
+            </div>
+
+            {/* Vintage service-log card under the stats */}
+            <div className="mt-10 reveal hidden lg:flex justify-start" style={{ transitionDelay: "500ms" }}>
+              <MaintenanceLog />
             </div>
           </div>
 
