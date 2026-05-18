@@ -3,6 +3,7 @@
 import { SITE, ABOUT } from "@/lib/content";
 import { useLenis } from "./SmoothScrollProvider";
 import { BrandSeal } from "./BrandSeal";
+import { CompassRose } from "./CompassRose";
 
 // ── Route 9 Corridor Map — Framingham → Worcester along MA-9 ─────────────────
 function Route9CorridorMap() {
@@ -123,7 +124,8 @@ export function Footer() {
 
       {/* ── Route 9 corridor map strip ── */}
       <div className="border-t border-[rgba(212,104,42,0.1)] py-8">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-center">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
+          <CompassRose size={220} />
           <Route9CorridorMap />
         </div>
       </div>
