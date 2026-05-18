@@ -1321,6 +1321,14 @@ body.cursor-active * {
     display: none !important;
   }
 
+  /* Vinyl record: stop spinning. The record stays oriented as drawn so
+     the label is upright and readable, which is what we want as a
+     resting illustration. */
+  .vinyl-record .vinyl-spinner {
+    animation: none !important;
+    transform: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1480,6 +1488,25 @@ body.cursor-active * {
   0%   { opacity: 0; transform: scale(0.4) translate(8px, 8px) rotate(-12deg); }
   35%  { opacity: 1; transform: scale(1.15) translate(0, 0) rotate(4deg); }
   100% { opacity: 0; transform: scale(0.9) translate(-4px, -8px) rotate(-2deg); }
+}
+
+/* ═══════════════════════════════════════════════
+   VINYL RECORD — 33⅓ RPM spin
+══════════════════════════════════════════════ */
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.vinyl-record .vinyl-spinner {
+  transform-origin: center;
+  will-change: transform;
+}
+.vinyl-record.is-spinning .vinyl-spinner {
+  /* 33⅓ RPM ≈ 1.8s per revolution */
+  animation: vinyl-spin 1.8s linear infinite;
+}
+.vinyl-record.spin-on-hover:hover .vinyl-spinner {
+  animation: vinyl-spin 1.8s linear infinite;
 }
 
 /* ═══════════════════════════════════════════════

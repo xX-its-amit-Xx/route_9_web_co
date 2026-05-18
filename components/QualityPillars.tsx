@@ -3,6 +3,7 @@
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { VinylRecord } from "./VinylRecord";
 import { PILLARS } from "@/lib/content";
 
 // ── Custom artisan SVG icons ──────────────────────────────────────────────────
@@ -1062,25 +1063,35 @@ export function QualityPillars() {
       />
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
-        {/* Heading */}
-        <div ref={headingRef} className="mb-14">
-          <div className="label-pill mb-4 reveal">How I build</div>
-          <SplitTextReveal
-            as="h2"
-            id="pillars-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-            delay={0}
-            stagger={70}
+        {/* Heading — with a spinning vinyl record off to the right */}
+        <div ref={headingRef} className="mb-14 flex items-start gap-8">
+          <div className="flex-1 min-w-0">
+            <div className="label-pill mb-4 reveal">How I build</div>
+            <SplitTextReveal
+              as="h2"
+              id="pillars-heading"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
+              style={{ fontFamily: "var(--font-display)" }}
+              delay={0}
+              stagger={70}
+            >
+              Six things every site gets right.
+            </SplitTextReveal>
+            <p
+              className="mt-4 max-w-xl text-muted text-lg reveal"
+              style={{ transitionDelay: "400ms" }}
+            >
+              These aren&apos;t upsells. They&apos;re the baseline.
+            </p>
+          </div>
+          {/* Decorative vinyl record — spins on hover */}
+          <div
+            aria-hidden
+            className="hidden xl:block flex-shrink-0 reveal"
+            style={{ transitionDelay: "600ms" }}
           >
-            Six things every site gets right.
-          </SplitTextReveal>
-          <p
-            className="mt-4 max-w-xl text-muted text-lg reveal"
-            style={{ transitionDelay: "400ms" }}
-          >
-            These aren&apos;t upsells. They&apos;re the baseline.
-          </p>
+            <VinylRecord size={180} />
+          </div>
         </div>
 
         {/* Grid */}
