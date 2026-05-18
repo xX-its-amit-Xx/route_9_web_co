@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { BrandSeal } from "./BrandSeal";
+import { HandwrittenSignature } from "./HandwrittenSignature";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -175,6 +176,11 @@ export function About() {
                 </a>
               </div>
             )}
+
+            {/* Hand-drawn ink signature — draws on when scrolled into view */}
+            <div className="mt-8 reveal" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 2) * 90}ms` }}>
+              <HandwrittenSignature />
+            </div>
           </div>
         </div>
       </div>
