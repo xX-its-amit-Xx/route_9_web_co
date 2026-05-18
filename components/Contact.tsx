@@ -5,6 +5,7 @@ import { Send, Mail, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Postcard } from "./Postcard";
 import { RotaryPhone } from "./RotaryPhone";
+import { ServiceBell } from "./ServiceBell";
 import { VintageReceipt } from "./VintageReceipt";
 import { SITE } from "@/lib/content";
 
@@ -199,6 +200,11 @@ export function Contact() {
                       </p>
                     </div>
                   </a>
+
+                  {/* Vintage service bell — click to "ring" + seeds the form */}
+                  <div className="mt-4">
+                    <ServiceBell />
+                  </div>
                 </>
               )}
             </div>

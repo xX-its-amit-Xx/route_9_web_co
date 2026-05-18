@@ -1306,6 +1306,21 @@ body.cursor-active * {
     animation: none !important;
   }
 
+  /* Service bell: kill every ring animation — the plunger, dome shake,
+     sound waves, and DING bubble. Clicking still fires the prefill
+     event; only the visual flourishes are gone. */
+  .service-bell .sb-plunger,
+  .service-bell .sb-dome,
+  .service-bell .bell-wave,
+  .service-bell .bell-ding-bubble {
+    animation: none !important;
+    transform: none !important;
+  }
+  .service-bell .bell-wave,
+  .service-bell .bell-ding-bubble {
+    display: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1414,6 +1429,57 @@ body.cursor-active * {
 
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   SERVICE BELL — squash, sound waves, DING bubble
+══════════════════════════════════════════════ */
+.service-bell-button { transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1); }
+.service-bell-button:hover { transform: translateY(-2px); }
+
+/* Plunger pushes down on ring */
+.service-bell.is-ringing .sb-plunger {
+  animation: bell-plunger-push 0.42s ease-out;
+}
+@keyframes bell-plunger-push {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(6px); }
+  100% { transform: translateY(0); }
+}
+
+/* Dome squash + bell shake */
+.service-bell.is-ringing .sb-dome {
+  animation: bell-dome-ring 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  transform-origin: 66px 92px;
+}
+@keyframes bell-dome-ring {
+  0%   { transform: rotate(0deg) scaleY(1); }
+  10%  { transform: rotate(-3deg) scaleY(0.95); }
+  20%  { transform: rotate(3deg) scaleY(1.02); }
+  35%  { transform: rotate(-2deg); }
+  50%  { transform: rotate(2deg); }
+  65%  { transform: rotate(-1deg); }
+  80%  { transform: rotate(1deg); }
+  100% { transform: rotate(0deg) scaleY(1); }
+}
+
+/* Sound wave ripples — each fires with its own delay */
+.service-bell.is-ringing .bell-wave {
+  animation: bell-wave-out 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--bell-wave-delay, 0s) both;
+}
+@keyframes bell-wave-out {
+  0%   { opacity: 0.7; transform: scale(0.4); }
+  100% { opacity: 0;   transform: scale(2.2); }
+}
+
+/* DING! bubble pops on ring */
+.service-bell.is-ringing .bell-ding-bubble {
+  animation: bell-ding-pop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes bell-ding-pop {
+  0%   { opacity: 0; transform: scale(0.4) translate(8px, 8px) rotate(-12deg); }
+  35%  { opacity: 1; transform: scale(1.15) translate(0, 0) rotate(4deg); }
+  100% { opacity: 0; transform: scale(0.9) translate(-4px, -8px) rotate(-2deg); }
 }
 
 /* ═══════════════════════════════════════════════
