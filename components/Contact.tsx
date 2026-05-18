@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Send, Mail, Phone, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
+import { Postcard } from "./Postcard";
 import { SITE } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -120,6 +121,11 @@ export function Contact() {
       </svg>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
+        {/* Postcard — click to flip between front art and message side */}
+        <div className="flex justify-center mb-14 reveal">
+          <Postcard />
+        </div>
+
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
           {/* Left */}
           <div ref={headingRef} className="relative">
