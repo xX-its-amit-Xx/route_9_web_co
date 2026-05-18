@@ -1282,6 +1282,18 @@ body.cursor-active * {
     transform: none !important;
   }
 
+  /* Rotary phone: skip the handset jiggle and dial spin entirely — the
+     tel: link still works on click. The ring bubble would otherwise
+     flash for 1.1s with no rest state; suppress it too. */
+  .rotary-phone .rp-handset,
+  .rotary-phone .rp-dial {
+    animation: none !important;
+    transform: none !important;
+  }
+  .rotary-phone .rp-ring-bubble {
+    display: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1390,6 +1402,46 @@ body.cursor-active * {
 
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   ROTARY PHONE — dial spin, handset jiggle, ring bubble
+══════════════════════════════════════════════ */
+.rotary-phone {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rotary-phone-link:hover .rotary-phone {
+  transform: translateY(-2px) rotate(-2deg);
+}
+.rotary-phone-link:hover .rp-handset {
+  animation: rp-jiggle 0.6s ease-in-out infinite;
+}
+@keyframes rp-jiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(-3deg) translateY(-1px); }
+  75%      { transform: rotate(3deg) translateY(-1px); }
+}
+/* Dial spin on click */
+.rotary-phone.is-ringing .rp-dial {
+  animation: rp-dial-spin 0.95s cubic-bezier(0.4, 0.05, 0.3, 1);
+  transform-origin: center;
+}
+@keyframes rp-dial-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(280deg); }
+}
+.rotary-phone.is-ringing .rp-handset {
+  animation: rp-handset-shake 0.12s ease-in-out 6;
+}
+@keyframes rp-handset-shake {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(6deg); }
+}
+/* Ring-ring bubble shows up while is-ringing is set */
+.rotary-phone.is-ringing .rp-ring-bubble {
+  opacity: 1 !important;
+  transform: scale(1) translate(0, 0) !important;
 }
 
 /* ═══════════════════════════════════════════════

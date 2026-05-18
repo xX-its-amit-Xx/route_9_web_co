@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { Send, Mail, Phone, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Send, Mail, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Postcard } from "./Postcard";
+import { RotaryPhone } from "./RotaryPhone";
 import { SITE } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -179,17 +180,13 @@ export function Contact() {
 
               {(SITE.phone as string) !== "PLACEHOLDER_PHONE" && (
                 <>
-                  <a href={`tel:+1${SITE.phone.replace(/\D/g, "")}`} className="flex items-center gap-3 group">
-                    <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-150 shadow-sm">
-                      <Phone size={17} />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted mb-0.5">Call</p>
-                      <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-150">
-                        {SITE.phone}
-                      </p>
-                    </div>
-                  </a>
+                  {/* Vintage rotary phone — replaces the small "Call" link */}
+                  <div className="mt-2 mb-2">
+                    <RotaryPhone
+                      phone={SITE.phone}
+                      href={`tel:+1${SITE.phone.replace(/\D/g, "")}`}
+                    />
+                  </div>
                   <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="flex items-center gap-3 group">
                     <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-150 shadow-sm">
                       <MessageCircle size={17} />
