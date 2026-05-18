@@ -14,30 +14,37 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const panelId = `faq-panel-${uid}`;
   return (
     <div className="border-b border-border-subtle last:border-0">
-      <button
-        id={btnId}
-        onClick={() => setOpen(!open)}
-        className="flex items-start justify-between w-full py-5 text-left gap-4 group"
-        aria-expanded={open}
-        aria-controls={panelId}
-      >
-        <span
-          className="font-medium text-sm md:text-base transition-colors duration-150 group-hover:text-accent"
-          style={{ color: open ? "var(--accent)" : "var(--fg)" }}
+      {/* ARIA APG accordion pattern: wrap the button in a heading so
+          screen-reader users can jump between FAQ questions via the
+          heading list. The h3 itself is unstyled — the button keeps
+          all visual treatment. */}
+      <h3 className="m-0 font-normal text-base">
+        <button
+          id={btnId}
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="flex items-start justify-between w-full py-5 text-left gap-4 group"
+          aria-expanded={open}
+          aria-controls={panelId}
         >
-          {q}
-        </span>
-        <span
-          aria-hidden
-          className="flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:text-accent"
-          style={{
-            color: open ? "var(--accent)" : "var(--muted)",
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-          }}
-        >
-          <Plus size={16} />
-        </span>
-      </button>
+          <span
+            className="font-medium text-sm md:text-base transition-colors duration-150 group-hover:text-accent"
+            style={{ color: open ? "var(--accent)" : "var(--fg)" }}
+          >
+            {q}
+          </span>
+          <span
+            aria-hidden
+            className="flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:text-accent"
+            style={{
+              color: open ? "var(--accent)" : "var(--muted)",
+              transform: open ? "rotate(45deg)" : "rotate(0deg)",
+            }}
+          >
+            <Plus size={16} />
+          </span>
+        </button>
+      </h3>
       {/* CSS grid trick for smooth height animation — no max-h guessing */}
       <div
         id={panelId}
