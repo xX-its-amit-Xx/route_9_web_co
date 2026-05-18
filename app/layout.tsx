@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { RevealObserver } from "@/components/RevealObserver";
+import { SITE } from "@/lib/content";
 import "./globals.css";
 
 const geist = Geist({
@@ -19,6 +20,15 @@ const instrumentSerif = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FEFBF5" },
+    { media: "(prefers-color-scheme: dark)",  color: "#110B07" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Route 9 Web — Websites for Businesses on Route 9",
@@ -60,7 +70,8 @@ const jsonLd = {
   description:
     "Custom websites and ongoing maintenance for independent businesses along Route 9 in central Massachusetts.",
   url: "https://route9web.com",
-  email: "hello@route9web.com",
+  email: SITE.email,
+  telephone: `+1${SITE.phone.replace(/\D/g, "")}`,
   address: {
     "@type": "PostalAddress",
     addressLocality: "Shrewsbury",
@@ -90,6 +101,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Speed up Unsplash image loads — DNS resolution + TLS handshake pre-done */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

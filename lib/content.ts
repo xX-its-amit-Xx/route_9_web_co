@@ -276,7 +276,7 @@ export const TESTIMONIALS = [
 export const ABOUT = {
   paragraphs: [
     "Route 9 Web is a one-person web design practice based in Shrewsbury, Massachusetts — right on the Route 9 corridor between Worcester and the Pike. Built by a developer with years of experience shipping software, now focused on the thing independent shops actually need: websites that work in 2026 instead of looking like they were made in 2014.",
-    "We're not an agency. There's no salesperson, no account manager, and no markup for fancy office space. Just real work, done locally, by someone who lives here.",
+    "I'm not an agency. There's no salesperson, no account manager, and no markup for fancy office space. Just real work, done locally, by someone who lives here.",
   ],
   aiNote:
     "I build with modern tools, including AI-assisted development. Every site is still custom-designed, reviewed line by line, and tested by hand. You're hiring a person, not a prompt.",

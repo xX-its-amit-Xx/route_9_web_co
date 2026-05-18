@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { PROCESS } from "@/lib/content";
@@ -62,29 +63,67 @@ const STEP_ILLUSTRATIONS = [
 ];
 
 export function Process() {
+  const headingRef = useScrollReveal();
   const stepsRef = useScrollReveal(0.05);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const allowMag = useRef(false);
+
+  useEffect(() => {
+    allowMag.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
+  const handleMagMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = ctaRef.current;
+    if (!el || !allowMag.current) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
+    const y = (e.clientY - (r.top + r.height / 2)) * 0.2;
+    el.style.transform = `translate(${x}px, ${y}px)`;
+    el.style.transition = "transform 0.1s ease-out, box-shadow 0.15s";
+  };
+
+  const handleMagLeave = () => {
+    const el = ctaRef.current;
+    if (!el || !allowMag.current) return;
+    el.style.transform = "translate(0px, 0px)";
+    el.style.transition = "transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.15s";
+  };
 
   return (
     <section
       id="process"
-      className="py-24 md:py-32 border-t border-[#E8D9C4]"
-      style={{ background: "#FEFBF5" }}
-      aria-label="How it works"
+      className="py-24 md:py-32 border-t border-border-subtle relative overflow-hidden"
+      style={{ background: "var(--section-warm-b)" }}
+      aria-labelledby="process-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Subtle bottom-left glow */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "-60px",
+          left: "-60px",
+          width: "420px",
+          height: "420px",
+          background: "radial-gradient(circle, rgba(212,104,42,0.055) 0%, transparent 65%)",
+          zIndex: 0,
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Heading */}
-        <div className="mb-14">
+        <div ref={headingRef} className="mb-14">
           <div className="label-pill mb-4 reveal">How it works</div>
           <SplitTextReveal
             as="h2"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1209] leading-tight"
+            id="process-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
             stagger={80}
           >
             From handshake to live website in days.
           </SplitTextReveal>
           <p
-            className="mt-4 max-w-xl text-[#7A6B5C] text-lg reveal"
+            className="mt-4 max-w-xl text-muted text-lg reveal"
             style={{ transitionDelay: "500ms" }}
           >
             Not weeks. Not months. Days. (Unless you need more time to think about it —
@@ -95,33 +134,59 @@ export function Process() {
         {/* Steps */}
         <div
           ref={stepsRef}
-          className="reveal reveal-stagger grid md:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
         >
           {PROCESS.map((step, i) => {
             const Illustration = STEP_ILLUSTRATIONS[i % STEP_ILLUSTRATIONS.length];
+            const timeHints = ["~20 min", "2–3 days", "Same day", "Ongoing"];
             return (
+              <div key={step.step} className="reveal" style={{ transitionDelay: `${i * 100}ms` }}>
               <article
-                key={step.step}
-                className="shine card-light relative flex flex-col gap-4 p-6 group"
+                aria-labelledby={`step-${step.step}`}
+                className="shine card-light relative flex flex-col gap-4 p-6 group h-full"
               >
+                {/* Time estimate chip — slides in on hover */}
+                <div
+                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-0 translate-y-1"
+                  aria-hidden
+                >
+                  <span
+                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold"
+                    style={{
+                      background: "rgba(212,104,42,0.1)",
+                      border: "1px solid rgba(212,104,42,0.22)",
+                      color: "rgba(212,104,42,0.9)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {timeHints[i]}
+                  </span>
+                </div>
                 {/* Step illustration + connector */}
                 <div className="flex items-center gap-3">
-                  <div className="relative flex-shrink-0 w-14 h-14 group-hover:scale-110 transition-transform duration-300">
+                  <div
+                    className="relative flex-shrink-0 w-14 h-14 group-hover:scale-110 group-hover:rotate-[-5deg] transition-all duration-300 rounded-2xl group-hover:bg-[rgba(212,104,42,0.06)] group-hover:shadow-[0_4px_18px_rgba(212,104,42,0.18)]"
+                  >
                     <Illustration />
-                    {/* Step number badge */}
+                    {/* Step number badge — 3D sphere */}
                     <div
-                      className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#D4682A] text-white text-[10px] font-bold flex items-center justify-center shadow-sm"
-                      style={{ fontFamily: "var(--font-display)" }}
+                      className="step-badge absolute -bottom-1 -right-1 w-5 h-5 rounded-full text-[#1C1209] text-[10px] font-bold flex items-center justify-center"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        background: "linear-gradient(145deg, #E07838 0%, #D4682A 50%, #B05020 100%)",
+                        boxShadow: "0 2px 8px rgba(212,104,42,0.55), inset 0 1px 0 rgba(255,220,140,0.28), inset 0 -1px 0 rgba(0,0,0,0.2)",
+                      }}
                     >
                       {step.step}
                     </div>
                   </div>
                   {i < PROCESS.length - 1 && (
                     <div
-                      className="hidden lg:block flex-1 h-px"
+                      className="hidden lg:block flex-1 h-px flow-line"
                       style={{
                         background:
-                          "repeating-linear-gradient(90deg, rgba(212,104,42,0.25) 0px, rgba(212,104,42,0.25) 4px, transparent 4px, transparent 8px)",
+                          "repeating-linear-gradient(90deg, rgba(212,104,42,0.5) 0px, rgba(212,104,42,0.5) 4px, transparent 4px, transparent 8px)",
+                        backgroundSize: "12px 1px",
                       }}
                       aria-hidden
                     />
@@ -129,36 +194,47 @@ export function Process() {
                 </div>
                 <div>
                   <h3
-                    className="font-bold text-[#1C1209] mb-2"
+                    id={`step-${step.step}`}
+                    className="font-bold text-fg mb-2"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {step.heading}
                   </h3>
-                  <p className="text-sm text-[#7A6B5C] leading-relaxed">{step.body}</p>
+                  <p className="text-sm text-muted leading-relaxed">{step.body}</p>
                 </div>
               </article>
+              </div>
             );
           })}
         </div>
 
         {/* CTA */}
-        <div className="mt-14 pt-10 border-t border-[#E8D9C4] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="mt-14 pt-10 border-t border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="max-w-md">
-            <p className="text-[#7A6B5C] reveal mb-2">
+            <p className="text-muted reveal mb-2">
               Ready to see what your site could look like? The meeting is free. The preview is free. You only pay when you&apos;re happy.
             </p>
             {/* Local detail */}
-            <p className="text-[11px] text-[#B0A090] italic reveal" style={{ fontFamily: "var(--font-display)", transitionDelay: "80ms" }}>
+            <p className="text-[11px] text-muted italic reveal" style={{ fontFamily: "var(--font-display)", transitionDelay: "80ms" }}>
               I can meet you at your shop on Route 9 — Shrewsbury Center, near the lake, wherever you are.
             </p>
           </div>
-          <a
-            href="#contact"
-            className="reveal flex-shrink-0 inline-flex items-center h-12 px-7 rounded-xl bg-[#D4682A] hover:bg-[#C05A20] text-white text-sm font-semibold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[rgba(212,104,42,0.3)]"
-            style={{ transitionDelay: "100ms" }}
-          >
-            Book a free meeting
-          </a>
+          <div className="reveal flex-shrink-0" style={{ transitionDelay: "100ms" }}>
+            <a
+              ref={ctaRef}
+              href="#contact"
+              onMouseMove={handleMagMove}
+              onMouseLeave={handleMagLeave}
+              className="nav-cta-shimmer inline-flex items-center h-12 px-7 rounded-xl text-[#1C1209] text-sm font-semibold"
+              style={{
+                background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
+                boxShadow: "0 0 0 1px rgba(212,104,42,0.4), 0 4px 16px rgba(212,104,42,0.4), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
+                transition: "transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.15s",
+              }}
+            >
+              Book a free meeting
+            </a>
+          </div>
         </div>
       </div>
     </section>

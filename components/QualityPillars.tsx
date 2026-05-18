@@ -1028,23 +1028,47 @@ const DEMO_MAP: Record<IconKey, React.FC> = {
 // ── Section ───────────────────────────────────────────────────────────────────
 
 export function QualityPillars() {
-  const gridRef = useScrollReveal(0.05);
+  const headingRef = useScrollReveal();
+  const gridRef    = useScrollReveal(0.05);
 
   return (
     <section
       id="pillars"
-      className="py-24 md:py-32 border-t border-[#E8D9C4]"
-      style={{ background: "#FFF8F3" }}
-      aria-label="How I build"
+      className="py-24 md:py-32 border-t border-border-subtle relative overflow-hidden"
+      style={{ background: "var(--section-warm-a)" }}
+      aria-labelledby="pillars-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Top-right warm glow */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          top: "-80px", right: "-80px",
+          width: "500px", height: "500px",
+          background: "radial-gradient(circle, rgba(212,104,42,0.055) 0%, transparent 65%)",
+          zIndex: 0,
+        }}
+      />
+      {/* Bottom-left echo glow */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "-40px", left: "-40px",
+          width: "320px", height: "320px",
+          background: "radial-gradient(circle, rgba(212,104,42,0.04) 0%, transparent 65%)",
+          zIndex: 0,
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
         {/* Heading */}
-        <div className="mb-14">
+        <div ref={headingRef} className="mb-14">
           <div className="label-pill mb-4 reveal">How I build</div>
           <SplitTextReveal
             as="h2"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1209] leading-tight"
+            id="pillars-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
             delay={0}
             stagger={70}
@@ -1052,7 +1076,7 @@ export function QualityPillars() {
             Six things every site gets right.
           </SplitTextReveal>
           <p
-            className="mt-4 max-w-xl text-[#7A6B5C] text-lg reveal"
+            className="mt-4 max-w-xl text-muted text-lg reveal"
             style={{ transitionDelay: "400ms" }}
           >
             These aren&apos;t upsells. They&apos;re the baseline.
@@ -1062,21 +1086,32 @@ export function QualityPillars() {
         {/* Grid */}
         <div
           ref={gridRef}
-          className="reveal reveal-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {PILLARS.map((pillar) => {
+          {PILLARS.map((pillar, i) => {
             const Icon = ICON_MAP[pillar.icon];
             const DemoComp = DEMO_MAP[pillar.icon];
             return (
-              <TiltCard key={pillar.heading}>
-                <article className="group card-light h-full flex flex-col cursor-default overflow-hidden">
+              <div key={pillar.heading} className="reveal" style={{ transitionDelay: `${i * 90}ms` }}>
+              <TiltCard>
+                <article
+                  aria-labelledby={`pillar-${pillar.icon}`}
+                  className="group card-light h-full flex flex-col cursor-default overflow-hidden relative"
+                  style={{ isolation: "isolate" }}
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+                    e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+                  }}
+                >
+                  <div className="pillar-spotlight" aria-hidden />
 
                   {/* ── Animated demo area ── */}
                   <div
-                    className="h-[182px] overflow-hidden flex-shrink-0 relative"
+                    className="h-[182px] overflow-hidden flex-shrink-0 relative border-b border-border"
+                    aria-hidden
                     style={{
-                      borderBottom: "1px solid rgba(0,0,0,0.09)",
-                      boxShadow: "inset 0 -4px 12px rgba(0,0,0,0.06)",
+                      boxShadow: "inset 0 -4px 12px rgba(0,0,0,0.1)",
                     }}
                   >
                     <DemoComp />
@@ -1097,32 +1132,33 @@ export function QualityPillars() {
                   <div className="flex flex-col gap-3 p-5 flex-1">
                     <div className="flex items-center justify-between">
                       <div
-                        className="flex items-center justify-center w-10 h-10 rounded-xl text-[#D4682A] group-hover:text-white transition-all duration-300"
-                        style={{
-                          background: "rgba(212,104,42,0.1)",
-                        }}
+                        className="flex items-center justify-center w-10 h-10 rounded-xl text-[#D4682A] bg-[rgba(212,104,42,0.1)] group-hover:text-white group-hover:bg-[#D4682A] group-hover:scale-110 group-hover:shadow-[0_4px_14px_rgba(212,104,42,0.45)] transition-all duration-300"
                       >
                         <Icon />
                       </div>
-                      <div
-                        className="w-5 h-5 rounded-full border border-[rgba(212,104,42,0.3)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      <span
+                        className="text-[11px] font-bold tabular-nums opacity-20 group-hover:opacity-70 transition-opacity duration-200 select-none"
+                        style={{ fontFamily: "var(--font-display)", color: "#D4682A", fontStyle: "italic" }}
+                        aria-hidden
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#D4682A]" />
-                      </div>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                     </div>
                     <div>
                       <h3
-                        className="font-bold text-[#1C1209] mb-1.5"
+                        id={`pillar-${pillar.icon}`}
+                        className="font-bold text-fg mb-1.5"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {pillar.heading}
                       </h3>
-                      <p className="text-sm text-[#7A6B5C] leading-relaxed">{pillar.body}</p>
+                      <p className="text-sm text-muted leading-relaxed">{pillar.body}</p>
                     </div>
                   </div>
 
                 </article>
               </TiltCard>
+              </div>
             );
           })}
         </div>

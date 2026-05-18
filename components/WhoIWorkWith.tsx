@@ -1,5 +1,6 @@
 "use client";
 
+import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { WHO } from "@/lib/content";
 
@@ -60,23 +61,40 @@ const MOSAIC = [
 ];
 
 export function WhoIWorkWith() {
+  const leftRef  = useScrollReveal();
+  const rightRef = useScrollReveal();
+
   return (
     <section
       id="who"
-      className="py-24 md:py-32 border-t border-[#E8D9C4]"
-      style={{ background: "#FEFBF5" }}
-      aria-label="Who I work with"
+      className="py-24 md:py-32 border-t border-border-subtle relative overflow-hidden"
+      style={{ background: "var(--section-warm-b)" }}
+      aria-labelledby="who-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Subtle warm glow top-right */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          top: "-80px",
+          right: "-80px",
+          width: "500px",
+          height: "500px",
+          background: "radial-gradient(circle, rgba(212,104,42,0.06) 0%, transparent 65%)",
+          zIndex: 0,
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-14 md:gap-20 items-center">
 
           {/* ── Left: text ── */}
-          <div>
+          <div ref={leftRef}>
             <div className="label-pill mb-4 reveal">Who I work with</div>
 
             <SplitTextReveal
               as="h2"
-              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1209] leading-tight mb-6"
+              id="who-heading"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight mb-6"
               style={{ fontFamily: "var(--font-display)" }}
               stagger={80}
             >
@@ -84,7 +102,7 @@ export function WhoIWorkWith() {
             </SplitTextReveal>
 
             <p
-              className="text-[#7A6B5C] text-lg leading-relaxed mb-10 reveal max-w-md"
+              className="text-muted text-lg leading-relaxed mb-10 reveal max-w-md"
               style={{ transitionDelay: "300ms" }}
             >
               {WHO.subhead}
@@ -96,64 +114,86 @@ export function WhoIWorkWith() {
                 return (
                   <div
                     key={heading}
-                    className="flex gap-4 p-4 rounded-2xl reveal group transition-all duration-200 hover:bg-[rgba(212,104,42,0.04)]"
-                    style={{ transitionDelay: `${420 + i * 110}ms`, border: "1px solid transparent" }}
+                    className="flex gap-4 p-4 rounded-2xl reveal group transition-all duration-200 border border-transparent hover:bg-[rgba(212,104,42,0.04)] hover:border-[rgba(212,104,42,0.14)]"
+                    style={{ transitionDelay: `${420 + i * 110}ms` }}
                   >
                     <div
-                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:bg-[#D4682A] group-hover:text-white"
-                      style={{
-                        background: "rgba(212,104,42,0.1)",
-                        border: "1px solid rgba(212,104,42,0.2)",
-                        color: "#D4682A",
-                        boxShadow: "inset 0 1px 0 rgba(255,210,140,0.12)",
-                      }}
+                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:bg-[#D4682A] group-hover:text-white group-hover:shadow-[0_4px_14px_rgba(212,104,42,0.45)] text-[#D4682A] bg-[rgba(212,104,42,0.1)] border border-[rgba(212,104,42,0.2)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)]"
                       aria-hidden
                     >
                       <Icon />
                     </div>
                     <div>
                       <h3
-                        className="font-semibold text-[#1C1209] mb-1"
+                        className="font-semibold text-fg mb-1"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {heading}
                       </h3>
-                      <p className="text-[#7A6B5C] leading-relaxed text-sm">{body}</p>
+                      <p className="text-muted leading-relaxed text-sm">{body}</p>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            <div className="border-t border-[#E8D9C4] pt-6 reveal" style={{ transitionDelay: "760ms" }}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-[#B0A090] mb-4">
+            <div className="border-t border-border-subtle pt-6 reveal" style={{ transitionDelay: "760ms" }}>
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted mb-4">
                 Currently serving
               </p>
               {/* Mini Route 9 inline road strip */}
               <div className="relative flex items-center gap-0 mb-3 overflow-hidden">
                 {/* Road line */}
                 <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-px" style={{ background: "repeating-linear-gradient(90deg, rgba(212,104,42,0.3) 0px, rgba(212,104,42,0.3) 6px, transparent 6px, transparent 10px)" }} aria-hidden />
+                {/* Traveling car dot */}
+                <div
+                  aria-hidden
+                  className="absolute pointer-events-none"
+                  style={{
+                    top: "50%",
+                    /* Resting state matches keyframe 0% — off-screen left + invisible.
+                       Under reduced-motion the animation reverts here instead of
+                       left:auto / opacity:1 (visible dot stuck at start of strip). */
+                    left: "-2%",
+                    opacity: 0,
+                    transform: "translateY(-50%)",
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "50%",
+                    background: "#D4682A",
+                    boxShadow: "0 0 6px rgba(212,104,42,0.8)",
+                    animation: "road-car-travel 8s linear infinite",
+                  }}
+                />
                 <div className="relative flex items-center justify-between w-full py-3">
                   {WHO.towns.map((town, i) => (
                     <div key={town} className="flex flex-col items-center gap-1.5 group cursor-default">
                       <span
-                        className="flex items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110"
+                        className="relative flex items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110"
                         style={{
                           width: town === "Shrewsbury" ? "14px" : "10px",
                           height: town === "Shrewsbury" ? "14px" : "10px",
-                          background: town === "Shrewsbury" ? "#D4682A" : "white",
-                          border: town === "Shrewsbury" ? "2px solid rgba(212,104,42,0.4)" : "1.5px solid #E8D9C4",
-                          boxShadow: town === "Shrewsbury" ? "0 0 8px rgba(212,104,42,0.5)" : "0 1px 3px rgba(0,0,0,0.08)",
+                          background: town === "Shrewsbury" ? "#D4682A" : "var(--surface-raised)",
+                          border: town === "Shrewsbury" ? "2px solid rgba(212,104,42,0.4)" : "1.5px solid var(--border)",
+                          boxShadow: town === "Shrewsbury" ? "0 0 8px rgba(212,104,42,0.5)" : "0 1px 3px rgba(0,0,0,0.12)",
                           zIndex: 1,
                         }}
                         aria-hidden
-                      />
+                      >
+                        {town === "Shrewsbury" && (
+                          <span
+                            className="dot-ping absolute inset-0 rounded-full"
+                            style={{ background: "rgba(212,104,42,0.45)" }}
+                            aria-hidden
+                          />
+                        )}
+                      </span>
                       <span
                         className="text-center leading-tight transition-colors duration-200 group-hover:text-[#D4682A] whitespace-nowrap"
                         style={{
                           fontSize: "9px",
                           fontWeight: town === "Shrewsbury" ? 700 : 500,
-                          color: town === "Shrewsbury" ? "#D4682A" : "#9B8C7D",
+                          color: town === "Shrewsbury" ? "#D4682A" : "var(--muted)",
                           letterSpacing: "0.04em",
                         }}
                       >
@@ -164,19 +204,19 @@ export function WhoIWorkWith() {
                   ))}
                 </div>
               </div>
-              <p className="text-[10px] text-[#B0A090] italic" style={{ fontFamily: "var(--font-display)" }}>
+              <p className="text-[10px] text-muted italic" style={{ fontFamily: "var(--font-display)" }}>
                 + anywhere nearby along Route 9 — just ask.
               </p>
             </div>
           </div>
 
           {/* ── Right: bento photo mosaic ── */}
-          <div className="reveal" style={{ transitionDelay: "180ms" }}>
+          <div ref={rightRef} className="reveal" style={{ transitionDelay: "180ms" }}>
             {/* Neighborhood label */}
             <div className="flex items-center gap-2 mb-3">
               <span
                 className="text-[9px] font-semibold tracking-[0.18em] uppercase"
-                style={{ color: "#B0A090" }}
+                style={{ color: "var(--muted)" }}
               >
                 Route 9 shops, Shrewsbury &amp; beyond
               </span>
@@ -194,25 +234,40 @@ export function WhoIWorkWith() {
                 <div
                   key={label}
                   className={`relative overflow-hidden rounded-2xl group cursor-default${
-                    i === 0 ? " col-span-2 row-span-2" : ""
+                    i === 0 ? " col-span-2 row-span-2 shine" : ""
                   }`}
+                  onMouseMove={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty("--spot-x", `${((e.clientX - r.left) / r.width) * 100}%`);
+                    e.currentTarget.style.setProperty("--spot-y", `${((e.clientY - r.top) / r.height) * 100}%`);
+                  }}
                 >
                   <img
                     src={`https://images.unsplash.com/photo-${id}?w=${i === 0 ? 500 : 280}&auto=format&fit=crop&q=80`}
                     alt={label}
-                    loading="eager"
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  {/* Label */}
-                  <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                    <span className="text-[10px] font-semibold text-white/90 tracking-wide leading-tight block">
-                      {label}
-                    </span>
+                  {/* Cursor spotlight */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                    style={{
+                      background: "radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.18) 0%, transparent 55%)",
+                    }}
+                  />
+                  {/* Label — slides up from below on hover */}
+                  <div className="absolute bottom-0 left-0 right-0 z-20">
+                    <div className="overflow-hidden px-2.5 pb-2.5">
+                      <span className="block text-[10px] font-semibold text-white tracking-wide leading-tight translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                        {label}
+                      </span>
+                    </div>
                   </div>
-                  {/* Hover accent */}
-                  <div className="absolute inset-0 ring-2 ring-inset ring-[#D4682A]/0 group-hover:ring-[#D4682A]/40 rounded-2xl transition-all duration-300" />
+                  {/* Hover accent ring */}
+                  <div className="absolute inset-0 ring-2 ring-inset ring-[#D4682A]/0 group-hover:ring-[#D4682A]/40 rounded-2xl transition-all duration-300 z-20" />
                 </div>
               ))}
             </div>
@@ -223,21 +278,25 @@ export function WhoIWorkWith() {
               aria-hidden
             >
               {[
-                { icon: "🍕", label: "Pizzeria" },
-                { icon: "✂️", label: "Barber" },
-                { icon: "☕", label: "Café" },
-                { icon: "🥐", label: "Bakery" },
-                { icon: "💅", label: "Salon" },
-                { icon: "🔧", label: "Auto" },
-              ].map(({ icon, label }) => (
-                <div key={label} className="flex flex-col items-center gap-0.5 opacity-50 hover:opacity-80 transition-opacity duration-200">
+                { icon: "🍕", label: "Pizzeria", delay: "0s",    dur: "3.9s" },
+                { icon: "✂️", label: "Barber",   delay: "0.55s", dur: "4.4s" },
+                { icon: "☕", label: "Café",      delay: "1.1s",  dur: "3.6s" },
+                { icon: "🥐", label: "Bakery",   delay: "1.65s", dur: "4.8s" },
+                { icon: "💅", label: "Salon",    delay: "0.3s",  dur: "4.1s" },
+                { icon: "🔧", label: "Auto",     delay: "0.9s",  dur: "3.7s" },
+              ].map(({ icon, label, delay, dur }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center gap-0.5 opacity-50 hover:opacity-85 transition-opacity duration-200"
+                  style={{ animation: `float-subtle ${dur} ease-in-out ${delay} infinite` }}
+                >
                   <span className="text-base leading-none">{icon}</span>
-                  <span className="text-[8px] text-[#B0A090] font-medium tracking-wide">{label}</span>
+                  <span className="text-[8px] text-muted font-medium tracking-wide">{label}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-xs text-[#B0A090] mt-2 text-center italic" style={{ fontFamily: "var(--font-display)" }}>
+            <p className="text-xs text-muted mt-2 text-center italic" style={{ fontFamily: "var(--font-display)" }}>
               Not on the list? Every independent shop is welcome.
             </p>
           </div>

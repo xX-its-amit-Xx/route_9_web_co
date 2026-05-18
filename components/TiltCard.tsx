@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useRef, useEffect, MouseEvent } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -9,13 +9,22 @@ type Props = {
 };
 
 export function TiltCard({ children, className = "", intensity = 8 }: Props) {
-  const ref     = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
+  const ref         = useRef<HTMLDivElement>(null);
+  const glowRef     = useRef<HTMLDivElement>(null);
+  const allowTilt   = useRef(false);
+
+  useEffect(() => {
+    allowTilt.current =
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   const handleMove = (e: MouseEvent<HTMLDivElement>) => {
     const card = ref.current;
-    if (!card) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (!card || !allowTilt.current) return;
+
+    // Instant tracking during movement — no transition lag
+    card.style.transition = "box-shadow 0.28s cubic-bezier(0.22,1,0.36,1)";
 
     const rect = card.getBoundingClientRect();
     const x    = (e.clientX - rect.left) / rect.width  - 0.5;
@@ -46,7 +55,8 @@ export function TiltCard({ children, className = "", intensity = 8 }: Props) {
 
   const handleLeave = () => {
     const card = ref.current;
-    if (card) {
+    if (card && allowTilt.current) {
+      card.style.transition = "transform 0.55s cubic-bezier(0.22,1,0.36,1), box-shadow 0.55s cubic-bezier(0.22,1,0.36,1)";
       card.style.transform =
         "perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1) translateZ(0)";
       card.style.boxShadow = "";

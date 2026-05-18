@@ -1,4 +1,7 @@
+"use client";
+
 import { SITE, ABOUT } from "@/lib/content";
+import { useLenis } from "./SmoothScrollProvider";
 
 // ── Route 9 Corridor Map — Framingham → Worcester along MA-9 ─────────────────
 function Route9CorridorMap() {
@@ -26,6 +29,7 @@ function Route9CorridorMap() {
       <svg
         viewBox="0 0 652 48"
         fill="none"
+        role="img"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Route 9 corridor from Framingham to Worcester"
         style={{ width: "100%", maxWidth: "560px" }}
@@ -42,13 +46,37 @@ function Route9CorridorMap() {
         <rect x="309" y="13" width="34" height="16" rx="2.5" fill="rgba(212,104,42,0.12)" stroke="rgba(212,104,42,0.28)" strokeWidth="0.8" />
         <text x="326" y="24" textAnchor="middle" fontSize="7" fill="rgba(212,104,42,0.65)" fontWeight="700" fontFamily="monospace" letterSpacing="0.03em">MA 9</text>
 
+        {/* Traveling car dot — animates along Route 9 */}
+        <circle cx="0" cy="21" r="2.5" fill="rgba(212,104,42,0.75)" className="route-map-car">
+          <animate
+            attributeName="cx"
+            values="30;622;622;30;30"
+            keyTimes="0;0.45;0.5;0.95;1"
+            dur="9s"
+            repeatCount="indefinite"
+            calcMode="linear"
+          />
+          <animate
+            attributeName="opacity"
+            values="0.75;0.75;0;0;0.75"
+            keyTimes="0;0.45;0.5;0.95;1"
+            dur="9s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
         {/* Towns */}
         {towns.map(({ name, x, home }) => (
           <g key={name}>
             {home ? (
               <>
-                {/* Outer glow ring */}
-                <circle cx={x} cy={21} r="9" fill="rgba(212,104,42,0.08)" stroke="rgba(212,104,42,0.22)" strokeWidth="1" />
+                {/* Pinging outer ring */}
+                <circle cx={x} cy={21} r="9" fill="rgba(212,104,42,0.08)" stroke="rgba(212,104,42,0.22)" strokeWidth="1" className="route-map-ping">
+                  <animate attributeName="r" values="9;14;9" dur="2.5s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="1;0;1" dur="2.5s" repeatCount="indefinite" />
+                </circle>
+                {/* Static ring */}
+                <circle cx={x} cy={21} r="9" fill="none" stroke="rgba(212,104,42,0.25)" strokeWidth="1" />
                 {/* Main dot */}
                 <circle cx={x} cy={21} r="5" fill="#D4682A" />
                 {/* Inner highlight */}
@@ -82,6 +110,13 @@ const FOOTER_NAV = [
 ];
 
 export function Footer() {
+  const lenis = useLenis();
+
+  const scrollToTop = () => {
+    if (lenis) lenis.scrollTo(0, { duration: 1.4 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer style={{ background: "#0B0705" }}>
 
@@ -118,22 +153,20 @@ export function Footer() {
                   <span style={{ fontSize: "14px", fontFamily: "var(--font-display)", fontStyle: "italic", color: "#F3E9D5", letterSpacing: "-0.01em" }}>Web</span>
                 </div>
               </div>
-              <p className="text-xs leading-relaxed max-w-[230px]" style={{ color: "rgba(155,140,125,0.7)" }}>
+              <p className="text-xs leading-relaxed max-w-[230px]" style={{ color: "rgba(155,140,125,0.88)" }}>
                 Custom websites for independent shops along Route 9. Mobile-first, fast, and maintained by someone who actually answers.
               </p>
               <div className="flex flex-col gap-1.5 mt-4">
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="text-xs transition-colors duration-150 hover:text-[#D4682A]"
-                  style={{ color: "rgba(155,140,125,0.6)" }}
+                  className="text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#D4682A]"
                 >
                   {SITE.email}
                 </a>
                 {(SITE.phone as string) !== "PLACEHOLDER_PHONE" && (
                   <a
-                    href={`tel:${SITE.phone}`}
-                    className="text-xs transition-colors duration-150 hover:text-[#D4682A]"
-                    style={{ color: "rgba(155,140,125,0.6)" }}
+                    href={`tel:+1${SITE.phone.replace(/\D/g, "")}`}
+                    className="text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#D4682A]"
                   >
                     {SITE.phone}
                   </a>
@@ -145,21 +178,20 @@ export function Footer() {
             <div>
               <p
                 className="mb-4 font-semibold"
-                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.5)" }}
+                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
               >
                 Navigation
               </p>
-              <ul className="space-y-2.5">
+              <nav aria-label="Footer navigation">
+              <ul role="list" className="space-y-2.5">
                 {FOOTER_NAV.map(({ label, href }) => (
                   <li key={href}>
                     <a
                       href={href}
-                      className="group text-xs flex items-center gap-1.5 transition-colors duration-150 hover:text-[#F3E9D5]"
-                      style={{ color: "rgba(155,140,125,0.6)" }}
+                      className="group text-xs flex items-center gap-1.5 text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#F3E9D5]"
                     >
                       <span
-                        className="block h-px rounded-full transition-all duration-200"
-                        style={{ width: "0px", background: "#D4682A" }}
+                        className="block h-px w-0 group-hover:w-3 rounded-full transition-all duration-250 bg-[#D4682A]"
                         aria-hidden
                       />
                       {label}
@@ -167,19 +199,20 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
+              </nav>
             </div>
 
             {/* Contact / quick info column */}
             <div>
               <p
                 className="mb-4 font-semibold"
-                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.5)" }}
+                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
               >
                 Get in touch
               </p>
               <a
                 href="#contact"
-                className="inline-flex items-center h-9 px-5 rounded-xl text-xs font-semibold text-white transition-all duration-150 hover:-translate-y-0.5 mb-5"
+                className="nav-cta-shimmer inline-flex items-center h-9 px-5 rounded-xl text-xs font-semibold text-[#1C1209] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(212,104,42,0.45)] mb-5"
                 style={{
                   background: "linear-gradient(135deg, #D4682A 0%, #C05A20 100%)",
                   boxShadow: "0 4px 16px rgba(212,104,42,0.3), inset 0 1px 0 rgba(255,255,255,0.18)",
@@ -206,10 +239,10 @@ export function Footer() {
             className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-6"
             style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
           >
-            <p style={{ fontSize: "11px", color: "rgba(90,75,60,0.8)" }}>
-              © {SITE.founded} {SITE.name} · Shrewsbury, MA · Est. {SITE.founded}
+            <p style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
+              © {new Date().getFullYear()} {SITE.name} · Shrewsbury, MA · Est. {SITE.founded}
             </p>
-            <div className="flex items-center gap-5" style={{ fontSize: "11px", color: "rgba(90,75,60,0.8)" }}>
+            <div className="flex items-center gap-5" style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
               {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
                 <a
                   href={SITE.personalSite}
@@ -231,6 +264,23 @@ export function Footer() {
                 </a>
               )}
               <span>MIT License</span>
+              <button
+                onClick={scrollToTop}
+                aria-label="Back to top"
+                className="flex items-center gap-1.5 transition-colors duration-150 hover:text-[#D4682A] group"
+                style={{ color: "rgba(90,75,60,0.5)" }}
+              >
+                <span
+                  className="inline-flex items-center justify-center w-5 h-5 rounded-full transition-transform duration-200 group-hover:-translate-y-0.5"
+                  style={{ border: "1px solid rgba(212,104,42,0.2)", background: "rgba(212,104,42,0.06)" }}
+                  aria-hidden
+                >
+                  <svg viewBox="0 0 10 10" fill="none" className="w-2.5 h-2.5">
+                    <path d="M2 7L5 3L8 7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                Top
+              </button>
             </div>
           </div>
         </div>

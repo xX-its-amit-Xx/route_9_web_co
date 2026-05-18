@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { useLenis } from "./SmoothScrollProvider";
 import { SITE } from "@/lib/content";
 
 const NAV_LINKS = [
@@ -15,17 +16,67 @@ const NAV_LINKS = [
 type Section = (typeof NAV_LINKS)[number]["section"];
 
 export function Nav() {
-  const [open, setOpen]       = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive]   = useState<Section | null>(null);
+  const lenis = useLenis();
+  const [open, setOpen]           = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
+  const [active, setActive]       = useState<Section | null>(null);
+  const [isDark, setIsDark]       = useState(true);
+  const firstMobileLinkRef        = useRef<HTMLAnchorElement>(null);
+  const hamburgerRef              = useRef<HTMLButtonElement>(null);
 
   // Scroll detection
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 48);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Track dark/light mode (set by ThemeToggle on document.documentElement)
+  useEffect(() => {
+    const update = () => setIsDark(document.documentElement.classList.contains("dark"));
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Escape key closes mobile menu and returns focus to hamburger button
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+        hamburgerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Focus first menu item when mobile menu opens
+  useEffect(() => {
+    if (open) firstMobileLinkRef.current?.focus();
+  }, [open]);
+
+  // Keyboard shortcut: K → scroll to contact
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement).isContentEditable) return;
+      if (e.key === "k" || e.key === "K") {
+        e.preventDefault();
+        setOpen(false);
+        const contact = document.getElementById("contact");
+        if (!contact) return;
+        if (lenis) lenis.scrollTo(contact, { offset: -72, duration: 1.6 });
+        else contact.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lenis]);
 
   // Active section via IntersectionObserver
   useEffect(() => {
@@ -50,9 +101,10 @@ export function Nav() {
 
   const scrollToTop = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (lenis) lenis.scrollTo(0, { duration: 1.4 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
     setOpen(false);
-  }, []);
+  }, [lenis]);
 
   const close = () => setOpen(false);
 
@@ -60,7 +112,7 @@ export function Nav() {
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-          scrolled ? "nav-glass" : "bg-transparent"
+          scrolled || !isDark ? "nav-glass" : "bg-transparent"
         }`}
       >
         {/* Gradient glow line at bottom (scrolled only) */}
@@ -74,7 +126,7 @@ export function Nav() {
           }}
         />
 
-        <nav className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+        <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
 
           {/* ── Logo ── */}
           <a
@@ -104,24 +156,25 @@ export function Nav() {
           </a>
 
           {/* ── Desktop nav links ── */}
-          <ul className="hidden md:flex items-center gap-0.5">
+          <ul role="list" className="hidden md:flex items-center gap-0.5">
             {NAV_LINKS.map(({ label, href, section }) => {
               const isActive = active === section;
               return (
                 <li key={href}>
                   <a
                     href={href}
-                    className="relative px-3.5 py-1.5 text-sm rounded-lg transition-all duration-250"
-                    style={{
-                      color: isActive ? "#F3E9D5" : "rgba(243,233,213,0.48)",
-                      background: isActive
-                        ? "linear-gradient(135deg, rgba(212,104,42,0.18) 0%, rgba(160,64,12,0.1) 100%)"
-                        : "transparent",
-                      border: isActive ? "1px solid rgba(212,104,42,0.25)" : "1px solid transparent",
-                      boxShadow: isActive
-                        ? "0 1px 8px rgba(212,104,42,0.15), inset 0 1px 0 rgba(255,210,140,0.1)"
-                        : "none",
-                    }}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative px-3.5 py-1.5 text-sm rounded-lg transition-all duration-200 border ${
+                      isActive
+                        ? ""
+                        : "text-[rgba(243,233,213,0.48)] border-transparent hover:text-[rgba(243,233,213,0.82)] hover:bg-[rgba(243,233,213,0.07)] hover:border-[rgba(243,233,213,0.08)]"
+                    }`}
+                    style={isActive ? {
+                      color: "#F3E9D5",
+                      background: "linear-gradient(135deg, rgba(212,104,42,0.18) 0%, rgba(160,64,12,0.1) 100%)",
+                      borderColor: "rgba(212,104,42,0.25)",
+                      boxShadow: "0 1px 8px rgba(212,104,42,0.15), inset 0 1px 0 rgba(255,210,140,0.1)",
+                    } : undefined}
                   >
                     {label}
                   </a>
@@ -134,10 +187,11 @@ export function Nav() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
 
-            {/* CTA with shimmer */}
+            {/* CTA with shimmer + live dot */}
             <a
               href="#contact"
-              className="nav-cta-shimmer hidden sm:inline-flex items-center h-9 px-5 rounded-xl text-white text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03]"
+              aria-keyshortcuts="k"
+              className="nav-cta-shimmer group hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03]"
               style={{
                 background:
                   "linear-gradient(135deg, #D4682A 0%, #C05A20 55%, #B04C18 100%)",
@@ -146,15 +200,35 @@ export function Nav() {
                 letterSpacing: "0.025em",
               }}
             >
+              <span
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
+                style={{ background: "rgba(255,220,140,0.9)", boxShadow: "0 0 5px rgba(255,200,80,0.85)" }}
+                aria-hidden
+              />
               Get in touch
+              <kbd
+                className="hidden lg:inline-flex items-center justify-center rounded text-[9px] font-bold opacity-0 group-hover:opacity-55 transition-opacity duration-200 pointer-events-none"
+                style={{
+                  padding: "1px 4px",
+                  background: "rgba(28,18,9,0.12)",
+                  border: "1px solid rgba(28,18,9,0.22)",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1.4,
+                }}
+                aria-hidden
+              >
+                K
+              </kbd>
             </a>
 
             {/* Hamburger */}
             <button
+              ref={hamburgerRef}
               className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl text-[#9B8C7D] hover:text-[#F3E9D5] hover:bg-[rgba(243,233,213,0.08)] transition-colors duration-150"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="mobile-nav"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -164,6 +238,10 @@ export function Nav() {
 
       {/* ── Mobile overlay ── */}
       <div
+        id="mobile-nav"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         className={`fixed inset-0 z-40 flex flex-col pt-20 px-6 md:hidden transition-all duration-250 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
@@ -172,16 +250,19 @@ export function Nav() {
           backdropFilter: "blur(28px)",
           WebkitBackdropFilter: "blur(28px)",
         }}
-        aria-hidden={!open}
+        aria-hidden={open ? undefined : true}
       >
-        <ul className="flex flex-col gap-1">
-          {NAV_LINKS.map(({ label, href, section }) => {
+        <ul role="list" className="flex flex-col gap-1">
+          {NAV_LINKS.map(({ label, href, section }, i) => {
             const isActive = active === section;
             return (
-              <li key={href}>
+              <li key={href} className={open ? "nav-link-animate" : ""} style={{ animationDelay: `${i * 60}ms` }}>
                 <a
+                  ref={i === 0 ? firstMobileLinkRef : undefined}
                   href={href}
                   onClick={close}
+                  tabIndex={open ? undefined : -1}
+                  aria-current={isActive ? "page" : undefined}
                   className="flex items-center justify-between px-4 py-4 text-lg font-medium rounded-2xl transition-all duration-150"
                   style={{
                     color: isActive ? "#D4682A" : "#F3E9D5",
@@ -208,7 +289,8 @@ export function Nav() {
           <a
             href="#contact"
             onClick={close}
-            className="flex items-center justify-center h-12 w-full rounded-2xl text-white text-base font-bold transition-colors duration-150"
+            tabIndex={open ? undefined : -1}
+            className="flex items-center justify-center h-12 w-full rounded-2xl text-[#1C1209] text-base font-bold transition-colors duration-150"
             style={{
               background:
                 "linear-gradient(135deg, #D4682A 0%, #C05A20 100%)",

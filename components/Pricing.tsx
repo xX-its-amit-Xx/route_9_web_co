@@ -14,21 +14,20 @@ export function Pricing() {
     <section
       id="pricing"
       className="py-24 md:py-32 border-t border-border-subtle"
-      aria-label="Services and pricing"
+      aria-labelledby="pricing-heading"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Heading */}
-        <div ref={headingRef} className="reveal mb-14">
-          <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
-            Services &amp; pricing
-          </p>
+        <div ref={headingRef} className="mb-14">
+          <div className="label-pill mb-4 reveal">Services &amp; pricing</div>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
+            id="pricing-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight reveal"
+            style={{ fontFamily: "var(--font-display)", transitionDelay: "80ms" }}
           >
             Transparent pricing.<br />No surprises.
           </h2>
-          <p className="mt-4 max-w-xl text-muted text-lg">
+          <p className="mt-4 max-w-xl text-muted text-lg reveal" style={{ transitionDelay: "220ms" }}>
             A one-time build fee. A monthly care fee. That&apos;s the whole model.
             <span className="text-fg font-medium"> No mystery invoices.</span>
           </p>
@@ -37,21 +36,46 @@ export function Pricing() {
         {/* Cards */}
         <div
           ref={cardsRef}
-          className="reveal reveal-stagger grid md:grid-cols-3 gap-5 mb-10"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
         >
-          {PRICING.map((tier) => (
-            <TiltCard key={tier.name} intensity={tier.highlighted ? 5 : 7}>
+          {PRICING.map((tier, i) => (
+            <div key={tier.name} className="reveal" style={{ transitionDelay: `${i * 110}ms` }}>
+            <TiltCard intensity={tier.highlighted ? 5 : 7}>
               <article
+                aria-labelledby={`tier-${tier.name}`}
                 className={`relative flex flex-col h-full rounded-2xl p-7 border transition-all duration-200 ${
                   tier.highlighted
-                    ? "bg-[#1C1209] border-[rgba(212,104,42,0.35)] shadow-2xl shadow-[rgba(212,104,42,0.15)]"
-                    : "bg-surface-raised border-border hover:border-accent/30 hover:shadow-lg"
+                    ? "bg-[#1C1209] border-[rgba(212,104,42,0.38)] shadow-2xl shadow-[rgba(212,104,42,0.18)]"
+                    : "bg-surface-raised border-border hover:border-[rgba(212,104,42,0.28)] hover:shadow-[0_4px_24px_rgba(212,104,42,0.1),0_8px_40px_rgba(212,104,42,0.06),0_2px_8px_rgba(0,0,0,0.06)]"
                 }`}
+                style={tier.highlighted ? {
+                  boxShadow: "0 0 0 1px rgba(212,104,42,0.38), 0 8px 40px rgba(212,104,42,0.18), 0 32px 80px rgba(0,0,0,0.25), inset 0 1px 0 rgba(212,104,42,0.25)",
+                  transition: "box-shadow 0.25s ease",
+                } : undefined}
+                onMouseEnter={tier.highlighted ? (e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow =
+                    "0 0 0 1.5px rgba(212,104,42,0.65), 0 12px 56px rgba(212,104,42,0.38), 0 40px 100px rgba(0,0,0,0.35), inset 0 1px 0 rgba(212,104,42,0.45)";
+                } : undefined}
+                onMouseLeave={tier.highlighted ? (e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow =
+                    "0 0 0 1px rgba(212,104,42,0.38), 0 8px 40px rgba(212,104,42,0.18), 0 32px 80px rgba(0,0,0,0.25), inset 0 1px 0 rgba(212,104,42,0.25)";
+                } : undefined}
               >
+                {/* Glowing top border strip on highlighted card */}
+                {tier.highlighted && (
+                  <div
+                    aria-hidden
+                    className="absolute top-0 left-6 right-6 h-px rounded-full"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgba(212,104,42,0.8) 30%, rgba(240,160,90,0.9) 50%, rgba(212,104,42,0.8) 70%, transparent)",
+                      boxShadow: "0 0 12px rgba(212,104,42,0.6)",
+                    }}
+                  />
+                )}
                 {tier.highlighted && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4682A] text-[#110B07] text-xs font-bold">
-                      <Sparkles size={11} />
+                      <Sparkles size={11} aria-hidden />
                       Most popular
                     </span>
                   </div>
@@ -59,6 +83,7 @@ export function Pricing() {
 
                 <div className="mb-6">
                   <h3
+                    id={`tier-${tier.name}`}
                     className={`font-bold text-xl mb-1 ${tier.highlighted ? "text-[#F3E9D5]" : "text-fg"}`}
                     style={{ fontFamily: "var(--font-display)" }}
                   >
@@ -75,7 +100,7 @@ export function Pricing() {
                 }}>
                   <div className="flex items-end gap-1.5 mb-1">
                     <span
-                      className={`text-4xl font-extrabold tracking-tight ${tier.highlighted ? "text-gradient" : "text-fg"}`}
+                      className="text-4xl font-extrabold tracking-tight text-gradient"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {tier.setup}
@@ -94,12 +119,16 @@ export function Pricing() {
                 </div>
 
                 {/* Features */}
-                <ul className="flex-1 space-y-2.5 mb-8">
+                <ul role="list" className="flex-1 space-y-2.5 mb-8">
                   {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm">
+                    <li
+                      key={feature}
+                      className="flex items-start gap-2.5 text-sm"
+                    >
                       <Check
                         size={14}
                         strokeWidth={2.5}
+                        aria-hidden
                         className={`mt-0.5 flex-shrink-0 ${tier.highlighted ? "text-[#D4682A]" : "text-accent"}`}
                       />
                       <span className={tier.highlighted ? "text-[#F3E9D5]/85" : "text-fg"}>
@@ -109,7 +138,7 @@ export function Pricing() {
                   ))}
                 </ul>
 
-                <p className={`text-xs mb-5 ${tier.highlighted ? "text-[#9B8C7D]/60" : "text-muted-light"}`}>
+                <p className={`text-xs mb-5 ${tier.highlighted ? "text-[#9B8C7D]/60" : "text-muted"}`}>
                   <span className="font-semibold">Ideal for: </span>{tier.ideal}
                 </p>
 
@@ -117,14 +146,19 @@ export function Pricing() {
                   href="#contact"
                   className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-all duration-150 hover:-translate-y-0.5 ${
                     tier.highlighted
-                      ? "bg-[#D4682A] hover:bg-[#C05A20] text-[#110B07]"
+                      ? "nav-cta-shimmer text-[#110B07]"
                       : "bg-surface border border-border hover:border-accent/40 text-fg hover:shadow-sm"
                   }`}
+                  style={tier.highlighted ? {
+                    background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
+                    boxShadow: "0 0 0 1px rgba(212,104,42,0.4), 0 3px 12px rgba(212,104,42,0.35), 0 1px 0 rgba(255,220,160,0.18) inset, 0 -1px 0 rgba(0,0,0,0.12) inset",
+                  } : undefined}
                 >
                   {tier.cta}
                 </a>
               </article>
             </TiltCard>
+            </div>
           ))}
         </div>
 
@@ -138,11 +172,18 @@ export function Pricing() {
               boxShadow: "0 4px 32px rgba(212,104,42,0.15), 0 1px 0 rgba(212,104,42,0.08) inset",
             }}
           >
-            {/* Warm glow orb */}
+            {/* Warm glow orb — pulses */}
             <div
               aria-hidden
               className="absolute top-0 left-0 w-48 h-48 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, rgba(212,104,42,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}
+              style={{
+                background: "radial-gradient(circle, rgba(212,104,42,0.22) 0%, transparent 70%)",
+                /* Resting state matches keyframe 0%/100% — so reduced-motion reversion
+                   lands here instead of opacity:1 / transform:none */
+                opacity: 0.18,
+                transform: "translate(-30%, -30%)",
+                animation: "pricing-glow-pulse 3.5s ease-in-out infinite",
+              }}
             />
 
             {/* Route 9 shield icon */}
@@ -163,17 +204,22 @@ export function Pricing() {
                 <p className="font-bold text-[#F3E9D5] text-sm" style={{ fontFamily: "var(--font-display)" }}>
                   {FOUNDING_OFFER.headline}
                 </p>
-                {/* Spots remaining indicator */}
+                {/* Spots remaining — visual dot indicators */}
                 <span
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold flex-shrink-0"
+                  className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[10px] font-bold flex-shrink-0"
                   style={{
                     background: "rgba(212,104,42,0.2)",
                     border: "1px solid rgba(212,104,42,0.4)",
                     color: "#E07838",
                   }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4682A] animate-pulse flex-shrink-0" aria-hidden />
-                  3 spots total
+                  {/* 2 taken, 1 open */}
+                  <span className="flex items-center gap-0.5" aria-hidden>
+                    <span className="w-2 h-2 rounded-full bg-[#D4682A]" />
+                    <span className="w-2 h-2 rounded-full bg-[#D4682A] opacity-60" />
+                    <span className="w-2 h-2 rounded-full border border-[#D4682A] animate-pulse" style={{ background: "rgba(212,104,42,0.15)" }} />
+                  </span>
+                  1 spot left
                 </span>
               </div>
               <p className="text-[#9B8C7D] text-sm leading-relaxed">{FOUNDING_OFFER.body}</p>
@@ -181,10 +227,10 @@ export function Pricing() {
 
             <a
               href="#contact"
-              className="relative flex-shrink-0 inline-flex items-center h-10 px-5 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg"
+              className="nav-cta-shimmer relative flex-shrink-0 inline-flex items-center h-10 px-5 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-150 hover:-translate-y-0.5"
               style={{
-                background: "linear-gradient(135deg, #E07838 0%, #D4682A 50%, #C05A20 100%)",
-                boxShadow: "0 2px 12px rgba(212,104,42,0.4), inset 0 1px 0 rgba(255,220,140,0.25)",
+                background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
+                boxShadow: "0 0 0 1px rgba(212,104,42,0.4), 0 4px 16px rgba(212,104,42,0.4), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
               }}
             >
               Claim a spot

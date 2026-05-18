@@ -8,6 +8,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   const ref = useRef<T>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const el = ref.current;
     if (!el) return;
 
@@ -15,6 +16,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.classList.add("visible");
+          el.querySelectorAll<HTMLElement>(".reveal:not(.visible)").forEach(child => child.classList.add("visible"));
           observer.disconnect();
         }
       },

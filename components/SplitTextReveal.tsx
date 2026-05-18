@@ -8,6 +8,7 @@ type Props = {
   children: string;
   className?: string;
   as?: Tag;
+  id?: string;
   delay?: number;       // base delay in ms
   stagger?: number;     // ms between each word
   duration?: number;    // ms per word
@@ -19,6 +20,7 @@ export function SplitTextReveal({
   children,
   className = "",
   as: Tag = "div",
+  id,
   delay = 0,
   stagger = 70,
   duration = 750,
@@ -34,6 +36,12 @@ export function SplitTextReveal({
     if (!el) return;
 
     const spans = el.querySelectorAll<HTMLSpanElement>(".word-inner");
+
+    // Under reduced-motion: reveal words immediately; no observer needed
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      spans.forEach((span) => span.classList.add("word-visible"));
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -63,6 +71,7 @@ export function SplitTextReveal({
     <Tag
       // @ts-expect-error ref polymorphism
       ref={ref}
+      id={id}
       className={className}
       aria-label={children}
       style={style}

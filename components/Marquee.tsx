@@ -9,6 +9,7 @@ const BUSINESS_ICONS: Record<string, string> = {
   "Cafes & Coffee Shops":    "☕",
   "Barbershops":             "✂️",
   "Salons & Spas":           "💅",
+  "Nail Salons":             "✨",
   "Bakeries":                "🥐",
   "Specialty Retail":        "🛍️",
   "Auto Repair":             "🔧",
@@ -26,7 +27,11 @@ export function Marquee({ items, className = "" }: Props) {
     <div
       className={`overflow-hidden ${className}`}
       aria-hidden
-      style={{ perspective: "600px" }}
+      style={{
+        perspective: "600px",
+        WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)",
+        maskImage: "linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)",
+      }}
     >
       <div className="marquee-track gap-3 py-2.5">
         {doubled.map((item, i) => {

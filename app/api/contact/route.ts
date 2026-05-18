@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 // In-memory IP rate limiting: max 3 submissions per minute per IP
 const submissions = new Map<string, number[]>();
 
@@ -32,30 +36,42 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const name = String(body.name ?? "").trim();
-  const shop = String(body.shop ?? "").trim();
-  const email = String(body.email ?? "").trim();
+  const name    = String(body.name    ?? "").trim();
+  const shop    = String(body.shop    ?? "").trim();
+  const email   = String(body.email   ?? "").trim();
   const message = String(body.message ?? "").trim();
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 422 });
   }
 
+  if (name.length > 120 || email.length > 254 || shop.length > 200 || message.length > 5000) {
+    return NextResponse.json({ error: "Input too long." }, { status: 422 });
+  }
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 422 });
   }
 
-  const subject = `Route 9 Web inquiry from ${name}${shop ? ` — ${shop}` : ""}`;
+  const safeName    = escapeHtml(name);
+  const safeShop    = escapeHtml(shop);
+  const safeEmail   = escapeHtml(email);
+  const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+
+  // Strip CR/LF/tab from subject-line fields to prevent header injection
+  const subjectName = name.replace(/[\r\n\t]/g, " ");
+  const subjectShop = shop.replace(/[\r\n\t]/g, " ");
+  const subject = `Route 9 Web inquiry from ${subjectName}${subjectShop ? ` — ${subjectShop}` : ""}`;
 
   const html = `
     <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #fefbf5; border-radius: 12px;">
       <h2 style="color: #110B07; font-size: 24px; margin-bottom: 24px;">New contact from Route 9 Web</h2>
       <table style="width: 100%; border-collapse: collapse;">
-        <tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px; width: 100px;">Name</td><td style="padding: 8px 0; color: #110B07; font-weight: 600;">${name}</td></tr>
-        ${shop ? `<tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px;">Shop</td><td style="padding: 8px 0; color: #110B07; font-weight: 600;">${shop}</td></tr>` : ""}
-        <tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px;">Email</td><td style="padding: 8px 0; color: #D4682A;">${email}</td></tr>
+        <tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px; width: 100px;">Name</td><td style="padding: 8px 0; color: #110B07; font-weight: 600;">${safeName}</td></tr>
+        ${safeShop ? `<tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px;">Shop</td><td style="padding: 8px 0; color: #110B07; font-weight: 600;">${safeShop}</td></tr>` : ""}
+        <tr><td style="padding: 8px 0; color: #7a6b5c; font-size: 13px;">Email</td><td style="padding: 8px 0; color: #D4682A;">${safeEmail}</td></tr>
       </table>
-      ${message ? `<div style="margin-top: 24px; padding: 20px; background: #fff; border-left: 3px solid #D4682A; border-radius: 4px;"><p style="color: #110B07; line-height: 1.7; margin: 0;">${message.replace(/\n/g, "<br>")}</p></div>` : ""}
+      ${safeMessage ? `<div style="margin-top: 24px; padding: 20px; background: #fff; border-left: 3px solid #D4682A; border-radius: 4px;"><p style="color: #110B07; line-height: 1.7; margin: 0;">${safeMessage}</p></div>` : ""}
       <p style="margin-top: 24px; font-size: 12px; color: #9B8C7D;">Sent via route9web.com contact form</p>
     </div>
   `;

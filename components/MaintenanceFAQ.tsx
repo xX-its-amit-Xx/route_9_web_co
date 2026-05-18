@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { useState, useId } from "react";
+import { Plus } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { SplitTextReveal } from "./SplitTextReveal";
@@ -9,22 +9,58 @@ import { FAQ } from "@/lib/content";
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
+  const uid = useId();
+  const btnId = `faq-btn-${uid}`;
+  const panelId = `faq-panel-${uid}`;
   return (
     <div className="border-b border-border-subtle last:border-0">
       <button
+        id={btnId}
         onClick={() => setOpen(!open)}
         className="flex items-start justify-between w-full py-5 text-left gap-4 group"
         aria-expanded={open}
+        aria-controls={panelId}
       >
-        <span className="font-medium text-fg text-sm md:text-base group-hover:text-accent transition-colors duration-150">
+        <span
+          className="font-medium text-sm md:text-base transition-colors duration-150 group-hover:text-accent"
+          style={{ color: open ? "var(--accent)" : "var(--fg)" }}
+        >
           {q}
         </span>
-        <span className="flex-shrink-0 mt-0.5 text-muted group-hover:text-accent transition-colors duration-150">
-          {open ? <Minus size={16} /> : <Plus size={16} />}
+        <span
+          aria-hidden
+          className="flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:text-accent"
+          style={{
+            color: open ? "var(--accent)" : "var(--muted)",
+            transform: open ? "rotate(45deg)" : "rotate(0deg)",
+          }}
+        >
+          <Plus size={16} />
         </span>
       </button>
-      <div className={`overflow-hidden transition-all duration-300 ${open ? "max-h-96 pb-5" : "max-h-0"}`}>
-        <p className="text-muted text-sm leading-relaxed pr-8">{a}</p>
+      {/* CSS grid trick for smooth height animation — no max-h guessing */}
+      <div
+        id={panelId}
+        style={{
+          display: "grid",
+          gridTemplateRows: open ? "1fr" : "0fr",
+          transition: "grid-template-rows 0.38s cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+      >
+        <div style={{ overflow: "hidden" }}>
+          <div
+            className="pb-5 pr-8"
+            style={{
+              borderLeft: "2px solid",
+              borderColor: open ? "rgba(212,104,42,0.45)" : "transparent",
+              paddingLeft: "12px",
+              marginLeft: "2px",
+              transition: "border-color 0.4s cubic-bezier(0.22,1,0.36,1)",
+            }}
+          >
+            <p className="text-muted text-sm leading-relaxed">{a}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -57,7 +93,8 @@ const STATS = [
       </svg>
     ),
     prefix: "",
-    color: "#10B981",
+    /* emerald-600 (#059669): 3.1:1 on cream (passes large-text AA), 5.7:1 on dark bg */
+    color: "#059669",
   },
   {
     label: "Contracts",
@@ -99,46 +136,43 @@ export function MaintenanceFAQ() {
     <section
       id="maintenance"
       className="py-24 md:py-32 bg-surface border-t border-border-subtle"
-      aria-label="Maintenance and support"
+      aria-labelledby="faq-heading"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
           {/* Left */}
-          <div ref={headingRef} className="reveal">
-            <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
-              Maintenance
-            </p>
+          <div ref={headingRef}>
+            <div className="label-pill mb-4 reveal">Maintenance</div>
             <SplitTextReveal
               as="h2"
+              id="faq-heading"
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
               style={{ fontFamily: "var(--font-display)" }}
               stagger={80}
             >
               What&apos;s included after launch.
             </SplitTextReveal>
-            <p className="text-muted leading-relaxed mb-8">
+            <p className="text-muted leading-relaxed mb-8 reveal" style={{ transitionDelay: "200ms" }}>
               The monthly fee isn&apos;t a software subscription. It&apos;s a retainer on
               a person — one who already knows your site inside and out.
             </p>
 
             {/* Stats */}
-            <div ref={statsRef} className="reveal reveal-stagger grid grid-cols-2 gap-3">
-              {STATS.map((stat) => (
+            <div ref={statsRef} className="grid grid-cols-2 gap-3">
+              {STATS.map((stat, i) => (
+                <div key={stat.label} className="reveal" style={{ transitionDelay: `${i * 80}ms` }}>
                 <div
-                  key={stat.label}
-                  className="group p-5 rounded-2xl border transition-all duration-200 hover:-translate-y-1"
+                  className="group p-5 rounded-2xl border border-border transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(212,104,42,0.3)] shadow-[0_2px_8px_rgba(28,18,9,0.05),0_8px_24px_rgba(28,18,9,0.03),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_4px_24px_rgba(212,104,42,0.14),0_1px_0_rgba(255,220,160,0.06)_inset]"
                   style={{
-                    background: "linear-gradient(160deg, #FFFFFF 0%, #FDFAF7 100%)",
-                    border: "1px solid #E8D9C4",
-                    boxShadow: "0 2px 8px rgba(28,18,9,0.05), 0 8px 24px rgba(28,18,9,0.03), inset 0 1px 0 rgba(255,255,255,0.9)",
+                    background: "linear-gradient(160deg, var(--surface-raised) 0%, var(--surface) 100%)",
                   }}
                 >
                   {/* Icon */}
                   <div
                     className="flex items-center justify-center w-8 h-8 rounded-xl mb-3 transition-all duration-200 group-hover:scale-110"
                     style={{
-                      background: `rgba(${stat.color === "#10B981" ? "16,185,129" : "212,104,42"},0.1)`,
-                      border: `1px solid rgba(${stat.color === "#10B981" ? "16,185,129" : "212,104,42"},0.2)`,
+                      background: `rgba(${stat.color === "#059669" ? "5,150,105" : "212,104,42"},0.1)`,
+                      border: `1px solid rgba(${stat.color === "#059669" ? "5,150,105" : "212,104,42"},0.2)`,
                       color: stat.color,
                     }}
                   >
@@ -151,19 +185,22 @@ export function MaintenanceFAQ() {
                     {"displayText" in stat && stat.displayText ? (
                       stat.displayText
                     ) : (
-                      <>{stat.prefix}<AnimatedCounter to={stat.value} />{stat.suffix}</>
+                      <>{stat.prefix}<AnimatedCounter to={stat.value} decimals={stat.value % 1 !== 0 ? 1 : 0} />{stat.suffix}</>
                     )}
                   </div>
                   <div className="text-xs text-muted font-medium">{stat.label}</div>
+                </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Right: FAQ */}
-          <div ref={faqRef} className="reveal">
-            {FAQ.map((item) => (
-              <FAQItem key={item.q} q={item.q} a={item.a} />
+          <div ref={faqRef}>
+            {FAQ.map((item, i) => (
+              <div key={item.q} className="reveal" style={{ transitionDelay: `${i * 70}ms` }}>
+                <FAQItem q={item.q} a={item.a} />
+              </div>
             ))}
           </div>
         </div>
