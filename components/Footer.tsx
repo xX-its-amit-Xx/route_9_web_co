@@ -2,6 +2,7 @@
 
 import { SITE, ABOUT } from "@/lib/content";
 import { useLenis } from "./SmoothScrollProvider";
+import { BrandSeal } from "./BrandSeal";
 
 // ── Route 9 Corridor Map — Framingham → Worcester along MA-9 ─────────────────
 function Route9CorridorMap() {
@@ -134,23 +135,12 @@ export function Footer() {
 
             {/* Brand column */}
             <div>
-              <div className="flex items-center gap-2.5 mb-3">
-                <span
-                  className="flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none flex-shrink-0"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontStyle: "italic",
-                    fontSize: "13px",
-                    background: "linear-gradient(145deg, #E07838 0%, #C05A20 55%, #A04010 100%)",
-                    boxShadow:
-                      "0 0 0 1px rgba(212,104,42,0.45), 0 2px 8px rgba(212,104,42,0.3), inset 0 1px 0 rgba(255,255,255,0.2)",
-                  }}
-                >
-                  R9
-                </span>
-                <div className="flex flex-col leading-none gap-[1px]">
+              <div className="flex items-start gap-4 mb-3">
+                <BrandSeal size={92} tilt={-7} className="flex-shrink-0 mt-1" />
+                <div className="flex flex-col leading-none gap-[1px] mt-2">
                   <span style={{ fontSize: "8px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(243,233,213,0.35)" }}>Route 9</span>
-                  <span style={{ fontSize: "14px", fontFamily: "var(--font-display)", fontStyle: "italic", color: "#F3E9D5", letterSpacing: "-0.01em" }}>Web</span>
+                  <span style={{ fontSize: "20px", fontFamily: "var(--font-display)", fontStyle: "italic", color: "#F3E9D5", letterSpacing: "-0.01em" }}>Web Co.</span>
+                  <span style={{ fontSize: "9px", color: "rgba(155,140,125,0.6)", marginTop: "4px", letterSpacing: "0.08em" }}>SHREWSBURY · ROUTE 9</span>
                 </div>
               </div>
               <p className="text-xs leading-relaxed max-w-[230px]" style={{ color: "rgba(155,140,125,0.88)" }}>

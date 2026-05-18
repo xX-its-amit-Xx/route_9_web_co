@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { BrandSeal } from "./BrandSeal";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -133,22 +134,9 @@ export function About() {
               ))}
             </dl>
 
-            {/* Route 9 sign element */}
+            {/* Route 9 sign element — now featuring the official brand seal */}
             <div className="inline-flex items-center gap-4 p-4 rounded-2xl border border-border bg-surface reveal float-after-reveal transition-all duration-200 hover:border-[rgba(212,104,42,0.28)] hover:shadow-[0_4px_20px_rgba(212,104,42,0.1)]" style={{ transitionDelay: "300ms" }}>
-              <div
-                className="flex items-center justify-center w-14 h-14 rounded-xl bg-[#110B07] flex-shrink-0"
-                aria-hidden
-              >
-                <div className="text-center">
-                  <div className="text-[9px] font-bold text-[#D4682A] tracking-widest leading-tight">MA</div>
-                  <div
-                    className="text-2xl font-bold text-[#F3E9D5] italic leading-none"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    9
-                  </div>
-                </div>
-              </div>
+              <BrandSeal size={72} tilt={-8} className="flex-shrink-0" />
               <div>
                 <p className="text-sm font-bold text-fg" style={{ fontFamily: "var(--font-display)" }}>{SITE.name}</p>
                 <p className="text-xs text-muted">{SITE.location} · Est. {SITE.founded}</p>
