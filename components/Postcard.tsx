@@ -352,72 +352,68 @@ export function Postcard() {
             </div>
           </div>
 
-          {/* RIGHT: address area + stamp + postmark */}
+          {/* Postage stamp — stamped in the top-right corner of the
+              postcard back (a real postcard's stamp sits at the very
+              edge, not nestled inside the right column). */}
           <div
             className="absolute"
             style={{
-              top: "42px",
+              top: "8px",
+              right: "8px",
+              width: "64px",
+              height: "76px",
+              padding: "3px",
+              background: "#FFF6E2",
+              border: "1px dashed rgba(168,72,24,0.55)",
+              boxShadow: "0 1px 2px rgba(28,18,9,0.18)",
+              zIndex: 2,
+            }}
+          >
+            <div className="flex items-center justify-center w-full h-full overflow-hidden">
+              <BrandSeal size={68} tilt={0} tagline="MA · 26¢" />
+            </div>
+          </div>
+
+          {/* Postmark — circular cancellation overlapping the stamp's
+              bottom-left, also pulled up to the top-right corner */}
+          <svg
+            viewBox="0 0 80 80"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden
+            className="absolute"
+            style={{
+              top: "44px",
+              right: "44px",
+              width: "56px",
+              height: "56px",
+              transform: "rotate(-12deg)",
+              opacity: 0.62,
+              pointerEvents: "none",
+              zIndex: 3,
+            }}
+          >
+            <circle cx="40" cy="40" r="34" fill="none" stroke="#1C1209" strokeWidth="1.5" />
+            <circle cx="40" cy="40" r="29" fill="none" stroke="#1C1209" strokeWidth="0.6" />
+            <text x="40" y="32" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fontWeight="700" fill="#1C1209" letterSpacing="0.8">SHREWSBURY</text>
+            <text x="40" y="42" textAnchor="middle" fontSize="9" fontFamily="Georgia, serif" fontWeight="700" fill="#1C1209">MAY 2026</text>
+            <text x="40" y="52" textAnchor="middle" fontSize="5.5" fontFamily="monospace" fontWeight="700" fill="#1C1209" letterSpacing="0.6">MASS · ROUTE 9</text>
+            {/* Cancellation wave lines */}
+            <path d="M-10 60 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
+            <path d="M-10 66 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
+            <path d="M-10 72 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
+          </svg>
+
+          {/* RIGHT: address area only (stamp + postmark moved out) */}
+          <div
+            className="absolute"
+            style={{
+              top: "94px",
               left: "50%",
               right: "12px",
               bottom: "12px",
               paddingLeft: "14px",
             }}
           >
-            {/* Postage stamp — uses BrandSeal as the stamp art */}
-            <div
-              className="absolute"
-              style={{
-                top: "0px",
-                right: "0px",
-                width: "78px",
-                height: "92px",
-                padding: "4px",
-                background: "#FFF6E2",
-                border: "1px dashed rgba(168,72,24,0.55)",
-                boxShadow: "0 1px 2px rgba(28,18,9,0.18)",
-              }}
-            >
-              {/* Perforated edge effect via radial-gradient dots */}
-              <div
-                aria-hidden
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle 2.5px at 0 0, transparent 2.5px, transparent 2.5px), radial-gradient(circle 2.5px at 100% 0, transparent 2.5px, transparent 2.5px)",
-                }}
-              />
-              <div className="flex items-center justify-center w-full h-full overflow-hidden">
-                <BrandSeal size={84} tilt={0} tagline="MA · 26¢" />
-              </div>
-            </div>
-
-            {/* Postmark — circular date stamp overlapping stamp */}
-            <svg
-              viewBox="0 0 80 80"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-              className="absolute"
-              style={{
-                top: "60px",
-                right: "44px",
-                width: "60px",
-                height: "60px",
-                transform: "rotate(-12deg)",
-                opacity: 0.62,
-                pointerEvents: "none",
-              }}
-            >
-              <circle cx="40" cy="40" r="34" fill="none" stroke="#1C1209" strokeWidth="1.5" />
-              <circle cx="40" cy="40" r="29" fill="none" stroke="#1C1209" strokeWidth="0.6" />
-              <text x="40" y="32" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fontWeight="700" fill="#1C1209" letterSpacing="0.8">SHREWSBURY</text>
-              <text x="40" y="42" textAnchor="middle" fontSize="9" fontFamily="Georgia, serif" fontWeight="700" fill="#1C1209">MAY 2026</text>
-              <text x="40" y="52" textAnchor="middle" fontSize="5.5" fontFamily="monospace" fontWeight="700" fill="#1C1209" letterSpacing="0.6">MASS · ROUTE 9</text>
-              {/* Cancellation wave lines */}
-              <path d="M-10 60 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
-              <path d="M-10 66 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
-              <path d="M-10 72 q15 -4 30 0 q15 4 30 0 q15 -4 30 0 q15 4 30 0" stroke="#1C1209" strokeWidth="0.7" fill="none" />
-            </svg>
-
             {/* Address lines */}
             <div
               className="absolute"
