@@ -1346,6 +1346,13 @@ body.cursor-active * {
     transform: none !important;
   }
 
+  /* Vintage typewriter: stop the bell's startle-wobble. Keyframes end
+     at rotate(0deg) so the resting state is correct; lock for safety. */
+  .vintage-typewriter .tw-bell {
+    animation: none !important;
+    transform: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1505,6 +1512,23 @@ body.cursor-active * {
   0%   { opacity: 0; transform: scale(0.4) translate(8px, 8px) rotate(-12deg); }
   35%  { opacity: 1; transform: scale(1.15) translate(0, 0) rotate(4deg); }
   100% { opacity: 0; transform: scale(0.9) translate(-4px, -8px) rotate(-2deg); }
+}
+
+/* ═══════════════════════════════════════════════
+   VINTAGE TYPEWRITER — carriage-return bell wobble
+══════════════════════════════════════════════ */
+.vintage-typewriter .tw-bell {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tw-bell-ring 5.5s ease-in-out infinite;
+}
+@keyframes tw-bell-ring {
+  0%, 88%, 100%  { transform: rotate(0deg);   }
+  90%            { transform: rotate(-12deg); }
+  92%            { transform: rotate(10deg);  }
+  94%            { transform: rotate(-6deg);  }
+  96%            { transform: rotate(3deg);   }
+  98%            { transform: rotate(0deg);   }
 }
 
 /* ═══════════════════════════════════════════════

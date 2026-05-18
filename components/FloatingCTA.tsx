@@ -38,48 +38,64 @@ export function FloatingCTA() {
 
   const visible = scrolled && !atContact;
 
+  // Fixed-position FloatingCTA must NOT bleed past the viewport on
+  // mobile. We wrap it in a fixed container with overflow:hidden + safe
+  // bottom-right inset so the pulse ring (which scales outward) is
+  // clipped instead of leaking off the page.
   return (
-    <a
-      href="#contact"
-      aria-label="Get in touch"
-      data-floating-cta
+    <div
       aria-hidden={visible ? undefined : true}
-      tabIndex={visible ? undefined : -1}
-      className="nav-cta-shimmer fixed z-40 flex items-center gap-2.5 rounded-full text-[#1C1209] text-xs font-bold transition-all duration-500"
+      data-floating-cta
+      className="fixed z-40 pointer-events-none"
       style={{
-        bottom: "28px",
-        right: "24px",
-        height: "44px",
-        padding: "0 18px 0 14px",
-        background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
-        boxShadow: "0 0 0 1px rgba(212,104,42,0.45), 0 8px 28px rgba(212,104,42,0.5), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
+        bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
+        right: "max(12px, env(safe-area-inset-right, 12px))",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.92)",
-        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 0.5s, transform 0.5s",
       }}
     >
-      {/* Pulse ring — expands outward every 2.4s */}
-      <span
-        aria-hidden
-        className="cta-pulse-ring absolute inset-0 rounded-full pointer-events-none"
+      <a
+        href="#contact"
+        aria-label="Get in touch"
+        tabIndex={visible ? undefined : -1}
+        className="nav-cta-shimmer relative inline-flex items-center gap-2 rounded-full text-[#1C1209] font-bold"
         style={{
-          border: "1.5px solid rgba(212,104,42,0.6)",
-          animation: visible ? "cta-ring-ping 2.4s ease-out 1.2s infinite" : "none",
+          height: "42px",
+          padding: "0 14px 0 12px",
+          fontSize: "12px",
+          background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
+          boxShadow: "0 0 0 1px rgba(212,104,42,0.45), 0 8px 24px rgba(212,104,42,0.45), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
+          pointerEvents: visible ? "auto" : "none",
+          // Contain the pulse ring inside the button's pill bounds so it
+          // can't reach off-screen
+          overflow: "hidden",
         }}
-      />
-      <span
-        aria-hidden
-        className="flex items-center justify-center w-5 h-5 rounded-full flex-shrink-0"
-        style={{ background: "rgba(255,255,255,0.18)" }}
       >
-        <MessageCircle size={11} strokeWidth={2.5} />
-      </span>
-      <span>Let&apos;s talk</span>
-      <span
-        className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
-        style={{ background: "rgba(255,220,160,0.9)", boxShadow: "0 0 6px rgba(255,200,100,0.8)" }}
-        aria-hidden
-      />
-    </a>
+        {/* Pulse ring — now contained inside the button (overflow:hidden
+            above), so it pulses subtly without bleeding off the page */}
+        <span
+          aria-hidden
+          className="cta-pulse-ring absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            border: "1.5px solid rgba(255,220,160,0.55)",
+            animation: visible ? "cta-ring-ping 2.4s ease-out 1.2s infinite" : "none",
+          }}
+        />
+        <span
+          aria-hidden
+          className="flex items-center justify-center w-5 h-5 rounded-full flex-shrink-0 relative z-10"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        >
+          <MessageCircle size={11} strokeWidth={2.5} />
+        </span>
+        <span className="relative z-10">Let&apos;s talk</span>
+        <span
+          className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse relative z-10"
+          style={{ background: "rgba(255,220,160,0.9)", boxShadow: "0 0 6px rgba(255,200,100,0.8)" }}
+          aria-hidden
+        />
+      </a>
+    </div>
   );
 }

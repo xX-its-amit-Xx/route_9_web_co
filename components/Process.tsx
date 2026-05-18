@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { MapleLeafFall } from "./MapleLeafFall";
+import { VintageTypewriter } from "./VintageTypewriter";
 import { PROCESS } from "@/lib/content";
 
 // Custom artisan step illustrations
@@ -112,6 +113,17 @@ export function Process() {
       />
       {/* Ambient falling maple leaves — New England autumn backdrop */}
       <MapleLeafFall />
+
+      {/* Vintage typewriter floating in the section's top-right corner
+          on xl screens — visually echoes the TypewriterHeading below */}
+      <div
+        aria-hidden
+        className="hidden xl:block absolute pointer-events-none"
+        style={{ top: "80px", right: "48px", zIndex: 1 }}
+      >
+        <VintageTypewriter size={220} />
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Heading */}
         <div ref={headingRef} className="mb-14">
