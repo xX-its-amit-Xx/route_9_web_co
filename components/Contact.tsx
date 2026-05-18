@@ -5,6 +5,7 @@ import { Send, Mail, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Postcard } from "./Postcard";
 import { RotaryPhone } from "./RotaryPhone";
+import { VintageReceipt } from "./VintageReceipt";
 import { SITE } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -206,77 +207,19 @@ export function Contact() {
           {/* Right: form */}
           <div ref={formRef} className="reveal">
             {status === "success" ? (
-              <div role="status" className="flex flex-col items-center justify-center text-center py-16 px-8 card-light rounded-2xl">
-                <div className="w-16 h-16 flex items-center justify-center mb-4 relative">
-                  {/* Sparkle burst particles */}
-                  {[
-                    { tx: "0px",    ty: "-32px", delay: "0.9s",  color: "#D4682A" },
-                    { tx: "23px",   ty: "-23px", delay: "0.97s", color: "rgba(255,190,60,0.9)" },
-                    { tx: "32px",   ty: "0px",   delay: "0.93s", color: "#D4682A" },
-                    { tx: "23px",   ty: "23px",  delay: "1.0s",  color: "rgba(255,190,60,0.9)" },
-                    { tx: "0px",    ty: "32px",  delay: "0.87s", color: "#D4682A" },
-                    { tx: "-23px",  ty: "23px",  delay: "0.95s", color: "rgba(255,190,60,0.9)" },
-                    { tx: "-32px",  ty: "0px",   delay: "0.91s", color: "#D4682A" },
-                    { tx: "-23px",  ty: "-23px", delay: "1.02s", color: "rgba(255,190,60,0.9)" },
-                  ].map(({ tx, ty, delay, color }, i) => (
-                    <span
-                      key={i}
-                      aria-hidden
-                      style={{
-                        position: "absolute",
-                        width: i % 2 === 0 ? "5px" : "4px",
-                        height: i % 2 === 0 ? "5px" : "4px",
-                        borderRadius: "50%",
-                        background: color,
-                        top: "50%",
-                        left: "50%",
-                        marginTop: "-2.5px",
-                        marginLeft: "-2.5px",
-                        "--tx": tx,
-                        "--ty": ty,
-                        animation: `sparkle-burst 0.65s ease-out ${delay} forwards`,
-                        opacity: 0,
-                      } as React.CSSProperties}
-                    />
-                  ))}
-                  <svg viewBox="0 0 48 48" fill="none" width="64" height="64" aria-hidden>
-                    {/* Background circle fill */}
-                    <circle cx="24" cy="24" r="22" fill="rgba(212,104,42,0.08)" />
-                    {/* Animated draw-on ring */}
-                    <circle
-                      cx="24" cy="24" r="22"
-                      stroke="#D4682A"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeDasharray="138"
-                      strokeDashoffset="138"
-                      style={{ animation: "draw-circle 0.55s ease-out 0.05s forwards", transformOrigin: "24px 24px", transform: "rotate(-90deg)" }}
-                    />
-                    {/* Animated draw-on checkmark */}
-                    <path
-                      d="M14 24L21 31L34 17"
-                      stroke="#D4682A"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeDasharray="30"
-                      strokeDashoffset="30"
-                      style={{ animation: "draw-check 0.42s ease-out 0.58s forwards" }}
-                    />
-                  </svg>
-                </div>
-                <h3 ref={successRef} tabIndex={-1} className="text-xl font-bold text-fg mb-2 outline-none" style={{ fontFamily: "var(--font-display)" }}>
-                  Message sent!
-                </h3>
-                <p className="text-muted text-sm leading-relaxed mb-6">
-                  Thanks for reaching out. I&apos;ll get back to you within a few hours.
-                </p>
-                <button
-                  onClick={() => setStatus("idle")}
-                  className="text-sm text-accent hover:underline"
+              <div>
+                {/* Visually-hidden focusable heading so screen-reader users
+                    land on a real heading and hear the success state. The
+                    receipt itself is the visual treatment. */}
+                <h3
+                  ref={successRef}
+                  tabIndex={-1}
+                  className="sr-only"
+                  style={{ outline: "none" }}
                 >
-                  Send another message
-                </button>
+                  Message sent — thanks for reaching out. We&apos;ll reply within a few hours.
+                </h3>
+                <VintageReceipt onReset={() => setStatus("idle")} />
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate aria-busy={status === "loading"} className="space-y-4">
