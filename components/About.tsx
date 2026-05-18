@@ -7,6 +7,7 @@ import { BrandSeal } from "./BrandSeal";
 import { HandwrittenSignature } from "./HandwrittenSignature";
 import { Matchbook } from "./Matchbook";
 import { NewspaperClipping } from "./NewspaperClipping";
+import { Mailcarrier } from "./Mailcarrier";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -162,6 +163,14 @@ export function About() {
 
           {/* Right: body */}
           <div ref={bodyRef} className="space-y-5">
+            {/* Otis the mailcarrier — friendly brand mascot. Floats
+                inline-right with a wraparound so the paragraphs flow
+                around him on wider screens; hides on mobile where the
+                wrap would crowd the text. */}
+            <div className="hidden md:block float-right ml-5 mb-3 reveal">
+              <Mailcarrier size={160} />
+            </div>
+
             {ABOUT.paragraphs.map((p, i) => (
               <div key={i} className="reveal" style={{ transitionDelay: `${i * 90}ms` }}>
                 <p className="text-muted leading-relaxed">{p}</p>
