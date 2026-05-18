@@ -4,6 +4,7 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { BarberPole } from "./BarberPole";
 import { VintageStamps } from "./VintageStamps";
+import { ShrewsburyMap } from "./ShrewsburyMap";
 import { WHO } from "@/lib/content";
 
 // ── Custom icons for the three reasons ───────────────────────────────────────
@@ -293,6 +294,12 @@ export function WhoIWorkWith() {
             </p>
           </div>
 
+        </div>
+
+        {/* Hand-drawn aerial map of the Route 9 corridor — sits below
+            the two-column grid so it spans the section's full width */}
+        <div className="mt-16 reveal">
+          <ShrewsburyMap />
         </div>
       </div>
     </section>
