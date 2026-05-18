@@ -22,6 +22,23 @@ export function Contact() {
     if (status === "success") successRef.current?.focus();
   }, [status]);
 
+  // Pre-fill the message field when a Pricing tier CTA is clicked, so the
+  // user lands here with context already filled in. Only seeds an empty
+  // message — never overwrites whatever the user has typed.
+  useEffect(() => {
+    const onTier = (e: Event) => {
+      const tier = (e as CustomEvent<{ tier?: string }>).detail?.tier;
+      if (!tier) return;
+      setFields((prev) =>
+        prev.message.trim()
+          ? prev
+          : { ...prev, message: `Hi! I'm interested in the ${tier} tier.` }
+      );
+    };
+    window.addEventListener("r9:select-tier", onTier);
+    return () => window.removeEventListener("r9:select-tier", onTier);
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };

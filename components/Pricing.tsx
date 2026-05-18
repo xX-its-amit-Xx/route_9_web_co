@@ -144,6 +144,11 @@ export function Pricing() {
 
                 <a
                   href="#contact"
+                  onClick={() => {
+                    window.dispatchEvent(
+                      new CustomEvent("r9:select-tier", { detail: { tier: tier.name } })
+                    );
+                  }}
                   className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-all duration-150 hover:-translate-y-0.5 ${
                     tier.highlighted
                       ? "nav-cta-shimmer text-[#110B07]"
