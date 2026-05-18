@@ -3,6 +3,7 @@
 import { Check, Sparkles } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
+import { WaxSeal } from "./WaxSeal";
 import { PRICING, FOUNDING_OFFER } from "@/lib/content";
 
 export function Pricing() {
@@ -170,7 +171,17 @@ export function Pricing() {
         </div>
 
         {/* Founding offer */}
-        <div ref={offerRef} className="reveal">
+        <div ref={offerRef} className="reveal relative">
+          {/* Wax seal — "sealed by the maker" — positioned in the top-right
+              corner of the offer card. Decorative; conveys "official offer". */}
+          <div
+            aria-hidden
+            className="hidden sm:block absolute pointer-events-none"
+            style={{ top: "-22px", right: "20px", zIndex: 5 }}
+          >
+            <WaxSeal size={96} tilt={-12} />
+          </div>
+
           <div
             className="relative overflow-hidden rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5"
             style={{
