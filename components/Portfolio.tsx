@@ -5,6 +5,7 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { PORTFOLIO } from "@/lib/content";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { ProjectFolders } from "./ProjectFolders";
 
 // Real Unsplash photos for each portfolio card
 const PORTFOLIO_PHOTOS = [
@@ -137,6 +138,12 @@ export function Portfolio() {
             <span aria-hidden style={{ display: "inline-flex", animation: "arrow-nudge 1.8s ease-in-out infinite" }}>
               <ArrowRight size={14} />
             </span>
+          </div>
+
+          {/* Stack of "in progress" project folders — visual cue that
+              real client work is queued up behind the placeholder cards */}
+          <div className="mt-10 reveal" style={{ transitionDelay: "550ms" }}>
+            <ProjectFolders size={300} />
           </div>
         </div>
 
