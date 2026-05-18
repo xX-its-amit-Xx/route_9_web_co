@@ -155,15 +155,15 @@ export function Postcard() {
                 ))}
               </defs>
               <text
-                x="180" y="78"
+                x="180" y="72"
                 textAnchor="middle"
                 fontFamily="Georgia, 'Times New Roman', serif"
                 fontWeight="900"
-                fontSize="92"
-                letterSpacing="-2"
+                fontSize="64"
+                letterSpacing="-3"
                 style={{ paintOrder: "stroke fill" }}
                 stroke="#1C1209"
-                strokeWidth="2"
+                strokeWidth="1.6"
               >
                 {LETTERS.map((ch, i) => (
                   <tspan key={i} fill={`url(#pc-photo-${i})`}>{ch}</tspan>
@@ -171,15 +171,15 @@ export function Postcard() {
               </text>
               {/* White inner bevel on the letterforms */}
               <text
-                x="180" y="78"
+                x="180" y="72"
                 textAnchor="middle"
                 fontFamily="Georgia, 'Times New Roman', serif"
                 fontWeight="900"
-                fontSize="92"
-                letterSpacing="-2"
+                fontSize="64"
+                letterSpacing="-3"
                 fill="none"
                 stroke="rgba(255,255,255,0.45)"
-                strokeWidth="0.6"
+                strokeWidth="0.5"
               >
                 GREETINGS
               </text>

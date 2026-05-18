@@ -4,6 +4,7 @@ import { Check, Sparkles } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
 import { WaxSeal } from "./WaxSeal";
+import { ChalkboardSpecial } from "./ChalkboardSpecial";
 import { PRICING, FOUNDING_OFFER } from "@/lib/content";
 
 export function Pricing() {
@@ -170,16 +171,22 @@ export function Pricing() {
           ))}
         </div>
 
+        {/* Hanging chalkboard "today's special" above the offer card */}
+        <div className="flex justify-center mb-6 reveal">
+          <ChalkboardSpecial />
+        </div>
+
         {/* Founding offer */}
         <div ref={offerRef} className="reveal relative">
           {/* Wax seal — "sealed by the maker" — positioned in the top-right
-              corner of the offer card. Decorative; conveys "official offer". */}
+              corner of the offer card. Decorative; conveys "official offer".
+              Sized small + no ribbon tails so it doesn't clip into the CTA. */}
           <div
             aria-hidden
             className="hidden sm:block absolute pointer-events-none"
-            style={{ top: "-22px", right: "20px", zIndex: 5 }}
+            style={{ top: "-18px", right: "16px", zIndex: 5 }}
           >
-            <WaxSeal size={96} tilt={-12} />
+            <WaxSeal size={56} tilt={-12} withRibbon={false} />
           </div>
 
           <div
