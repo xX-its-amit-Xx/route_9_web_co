@@ -3,6 +3,7 @@
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { BarberPole } from "./BarberPole";
+import { VintageStamps } from "./VintageStamps";
 import { WHO } from "@/lib/content";
 
 // ── Custom icons for the three reasons ───────────────────────────────────────
@@ -283,29 +284,9 @@ export function WhoIWorkWith() {
               ))}
             </div>
 
-            {/* Shop window strip — hand-drawn ma-and-pa feel */}
-            <div
-              className="mt-3 flex items-center justify-between px-1"
-              aria-hidden
-            >
-              {[
-                { icon: "🍕", label: "Pizzeria", delay: "0s",    dur: "3.9s" },
-                { icon: "✂️", label: "Barber",   delay: "0.55s", dur: "4.4s" },
-                { icon: "☕", label: "Café",      delay: "1.1s",  dur: "3.6s" },
-                { icon: "🥐", label: "Bakery",   delay: "1.65s", dur: "4.8s" },
-                { icon: "💅", label: "Salon",    delay: "0.3s",  dur: "4.1s" },
-                { icon: "🔧", label: "Auto",     delay: "0.9s",  dur: "3.7s" },
-              ].map(({ icon, label, delay, dur }) => (
-                <div
-                  key={label}
-                  className="flex flex-col items-center gap-0.5 opacity-50 hover:opacity-85 transition-opacity duration-200"
-                  style={{ animation: `float-subtle ${dur} ease-in-out ${delay} infinite` }}
-                >
-                  <span className="text-base leading-none">{icon}</span>
-                  <span className="text-[8px] text-muted font-medium tracking-wide">{label}</span>
-                </div>
-              ))}
-            </div>
+            {/* Vintage postage-stamp strip — replaces the emoji strip with
+                hand-drawn line-art "stamps" per trade */}
+            <VintageStamps />
 
             <p className="text-xs text-muted mt-2 text-center italic" style={{ fontFamily: "var(--font-display)" }}>
               Not on the list? Every independent shop is welcome.
