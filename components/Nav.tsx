@@ -60,6 +60,32 @@ export function Nav() {
     if (open) firstMobileLinkRef.current?.focus();
   }, [open]);
 
+  // Tab focus trap inside the mobile dialog (WCAG 2.4.3 — focus order
+  // inside aria-modal must not escape to background content)
+  useEffect(() => {
+    if (!open) return;
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const dialog = document.getElementById("mobile-nav");
+      if (!dialog) return;
+      const focusables = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onTab);
+    return () => document.removeEventListener("keydown", onTab);
+  }, [open]);
+
   // Keyboard shortcut: K → scroll to contact
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
