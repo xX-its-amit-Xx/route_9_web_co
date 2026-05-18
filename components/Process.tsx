@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TypewriterHeading } from "./TypewriterHeading";
+import { MapleLeafFall } from "./MapleLeafFall";
 import { PROCESS } from "@/lib/content";
 
 // Custom artisan step illustrations
@@ -109,6 +110,8 @@ export function Process() {
           zIndex: 0,
         }}
       />
+      {/* Ambient falling maple leaves — New England autumn backdrop */}
+      <MapleLeafFall />
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Heading */}
         <div ref={headingRef} className="mb-14">

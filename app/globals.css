@@ -1294,6 +1294,11 @@ body.cursor-active * {
     display: none !important;
   }
 
+  /* Maple leaves: hide entirely. Without the fall animation they'd snap
+     to top:0 and pile up at the top of the section. The autumn vibe is
+     purely decorative anyway. */
+  .maple-leaf { display: none !important; }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1402,6 +1407,34 @@ body.cursor-active * {
 
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   FALLING MAPLE LEAVES — autumn ambient backdrop
+══════════════════════════════════════════════ */
+.maple-leaf {
+  display: inline-block;
+  will-change: transform;
+  /* Per-leaf custom properties are set inline; defaults here in case */
+  animation:
+    maple-fall var(--leaf-dur, 22s) linear var(--leaf-delay, 0s) infinite,
+    maple-sway calc(var(--leaf-dur, 22s) / 5) ease-in-out var(--leaf-delay, 0s) infinite,
+    maple-spin calc(var(--leaf-dur, 22s) / 3) linear var(--leaf-delay, 0s) infinite;
+  transform: scale(var(--leaf-scale, 1));
+}
+@keyframes maple-fall {
+  0%   { top: -40px; opacity: 0; }
+  6%   { opacity: 0.9; }
+  90%  { opacity: 0.9; }
+  100% { top: calc(100% + 40px); opacity: 0; }
+}
+@keyframes maple-sway {
+  0%, 100% { margin-left: 0; }
+  50%      { margin-left: 38px; }
+}
+@keyframes maple-spin {
+  from { rotate: 0deg; }
+  to   { rotate: 360deg; }
 }
 
 /* ═══════════════════════════════════════════════
