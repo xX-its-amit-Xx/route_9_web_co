@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { SplitTextReveal } from "./SplitTextReveal";
+import { PolaroidPinboard } from "./PolaroidPinboard";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TESTIMONIALS } from "@/lib/content";
 
@@ -209,6 +210,11 @@ export function Testimonials() {
               <ChevronRight size={18} aria-hidden />
             </button>
           </div>
+        </div>
+
+        {/* Decorative pinboard of Route 9 scenes above the carousel */}
+        <div className="mb-12 reveal">
+          <PolaroidPinboard />
         </div>
 
         {/* Stable sr-only live region — content updates in-place so AT reliably
