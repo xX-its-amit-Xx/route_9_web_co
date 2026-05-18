@@ -1252,6 +1252,13 @@ body.cursor-active * {
     display: none;
   }
 
+  /* Route 9 scene car: would otherwise snap to viewBox origin (top-left)
+     when the animation is killed — hide it entirely under reduced-motion.
+     The rest of the scene is static SVG and renders normally. */
+  .r9-car-drive {
+    display: none;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1360,6 +1367,20 @@ body.cursor-active * {
 
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   ROUTE 9 SCENE — car drives across the scene
+══════════════════════════════════════════════ */
+@keyframes r9-car-drive {
+  0%   { transform: translate(-40px, 234px) scale(0.7); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(720px, 218px) scale(1); opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translate(1500px, 234px) scale(1.3); opacity: 0; }
+}
+.r9-car-drive {
+  animation: r9-car-drive 18s linear infinite;
 }
 
 /* ═══════════════════════════════════════════════

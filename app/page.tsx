@@ -14,6 +14,7 @@ import { FloatingCTA } from "@/components/FloatingCTA";
 import { CustomCursor } from "@/components/CustomCursor";
 import { IntroSplash } from "@/components/IntroSplash";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
+import { Route9Scene } from "@/components/Route9Scene";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
         <Portfolio />
         <Testimonials />
         <Process />
+        <Route9Scene />
         <About />
         <Contact />
       </main>
