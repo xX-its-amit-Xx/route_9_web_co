@@ -16,6 +16,7 @@ import { IntroSplash } from "@/components/IntroSplash";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { Route9Scene } from "@/components/Route9Scene";
 import { NeonSign } from "@/components/NeonSign";
+import { LakeScene } from "@/components/LakeScene";
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
         <NeonSign />
         <MaintenanceFAQ />
         <Portfolio />
+        <LakeScene />
         <Testimonials />
         <Process />
         <Route9Scene />

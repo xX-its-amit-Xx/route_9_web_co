@@ -1272,6 +1272,16 @@ body.cursor-active * {
     opacity: 0.35 !important;
   }
 
+  /* Lake scene: hide the sailboat (its initial keyframe transform places
+     it off-screen left, so without the animation it'd snap to viewBox
+     origin), freeze ripples, and stop lily-pad bobbing. The static scene
+     still renders normally. */
+  .lake-sailboat { display: none; }
+  .lake-ripple, .lily-bob {
+    animation: none !important;
+    transform: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1381,6 +1391,33 @@ body.cursor-active * {
   /* Remove decorative box-shadow blur that can soften edges */
   .card-light { box-shadow: 0 0 0 1px rgba(212,104,42,0.5), 0 2px 8px rgba(0,0,0,0.15) !important; }
 }
+
+/* ═══════════════════════════════════════════════
+   LAKE SCENE — animated water ripples + sailboat
+══════════════════════════════════════════════ */
+@keyframes lake-ripple-slide {
+  0%   { transform: translateX(0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateX(2880px); opacity: 0; }
+}
+.lake-ripple   { animation: lake-ripple-slide 14s linear infinite; }
+.lake-ripple-2 { animation-duration: 18s; animation-delay: -6s; }
+.lake-ripple-3 { animation-duration: 22s; animation-delay: -12s; }
+
+@keyframes lake-sailboat-glide {
+  0%   { transform: translate(40px, 162px); opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { transform: translate(1420px, 164px); opacity: 0; }
+}
+.lake-sailboat { animation: lake-sailboat-glide 42s linear infinite; }
+
+@keyframes lily-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
+}
+.lily-bob { animation: lily-bob 4s ease-in-out infinite; }
 
 /* ═══════════════════════════════════════════════
    NEON SIGN — realistic vintage neon flicker
