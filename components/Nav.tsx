@@ -86,6 +86,26 @@ export function Nav() {
     return () => document.removeEventListener("keydown", onTab);
   }, [open]);
 
+  // Hide outside content from AT while the modal is open. aria-modal="true"
+  // alone doesn't guarantee that screen readers stop exposing background
+  // content — marking <main> and <footer> as aria-hidden enforces it.
+  // Also lock body scroll so a swipe on the overlay doesn't shift the page
+  // underneath.
+  useEffect(() => {
+    if (!open) return;
+    const main = document.querySelector("main");
+    const footer = document.querySelector("footer");
+    main?.setAttribute("aria-hidden", "true");
+    footer?.setAttribute("aria-hidden", "true");
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      main?.removeAttribute("aria-hidden");
+      footer?.removeAttribute("aria-hidden");
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
+
   // Keyboard shortcut: K → scroll to contact
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
