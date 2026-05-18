@@ -146,7 +146,9 @@ export function Pricing() {
                   href="#contact"
                   onClick={() => {
                     window.dispatchEvent(
-                      new CustomEvent("r9:select-tier", { detail: { tier: tier.name } })
+                      new CustomEvent("r9:contact-prefill", {
+                        detail: { message: `Hi! I'm interested in the ${tier.name} tier.` },
+                      })
                     );
                   }}
                   className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-all duration-150 hover:-translate-y-0.5 ${
@@ -232,6 +234,13 @@ export function Pricing() {
 
             <a
               href="#contact"
+              onClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent("r9:contact-prefill", {
+                    detail: { message: "Hi! I'd like to claim a founding-pricing spot." },
+                  })
+                );
+              }}
               className="nav-cta-shimmer relative flex-shrink-0 inline-flex items-center h-10 px-5 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-150 hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
