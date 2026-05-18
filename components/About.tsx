@@ -5,6 +5,7 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { BrandSeal } from "./BrandSeal";
 import { HandwrittenSignature } from "./HandwrittenSignature";
+import { Matchbook } from "./Matchbook";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -37,16 +38,17 @@ export function About() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* ── Atmospheric street photo ── */}
-        <div ref={bannerRef} className="relative w-full h-44 md:h-60 rounded-3xl overflow-hidden mb-14 reveal group">
-          <img
-            ref={photoRef}
-            src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1400&auto=format&fit=crop&q=80"
-            alt="A warm café along Route 9, Shrewsbury MA"
-            loading="lazy"
-            className="w-full h-full object-cover object-center"
-            style={{ willChange: "transform", transform: "scale(1.08)" }}
-          />
+        {/* ── Atmospheric street photo with matchbook artifact ── */}
+        <div className="relative mb-14">
+          <div ref={bannerRef} className="relative w-full h-44 md:h-60 rounded-3xl overflow-hidden reveal group">
+            <img
+              ref={photoRef}
+              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1400&auto=format&fit=crop&q=80"
+              alt="A warm café along Route 9, Shrewsbury MA"
+              loading="lazy"
+              className="w-full h-full object-cover object-center"
+              style={{ willChange: "transform", transform: "scale(1.08)" }}
+            />
           {/* Dark gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#1C1209]/80 via-[#1C1209]/45 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/45 to-transparent" />
@@ -81,6 +83,17 @@ export function About() {
             >
               9
             </span>
+          </div>
+          </div>
+
+          {/* Matchbook artifact — tucked into the bottom-left corner of
+              the banner. Desktop only; would crowd narrow viewports. */}
+          <div
+            aria-hidden
+            className="hidden md:block absolute pointer-events-none"
+            style={{ left: "-12px", bottom: "-22px", zIndex: 2 }}
+          >
+            <Matchbook size={156} />
           </div>
         </div>
 
