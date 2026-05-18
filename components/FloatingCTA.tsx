@@ -4,14 +4,30 @@ import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 
 export function FloatingCTA() {
-  const [visible, setVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [atContact, setAtContact] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Hide the CTA once the user has actually reached the Contact section —
+  // it points there, so showing it overlapping the form is redundant noise.
+  useEffect(() => {
+    const contact = document.getElementById("contact");
+    if (!contact) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setAtContact(entry.isIntersecting),
+      { rootMargin: "0px 0px -20% 0px" }
+    );
+    obs.observe(contact);
+    return () => obs.disconnect();
+  }, []);
+
+  const visible = scrolled && !atContact;
 
   return (
     <a
