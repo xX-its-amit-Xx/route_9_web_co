@@ -65,15 +65,15 @@ export function CompassRose({ size = 280 }: { size?: number }) {
         {/* Outer ring grain (masked between r=84 and r=94 visually via stroke) */}
         <circle cx="100" cy="100" r="89" fill="none" stroke="url(#cr-grain)" strokeWidth="4" opacity="0.6" />
 
-        {/* Top curved label */}
-        <text fontSize="9" fontFamily="Georgia, serif" fontWeight="700" letterSpacing="3.6" fill="#D4682A">
+        {/* Top curved label — sized to fit the r=84 arc (~264 units) */}
+        <text fontSize="8" fontFamily="Georgia, serif" fontWeight="700" letterSpacing="1.4" fill="#D4682A">
           <textPath href="#cr-outer-top" startOffset="50%" textAnchor="middle">
-            ROUTE 9 · SHREWSBURY · MASS
+            ROUTE 9 · SHREWSBURY MASS
           </textPath>
         </text>
 
-        {/* Bottom curved label */}
-        <text fontSize="7" fontFamily="monospace" fontWeight="700" letterSpacing="2.8" fill="#D4682A" opacity="0.78">
+        {/* Bottom curved label — sized to fit the r=78 arc (~245 units) */}
+        <text fontSize="6.5" fontFamily="monospace" fontWeight="700" letterSpacing="1.4" fill="#D4682A" opacity="0.78">
           <textPath href="#cr-outer-bot" startOffset="50%" textAnchor="middle">
             WORCESTER COUNTY · NEW ENGLAND
           </textPath>

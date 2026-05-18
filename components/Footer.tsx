@@ -234,7 +234,7 @@ export function Footer() {
             <p style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
               © {new Date().getFullYear()} {SITE.name} · Shrewsbury, MA · Est. {SITE.founded}
             </p>
-            <div className="flex items-center gap-5" style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2" style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
               {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
                 <a
                   href={SITE.personalSite}

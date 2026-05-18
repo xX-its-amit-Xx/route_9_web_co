@@ -91,17 +91,17 @@ export function VinylRecord({ size = 220, spinning = false }: Props) {
         <circle cx="110" cy="110" r="42" fill="url(#vinyl-label)" stroke="#A84818" strokeWidth="0.6" />
         <circle cx="110" cy="110" r="38" fill="none" stroke="rgba(168,72,24,0.45)" strokeWidth="0.5" />
 
-        {/* Curved label text — top */}
-        <text fontFamily="Georgia, serif" fontWeight="700" fontSize="6" letterSpacing="2.2" fill="#A84818">
+        {/* Curved label text — top (arc r=40, ~126 units long) */}
+        <text fontFamily="Georgia, serif" fontWeight="700" fontSize="5" letterSpacing="0.3" fill="#A84818">
           <textPath href="#vinyl-arc-top" startOffset="50%" textAnchor="middle">
-            ROUTE 9 WEB CO. RECORDS
+            ROUTE 9 WEB CO. · RECORDS
           </textPath>
         </text>
 
-        {/* Bottom curved tagline */}
-        <text fontFamily="monospace" fontWeight="700" fontSize="4.5" letterSpacing="1.8" fill="#A84818" opacity="0.85">
+        {/* Bottom curved tagline (arc r=36, ~113 units long) */}
+        <text fontFamily="monospace" fontWeight="700" fontSize="3.6" letterSpacing="0.4" fill="#A84818" opacity="0.85">
           <textPath href="#vinyl-arc-bot" startOffset="50%" textAnchor="middle">
-            SHREWSBURY MA · 33⅓ RPM · LONG PLAY
+            SHREWSBURY MA · 33⅓ RPM
           </textPath>
         </text>
 

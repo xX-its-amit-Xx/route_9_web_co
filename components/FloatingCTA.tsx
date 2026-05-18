@@ -14,16 +14,25 @@ export function FloatingCTA() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Hide the CTA once the user has actually reached the Contact section —
-  // it points there, so showing it overlapping the form is redundant noise.
+  // Hide the CTA once the user has actually reached the Contact section
+  // OR scrolled past it into the footer — at that point the floating
+  // "Let's talk" pointing to #contact is just noise.
   useEffect(() => {
     const contact = document.getElementById("contact");
+    const footer = document.querySelector("footer");
     if (!contact) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setAtContact(entry.isIntersecting),
+      (entries) => {
+        let nearEnd = false;
+        for (const entry of entries) {
+          if (entry.isIntersecting) nearEnd = true;
+        }
+        setAtContact(nearEnd);
+      },
       { rootMargin: "0px 0px -20% 0px" }
     );
     obs.observe(contact);
+    if (footer) obs.observe(footer);
     return () => obs.disconnect();
   }, []);
 

@@ -86,7 +86,9 @@ export function SplitTextReveal({
             {word}
           </span>
           {i < words.length - 1 && (
-            <span aria-hidden="true">&nbsp;</span>
+            // Real space so the heading wraps on narrow viewports;
+            // &nbsp; would prevent line-breaks and overflow the screen.
+            <span aria-hidden="true"> </span>
           )}
         </span>
       ))}
