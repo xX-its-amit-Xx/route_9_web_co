@@ -8,8 +8,10 @@
   /* Light-mode: warm cream */
   --bg:             #FEFBF5;
   --fg:             #1C1209;
-  --accent:         #D4682A;
-  --accent-hover:   #C05A20;
+  /* #D4682A on cream is only ~3.4:1 — below AA for normal text.
+     Darker burnt-orange variants give ~5.7:1 (accent) and ~7:1 (hover). */
+  --accent:         #A84818;
+  --accent-hover:   #8E3A0E;
   --accent-fg:      #FEFBF5;
   --accent-light:   #FDF0E8;
   --muted:          #7A6B5C;
