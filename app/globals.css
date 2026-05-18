@@ -1154,8 +1154,10 @@ body.cursor-active * {
   z-index: 999999;
   padding: 10px 20px;
   border-radius: 0 0 10px 10px;
+  /* #1C1209 on #D4682A ≈ 5.4:1 — passes AA. White on brand orange was
+     only ~3.6:1 and 14px bold isn't "large text" per WCAG. */
   background: #D4682A;
-  color: #fff;
+  color: #1C1209;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.01em;
