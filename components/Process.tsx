@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TypewriterHeading } from "./TypewriterHeading";
 import { PROCESS } from "@/lib/content";
 
 // Custom artisan step illustrations
@@ -113,15 +113,15 @@ export function Process() {
         {/* Heading */}
         <div ref={headingRef} className="mb-14">
           <div className="label-pill mb-4 reveal">How it works</div>
-          <SplitTextReveal
+          <TypewriterHeading
             as="h2"
             id="process-heading"
             className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
-            stagger={80}
-          >
-            From handshake to live website in days.
-          </SplitTextReveal>
+            lines={["From handshake", "to live website in days."]}
+            charDelay={36}
+            lineGap={420}
+          />
           <p
             className="mt-4 max-w-xl text-muted text-lg reveal"
             style={{ transitionDelay: "500ms" }}

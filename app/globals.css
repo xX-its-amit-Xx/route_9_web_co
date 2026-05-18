@@ -1405,6 +1405,36 @@ body.cursor-active * {
 }
 
 /* ═══════════════════════════════════════════════
+   TYPEWRITER HEADING — character-by-character + DING!
+══════════════════════════════════════════════ */
+.typewriter-heading .tw-caret {
+  display: inline-block;
+  width: 0.04em;
+  margin-left: 0.06em;
+  color: #D4682A;
+  animation: tw-caret-blink 0.95s steps(2, end) infinite;
+}
+.typewriter-heading .tw-caret-done {
+  animation: tw-caret-fade 1.4s ease-out 0.8s forwards;
+}
+@keyframes tw-caret-blink {
+  50% { opacity: 0; }
+}
+@keyframes tw-caret-fade {
+  to { opacity: 0; }
+}
+
+.tw-ding {
+  animation: tw-ding-pop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: left center;
+}
+@keyframes tw-ding-pop {
+  0%   { opacity: 0; transform: scale(0.3) rotate(-12deg); }
+  60%  { opacity: 1; transform: scale(1.15) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-4deg); }
+}
+
+/* ═══════════════════════════════════════════════
    ROTARY PHONE — dial spin, handset jiggle, ring bubble
 ══════════════════════════════════════════════ */
 .rotary-phone {
