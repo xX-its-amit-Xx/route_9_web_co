@@ -6,6 +6,7 @@ import { SplitTextReveal } from "./SplitTextReveal";
 import { BrandSeal } from "./BrandSeal";
 import { HandwrittenSignature } from "./HandwrittenSignature";
 import { Matchbook } from "./Matchbook";
+import { NewspaperClipping } from "./NewspaperClipping";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -189,6 +190,11 @@ export function About() {
                 </a>
               </div>
             )}
+
+            {/* Vintage newspaper clipping — fictional "press coverage" */}
+            <div className="reveal mt-8" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 1.5) * 90}ms` }}>
+              <NewspaperClipping />
+            </div>
 
             {/* Hand-drawn ink signature — draws on when scrolled into view */}
             <div className="mt-8 reveal" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 2) * 90}ms` }}>
