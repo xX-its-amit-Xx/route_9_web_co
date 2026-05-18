@@ -1338,6 +1338,14 @@ body.cursor-active * {
     transform: none !important;
   }
 
+  /* Pocket watch: park the second hand at its 12 o'clock resting
+     position. Hour and minute hands are static SVG transforms so they
+     stay at the 10:10 photographer's pose. */
+  .pocket-watch .pw-second {
+    animation: none !important;
+    transform: none !important;
+  }
+
   /* Tailwind hover-lift / hover-scale utilities still apply transform instantly
      (transition is suppressed to 0.01ms but the property change fires as a jump). */
   .hover\:-translate-y-0\.5:hover,
@@ -1497,6 +1505,19 @@ body.cursor-active * {
   0%   { opacity: 0; transform: scale(0.4) translate(8px, 8px) rotate(-12deg); }
   35%  { opacity: 1; transform: scale(1.15) translate(0, 0) rotate(4deg); }
   100% { opacity: 0; transform: scale(0.9) translate(-4px, -8px) rotate(-2deg); }
+}
+
+/* ═══════════════════════════════════════════════
+   POCKET WATCH — second hand sweeps
+══════════════════════════════════════════════ */
+.pocket-watch .pw-second {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pw-second-sweep 60s linear infinite;
+}
+@keyframes pw-second-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 /* ═══════════════════════════════════════════════

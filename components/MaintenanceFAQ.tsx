@@ -6,6 +6,7 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { SplitTextReveal } from "./SplitTextReveal";
 import { MaintenanceLog } from "./MaintenanceLog";
+import { PocketWatch } from "./PocketWatch";
 import { FAQ } from "@/lib/content";
 
 function FAQItem({ q, a }: { q: string; a: string }) {
@@ -143,10 +144,20 @@ export function MaintenanceFAQ() {
   return (
     <section
       id="maintenance"
-      className="py-24 md:py-32 bg-surface border-t border-border-subtle"
+      className="py-24 md:py-32 bg-surface border-t border-border-subtle relative overflow-hidden"
       aria-labelledby="faq-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Decorative pocket watch — second hand sweeps continuously.
+          Floats absolute over the section's top-right corner on lg+ */}
+      <div
+        aria-hidden
+        className="hidden lg:block absolute pointer-events-none"
+        style={{ top: "60px", right: "32px", zIndex: 1 }}
+      >
+        <PocketWatch size={170} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
           {/* Left */}
           <div ref={headingRef}>
