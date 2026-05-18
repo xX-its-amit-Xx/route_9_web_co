@@ -295,6 +295,7 @@ export function Contact() {
                       Your name <span className="text-accent">*</span>
                     </label>
                     <input id="name" name="name" type="text" required autoComplete="name"
+                      maxLength={120}
                       placeholder="Jane Smith" value={fields.name} onChange={handleChange}
                       disabled={status === "loading"}
                       className={inputClass} />
@@ -304,6 +305,7 @@ export function Contact() {
                       Shop name
                     </label>
                     <input id="shop" name="shop" type="text" autoComplete="organization"
+                      maxLength={200}
                       placeholder="Smith's Pizzeria" value={fields.shop} onChange={handleChange}
                       disabled={status === "loading"}
                       className={inputClass} />
@@ -315,6 +317,7 @@ export function Contact() {
                     Email address <span className="text-accent">*</span>
                   </label>
                   <input id="email" name="email" type="email" required autoComplete="email"
+                    maxLength={254}
                     placeholder="jane@smithspizzeria.com" value={fields.email} onChange={handleChange}
                     disabled={status === "loading"}
                     className={inputClass} />
@@ -325,6 +328,7 @@ export function Contact() {
                     Message
                   </label>
                   <textarea id="message" name="message" rows={5}
+                    maxLength={5000}
                     placeholder="Tell me about your business and what you're looking for..."
                     value={fields.message} onChange={handleChange}
                     disabled={status === "loading"}
