@@ -17,6 +17,7 @@ import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { Route9Scene } from "@/components/Route9Scene";
 import { NeonSign } from "@/components/NeonSign";
 import { LakeScene } from "@/components/LakeScene";
+import { StorefrontParade } from "@/components/StorefrontParade";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
         <Hero />
         <SocialProofTicker />
         <WhoIWorkWith />
+        <StorefrontParade />
         <QualityPillars />
         <Pricing />
         <NeonSign />
