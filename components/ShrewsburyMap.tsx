@@ -17,7 +17,7 @@ export function ShrewsburyMap() {
     { x: 250, y: 154, label: "Barber",    align: "above" },
     { x: 360, y: 188, label: "Bakery",    align: "below" },
     { x: 480, y: 162, label: "Café",      align: "above" },
-    { x: 590, y: 186, label: "Salon",     align: "below" },
+    { x: 520, y: 184, label: "Salon",     align: "above" },
   ];
 
   return (

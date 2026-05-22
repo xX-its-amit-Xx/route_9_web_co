@@ -407,20 +407,21 @@ export function Postcard() {
           <div
             className="absolute"
             style={{
-              top: "94px",
+              top: "108px",
               left: "50%",
               right: "12px",
               bottom: "12px",
               paddingLeft: "14px",
+              overflow: "hidden",
             }}
           >
             {/* Address lines */}
             <div
               className="absolute"
               style={{
-                bottom: "10px",
+                top: "8px",
                 left: "14px",
-                right: "8px",
+                right: "68px",
                 fontFamily: "Georgia, serif",
                 fontStyle: "italic",
                 fontSize: "12px",

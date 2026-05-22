@@ -77,19 +77,14 @@ export function SplitTextReveal({
       style={style}
     >
       {words.map((word, i) => (
-        <span
-          key={i}
-          className="word-clip"
-          aria-hidden="true"
-        >
-          <span className="word-inner">
-            {word}
+        // The space lives OUTSIDE word-clip (which has overflow:hidden) so
+        // browsers can't collapse it. A text node between inline-blocks gives
+        // natural inter-word spacing and still allows line-wrapping.
+        <span key={i} style={{ display: "inline" }} aria-hidden="true">
+          <span className="word-clip">
+            <span className="word-inner">{word}</span>
           </span>
-          {i < words.length - 1 && (
-            // Real space so the heading wraps on narrow viewports;
-            // &nbsp; would prevent line-breaks and overflow the screen.
-            <span aria-hidden="true"> </span>
-          )}
+          {i < words.length - 1 && " "}
         </span>
       ))}
     </Tag>
