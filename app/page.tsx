@@ -88,6 +88,7 @@ import { QuiltingBee } from "@/components/QuiltingBee";
 import { FiddleContest } from "@/components/FiddleContest";
 import { CranberryBog } from "@/components/CranberryBog";
 import { AerialBalloon } from "@/components/AerialBalloon";
+import { TobogganRun } from "@/components/TobogganRun";
 
 export default function Home() {
   return (
@@ -148,6 +149,7 @@ export default function Home() {
         <IronBridge />
         <AutumnForestPath />
         <WinterSleigh />
+        <TobogganRun />
         <IceHarvestScene />
         <SpringThaw />
         <BarnQuilt />
