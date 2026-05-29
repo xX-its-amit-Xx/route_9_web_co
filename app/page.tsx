@@ -86,6 +86,7 @@ import { WhalingShip } from "@/components/WhalingShip";
 import { SummerPicnic } from "@/components/SummerPicnic";
 import { QuiltingBee } from "@/components/QuiltingBee";
 import { FiddleContest } from "@/components/FiddleContest";
+import { CranberryBog } from "@/components/CranberryBog";
 
 export default function Home() {
   return (
@@ -126,6 +127,7 @@ export default function Home() {
         <MagicLantern />
         <LakeScene />
         <FishingPierScene />
+        <CranberryBog />
         <WhalingShip />
         <SteamboatScene />
         <RecordCrate />
