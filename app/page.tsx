@@ -52,6 +52,7 @@ import { Telegrapher } from "@/components/Telegrapher";
 import { RecordCrate } from "@/components/RecordCrate";
 import { WorkbenchTools } from "@/components/WorkbenchTools";
 import { ShrewsburyPostcard } from "@/components/ShrewsburyPostcard";
+import { SealPress } from "@/components/SealPress";
 
 export default function Home() {
   return (
@@ -107,6 +108,7 @@ export default function Home() {
         <MotelSign />
         <FortuneTeller />
         <Telegrapher />
+        <SealPress />
         <Contact />
         <FooterStreetscape />
       </main>
