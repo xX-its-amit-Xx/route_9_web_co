@@ -69,6 +69,7 @@ import { GristMillScene } from "@/components/GristMillScene";
 import { PrintshopBroadside } from "@/components/PrintshopBroadside";
 import { CiderPressScene } from "@/components/CiderPressScene";
 import { SteamboatScene } from "@/components/SteamboatScene";
+import { BlacksmithForge } from "@/components/BlacksmithForge";
 
 export default function Home() {
   return (
@@ -133,6 +134,7 @@ export default function Home() {
         <About />
         <ShrewsburyCommon />
         <WorkbenchTools />
+        <BlacksmithForge />
         <VintageSeedPacket />
         <MatchbookCollection />
         <CorkBoard />
