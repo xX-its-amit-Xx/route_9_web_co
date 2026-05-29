@@ -71,6 +71,7 @@ import { CiderPressScene } from "@/components/CiderPressScene";
 import { SteamboatScene } from "@/components/SteamboatScene";
 import { BlacksmithForge } from "@/components/BlacksmithForge";
 import { FishingPierScene } from "@/components/FishingPierScene";
+import { SugaringShack } from "@/components/SugaringShack";
 
 export default function Home() {
   return (
@@ -93,6 +94,7 @@ export default function Home() {
         <ApothecaryShelf />
         <PinballMachine />
         <MapleScene />
+        <SugaringShack />
         <HighwayMileageSign />
         <DinerMenu />
         <GasStationPump />
