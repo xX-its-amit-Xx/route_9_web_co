@@ -25,6 +25,7 @@ import { NightSky } from "@/components/NightSky";
 import { Lighthouse } from "@/components/Lighthouse";
 import { ApothecaryShelf } from "@/components/ApothecaryShelf";
 import { Typewriter } from "@/components/Typewriter";
+import { MatchbookCollection } from "@/components/MatchbookCollection";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
@@ -88,6 +89,7 @@ export default function Home() {
         <NightSky />
         <Lighthouse />
         <About />
+        <MatchbookCollection />
         <CorkBoard />
         <MotelSign />
         <FortuneTeller />
