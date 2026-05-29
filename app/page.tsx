@@ -88,6 +88,7 @@ import { TavernSign } from "@/components/TavernSign";
 import { TavernInterior } from "@/components/TavernInterior";
 import { BeeSkep } from "@/components/BeeSkep";
 import { LobsterBoat } from "@/components/LobsterBoat";
+import { MapleEvaporator } from "@/components/MapleEvaporator";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -124,6 +125,7 @@ export default function Home() {
         <ApothecaryShelf />
         <PinballMachine />
         <MapleScene />
+        <MapleEvaporator />
         <SugaringShack />
         <HighwayMileageSign />
         <DinerMenu />
