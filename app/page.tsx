@@ -27,6 +27,7 @@ import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
 import { CorkBoard } from "@/components/CorkBoard";
 import { ShrewsburyGazette } from "@/components/ShrewsburyGazette";
+import { PostageStamps } from "@/components/PostageStamps";
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
         <Pricing />
         <NeonSign />
         <MaintenanceFAQ />
+        <PostageStamps />
         <FilmStripBand />
         <Portfolio />
         <LakeScene />

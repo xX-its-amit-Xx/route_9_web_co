@@ -2283,3 +2283,58 @@ body.cursor-active * {
   }
 }
 
+/* ═══════════════════════════════════════════════
+   POSTAGE STAMPS — Route 9 business type collection
+   Two-div wrapper: outer .stamp-wrapper handles hover
+   scale + postmark reveal; inner .postage-stamp runs
+   the entrance animation (includes --stamp-tilt var
+   so fill-mode:both holds the correct tilted state).
+══════════════════════════════════════════════ */
+
+/* Entrance: stamp drops from above and lands with slight bounce */
+@keyframes stamp-fall {
+  0%   { opacity: 0; transform: translateY(-28px) scale(0.86) rotate(var(--stamp-tilt, 0deg)); }
+  58%  { transform: translateY(4px) scale(1.04) rotate(var(--stamp-tilt, 0deg)); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(var(--stamp-tilt, 0deg)); }
+}
+
+/* Hidden until IntersectionObserver fires */
+.postage-stamp {
+  opacity: 0;
+  display: block;
+  line-height: 0;
+}
+
+.postage-stamp.stamp-visible {
+  animation: stamp-fall 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Outer wrapper: lift + scale on hover */
+.stamp-wrapper {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.28s ease;
+}
+.stamp-wrapper:hover {
+  transform: scale(1.12);
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.40));
+  z-index: 5;
+}
+
+/* Postmark SVG fades in when wrapper is hovered */
+.stamp-wrapper:hover .stamp-postmark {
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postage-stamp,
+  .postage-stamp.stamp-visible {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .stamp-wrapper:hover {
+    transform: none !important;
+  }
+  .stamp-wrapper:hover .stamp-postmark {
+    opacity: 0 !important;
+  }
+}
+
