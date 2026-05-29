@@ -2153,3 +2153,23 @@ body.cursor-active * {
   .ct-water { animation: none !important; }
 }
 
+/* ═══════════════════════════════════════════════
+   TORN PAGE DIVIDER
+   Ember sparks pulse along the torn edge crack.
+   Glow layers and fibers are static (CSS filter on
+   SVG path handles the blur; no keyframes needed).
+══════════════════════════════════════════════ */
+@keyframes torn-spark-pulse {
+  0%,  100% { opacity: 0.65; r: 1;    }
+  40%        { opacity: 1;    r: 1.35; }
+  70%        { opacity: 0.30; r: 0.6;  }
+}
+
+.torn-spark {
+  animation: torn-spark-pulse 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .torn-spark { animation: none !important; opacity: 0.45; }
+}
+

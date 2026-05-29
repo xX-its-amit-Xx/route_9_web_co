@@ -21,6 +21,7 @@ import { StorefrontParade } from "@/components/StorefrontParade";
 import { HighwayMileageSign } from "@/components/HighwayMileageSign";
 import { FilmStripBand } from "@/components/FilmStripBand";
 import { ShrewsburyClockTower } from "@/components/ShrewsburyClockTower";
+import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
@@ -36,6 +37,7 @@ export default function Home() {
       <Nav />
       <main id="main-content">
         <Hero />
+        <TornPageDivider />
         <SocialProofTicker />
         <WhoIWorkWith />
         <StorefrontParade />
