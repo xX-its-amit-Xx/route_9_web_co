@@ -28,6 +28,7 @@ import { Typewriter } from "@/components/Typewriter";
 import { MatchbookCollection } from "@/components/MatchbookCollection";
 import { RoadAtlas } from "@/components/RoadAtlas";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
+import { AutumnForestPath } from "@/components/AutumnForestPath";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
 import { CoveredBridge } from "@/components/CoveredBridge";
@@ -101,6 +102,7 @@ export default function Home() {
         <SolariBoard />
         <Route9Scene />
         <CoveredBridge />
+        <AutumnForestPath />
         <BarnQuilt />
         <ShrewsburyClockTower />
         <NightSky />
