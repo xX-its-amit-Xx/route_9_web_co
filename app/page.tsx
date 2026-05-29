@@ -23,6 +23,7 @@ import { FilmStripBand } from "@/components/FilmStripBand";
 import { ShrewsburyClockTower } from "@/components/ShrewsburyClockTower";
 import { NightSky } from "@/components/NightSky";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
+import { PinballMachine } from "@/components/PinballMachine";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
@@ -55,6 +56,7 @@ export default function Home() {
         <TreasureMap />
         <StorefrontParade />
         <QualityPillars />
+        <PinballMachine />
         <MapleScene />
         <HighwayMileageSign />
         <DinerMenu />
