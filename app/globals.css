@@ -2077,3 +2077,50 @@ body.cursor-active * {
   .sign-headlight-beam { animation: none !important; }
 }
 
+/* ═══════════════════════════════════════════════
+   FILM STRIP BAND
+   Vintage 35mm celluloid strip scrolling between
+   MaintenanceFAQ and Portfolio sections.
+══════════════════════════════════════════════ */
+
+/* Main film advance — slides left; doubled content makes -50% seamless */
+@keyframes film-advance {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Data text strip — slower crawl, same direction */
+@keyframes film-data-crawl {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Projector-gate flicker — brief opacity flash, step timing for realism */
+@keyframes film-gate-flicker {
+  0%,  94%          { opacity: 0;    }
+  95%               { opacity: 0.18; }
+  96%               { opacity: 0.05; }
+  97%               { opacity: 0.22; }
+  98%, 100%         { opacity: 0;    }
+}
+
+.film-strip-advance {
+  animation: film-advance 26s linear infinite;
+  will-change: transform;
+}
+
+.film-data-scroll {
+  animation: film-data-crawl 55s linear infinite;
+  will-change: transform;
+}
+
+.film-gate-flicker {
+  animation: film-gate-flicker 7s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-strip-advance { animation: none !important; transform: none !important; }
+  .film-data-scroll   { animation: none !important; }
+  .film-gate-flicker  { animation: none !important; }
+}
+

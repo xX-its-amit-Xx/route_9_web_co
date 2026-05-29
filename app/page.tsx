@@ -19,6 +19,7 @@ import { NeonSign } from "@/components/NeonSign";
 import { LakeScene } from "@/components/LakeScene";
 import { StorefrontParade } from "@/components/StorefrontParade";
 import { HighwayMileageSign } from "@/components/HighwayMileageSign";
+import { FilmStripBand } from "@/components/FilmStripBand";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
@@ -42,6 +43,7 @@ export default function Home() {
         <Pricing />
         <NeonSign />
         <MaintenanceFAQ />
+        <FilmStripBand />
         <Portfolio />
         <LakeScene />
         <Testimonials />
