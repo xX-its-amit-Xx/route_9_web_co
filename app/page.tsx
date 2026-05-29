@@ -93,6 +93,7 @@ import { NorEaster } from "@/components/NorEaster";
 import { TrainDepot } from "@/components/TrainDepot";
 import { IceCreamSocial } from "@/components/IceCreamSocial";
 import { ClamBake } from "@/components/ClamBake";
+import { WoolMill } from "@/components/WoolMill";
 
 export default function Home() {
   return (
@@ -179,6 +180,7 @@ export default function Home() {
         <WorkbenchTools />
         <QuiltingBee />
         <FiddleContest />
+        <WoolMill />
         <BlacksmithForge />
         <VintageSeedPacket />
         <MatchbookCollection />
