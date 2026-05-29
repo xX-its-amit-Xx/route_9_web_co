@@ -89,6 +89,7 @@ import { TavernInterior } from "@/components/TavernInterior";
 import { BeeSkep } from "@/components/BeeSkep";
 import { LobsterBoat } from "@/components/LobsterBoat";
 import { MapleEvaporator } from "@/components/MapleEvaporator";
+import { TownBandstand } from "@/components/TownBandstand";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -192,6 +193,7 @@ export default function Home() {
         <HarvestFair />
         <SummerPicnic />
         <ShrewsburyCommon />
+        <TownBandstand />
         <IceCreamSocial />
         <WorkbenchTools />
         <QuiltingBee />
