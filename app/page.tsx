@@ -87,6 +87,7 @@ import { SummerPicnic } from "@/components/SummerPicnic";
 import { QuiltingBee } from "@/components/QuiltingBee";
 import { FiddleContest } from "@/components/FiddleContest";
 import { CranberryBog } from "@/components/CranberryBog";
+import { AerialBalloon } from "@/components/AerialBalloon";
 
 export default function Home() {
   return (
@@ -158,6 +159,7 @@ export default function Home() {
         <CountryChurch />
         <ShrewsburyClockTower />
         <NightSky />
+        <AerialBalloon />
         <CelestialOrrery />
         <Lighthouse />
         <About />
