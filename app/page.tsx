@@ -85,6 +85,7 @@ import { TavernSign } from "@/components/TavernSign";
 import { WhalingShip } from "@/components/WhalingShip";
 import { SummerPicnic } from "@/components/SummerPicnic";
 import { QuiltingBee } from "@/components/QuiltingBee";
+import { FiddleContest } from "@/components/FiddleContest";
 
 export default function Home() {
   return (
@@ -163,6 +164,7 @@ export default function Home() {
         <ShrewsburyCommon />
         <WorkbenchTools />
         <QuiltingBee />
+        <FiddleContest />
         <BlacksmithForge />
         <VintageSeedPacket />
         <MatchbookCollection />
