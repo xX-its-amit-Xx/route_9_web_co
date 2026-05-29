@@ -53,6 +53,7 @@ import { RecordCrate } from "@/components/RecordCrate";
 import { WorkbenchTools } from "@/components/WorkbenchTools";
 import { ShrewsburyPostcard } from "@/components/ShrewsburyPostcard";
 import { SealPress } from "@/components/SealPress";
+import { NauticalCompass } from "@/components/NauticalCompass";
 
 export default function Home() {
   return (
@@ -93,6 +94,7 @@ export default function Home() {
         <ShrewsburyPostcard />
         <ShrewsburyGazette />
         <RoadAtlas />
+        <NauticalCompass />
         <Process />
         <SolariBoard />
         <Route9Scene />

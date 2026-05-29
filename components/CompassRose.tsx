@@ -62,17 +62,17 @@ export function CompassRose({ size = 280 }: { size?: number }) {
         <circle cx="100" cy="100" r="88" fill="none" stroke="#D4682A" strokeWidth="0.6" opacity="0.7" />
         <circle cx="100" cy="100" r="84" fill="none" stroke="#D4682A" strokeWidth="0.9" />
 
-        {/* Outer ring grain (masked between r=84 and r=94 visually via stroke) */}
+        {/* Outer ring grain */}
         <circle cx="100" cy="100" r="89" fill="none" stroke="url(#cr-grain)" strokeWidth="4" opacity="0.6" />
 
-        {/* Top curved label — sized to fit the r=84 arc (~264 units) */}
+        {/* Top curved label */}
         <text fontSize="8" fontFamily="Georgia, serif" fontWeight="700" letterSpacing="1.4" fill="#D4682A">
           <textPath href="#cr-outer-top" startOffset="50%" textAnchor="middle">
             ROUTE 9 · SHREWSBURY MASS
           </textPath>
         </text>
 
-        {/* Bottom curved label — sized to fit the r=78 arc (~245 units) */}
+        {/* Bottom curved label */}
         <text fontSize="6.5" fontFamily="monospace" fontWeight="700" letterSpacing="1.4" fill="#D4682A" opacity="0.78">
           <textPath href="#cr-outer-bot" startOffset="50%" textAnchor="middle">
             WORCESTER COUNTY · NEW ENGLAND
@@ -83,43 +83,35 @@ export function CompassRose({ size = 280 }: { size?: number }) {
         <circle cx="100" cy="100" r="62" fill="none" stroke="#D4682A" strokeWidth="0.9" />
         <circle cx="100" cy="100" r="58" fill="none" stroke="#D4682A" strokeWidth="0.5" opacity="0.65" />
 
-        {/* Tick marks every 22.5° between the two inner rings */}
-        {[...Array(32)].map((_, i) => {
-          const a = (i * 11.25 * Math.PI) / 180;
+        {/* Tick marks every 11.25° */}
+        {Array.from({ length: 32 }, (_, i) => {
+          const a  = (i * 11.25 * Math.PI) / 180;
           const x1 = 100 + Math.cos(a) * 58;
           const y1 = 100 + Math.sin(a) * 58;
           const x2 = 100 + Math.cos(a) * 62;
           const y2 = 100 + Math.sin(a) * 62;
           return (
-            <line
-              key={i}
-              x1={x1} y1={y1} x2={x2} y2={y2}
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
               stroke="#D4682A"
               strokeWidth={i % 4 === 0 ? 1.2 : 0.5}
-              opacity={i % 4 === 0 ? 0.95 : 0.6}
-            />
+              opacity={i % 4 === 0 ? 0.95 : 0.6}/>
           );
         })}
 
         {/* ── 8-point compass star ── */}
         <g>
-          {/* Long axis points (N/S/E/W) — outer cream petals */}
           <path d="M 100 18 L 110 100 L 100 56 L 90 100 Z" fill="url(#cr-needle-s)" stroke="#1C1209" strokeWidth="0.6" />
           <path d="M 182 100 L 100 110 L 144 100 L 100 90 Z" fill="url(#cr-needle-s)" stroke="#1C1209" strokeWidth="0.6" />
           <path d="M 100 182 L 90 100 L 100 144 L 110 100 Z" fill="url(#cr-needle-s)" stroke="#1C1209" strokeWidth="0.6" />
           <path d="M 18 100 L 100 90 L 56 100 L 100 110 Z" fill="url(#cr-needle-s)" stroke="#1C1209" strokeWidth="0.6" />
-
-          {/* Short axis points (NE/SE/SW/NW) — warm brass petals */}
           <path d="M 158 42 L 108 92 L 132 76 L 124 84 Z M 158 42 L 92 108 L 76 132 L 84 124 Z" fill="url(#cr-body)" opacity="0.85" stroke="#1C1209" strokeWidth="0.4" />
           <path d="M 158 158 L 92 92 L 132 124 L 124 116 Z M 158 158 L 108 108 L 76 68 L 84 76 Z" fill="url(#cr-body)" opacity="0.85" stroke="#1C1209" strokeWidth="0.4" />
-
-          {/* Bright north fletch — darker fill so it's visually distinct as the "this way" point */}
           <path d="M 100 18 L 100 56 L 110 100 Z" fill="#A84818" stroke="#1C1209" strokeWidth="0.6" />
         </g>
 
         {/* Cardinal letters */}
         <g fontFamily="Georgia, serif" fontWeight="800" fill="#1C1209">
-          <text x="100" y="14" textAnchor="middle" fontSize="11">N</text>
+          <text x="100" y="14"  textAnchor="middle" fontSize="11">N</text>
           <text x="190" y="103" textAnchor="middle" fontSize="11">E</text>
           <text x="100" y="194" textAnchor="middle" fontSize="11">S</text>
           <text x="10"  y="103" textAnchor="middle" fontSize="11">W</text>
@@ -127,44 +119,32 @@ export function CompassRose({ size = 280 }: { size?: number }) {
 
         {/* Intercardinal small letters */}
         <g fontFamily="monospace" fontWeight="700" fill="#A84818" fontSize="6.5">
-          <text x="153" y="48" textAnchor="middle">NE</text>
+          <text x="153" y="48"  textAnchor="middle">NE</text>
           <text x="153" y="160" textAnchor="middle">SE</text>
           <text x="47"  y="160" textAnchor="middle">SW</text>
-          <text x="47"  y="48" textAnchor="middle">NW</text>
+          <text x="47"  y="48"  textAnchor="middle">NW</text>
         </g>
 
-        {/* Decorative corner fleurons — small starbursts at 45° offsets */}
-        {[42, 158].flatMap((y) => [42, 158].map((x) => (
-          <g key={`${x}-${y}`} transform={`translate(${x} ${y})`}>
-            <path d="M 0 -2.4 L 0.8 -0.8 L 2.4 0 L 0.8 0.8 L 0 2.4 L -0.8 0.8 L -2.4 0 L -0.8 -0.8 Z" fill="#D4682A" />
-          </g>
-        )))}
+        {/* Corner fleurons */}
+        {([42, 158] as number[]).flatMap(y =>
+          ([42, 158] as number[]).map(x => (
+            <g key={`${x}-${y}`} transform={`translate(${x} ${y})`}>
+              <path d="M 0 -2.4 L 0.8 -0.8 L 2.4 0 L 0.8 0.8 L 0 2.4 L -0.8 0.8 L -2.4 0 L -0.8 -0.8 Z" fill="#D4682A" />
+            </g>
+          ))
+        )}
 
         {/* ── Center hub ── */}
-        <g>
-          {/* Hub plate */}
-          <circle cx="100" cy="100" r="14" fill="#1C1209" stroke="#D4682A" strokeWidth="1.4" />
-          <circle cx="100" cy="100" r="11" fill="none" stroke="rgba(212,104,42,0.45)" strokeWidth="0.6" />
+        <circle cx="100" cy="100" r="14" fill="#1C1209" stroke="#D4682A" strokeWidth="1.4" />
+        <circle cx="100" cy="100" r="11" fill="none" stroke="rgba(212,104,42,0.45)" strokeWidth="0.6" />
+        <circle cx="100" cy="100" r="3"  fill="url(#cr-body)" className="compass-needle" />
+        <text x="100" y="103.5" textAnchor="middle"
+          fontFamily="Georgia, serif" fontStyle="italic" fontWeight="800"
+          fontSize="9" fill="#FFC480" letterSpacing="0.04em">
+          R9
+        </text>
 
-          {/* Small pulsing needle pivot — the "you are here" indicator */}
-          <circle cx="100" cy="100" r="3" fill="url(#cr-body)" className="compass-needle" />
-
-          {/* Center monogram */}
-          <text
-            x="100" y="103.5"
-            textAnchor="middle"
-            fontFamily="Georgia, serif"
-            fontStyle="italic"
-            fontWeight="800"
-            fontSize="9"
-            fill="#FFC480"
-            letterSpacing="0.04em"
-          >
-            R9
-          </text>
-        </g>
-
-        {/* Tiny ink-stamp specks for hand-drawn texture */}
+        {/* Ink specks */}
         <circle cx="40"  cy="60"  r="0.7" fill="#1C1209" opacity="0.6" />
         <circle cx="156" cy="142" r="0.8" fill="#1C1209" opacity="0.55" />
         <circle cx="62"  cy="142" r="0.5" fill="#1C1209" opacity="0.4" />
