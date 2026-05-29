@@ -66,6 +66,7 @@ import { VintageSeedPacket } from "@/components/VintageSeedPacket";
 import { CartographerDesk } from "@/components/CartographerDesk";
 import { IceHarvestScene } from "@/components/IceHarvestScene";
 import { GristMillScene } from "@/components/GristMillScene";
+import { PrintshopBroadside } from "@/components/PrintshopBroadside";
 
 export default function Home() {
   return (
@@ -120,6 +121,7 @@ export default function Home() {
         <IceHarvestScene />
         <BarnQuilt />
         <GristMillScene />
+        <PrintshopBroadside />
         <ShrewsburyClockTower />
         <NightSky />
         <CelestialOrrery />
