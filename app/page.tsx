@@ -81,6 +81,7 @@ import { WinterSleigh } from "@/components/WinterSleigh";
 import { MillPond } from "@/components/MillPond";
 import { CountryChurch } from "@/components/CountryChurch";
 import { SpringThaw } from "@/components/SpringThaw";
+import { TavernSign } from "@/components/TavernSign";
 
 export default function Home() {
   return (
@@ -160,6 +161,7 @@ export default function Home() {
         <VintageSeedPacket />
         <MatchbookCollection />
         <CorkBoard />
+        <TavernSign />
         <MotelSign />
         <FortuneTeller />
         <Telegrapher />
