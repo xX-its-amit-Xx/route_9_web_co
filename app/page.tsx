@@ -82,6 +82,7 @@ import { MillPond } from "@/components/MillPond";
 import { CountryChurch } from "@/components/CountryChurch";
 import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
+import { WhalingShip } from "@/components/WhalingShip";
 
 export default function Home() {
   return (
@@ -122,6 +123,7 @@ export default function Home() {
         <MagicLantern />
         <LakeScene />
         <FishingPierScene />
+        <WhalingShip />
         <SteamboatScene />
         <RecordCrate />
         <MusicBox />
