@@ -85,6 +85,7 @@ import { CountryChurch } from "@/components/CountryChurch";
 import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
 import { WhalingShip } from "@/components/WhalingShip";
+import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
 import { QuiltingBee } from "@/components/QuiltingBee";
 import { FiddleContest } from "@/components/FiddleContest";
@@ -141,6 +142,7 @@ export default function Home() {
         <ClamBake />
         <CranberryBog />
         <WhalingShip />
+        <ShipLaunch />
         <NorEaster />
         <SteamboatScene />
         <RecordCrate />
