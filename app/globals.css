@@ -2173,3 +2173,33 @@ body.cursor-active * {
   .torn-spark { animation: none !important; opacity: 0.45; }
 }
 
+/* ═══════════════════════════════════════════════
+   CORK BOARD — note drop-in entrance
+   Outer .cork-note div receives the animation;
+   inner div holds the static rotation transform.
+   Two-div pattern keeps them independent.
+══════════════════════════════════════════════ */
+@keyframes cork-note-drop {
+  0%   { opacity: 0; transform: translateY(-20px) scale(0.90); }
+  55%  { transform: translateY(4px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Hidden until IntersectionObserver adds .visible */
+.cork-note {
+  opacity: 0;
+}
+
+.cork-note.visible {
+  animation: cork-note-drop 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cork-note,
+  .cork-note.visible {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+

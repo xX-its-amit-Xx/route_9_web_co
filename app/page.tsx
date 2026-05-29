@@ -25,6 +25,7 @@ import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
+import { CorkBoard } from "@/components/CorkBoard";
 
 export default function Home() {
   return (
@@ -54,6 +55,7 @@ export default function Home() {
         <Route9Scene />
         <ShrewsburyClockTower />
         <About />
+        <CorkBoard />
         <Contact />
       </main>
       <Footer />
