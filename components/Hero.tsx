@@ -665,16 +665,64 @@ export function Hero() {
               })}
             </dl>
 
-            {/* Trust line — alpha tuned for WCAG AA contrast (~4.8:1) on #0E0905 bg */}
-            <p
-              className="text-xs tracking-wide"
-              style={{
-                color: "rgba(243,233,213,0.50)",
-                animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.96s both",
-              }}
+            {/* Trust badge strip — icon pills */}
+            <div
+              className="flex flex-wrap items-center gap-2"
+              style={{ animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.96s both" }}
+              aria-label="Key features"
             >
-              No contracts · No lock-in · Free preview before you pay anything
-            </p>
+              {([
+                {
+                  label: "48hr build",
+                  icon: (
+                    <svg viewBox="0 0 12 12" fill="none" className="w-2.5 h-2.5" aria-hidden>
+                      <path d="M7 1L3 7h4l-1.5 4L10 5H6.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Route 9 native",
+                  icon: (
+                    <svg viewBox="0 0 12 12" fill="none" className="w-2.5 h-2.5" aria-hidden>
+                      <path d="M6 1C4.3 1 3 2.3 3 4c0 2.5 3 7 3 7s3-4.5 3-7c0-1.7-1.3-3-3-3z" stroke="currentColor" strokeWidth="1.3" />
+                      <circle cx="6" cy="4" r="1.2" stroke="currentColor" strokeWidth="1" />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "No lock-in",
+                  icon: (
+                    <svg viewBox="0 0 12 12" fill="none" className="w-2.5 h-2.5" aria-hidden>
+                      <rect x="2" y="5.5" width="8" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.3" />
+                      <path d="M4 5.5V3.5a2 2 0 0 1 4 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Mobile-first",
+                  icon: (
+                    <svg viewBox="0 0 12 12" fill="none" className="w-2.5 h-2.5" aria-hidden>
+                      <rect x="3" y="1" width="6" height="10" rx="1.2" stroke="currentColor" strokeWidth="1.3" />
+                      <line x1="3" y1="3" x2="9" y2="3" stroke="currentColor" strokeWidth="0.9" />
+                      <line x1="3" y1="9" x2="9" y2="9" stroke="currentColor" strokeWidth="0.9" />
+                    </svg>
+                  ),
+                },
+              ] as { label: string; icon: React.ReactNode }[]).map(({ label, icon }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold"
+                  style={{
+                    background: "rgba(243,233,213,0.06)",
+                    border: "1px solid rgba(243,233,213,0.10)",
+                    color: "rgba(243,233,213,0.52)",
+                  }}
+                >
+                  {icon}
+                  {label}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* ── Right: photo collage (desktop only) ── */}

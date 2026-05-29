@@ -245,7 +245,7 @@ export function Testimonials() {
         {/* Visual card — keyed for animation; no live region needed here */}
         <div
           key={key}
-          className={`${dir === 1 ? "testimonial-enter" : "testimonial-enter-left"} rounded-3xl p-8 md:p-12 max-w-3xl relative overflow-hidden select-none`}
+          className={`group ${dir === 1 ? "testimonial-enter" : "testimonial-enter-left"} rounded-3xl p-8 md:p-12 max-w-3xl relative overflow-hidden select-none`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -260,6 +260,22 @@ export function Testimonials() {
             borderLeft: "4px solid #D4682A",
           }}
         >
+          {/* Route 9 shield letterhead watermark — fades in on hover */}
+          <div
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+            style={{ zIndex: 0 }}
+          >
+            <svg viewBox="0 0 120 148" fill="none" style={{ width: "210px", height: "auto" }}>
+              <path d="M60 6 L114 26 L114 88 Q114 128 60 142 Q6 128 6 88 L6 26 Z"
+                fill="rgba(212,104,42,0.038)" stroke="rgba(212,104,42,0.045)" strokeWidth="1.5" />
+              <text x="60" y="68" textAnchor="middle" fontSize="11" fill="rgba(212,104,42,0.042)"
+                fontFamily="monospace" fontWeight="700" letterSpacing="3">ROUTE</text>
+              <text x="62" y="112" textAnchor="middle" fontSize="56" fontStyle="italic"
+                fill="rgba(212,104,42,0.048)" fontFamily="Georgia, serif" fontWeight="400">9</text>
+            </svg>
+          </div>
+
           {/* Warm glow behind quote */}
           <div
             aria-hidden

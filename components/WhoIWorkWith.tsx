@@ -324,9 +324,59 @@ export function WhoIWorkWith() {
 
         </div>
 
+        {/* Welcome mat — hand-drawn doorstep rug with Route 9 motif */}
+        <div className="flex justify-center mt-14 mb-6 reveal" style={{ transitionDelay: "200ms" }}>
+          <svg
+            viewBox="0 0 320 90"
+            fill="none"
+            aria-hidden
+            style={{ width: "min(320px, 72%)", opacity: 0.72 }}
+          >
+            {/* Outer mat frame */}
+            <rect x="6" y="10" width="308" height="70" rx="7" fill="rgba(212,104,42,0.06)" stroke="rgba(212,104,42,0.32)" strokeWidth="1.5" />
+            {/* Inner border bevel */}
+            <rect x="12" y="16" width="296" height="58" rx="5" fill="none" stroke="rgba(212,104,42,0.13)" strokeWidth="1" />
+            {/* Horizontal ribs — woven texture */}
+            {[24, 32, 40, 48, 56, 64, 72].map((y) => (
+              <line key={y} x1="14" y1={y} x2="306" y2={y} stroke="rgba(212,104,42,0.07)" strokeWidth="2.5" />
+            ))}
+            {/* Left fringe */}
+            {[0,1,2,3,4,5,6,7].map((i) => (
+              <line key={i} x1={14 + i * 7} y1="10" x2={14 + i * 7} y2="2" stroke="rgba(212,104,42,0.3)" strokeWidth="1.2" strokeLinecap="round" />
+            ))}
+            {/* Right fringe */}
+            {[0,1,2,3,4,5,6,7].map((i) => (
+              <line key={i} x1={254 + i * 7} y1="10" x2={254 + i * 7} y2="2" stroke="rgba(212,104,42,0.3)" strokeWidth="1.2" strokeLinecap="round" />
+            ))}
+            {/* Bottom fringe */}
+            {[0,1,2,3,4,5,6,7].map((i) => (
+              <line key={i} x1={14 + i * 7} y1="80" x2={14 + i * 7} y2="88" stroke="rgba(212,104,42,0.28)" strokeWidth="1.2" strokeLinecap="round" />
+            ))}
+            {[0,1,2,3,4,5,6,7].map((i) => (
+              <line key={i} x1={254 + i * 7} y1="80" x2={254 + i * 7} y2="88" stroke="rgba(212,104,42,0.28)" strokeWidth="1.2" strokeLinecap="round" />
+            ))}
+            {/* Corner diamond accent — top-left */}
+            <path d="M20 28 L26 34 L20 40 L14 34 Z" fill="rgba(212,104,42,0.14)" stroke="rgba(212,104,42,0.35)" strokeWidth="0.8" />
+            {/* Corner diamond accent — top-right */}
+            <path d="M300 28 L306 34 L300 40 L294 34 Z" fill="rgba(212,104,42,0.14)" stroke="rgba(212,104,42,0.35)" strokeWidth="0.8" />
+            {/* WELCOME text */}
+            <text x="160" y="50" textAnchor="middle" fontSize="20" fill="rgba(212,104,42,0.7)"
+              fontFamily="Georgia, serif" fontWeight="700" letterSpacing="0.32em">
+              WELCOME
+            </text>
+            {/* Route 9 shield below text */}
+            <g transform="translate(160 62)">
+              <path d="M0 -6 L8 -3 L8 2 Q8 7 0 10 Q-8 7 -8 2 L-8 -3 Z"
+                fill="rgba(212,104,42,0.1)" stroke="rgba(212,104,42,0.5)" strokeWidth="0.9" />
+              <text x="0" y="4" textAnchor="middle" fontSize="6" fill="rgba(212,104,42,0.75)"
+                fontFamily="Georgia, serif" fontStyle="italic" fontWeight="700">9</text>
+            </g>
+          </svg>
+        </div>
+
         {/* Hand-drawn aerial map of the Route 9 corridor — sits below
             the two-column grid so it spans the section's full width */}
-        <div className="mt-16 reveal">
+        <div className="mt-4 reveal">
           <ShrewsburyMap />
         </div>
       </div>

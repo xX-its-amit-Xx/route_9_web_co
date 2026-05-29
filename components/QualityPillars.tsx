@@ -1106,7 +1106,7 @@ export function QualityPillars() {
               <TiltCard>
                 <article
                   aria-labelledby={`pillar-${pillar.icon}`}
-                  className="group card-light h-full flex flex-col cursor-default overflow-hidden relative"
+                  className="group card-light h-full flex flex-col cursor-default overflow-hidden relative transition-[box-shadow] duration-300 group-hover:shadow-[0_0_0_1.5px_rgba(212,104,42,0.45),0_0_30px_rgba(212,104,42,0.2),0_8px_32px_rgba(212,104,42,0.12)]"
                   style={{ isolation: "isolate" }}
                   onMouseMove={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
