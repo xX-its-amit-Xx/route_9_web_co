@@ -969,6 +969,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════
+   HERO AURORA BACKDROP
+   Two large blurred ellipses drift slowly to give
+   the dark hero bg a living, ember-lit warmth.
+══════════════════════════════════════════════ */
+@keyframes hero-aurora-a {
+  0%, 100% { transform: translate(0, 0)      scale(1);    opacity: 0.85; }
+  30%       { transform: translate(8vw, -4vh)  scale(1.08); opacity: 1; }
+  65%       { transform: translate(-5vw, 6vh)  scale(0.94); opacity: 0.7; }
+}
+@keyframes hero-aurora-b {
+  0%, 100% { transform: translate(0, 0)      scale(1);    opacity: 0.8; }
+  35%       { transform: translate(-7vw, 5vh)  scale(1.1);  opacity: 1; }
+  70%       { transform: translate(6vw, -3vh)  scale(0.96); opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-aurora-reduced { animation: none !important; }
+}
+
+/* ═══════════════════════════════════════════════
    PRO PRICING CARD — ANIMATED GRADIENT RING
    Conic gradient comet sweeps the card border.
 ══════════════════════════════════════════════ */

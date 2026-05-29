@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { PORTFOLIO } from "@/lib/content";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { ProjectFolders } from "./ProjectFolders";
 
 // Real Unsplash photos for each portfolio card
@@ -107,25 +107,23 @@ export function Portfolio() {
           style={{ width: "min(520px, 90vw)", paddingTop: "80px" }}
         >
           <div className="label-pill mb-4 reveal">Recent work</div>
-          <SplitTextReveal
+          <TextScramble
             as="h2"
             id="portfolio-heading"
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-fg leading-tight mb-6"
             style={{ fontFamily: "var(--font-display)" }}
-            delay={100}
-            stagger={80}
+            speed={3}
           >
             Portfolio loading.
-          </SplitTextReveal>
-          <SplitTextReveal
+          </TextScramble>
+          <TextScramble
             as="p"
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#D4682A] italic leading-tight mb-6"
             style={{ fontFamily: "var(--font-display)" }}
-            delay={400}
-            stagger={80}
+            speed={3}
           >
             Quality already here.
-          </SplitTextReveal>
+          </TextScramble>
           <p className="text-muted leading-relaxed mb-6 reveal max-w-sm" style={{ transitionDelay: "300ms" }}>
             First clients are being onboarded now.{" "}
             <a href="#contact" className="text-accent underline-grow">

@@ -287,6 +287,39 @@ export function Hero() {
         }}
       />
 
+      {/* Aurora layer A — slow drift, warm ochre-amber sweep */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none hero-aurora-reduced"
+        style={{
+          top: "0%",
+          left: "-20%",
+          width: "90vw",
+          height: "70vh",
+          background:
+            "radial-gradient(ellipse at 40% 60%, rgba(212,104,42,0.13) 0%, rgba(170,65,12,0.07) 38%, transparent 68%)",
+          filter: "blur(48px)",
+          animation: "hero-aurora-a 18s ease-in-out infinite",
+          zIndex: 0,
+        }}
+      />
+      {/* Aurora layer B — counter-drift, deeper ember hue */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none hero-aurora-reduced"
+        style={{
+          bottom: "0%",
+          right: "-18%",
+          width: "75vw",
+          height: "65vh",
+          background:
+            "radial-gradient(ellipse at 58% 35%, rgba(180,72,16,0.12) 0%, rgba(120,48,10,0.06) 42%, transparent 70%)",
+          filter: "blur(56px)",
+          animation: "hero-aurora-b 24s ease-in-out infinite 3s",
+          zIndex: 0,
+        }}
+      />
+
       {/* Fine dot grid */}
       <div
         className="absolute inset-0 pointer-events-none"

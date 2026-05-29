@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Send, Mail, MessageCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
+import { TextScramble } from "./TextScramble";
 import { Postcard } from "./Postcard";
 import { RotaryPhone } from "./RotaryPhone";
 import { ServiceBell } from "./ServiceBell";
@@ -176,13 +177,15 @@ export function Contact() {
           {/* Left */}
           <div ref={headingRef} className="relative">
             <div className="label-pill mb-4 reveal">Contact</div>
-            <h2
+            <TextScramble
+              as="h2"
               id="contact-heading"
-              className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4 reveal"
-              style={{ fontFamily: "var(--font-display)", transitionDelay: "80ms" }}
+              className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
+              style={{ fontFamily: "var(--font-display)" }}
+              speed={3}
             >
-              Let&apos;s talk about<br />your shop.
-            </h2>
+              {"Let's talk about your shop."}
+            </TextScramble>
             <p className="text-muted leading-relaxed mb-5 reveal" style={{ transitionDelay: "160ms" }}>
               Fill out the form and I&apos;ll reply within a few hours. Or text — fastest
               way to reach me, and I actually respond.

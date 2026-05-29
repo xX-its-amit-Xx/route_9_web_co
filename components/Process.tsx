@@ -74,6 +74,37 @@ export function Process() {
     allowMag.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
+  useEffect(() => {
+    const container = stepsRef.current;
+    if (!container) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let cleanup: (() => void) | undefined;
+    import("gsap").then(({ gsap }) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.registerPlugin(ScrollTrigger);
+        const articles = container.querySelectorAll<HTMLElement>("article");
+        if (!articles.length) return;
+        gsap.fromTo(
+          articles,
+          { opacity: 0, scale: 0.92, rotation: -1.5, y: 28 },
+          {
+            opacity: 1, scale: 1, rotation: 0, y: 0,
+            duration: 0.65, ease: "back.out(2)", stagger: 0.14,
+            scrollTrigger: {
+              trigger: container,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        cleanup = () => {
+          ScrollTrigger.getAll().forEach((t) => { if (t.trigger === container) t.kill(); });
+        };
+      });
+    });
+    return () => cleanup?.();
+  }, []);
+
   const handleMagMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const el = ctaRef.current;
     if (!el || !allowMag.current) return;

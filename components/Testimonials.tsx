@@ -26,7 +26,12 @@ export function Testimonials() {
   const isDragging = useRef(false);
   const mapleRef = useRef<SVGSVGElement>(null);
   const sectionInView = useRef(false);
+  const allowMotion = useRef(false);
   const headingRef = useScrollReveal();
+
+  useEffect(() => {
+    allowMotion.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   useEffect(() => {
     const el = mapleRef.current;
@@ -91,7 +96,13 @@ export function Testimonials() {
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (dragStartX.current === null) return;
-    if (Math.abs(e.clientX - dragStartX.current) > 6) isDragging.current = true;
+    const delta = e.clientX - dragStartX.current;
+    if (Math.abs(delta) > 6) isDragging.current = true;
+    if (allowMotion.current) {
+      const tilt = Math.max(-9, Math.min(9, delta * 0.065));
+      (e.currentTarget as HTMLElement).style.transform = `perspective(900px) rotateY(${tilt}deg)`;
+      (e.currentTarget as HTMLElement).style.transition = "transform 0.08s ease-out";
+    }
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
@@ -103,6 +114,10 @@ export function Testimonials() {
     dragStartX.current = null;
     isDragging.current = false;
     setPaused(false);
+    if (allowMotion.current) {
+      (e.currentTarget as HTMLElement).style.transform = "";
+      (e.currentTarget as HTMLElement).style.transition = "transform 0.5s cubic-bezier(0.22,1,0.36,1)";
+    }
   };
 
   const t = items[current];
