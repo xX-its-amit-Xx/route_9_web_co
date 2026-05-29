@@ -30,6 +30,7 @@ import { ShrewsburyGazette } from "@/components/ShrewsburyGazette";
 import { PostageStamps } from "@/components/PostageStamps";
 import { MotelSign } from "@/components/MotelSign";
 import { RetroTV } from "@/components/RetroTV";
+import { DinerMenu } from "@/components/DinerMenu";
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
         <StorefrontParade />
         <QualityPillars />
         <HighwayMileageSign />
+        <DinerMenu />
         <Pricing />
         <NeonSign />
         <RetroTV />

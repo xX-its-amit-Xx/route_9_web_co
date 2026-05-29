@@ -2338,3 +2338,29 @@ body.cursor-active * {
   }
 }
 
+/* ═══════════════════════════════════════════════
+   DINER MENU — Route 9 chalkboard specials board
+   Slide-up entrance on IntersectionObserver.
+   Spring easing gives a gentle "board being hung" settle.
+══════════════════════════════════════════════ */
+
+.diner-board {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.diner-board.menu-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diner-board {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
