@@ -32,6 +32,7 @@ import { MotelSign } from "@/components/MotelSign";
 import { RetroTV } from "@/components/RetroTV";
 import { DinerMenu } from "@/components/DinerMenu";
 import { MapleScene } from "@/components/MapleScene";
+import { CashRegister } from "@/components/CashRegister";
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
         <HighwayMileageSign />
         <DinerMenu />
         <Pricing />
+        <CashRegister />
         <NeonSign />
         <RetroTV />
         <MaintenanceFAQ />
