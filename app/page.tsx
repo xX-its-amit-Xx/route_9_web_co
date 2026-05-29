@@ -64,6 +64,7 @@ import { BotanicalConservatory } from "@/components/BotanicalConservatory";
 import { PocketWatchScene } from "@/components/PocketWatchScene";
 import { VintageSeedPacket } from "@/components/VintageSeedPacket";
 import { CartographerDesk } from "@/components/CartographerDesk";
+import { IceHarvestScene } from "@/components/IceHarvestScene";
 
 export default function Home() {
   return (
@@ -115,6 +116,7 @@ export default function Home() {
         <Route9Scene />
         <CoveredBridge />
         <AutumnForestPath />
+        <IceHarvestScene />
         <BarnQuilt />
         <ShrewsburyClockTower />
         <NightSky />
