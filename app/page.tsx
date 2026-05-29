@@ -90,6 +90,7 @@ import { CranberryBog } from "@/components/CranberryBog";
 import { AerialBalloon } from "@/components/AerialBalloon";
 import { TobogganRun } from "@/components/TobogganRun";
 import { NorEaster } from "@/components/NorEaster";
+import { TrainDepot } from "@/components/TrainDepot";
 
 export default function Home() {
   return (
@@ -146,6 +147,7 @@ export default function Home() {
         <Process />
         <TownMeetingHall />
         <SolariBoard />
+        <TrainDepot />
         <Route9Scene />
         <CoveredBridge />
         <IronBridge />
