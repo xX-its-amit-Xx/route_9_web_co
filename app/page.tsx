@@ -87,6 +87,7 @@ import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
 import { TavernInterior } from "@/components/TavernInterior";
 import { BeeSkep } from "@/components/BeeSkep";
+import { LobsterBoat } from "@/components/LobsterBoat";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -141,6 +142,7 @@ export default function Home() {
         <MagicLantern />
         <LakeScene />
         <FishingPierScene />
+        <LobsterBoat />
         <OysterBed />
         <ClamBake />
         <CranberryBog />
