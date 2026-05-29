@@ -83,6 +83,7 @@ import { CountryChurch } from "@/components/CountryChurch";
 import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
 import { WhalingShip } from "@/components/WhalingShip";
+import { SummerPicnic } from "@/components/SummerPicnic";
 
 export default function Home() {
   return (
@@ -157,6 +158,7 @@ export default function Home() {
         <Lighthouse />
         <About />
         <HarvestFair />
+        <SummerPicnic />
         <ShrewsburyCommon />
         <WorkbenchTools />
         <BlacksmithForge />
