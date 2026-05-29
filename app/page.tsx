@@ -22,6 +22,7 @@ import { HighwayMileageSign } from "@/components/HighwayMileageSign";
 import { FilmStripBand } from "@/components/FilmStripBand";
 import { ShrewsburyClockTower } from "@/components/ShrewsburyClockTower";
 import { NightSky } from "@/components/NightSky";
+import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
@@ -77,6 +78,7 @@ export default function Home() {
         <MotelSign />
         <FortuneTeller />
         <Contact />
+        <FooterStreetscape />
       </main>
       <Footer />
       <FloatingCTA />
