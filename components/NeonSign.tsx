@@ -25,6 +25,38 @@ export function NeonSign() {
         borderBottom: "1px solid rgba(212,104,42,0.14)",
       }}
     >
+      {/* Slow-drifting warm ambient orbs — make the neon appear to breathe */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          width: "clamp(320px, 32vw, 520px)",
+          height: "clamp(200px, 22vw, 360px)",
+          left: "22%",
+          top: "5%",
+          borderRadius: "50%",
+          background: "radial-gradient(ellipse at center, rgba(212,104,42,0.2) 0%, transparent 70%)",
+          filter: "blur(32px)",
+          animation: "neon-orb-a 11s ease-in-out infinite",
+          zIndex: 1,
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          width: "clamp(200px, 24vw, 400px)",
+          height: "clamp(140px, 16vw, 260px)",
+          right: "18%",
+          top: "15%",
+          borderRadius: "50%",
+          background: "radial-gradient(ellipse at center, rgba(170,65,10,0.15) 0%, transparent 70%)",
+          filter: "blur(28px)",
+          animation: "neon-orb-b 15s ease-in-out infinite 2s",
+          zIndex: 1,
+        }}
+      />
+
       {/* Brick wall texture — repeating pattern of staggered rectangles */}
       <svg
         viewBox="0 0 1440 340"

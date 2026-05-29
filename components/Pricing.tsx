@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
@@ -11,6 +12,11 @@ export function Pricing() {
   const headingRef = useScrollReveal();
   const cardsRef = useScrollReveal(0.05);
   const offerRef = useScrollReveal();
+  const allowMotion = useRef(false);
+
+  useEffect(() => {
+    allowMotion.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   return (
     <section
@@ -167,7 +173,18 @@ export function Pricing() {
                       })
                     );
                   }}
-                  className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-all duration-150 hover:-translate-y-0.5 ${
+                  onMouseMove={(e) => {
+                    if (!allowMotion.current) return;
+                    const r = e.currentTarget.getBoundingClientRect();
+                    const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
+                    const dy = (e.clientY - (r.top + r.height / 2)) * 0.18;
+                    e.currentTarget.style.transform = `translate(${dx}px, ${dy}px)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!allowMotion.current) return;
+                    e.currentTarget.style.transform = "";
+                  }}
+                  className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-[box-shadow,border-color,background] duration-150 ${
                     tier.highlighted
                       ? "nav-cta-shimmer text-[#110B07]"
                       : "bg-surface border border-border hover:border-accent/40 text-fg hover:shadow-sm"

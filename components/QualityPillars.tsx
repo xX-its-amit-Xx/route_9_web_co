@@ -2,7 +2,7 @@
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { VinylRecord } from "./VinylRecord";
 import { PILLARS } from "@/lib/content";
 
@@ -1067,16 +1067,15 @@ export function QualityPillars() {
         <div ref={headingRef} className="mb-14 flex items-start gap-8">
           <div className="flex-1 min-w-0">
             <div className="label-pill mb-4 reveal">How I build</div>
-            <SplitTextReveal
+            <TextScramble
               as="h2"
               id="pillars-heading"
               className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
-              delay={0}
-              stagger={70}
+              speed={3}
             >
               Six things every site gets right.
-            </SplitTextReveal>
+            </TextScramble>
             <p
               className="mt-4 max-w-xl text-muted text-lg reveal"
               style={{ transitionDelay: "400ms" }}

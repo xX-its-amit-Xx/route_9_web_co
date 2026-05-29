@@ -11,6 +11,15 @@ import { SITE } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const MSG_PLACEHOLDERS = [
+  "Tell me about your business and what you're looking for...",
+  "Can you build a site for my bakery on Route 9?",
+  "What's the turnaround time for a new website?",
+  "Do you work with restaurants and cafes?",
+  "How much does monthly maintenance cost?",
+  "I need to get online before the holiday season...",
+];
+
 export function Contact() {
   const headingRef = useScrollReveal();
   const formRef = useScrollReveal();
@@ -18,6 +27,40 @@ export function Contact() {
   const [fields, setFields] = useState({ name: "", shop: "", email: "", message: "", website: "" });
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [msgPlaceholder, setMsgPlaceholder] = useState(MSG_PLACEHOLDERS[0]);
+
+  // Typewriter cycling placeholder for the message textarea
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let phraseIdx = 0;
+    let charIdx = MSG_PLACEHOLDERS[0].length;
+    let erasing = true;
+    let timerId: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      if (erasing) {
+        charIdx--;
+        setMsgPlaceholder(MSG_PLACEHOLDERS[phraseIdx].slice(0, charIdx));
+        if (charIdx <= 0) {
+          erasing = false;
+          phraseIdx = (phraseIdx + 1) % MSG_PLACEHOLDERS.length;
+          timerId = setTimeout(tick, 480);
+        } else {
+          timerId = setTimeout(tick, 20);
+        }
+      } else {
+        charIdx++;
+        setMsgPlaceholder(MSG_PLACEHOLDERS[phraseIdx].slice(0, charIdx));
+        if (charIdx >= MSG_PLACEHOLDERS[phraseIdx].length) {
+          erasing = true;
+          timerId = setTimeout(tick, 2400);
+        } else {
+          timerId = setTimeout(tick, 36);
+        }
+      }
+    };
+    timerId = setTimeout(tick, 3200);
+    return () => clearTimeout(timerId);
+  }, []);
   const successRef = useRef<HTMLHeadingElement>(null);
 
   // Move focus to success heading when form submits successfully so keyboard
@@ -281,7 +324,7 @@ export function Contact() {
                   </label>
                   <textarea id="message" name="message" rows={5}
                     maxLength={5000}
-                    placeholder="Tell me about your business and what you're looking for..."
+                    placeholder={msgPlaceholder}
                     value={fields.message} onChange={handleChange}
                     disabled={status === "loading"}
                     className={`${inputClass} h-auto py-3 resize-none`} />

@@ -2,6 +2,7 @@
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TextScramble } from "./TextScramble";
+import { CountUp } from "./CountUp";
 import { BarberPole } from "./BarberPole";
 import { VintageStamps } from "./VintageStamps";
 import { ShrewsburyMap } from "./ShrewsburyMap";
@@ -221,6 +222,33 @@ export function WhoIWorkWith() {
                 + anywhere nearby along Route 9 — just ask.
               </p>
             </div>
+
+            {/* By-the-numbers stats — count up on scroll entry */}
+            <dl
+              className="grid grid-cols-3 gap-3 mt-8 pt-6 border-t border-border-subtle reveal"
+              style={{ transitionDelay: "860ms" }}
+            >
+              {[
+                { to: 48, suffix: "hr", label: "Avg. launch" },
+                { to: 5,  suffix: "+",  label: "Route 9 towns" },
+                { to: 100, suffix: "%", label: "On-time" },
+              ].map(({ to, suffix, label }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center text-center p-3 rounded-xl border border-[rgba(212,104,42,0.1)] bg-[rgba(212,104,42,0.03)] hover:bg-[rgba(212,104,42,0.07)] hover:border-[rgba(212,104,42,0.22)] transition-all duration-200"
+                >
+                  <dt
+                    className="font-extrabold leading-none mb-1"
+                    style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "20px", color: "#D4682A" }}
+                  >
+                    <CountUp to={to} suffix={suffix} duration={1100} delay={150} />
+                  </dt>
+                  <dd className="text-[9px] font-semibold tracking-wide uppercase text-muted" style={{ letterSpacing: "0.1em" }}>
+                    {label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           {/* ── Right: bento photo mosaic ── */}
