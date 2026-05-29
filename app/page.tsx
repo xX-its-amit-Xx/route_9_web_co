@@ -41,6 +41,7 @@ import { PostageStamps } from "@/components/PostageStamps";
 import { MotelSign } from "@/components/MotelSign";
 import { RetroTV } from "@/components/RetroTV";
 import { Barograph } from "@/components/Barograph";
+import { GasStationPump } from "@/components/GasStationPump";
 import { DinerMenu } from "@/components/DinerMenu";
 import { MapleScene } from "@/components/MapleScene";
 import { CashRegister } from "@/components/CashRegister";
@@ -70,6 +71,7 @@ export default function Home() {
         <MapleScene />
         <HighwayMileageSign />
         <DinerMenu />
+        <GasStationPump />
         <Pricing />
         <CashRegister />
         <NeonSign />
