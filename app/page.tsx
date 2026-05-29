@@ -92,6 +92,7 @@ import { MapleEvaporator } from "@/components/MapleEvaporator";
 import { TownBandstand } from "@/components/TownBandstand";
 import { PotteryKiln } from "@/components/PotteryKiln";
 import { StonewallBuilding } from "@/components/StonewallBuilding";
+import { CountyFair } from "@/components/CountyFair";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -193,6 +194,7 @@ export default function Home() {
         <Lighthouse />
         <About />
         <HarvestFair />
+        <CountyFair />
         <SummerPicnic />
         <ShrewsburyCommon />
         <TownBandstand />
