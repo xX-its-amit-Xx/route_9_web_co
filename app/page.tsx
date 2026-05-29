@@ -93,6 +93,7 @@ import { TownBandstand } from "@/components/TownBandstand";
 import { PotteryKiln } from "@/components/PotteryKiln";
 import { StonewallBuilding } from "@/components/StonewallBuilding";
 import { CountyFair } from "@/components/CountyFair";
+import { TinsmithShop } from "@/components/TinsmithShop";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -204,6 +205,7 @@ export default function Home() {
         <FiddleContest />
         <WoolMill />
         <BlacksmithForge />
+        <TinsmithShop />
         <PotteryKiln />
         <StonewallBuilding />
         <VintageSeedPacket />
