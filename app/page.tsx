@@ -77,6 +77,7 @@ import { TownMeetingHall } from "@/components/TownMeetingHall";
 import { CountryGeneralStore } from "@/components/CountryGeneralStore";
 import { IronBridge } from "@/components/IronBridge";
 import { HarvestFair } from "@/components/HarvestFair";
+import { WinterSleigh } from "@/components/WinterSleigh";
 
 export default function Home() {
   return (
@@ -134,6 +135,7 @@ export default function Home() {
         <CoveredBridge />
         <IronBridge />
         <AutumnForestPath />
+        <WinterSleigh />
         <IceHarvestScene />
         <BarnQuilt />
         <GristMillScene />
