@@ -79,6 +79,7 @@ import { IronBridge } from "@/components/IronBridge";
 import { HarvestFair } from "@/components/HarvestFair";
 import { WinterSleigh } from "@/components/WinterSleigh";
 import { MillPond } from "@/components/MillPond";
+import { CountryChurch } from "@/components/CountryChurch";
 
 export default function Home() {
   return (
@@ -144,6 +145,7 @@ export default function Home() {
         <PrintshopBroadside />
         <CiderPressScene />
         <OrchardScene />
+        <CountryChurch />
         <ShrewsburyClockTower />
         <NightSky />
         <CelestialOrrery />
