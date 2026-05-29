@@ -26,6 +26,7 @@ import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
 import { CorkBoard } from "@/components/CorkBoard";
+import { ShrewsburyGazette } from "@/components/ShrewsburyGazette";
 
 export default function Home() {
   return (
@@ -51,6 +52,7 @@ export default function Home() {
         <Portfolio />
         <LakeScene />
         <Testimonials />
+        <ShrewsburyGazette />
         <Process />
         <Route9Scene />
         <ShrewsburyClockTower />
