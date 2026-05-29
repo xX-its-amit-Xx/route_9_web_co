@@ -26,6 +26,7 @@ import { Lighthouse } from "@/components/Lighthouse";
 import { ApothecaryShelf } from "@/components/ApothecaryShelf";
 import { Typewriter } from "@/components/Typewriter";
 import { MatchbookCollection } from "@/components/MatchbookCollection";
+import { RoadAtlas } from "@/components/RoadAtlas";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
@@ -81,6 +82,7 @@ export default function Home() {
         <Testimonials />
         <Typewriter />
         <ShrewsburyGazette />
+        <RoadAtlas />
         <Process />
         <SolariBoard />
         <Route9Scene />
