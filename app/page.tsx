@@ -75,6 +75,7 @@ import { FishingPierScene } from "@/components/FishingPierScene";
 import { SugaringShack } from "@/components/SugaringShack";
 import { TownMeetingHall } from "@/components/TownMeetingHall";
 import { CountryGeneralStore } from "@/components/CountryGeneralStore";
+import { IronBridge } from "@/components/IronBridge";
 
 export default function Home() {
   return (
@@ -130,6 +131,7 @@ export default function Home() {
         <SolariBoard />
         <Route9Scene />
         <CoveredBridge />
+        <IronBridge />
         <AutumnForestPath />
         <IceHarvestScene />
         <BarnQuilt />
