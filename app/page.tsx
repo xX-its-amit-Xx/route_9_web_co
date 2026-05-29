@@ -29,6 +29,7 @@ import { CorkBoard } from "@/components/CorkBoard";
 import { ShrewsburyGazette } from "@/components/ShrewsburyGazette";
 import { PostageStamps } from "@/components/PostageStamps";
 import { MotelSign } from "@/components/MotelSign";
+import { RetroTV } from "@/components/RetroTV";
 
 export default function Home() {
   return (
@@ -49,6 +50,7 @@ export default function Home() {
         <HighwayMileageSign />
         <Pricing />
         <NeonSign />
+        <RetroTV />
         <MaintenanceFAQ />
         <PostageStamps />
         <FilmStripBand />
