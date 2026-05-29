@@ -72,6 +72,7 @@ import { SteamboatScene } from "@/components/SteamboatScene";
 import { BlacksmithForge } from "@/components/BlacksmithForge";
 import { FishingPierScene } from "@/components/FishingPierScene";
 import { SugaringShack } from "@/components/SugaringShack";
+import { TownMeetingHall } from "@/components/TownMeetingHall";
 
 export default function Home() {
   return (
@@ -122,6 +123,7 @@ export default function Home() {
         <CartographerDesk />
         <NauticalCompass />
         <Process />
+        <TownMeetingHall />
         <SolariBoard />
         <Route9Scene />
         <CoveredBridge />
