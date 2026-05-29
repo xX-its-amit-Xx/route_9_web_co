@@ -67,6 +67,7 @@ import { CartographerDesk } from "@/components/CartographerDesk";
 import { IceHarvestScene } from "@/components/IceHarvestScene";
 import { GristMillScene } from "@/components/GristMillScene";
 import { PrintshopBroadside } from "@/components/PrintshopBroadside";
+import { CiderPressScene } from "@/components/CiderPressScene";
 
 export default function Home() {
   return (
@@ -122,6 +123,7 @@ export default function Home() {
         <BarnQuilt />
         <GristMillScene />
         <PrintshopBroadside />
+        <CiderPressScene />
         <ShrewsburyClockTower />
         <NightSky />
         <CelestialOrrery />
