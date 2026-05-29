@@ -78,6 +78,7 @@ import { CountryGeneralStore } from "@/components/CountryGeneralStore";
 import { IronBridge } from "@/components/IronBridge";
 import { HarvestFair } from "@/components/HarvestFair";
 import { WinterSleigh } from "@/components/WinterSleigh";
+import { MillPond } from "@/components/MillPond";
 
 export default function Home() {
   return (
@@ -139,6 +140,7 @@ export default function Home() {
         <IceHarvestScene />
         <BarnQuilt />
         <GristMillScene />
+        <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
         <OrchardScene />
