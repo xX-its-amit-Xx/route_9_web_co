@@ -30,6 +30,7 @@ import { RoadAtlas } from "@/components/RoadAtlas";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { AutumnForestPath } from "@/components/AutumnForestPath";
 import { MagicLantern } from "@/components/MagicLantern";
+import { MusicBox } from "@/components/MusicBox";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
 import { CoveredBridge } from "@/components/CoveredBridge";
@@ -94,6 +95,7 @@ export default function Home() {
         <MagicLantern />
         <LakeScene />
         <RecordCrate />
+        <MusicBox />
         <Testimonials />
         <Typewriter />
         <ShrewsburyPostcard />
