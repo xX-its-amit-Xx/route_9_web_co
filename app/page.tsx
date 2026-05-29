@@ -86,6 +86,7 @@ import { CountryChurch } from "@/components/CountryChurch";
 import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
 import { TavernInterior } from "@/components/TavernInterior";
+import { BeeSkep } from "@/components/BeeSkep";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -198,6 +199,7 @@ export default function Home() {
         <CorkBoard />
         <TavernSign />
         <TavernInterior />
+        <BeeSkep />
         <MotelSign />
         <FortuneTeller />
         <Telegrapher />
