@@ -63,6 +63,7 @@ import { WebTonic } from "@/components/WebTonic";
 import { BotanicalConservatory } from "@/components/BotanicalConservatory";
 import { PocketWatchScene } from "@/components/PocketWatchScene";
 import { VintageSeedPacket } from "@/components/VintageSeedPacket";
+import { CartographerDesk } from "@/components/CartographerDesk";
 
 export default function Home() {
   return (
@@ -107,6 +108,7 @@ export default function Home() {
         <ShrewsburyPostcard />
         <ShrewsburyGazette />
         <RoadAtlas />
+        <CartographerDesk />
         <NauticalCompass />
         <Process />
         <SolariBoard />
