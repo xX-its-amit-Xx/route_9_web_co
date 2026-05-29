@@ -18,6 +18,9 @@ import { Route9Scene } from "@/components/Route9Scene";
 import { NeonSign } from "@/components/NeonSign";
 import { LakeScene } from "@/components/LakeScene";
 import { StorefrontParade } from "@/components/StorefrontParade";
+import { AIChatWidget } from "@/components/AIChatWidget";
+import { CursorSparks } from "@/components/CursorSparks";
+import { SectionProgress } from "@/components/SectionProgress";
 
 export default function Home() {
   return (
@@ -25,6 +28,8 @@ export default function Home() {
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <IntroSplash />
       <CustomCursor />
+      <CursorSparks />
+      <SectionProgress />
       <Nav />
       <main id="main-content">
         <Hero />
@@ -45,6 +50,7 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingCTA />
+      <AIChatWidget />
     </>
   );
 }
