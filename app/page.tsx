@@ -89,6 +89,7 @@ import { FiddleContest } from "@/components/FiddleContest";
 import { CranberryBog } from "@/components/CranberryBog";
 import { AerialBalloon } from "@/components/AerialBalloon";
 import { TobogganRun } from "@/components/TobogganRun";
+import { NorEaster } from "@/components/NorEaster";
 
 export default function Home() {
   return (
@@ -131,6 +132,7 @@ export default function Home() {
         <FishingPierScene />
         <CranberryBog />
         <WhalingShip />
+        <NorEaster />
         <SteamboatScene />
         <RecordCrate />
         <MusicBox />
