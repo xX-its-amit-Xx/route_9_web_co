@@ -181,7 +181,7 @@ export function Portfolio() {
                     src={PORTFOLIO_PHOTOS[idx % PORTFOLIO_PHOTOS.length]}
                     alt={item.label}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-[1.1] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div aria-hidden="true" className="absolute bottom-3 left-3 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">

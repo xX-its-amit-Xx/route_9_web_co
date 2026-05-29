@@ -231,9 +231,22 @@ export function Footer() {
             className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-6"
             style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
           >
-            <p style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
-              © {new Date().getFullYear()} {SITE.name} · Shrewsbury, MA · Est. {SITE.founded}
-            </p>
+            <div className="flex flex-col gap-1">
+              <p style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
+                © {new Date().getFullYear()} {SITE.name} · Shrewsbury, MA · Est. {SITE.founded}
+              </p>
+              <p
+                style={{
+                  fontSize: "10px",
+                  color: "rgba(212,104,42,0.45)",
+                  fontFamily: "var(--font-display)",
+                  fontStyle: "italic",
+                  letterSpacing: "0.03em",
+                }}
+              >
+                Built by a neighbor. Maintained by the same one.
+              </p>
+            </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2" style={{ fontSize: "11px", color: "rgba(155,140,125,0.88)" }}>
               {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
                 <a

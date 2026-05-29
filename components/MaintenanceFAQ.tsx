@@ -4,7 +4,7 @@ import { useState, useId } from "react";
 import { Plus } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { MaintenanceLog } from "./MaintenanceLog";
 import { PocketWatch } from "./PocketWatch";
 import { FAQ } from "@/lib/content";
@@ -162,15 +162,15 @@ export function MaintenanceFAQ() {
           {/* Left */}
           <div ref={headingRef}>
             <div className="label-pill mb-4 reveal">Maintenance</div>
-            <SplitTextReveal
+            <TextScramble
               as="h2"
               id="faq-heading"
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
               style={{ fontFamily: "var(--font-display)" }}
-              stagger={80}
+              speed={3}
             >
-              What&apos;s included after launch.
-            </SplitTextReveal>
+              {"What's included after launch."}
+            </TextScramble>
             <p className="text-muted leading-relaxed mb-8 reveal" style={{ transitionDelay: "200ms" }}>
               The monthly fee isn&apos;t a software subscription. It&apos;s a retainer on
               a person — one who already knows your site inside and out.

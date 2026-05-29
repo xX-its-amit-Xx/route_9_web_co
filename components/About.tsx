@@ -159,6 +159,63 @@ export function About() {
                 <p className="text-xs text-muted mt-0.5">Serving Route 9 since day one</p>
               </div>
             </div>
+
+            {/* Studio desk illustration — pencil, mug, sticky, ruler */}
+            <div className="mt-6 reveal" style={{ transitionDelay: "420ms" }}>
+              <svg
+                viewBox="0 0 220 130"
+                fill="none"
+                aria-hidden
+                style={{
+                  width: "min(220px, 80%)",
+                  animation: "float-subtle 6s ease-in-out 1.8s infinite",
+                  opacity: 0.82,
+                }}
+              >
+                {/* Desk surface */}
+                <rect x="8" y="104" width="204" height="4" rx="2" fill="rgba(212,104,42,0.12)" stroke="rgba(212,104,42,0.22)" strokeWidth="1" />
+
+                {/* Ruler — horizontal, bottom-left */}
+                <rect x="10" y="92" width="88" height="11" rx="1.5" fill="rgba(212,104,42,0.06)" stroke="rgba(212,104,42,0.38)" strokeWidth="1" />
+                {[0,8,16,24,32,40,48,56,64,72,80].map((x, i) => (
+                  <line key={i} x1={14+x} y1="92" x2={14+x} y2={i % 5 === 0 ? "97" : "95"} stroke="rgba(212,104,42,0.45)" strokeWidth="0.8" />
+                ))}
+                <text x="16" y="101" fontSize="5" fill="rgba(212,104,42,0.35)" fontFamily="monospace">cm</text>
+
+                {/* Coffee mug — right side */}
+                <rect x="162" y="72" width="28" height="30" rx="3" fill="rgba(212,104,42,0.08)" stroke="rgba(212,104,42,0.55)" strokeWidth="1.4" />
+                <path d="M190 80 Q200 80 200 87 Q200 94 190 94" stroke="rgba(212,104,42,0.45)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+                <rect x="165" y="72" width="22" height="5" rx="1.5" fill="rgba(212,104,42,0.12)" />
+                {/* Steam */}
+                <path d="M170 68 Q172 63 170 58" stroke="rgba(212,104,42,0.28)" strokeWidth="1.1" strokeLinecap="round" />
+                <path d="M176 66 Q178 61 176 56" stroke="rgba(212,104,42,0.22)" strokeWidth="1" strokeLinecap="round" />
+                <path d="M182 68 Q184 63 182 58" stroke="rgba(212,104,42,0.18)" strokeWidth="0.9" strokeLinecap="round" />
+
+                {/* Sticky note — center */}
+                <rect x="96" y="60" width="52" height="42" rx="2" fill="rgba(212,104,42,0.09)" stroke="rgba(212,104,42,0.32)" strokeWidth="1" />
+                {/* Folded corner */}
+                <path d="M136 60 L148 60 L136 72 Z" fill="rgba(212,104,42,0.18)" />
+                <text x="122" y="80" textAnchor="middle" fontSize="8" fill="rgba(212,104,42,0.7)" fontFamily="monospace" fontWeight="700" letterSpacing="0.04em">ROUTE</text>
+                <text x="122" y="92" textAnchor="middle" fontSize="13" fill="rgba(212,104,42,0.8)" fontFamily="Georgia, serif" fontStyle="italic" fontWeight="400">9</text>
+
+                {/* Pencil — angled across desk */}
+                <g transform="rotate(-22, 60, 88)">
+                  <rect x="20" y="84" width="66" height="7" rx="1" fill="rgba(212,104,42,0.09)" stroke="rgba(212,104,42,0.45)" strokeWidth="1" />
+                  {/* Eraser tip */}
+                  <rect x="82" y="84" width="9" height="7" rx="1" fill="rgba(212,104,42,0.22)" stroke="rgba(212,104,42,0.45)" strokeWidth="1" />
+                  {/* Point */}
+                  <path d="M20 84 L14 87.5 L20 91" fill="rgba(212,104,42,0.35)" stroke="rgba(212,104,42,0.5)" strokeWidth="0.8" strokeLinejoin="round" />
+                  {/* Pencil grip band */}
+                  <rect x="76" y="84" width="4" height="7" fill="rgba(212,104,42,0.15)" />
+                  {/* Pencil shine */}
+                  <line x1="24" y1="86" x2="74" y2="86" stroke="rgba(255,220,160,0.18)" strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+
+                {/* Small eraser block — loose on desk */}
+                <rect x="58" y="90" width="18" height="10" rx="1.5" fill="rgba(212,104,42,0.08)" stroke="rgba(212,104,42,0.32)" strokeWidth="1" />
+                <text x="67" y="98" textAnchor="middle" fontSize="4.5" fill="rgba(212,104,42,0.4)" fontFamily="monospace" fontWeight="700">ERASER</text>
+              </svg>
+            </div>
           </div>
 
           {/* Right: body */}
