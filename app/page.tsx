@@ -60,6 +60,7 @@ import { ShrewsburyPostcard } from "@/components/ShrewsburyPostcard";
 import { SealPress } from "@/components/SealPress";
 import { NauticalCompass } from "@/components/NauticalCompass";
 import { WebTonic } from "@/components/WebTonic";
+import { BotanicalConservatory } from "@/components/BotanicalConservatory";
 
 export default function Home() {
   return (
@@ -78,6 +79,7 @@ export default function Home() {
         <TreasureMap />
         <StorefrontParade />
         <QualityPillars />
+        <BotanicalConservatory />
         <ApothecaryShelf />
         <PinballMachine />
         <MapleScene />
