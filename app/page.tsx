@@ -18,6 +18,7 @@ import { Route9Scene } from "@/components/Route9Scene";
 import { NeonSign } from "@/components/NeonSign";
 import { LakeScene } from "@/components/LakeScene";
 import { StorefrontParade } from "@/components/StorefrontParade";
+import { HighwayMileageSign } from "@/components/HighwayMileageSign";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
@@ -37,6 +38,7 @@ export default function Home() {
         <WhoIWorkWith />
         <StorefrontParade />
         <QualityPillars />
+        <HighwayMileageSign />
         <Pricing />
         <NeonSign />
         <MaintenanceFAQ />

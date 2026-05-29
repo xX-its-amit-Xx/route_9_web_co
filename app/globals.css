@@ -2033,3 +2033,47 @@ body.cursor-active * {
   49%, 100%{ opacity: 0.04; }
 }
 
+/* ═══════════════════════════════════════════════
+   HIGHWAY MILEAGE SIGN
+   Gentle wind sway on the whole sign + posts.
+   Headlight beam slides across the sign face.
+══════════════════════════════════════════════ */
+@keyframes sign-sway {
+  0%,  100% { transform: rotate(0deg);     }
+  20%        { transform: rotate(0.45deg);  }
+  50%        { transform: rotate(-0.3deg);  }
+  75%        { transform: rotate(0.25deg);  }
+}
+
+@keyframes sign-headlight-pass {
+  0%   { transform: translateX(-120%); opacity: 0;   }
+  8%   { opacity: 1; }
+  60%  { opacity: 1; }
+  68%  { transform: translateX(320%);  opacity: 0; }
+  100% { transform: translateX(320%);  opacity: 0; }
+}
+
+.sign-headlight-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.06) 60%,
+    transparent 100%
+  );
+  transform: skewX(-12deg);
+  animation: sign-headlight-pass 8s ease-in-out infinite;
+  animation-delay: 2.5s;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sign-headlight-beam { animation: none !important; }
+}
+
