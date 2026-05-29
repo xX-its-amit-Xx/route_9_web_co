@@ -68,6 +68,7 @@ import { IceHarvestScene } from "@/components/IceHarvestScene";
 import { GristMillScene } from "@/components/GristMillScene";
 import { PrintshopBroadside } from "@/components/PrintshopBroadside";
 import { CiderPressScene } from "@/components/CiderPressScene";
+import { OrchardScene } from "@/components/OrchardScene";
 import { SteamboatScene } from "@/components/SteamboatScene";
 import { BlacksmithForge } from "@/components/BlacksmithForge";
 import { FishingPierScene } from "@/components/FishingPierScene";
@@ -135,6 +136,7 @@ export default function Home() {
         <GristMillScene />
         <PrintshopBroadside />
         <CiderPressScene />
+        <OrchardScene />
         <ShrewsburyClockTower />
         <NightSky />
         <CelestialOrrery />
