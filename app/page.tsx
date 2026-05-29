@@ -33,6 +33,7 @@ import { RetroTV } from "@/components/RetroTV";
 import { DinerMenu } from "@/components/DinerMenu";
 import { MapleScene } from "@/components/MapleScene";
 import { CashRegister } from "@/components/CashRegister";
+import { TreasureMap } from "@/components/TreasureMap";
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
         <TornPageDivider />
         <SocialProofTicker />
         <WhoIWorkWith />
+        <TreasureMap />
         <StorefrontParade />
         <QualityPillars />
         <MapleScene />
