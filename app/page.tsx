@@ -28,6 +28,7 @@ import { SectionProgress } from "@/components/SectionProgress";
 import { CorkBoard } from "@/components/CorkBoard";
 import { ShrewsburyGazette } from "@/components/ShrewsburyGazette";
 import { PostageStamps } from "@/components/PostageStamps";
+import { MotelSign } from "@/components/MotelSign";
 
 export default function Home() {
   return (
@@ -60,6 +61,7 @@ export default function Home() {
         <ShrewsburyClockTower />
         <About />
         <CorkBoard />
+        <MotelSign />
         <Contact />
       </main>
       <Footer />
