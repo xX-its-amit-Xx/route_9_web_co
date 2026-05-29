@@ -98,6 +98,7 @@ import { SawmillScene } from "@/components/SawmillScene";
 import { RopewalkScene } from "@/components/RopewalkScene";
 import { CheesePress } from "@/components/CheesePress";
 import { CountingHouse } from "@/components/CountingHouse";
+import { HattersShop } from "@/components/HattersShop";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -190,6 +191,7 @@ export default function Home() {
         <RopewalkScene />
         <CheesePress />
         <CountingHouse />
+        <HattersShop />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
