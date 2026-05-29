@@ -91,6 +91,7 @@ import { AerialBalloon } from "@/components/AerialBalloon";
 import { TobogganRun } from "@/components/TobogganRun";
 import { NorEaster } from "@/components/NorEaster";
 import { TrainDepot } from "@/components/TrainDepot";
+import { IceCreamSocial } from "@/components/IceCreamSocial";
 
 export default function Home() {
   return (
@@ -172,6 +173,7 @@ export default function Home() {
         <HarvestFair />
         <SummerPicnic />
         <ShrewsburyCommon />
+        <IceCreamSocial />
         <WorkbenchTools />
         <QuiltingBee />
         <FiddleContest />
