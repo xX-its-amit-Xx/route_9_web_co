@@ -54,6 +54,7 @@ import { WorkbenchTools } from "@/components/WorkbenchTools";
 import { ShrewsburyPostcard } from "@/components/ShrewsburyPostcard";
 import { SealPress } from "@/components/SealPress";
 import { NauticalCompass } from "@/components/NauticalCompass";
+import { WebTonic } from "@/components/WebTonic";
 
 export default function Home() {
   return (
@@ -79,6 +80,7 @@ export default function Home() {
         <DinerMenu />
         <GasStationPump />
         <Pricing />
+        <WebTonic />
         <CashRegister />
         <NeonSign />
         <RetroTV />
