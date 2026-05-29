@@ -65,6 +65,7 @@ import { PocketWatchScene } from "@/components/PocketWatchScene";
 import { VintageSeedPacket } from "@/components/VintageSeedPacket";
 import { CartographerDesk } from "@/components/CartographerDesk";
 import { IceHarvestScene } from "@/components/IceHarvestScene";
+import { IceFishing } from "@/components/IceFishing";
 import { GristMillScene } from "@/components/GristMillScene";
 import { PrintshopBroadside } from "@/components/PrintshopBroadside";
 import { CiderPressScene } from "@/components/CiderPressScene";
@@ -166,6 +167,7 @@ export default function Home() {
         <WinterSleigh />
         <TobogganRun />
         <IceHarvestScene />
+        <IceFishing />
         <SpringThaw />
         <BarnQuilt />
         <GristMillScene />
