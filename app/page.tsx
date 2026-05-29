@@ -84,6 +84,7 @@ import { SpringThaw } from "@/components/SpringThaw";
 import { TavernSign } from "@/components/TavernSign";
 import { WhalingShip } from "@/components/WhalingShip";
 import { SummerPicnic } from "@/components/SummerPicnic";
+import { QuiltingBee } from "@/components/QuiltingBee";
 
 export default function Home() {
   return (
@@ -161,6 +162,7 @@ export default function Home() {
         <SummerPicnic />
         <ShrewsburyCommon />
         <WorkbenchTools />
+        <QuiltingBee />
         <BlacksmithForge />
         <VintageSeedPacket />
         <MatchbookCollection />
