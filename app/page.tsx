@@ -40,6 +40,7 @@ import { MapleScene } from "@/components/MapleScene";
 import { CashRegister } from "@/components/CashRegister";
 import { TreasureMap } from "@/components/TreasureMap";
 import { FortuneTeller } from "@/components/FortuneTeller";
+import { RecordCrate } from "@/components/RecordCrate";
 
 export default function Home() {
   return (
@@ -71,6 +72,7 @@ export default function Home() {
         <FilmStripBand />
         <Portfolio />
         <LakeScene />
+        <RecordCrate />
         <Testimonials />
         <ShrewsburyGazette />
         <Process />
