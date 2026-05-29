@@ -902,6 +902,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════
+   STEP-SPOTLIGHT — cursor-tracking glow for Process step cards
+══════════════════════════════════════════════ */
+.step-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(280px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(212,104,42,0.11), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.group:hover .step-spotlight {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════
    PROCESS FLOW-LINE ENTRANCE
    Dashes draw in left-to-right once the card reveals.
    flow-dashes (background-position) still runs on top.
@@ -1994,5 +2011,25 @@ body.cursor-active * {
 @keyframes arrow-nudge {
   0%, 100% { transform: translateX(0); }
   50%      { transform: translateX(5px); }
+}
+
+/* ═══════════════════════════════════════════════
+   URGENCY SWAP — Pricing founding offer badge text entrance
+══════════════════════════════════════════════ */
+@keyframes urgency-swap {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* ═══════════════════════════════════════════════
+   MORSE BLINK — Footer morse code dot pulse
+══════════════════════════════════════════════ */
+@keyframes morse-blink {
+  0%, 8%   { opacity: 0.22; }
+  9%, 18%  { opacity: 0.06; }
+  19%, 28% { opacity: 0.22; }
+  29%, 38% { opacity: 0.06; }
+  39%, 48% { opacity: 0.22; }
+  49%, 100%{ opacity: 0.04; }
 }
 

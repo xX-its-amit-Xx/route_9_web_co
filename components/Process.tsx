@@ -190,7 +190,14 @@ export function Process() {
               <article
                 aria-labelledby={`step-${step.step}`}
                 className="shine card-light relative flex flex-col gap-4 p-6 group h-full"
+                style={{ isolation: "isolate" }}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+                  e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+                }}
               >
+                <div className="step-spotlight" aria-hidden />
                 {/* Time estimate chip — slides in on hover */}
                 <div
                   className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-0 translate-y-1"

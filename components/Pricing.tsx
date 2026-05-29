@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
@@ -13,9 +13,16 @@ export function Pricing() {
   const cardsRef = useScrollReveal(0.05);
   const offerRef = useScrollReveal();
   const allowMotion = useRef(false);
+  const URGENCY_MSGS = ["1 spot left", "Filling fast", "Claim yours"] as const;
+  const [urgencyIdx, setUrgencyIdx] = useState(0);
 
   useEffect(() => {
     allowMotion.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setUrgencyIdx((i) => (i + 1) % URGENCY_MSGS.length), 4000);
+    return () => clearInterval(id);
   }, []);
 
   return (
@@ -276,7 +283,14 @@ export function Pricing() {
                     <span className="w-2 h-2 rounded-full bg-[#D4682A] opacity-60" />
                     <span className="w-2 h-2 rounded-full border border-[#D4682A] animate-pulse" style={{ background: "rgba(212,104,42,0.15)" }} />
                   </span>
-                  1 spot left
+                  <span
+                    key={urgencyIdx}
+                    style={{ animation: "urgency-swap 0.35s cubic-bezier(0.22,1,0.36,1) both" }}
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {URGENCY_MSGS[urgencyIdx]}
+                  </span>
                 </span>
               </div>
               <p className="text-[#9B8C7D] text-sm leading-relaxed">{FOUNDING_OFFER.body}</p>

@@ -269,6 +269,28 @@ export function Footer() {
                 </a>
               )}
               <span>MIT License</span>
+              {/* Morse code easter egg — hover to decode */}
+              <span className="group relative cursor-default select-none" aria-hidden>
+                <span
+                  className="font-mono text-[9px] tracking-widest"
+                  style={{ color: "rgba(212,104,42,0.22)", animation: "morse-blink 3.2s step-end infinite" }}
+                >
+                  ·&nbsp;·&nbsp;·
+                </span>
+                <span
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 rounded-lg text-[9px] font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  style={{
+                    background: "rgba(14,9,5,0.97)",
+                    border: "1px solid rgba(212,104,42,0.35)",
+                    color: "rgba(212,104,42,0.88)",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.5), 0 0 12px rgba(212,104,42,0.1)",
+                    letterSpacing: "0.15em",
+                  }}
+                >
+                  ·–&nbsp;·–·&nbsp;––&nbsp;···&nbsp;–&nbsp;&nbsp;·–&nbsp;···&nbsp;·
+                  <span className="block text-center mt-0.5" style={{ fontSize: "7px", color: "rgba(212,104,42,0.45)", letterSpacing: "0.06em" }}>ROUTE 9 · MORSE</span>
+                </span>
+              </span>
               <button
                 onClick={scrollToTop}
                 aria-label="Back to top"
