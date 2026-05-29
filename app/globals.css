@@ -2124,3 +2124,32 @@ body.cursor-active * {
   .film-gate-flicker  { animation: none !important; }
 }
 
+/* ═══════════════════════════════════════════════
+   SHREWSBURY CLOCK TOWER
+   Night-sky star twinkling + water shimmer lines.
+   Clock hands are driven by JS (inline transforms).
+══════════════════════════════════════════════ */
+@keyframes ct-star-twinkle {
+  0%, 100% { opacity: 0.88; }
+  45%       { opacity: 0.12; }
+  55%       { opacity: 0.22; }
+}
+
+@keyframes ct-water-shift {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -80; }
+}
+
+.ct-star {
+  animation: ct-star-twinkle 3.2s ease-in-out infinite;
+}
+
+.ct-water {
+  animation: ct-water-shift 3.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-star  { animation: none !important; opacity: 0.7; }
+  .ct-water { animation: none !important; }
+}
+
