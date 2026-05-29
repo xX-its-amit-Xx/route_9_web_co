@@ -95,6 +95,7 @@ import { StonewallBuilding } from "@/components/StonewallBuilding";
 import { CountyFair } from "@/components/CountyFair";
 import { TinsmithShop } from "@/components/TinsmithShop";
 import { SawmillScene } from "@/components/SawmillScene";
+import { RopewalkScene } from "@/components/RopewalkScene";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -184,6 +185,7 @@ export default function Home() {
         <BarnQuilt />
         <GristMillScene />
         <SawmillScene />
+        <RopewalkScene />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
