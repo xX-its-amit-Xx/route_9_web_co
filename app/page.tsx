@@ -25,6 +25,7 @@ import { NightSky } from "@/components/NightSky";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
+import { CoveredBridge } from "@/components/CoveredBridge";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
@@ -75,6 +76,7 @@ export default function Home() {
         <Process />
         <SolariBoard />
         <Route9Scene />
+        <CoveredBridge />
         <ShrewsburyClockTower />
         <NightSky />
         <About />
