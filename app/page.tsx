@@ -94,6 +94,7 @@ import { PotteryKiln } from "@/components/PotteryKiln";
 import { StonewallBuilding } from "@/components/StonewallBuilding";
 import { CountyFair } from "@/components/CountyFair";
 import { TinsmithShop } from "@/components/TinsmithShop";
+import { SawmillScene } from "@/components/SawmillScene";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -182,6 +183,7 @@ export default function Home() {
         <SpringThaw />
         <BarnQuilt />
         <GristMillScene />
+        <SawmillScene />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
