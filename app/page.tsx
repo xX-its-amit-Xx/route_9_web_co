@@ -48,6 +48,7 @@ import { MapleScene } from "@/components/MapleScene";
 import { CashRegister } from "@/components/CashRegister";
 import { TreasureMap } from "@/components/TreasureMap";
 import { FortuneTeller } from "@/components/FortuneTeller";
+import { Telegrapher } from "@/components/Telegrapher";
 import { RecordCrate } from "@/components/RecordCrate";
 
 export default function Home() {
@@ -101,6 +102,7 @@ export default function Home() {
         <CorkBoard />
         <MotelSign />
         <FortuneTeller />
+        <Telegrapher />
         <Contact />
         <FooterStreetscape />
       </main>
