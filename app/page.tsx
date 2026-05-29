@@ -76,6 +76,7 @@ import { SugaringShack } from "@/components/SugaringShack";
 import { TownMeetingHall } from "@/components/TownMeetingHall";
 import { CountryGeneralStore } from "@/components/CountryGeneralStore";
 import { IronBridge } from "@/components/IronBridge";
+import { HarvestFair } from "@/components/HarvestFair";
 
 export default function Home() {
   return (
@@ -144,6 +145,7 @@ export default function Home() {
         <CelestialOrrery />
         <Lighthouse />
         <About />
+        <HarvestFair />
         <ShrewsburyCommon />
         <WorkbenchTools />
         <BlacksmithForge />
