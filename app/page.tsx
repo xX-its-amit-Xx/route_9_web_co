@@ -80,6 +80,7 @@ import { HarvestFair } from "@/components/HarvestFair";
 import { WinterSleigh } from "@/components/WinterSleigh";
 import { MillPond } from "@/components/MillPond";
 import { CountryChurch } from "@/components/CountryChurch";
+import { SpringThaw } from "@/components/SpringThaw";
 
 export default function Home() {
   return (
@@ -139,6 +140,7 @@ export default function Home() {
         <AutumnForestPath />
         <WinterSleigh />
         <IceHarvestScene />
+        <SpringThaw />
         <BarnQuilt />
         <GristMillScene />
         <MillPond />
