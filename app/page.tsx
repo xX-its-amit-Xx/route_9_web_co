@@ -65,6 +65,7 @@ import { PocketWatchScene } from "@/components/PocketWatchScene";
 import { VintageSeedPacket } from "@/components/VintageSeedPacket";
 import { CartographerDesk } from "@/components/CartographerDesk";
 import { IceHarvestScene } from "@/components/IceHarvestScene";
+import { GristMillScene } from "@/components/GristMillScene";
 
 export default function Home() {
   return (
@@ -118,6 +119,7 @@ export default function Home() {
         <AutumnForestPath />
         <IceHarvestScene />
         <BarnQuilt />
+        <GristMillScene />
         <ShrewsburyClockTower />
         <NightSky />
         <CelestialOrrery />
