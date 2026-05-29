@@ -31,6 +31,7 @@ import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
 import { CoveredBridge } from "@/components/CoveredBridge";
+import { BarnQuilt } from "@/components/BarnQuilt";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { CursorSparks } from "@/components/CursorSparks";
@@ -91,6 +92,7 @@ export default function Home() {
         <SolariBoard />
         <Route9Scene />
         <CoveredBridge />
+        <BarnQuilt />
         <ShrewsburyClockTower />
         <NightSky />
         <Lighthouse />
