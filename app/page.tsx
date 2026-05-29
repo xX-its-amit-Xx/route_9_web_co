@@ -100,6 +100,7 @@ import { CheesePress } from "@/components/CheesePress";
 import { CountingHouse } from "@/components/CountingHouse";
 import { HattersShop } from "@/components/HattersShop";
 import { GlassblowerShop } from "@/components/GlassblowerShop";
+import { CooperShop } from "@/components/CooperShop";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -194,6 +195,7 @@ export default function Home() {
         <CountingHouse />
         <HattersShop />
         <GlassblowerShop />
+        <CooperShop />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
