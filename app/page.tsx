@@ -51,6 +51,7 @@ import { FortuneTeller } from "@/components/FortuneTeller";
 import { Telegrapher } from "@/components/Telegrapher";
 import { RecordCrate } from "@/components/RecordCrate";
 import { WorkbenchTools } from "@/components/WorkbenchTools";
+import { ShrewsburyPostcard } from "@/components/ShrewsburyPostcard";
 
 export default function Home() {
   return (
@@ -88,6 +89,7 @@ export default function Home() {
         <RecordCrate />
         <Testimonials />
         <Typewriter />
+        <ShrewsburyPostcard />
         <ShrewsburyGazette />
         <RoadAtlas />
         <Process />
