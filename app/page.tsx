@@ -68,6 +68,7 @@ import { IceHarvestScene } from "@/components/IceHarvestScene";
 import { GristMillScene } from "@/components/GristMillScene";
 import { PrintshopBroadside } from "@/components/PrintshopBroadside";
 import { CiderPressScene } from "@/components/CiderPressScene";
+import { SteamboatScene } from "@/components/SteamboatScene";
 
 export default function Home() {
   return (
@@ -105,6 +106,7 @@ export default function Home() {
         <Portfolio />
         <MagicLantern />
         <LakeScene />
+        <SteamboatScene />
         <RecordCrate />
         <MusicBox />
         <Testimonials />
