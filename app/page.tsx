@@ -61,6 +61,7 @@ import { SealPress } from "@/components/SealPress";
 import { NauticalCompass } from "@/components/NauticalCompass";
 import { WebTonic } from "@/components/WebTonic";
 import { BotanicalConservatory } from "@/components/BotanicalConservatory";
+import { PocketWatchScene } from "@/components/PocketWatchScene";
 
 export default function Home() {
   return (
@@ -124,6 +125,7 @@ export default function Home() {
         <MotelSign />
         <FortuneTeller />
         <Telegrapher />
+        <PocketWatchScene />
         <SealPress />
         <Contact />
         <FooterStreetscape />
