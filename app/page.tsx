@@ -50,6 +50,7 @@ import { TreasureMap } from "@/components/TreasureMap";
 import { FortuneTeller } from "@/components/FortuneTeller";
 import { Telegrapher } from "@/components/Telegrapher";
 import { RecordCrate } from "@/components/RecordCrate";
+import { WorkbenchTools } from "@/components/WorkbenchTools";
 
 export default function Home() {
   return (
@@ -98,6 +99,7 @@ export default function Home() {
         <NightSky />
         <Lighthouse />
         <About />
+        <WorkbenchTools />
         <MatchbookCollection />
         <CorkBoard />
         <MotelSign />
