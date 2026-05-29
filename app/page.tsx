@@ -32,6 +32,7 @@ import { AutumnForestPath } from "@/components/AutumnForestPath";
 import { MagicLantern } from "@/components/MagicLantern";
 import { MusicBox } from "@/components/MusicBox";
 import { CelestialOrrery } from "@/components/CelestialOrrery";
+import { ShrewsburyCommon } from "@/components/ShrewsburyCommon";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
 import { CoveredBridge } from "@/components/CoveredBridge";
@@ -114,6 +115,7 @@ export default function Home() {
         <CelestialOrrery />
         <Lighthouse />
         <About />
+        <ShrewsburyCommon />
         <WorkbenchTools />
         <MatchbookCollection />
         <CorkBoard />
