@@ -31,6 +31,7 @@ import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { AutumnForestPath } from "@/components/AutumnForestPath";
 import { MagicLantern } from "@/components/MagicLantern";
 import { MusicBox } from "@/components/MusicBox";
+import { CelestialOrrery } from "@/components/CelestialOrrery";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
 import { CoveredBridge } from "@/components/CoveredBridge";
@@ -110,6 +111,7 @@ export default function Home() {
         <BarnQuilt />
         <ShrewsburyClockTower />
         <NightSky />
+        <CelestialOrrery />
         <Lighthouse />
         <About />
         <WorkbenchTools />
