@@ -74,6 +74,7 @@ import { BlacksmithForge } from "@/components/BlacksmithForge";
 import { FishingPierScene } from "@/components/FishingPierScene";
 import { SugaringShack } from "@/components/SugaringShack";
 import { TownMeetingHall } from "@/components/TownMeetingHall";
+import { ElectionDay } from "@/components/ElectionDay";
 import { CountryGeneralStore } from "@/components/CountryGeneralStore";
 import { IronBridge } from "@/components/IronBridge";
 import { HarvestFair } from "@/components/HarvestFair";
@@ -152,6 +153,7 @@ export default function Home() {
         <NauticalCompass />
         <Process />
         <TownMeetingHall />
+        <ElectionDay />
         <SolariBoard />
         <TrainDepot />
         <Route9Scene />
