@@ -34,6 +34,7 @@ import { DinerMenu } from "@/components/DinerMenu";
 import { MapleScene } from "@/components/MapleScene";
 import { CashRegister } from "@/components/CashRegister";
 import { TreasureMap } from "@/components/TreasureMap";
+import { FortuneTeller } from "@/components/FortuneTeller";
 
 export default function Home() {
   return (
@@ -72,6 +73,7 @@ export default function Home() {
         <About />
         <CorkBoard />
         <MotelSign />
+        <FortuneTeller />
         <Contact />
       </main>
       <Footer />
