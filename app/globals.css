@@ -2364,3 +2364,37 @@ body.cursor-active * {
   }
 }
 
+/* ═══════════════════════════════════════════════
+   MAPLE SCENE — New England autumn falling leaves
+   Leaves are absolutely positioned <span> elements;
+   CSS custom properties drive each leaf's unique
+   drift, spin, duration, and delay.
+══════════════════════════════════════════════ */
+
+@keyframes leaf-fall {
+  0%   {
+    opacity: 0;
+    transform: translateX(0) translateY(-24px)
+               rotate(0deg) scale(var(--lf-scale, 1));
+  }
+  8%   { opacity: 0.88; }
+  90%  { opacity: 0.65; }
+  100% {
+    opacity: 0;
+    transform: translateX(var(--lf-drift, 40px)) translateY(400px)
+               rotate(var(--lf-spin, 360deg)) scale(var(--lf-scale, 1));
+  }
+}
+
+.maple-leaf {
+  position: absolute;
+  top: -24px;
+  line-height: 0;
+  animation: leaf-fall var(--lf-dur, 7s) var(--lf-delay, 0s) infinite linear;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maple-leaf { display: none !important; }
+}
+

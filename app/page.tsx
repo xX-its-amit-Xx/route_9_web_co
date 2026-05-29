@@ -31,6 +31,7 @@ import { PostageStamps } from "@/components/PostageStamps";
 import { MotelSign } from "@/components/MotelSign";
 import { RetroTV } from "@/components/RetroTV";
 import { DinerMenu } from "@/components/DinerMenu";
+import { MapleScene } from "@/components/MapleScene";
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
         <WhoIWorkWith />
         <StorefrontParade />
         <QualityPillars />
+        <MapleScene />
         <HighwayMileageSign />
         <DinerMenu />
         <Pricing />
