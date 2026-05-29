@@ -22,6 +22,7 @@ import { HighwayMileageSign } from "@/components/HighwayMileageSign";
 import { FilmStripBand } from "@/components/FilmStripBand";
 import { ShrewsburyClockTower } from "@/components/ShrewsburyClockTower";
 import { NightSky } from "@/components/NightSky";
+import { Lighthouse } from "@/components/Lighthouse";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { PinballMachine } from "@/components/PinballMachine";
 import { SolariBoard } from "@/components/SolariBoard";
@@ -81,6 +82,7 @@ export default function Home() {
         <CoveredBridge />
         <ShrewsburyClockTower />
         <NightSky />
+        <Lighthouse />
         <About />
         <CorkBoard />
         <MotelSign />
