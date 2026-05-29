@@ -94,6 +94,7 @@ import { TrainDepot } from "@/components/TrainDepot";
 import { IceCreamSocial } from "@/components/IceCreamSocial";
 import { ClamBake } from "@/components/ClamBake";
 import { WoolMill } from "@/components/WoolMill";
+import { OysterBed } from "@/components/OysterBed";
 
 export default function Home() {
   return (
@@ -134,6 +135,7 @@ export default function Home() {
         <MagicLantern />
         <LakeScene />
         <FishingPierScene />
+        <OysterBed />
         <ClamBake />
         <CranberryBog />
         <WhalingShip />
