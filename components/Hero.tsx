@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, MapPin } from "lucide-react";
 import { HERO, WHO } from "@/lib/content";
 import { Marquee } from "./Marquee";
+import { HeroNoise } from "./HeroNoise";
+import { CountUp } from "./CountUp";
 
 const SHOP_NAME_SETS = [
   "Arturo's Pizzeria · Lake Shore Barbers · Town Common Bakery",
@@ -327,6 +329,9 @@ export function Hero() {
         />
       ))}
 
+      {/* Animated film-grain noise layer — canvas redraws at 14fps */}
+      <HeroNoise />
+
       {/* Subtle shop background texture */}
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <img
@@ -605,7 +610,9 @@ export function Hero() {
                         fontStyle: i === 1 ? "italic" : "normal",
                       }}
                     >
-                      {val}
+                      {val === "48hr"
+                        ? <CountUp to={48} suffix="hr" duration={1200} delay={200} />
+                        : val}
                     </dt>
                     <dd className="text-[9px] uppercase tracking-widest mt-0.5" style={{ color: "rgba(243,233,213,0.3)" }}>
                       {label}

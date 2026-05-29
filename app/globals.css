@@ -953,6 +953,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════
+   PRO PRICING CARD — ANIMATED GRADIENT RING
+   Conic gradient comet sweeps the card border.
+══════════════════════════════════════════════ */
+@keyframes pro-ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════
    CONTACT FORM FIELD FOCUS
    Orange glow ring on focus for all contact inputs.
 ══════════════════════════════════════════════ */

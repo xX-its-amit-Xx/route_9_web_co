@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { BrandSeal } from "./BrandSeal";
 import { HandwrittenSignature } from "./HandwrittenSignature";
 import { Matchbook } from "./Matchbook";
@@ -103,15 +103,15 @@ export function About() {
           {/* Left */}
           <div ref={leftRef}>
             <div className="label-pill mb-4 reveal">About</div>
-            <SplitTextReveal
+            <TextScramble
               as="h2"
               id="about-heading"
               className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-3"
               style={{ fontFamily: "var(--font-display)" }}
-              stagger={80}
+              speed={3}
             >
               Local work, done locally.
-            </SplitTextReveal>
+            </TextScramble>
 
             {/* Animated wavy underline — draws on scroll */}
             <div className="reveal mb-6" style={{ transitionDelay: "500ms" }}>

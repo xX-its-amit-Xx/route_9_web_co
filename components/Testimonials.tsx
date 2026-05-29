@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { PolaroidPinboard } from "./PolaroidPinboard";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TESTIMONIALS } from "@/lib/content";
@@ -164,15 +164,15 @@ export function Testimonials() {
         <div ref={headingRef} className="mb-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
           <div>
             <div className="label-pill mb-4 reveal">What clients say</div>
-            <SplitTextReveal
+            <TextScramble
               as="h2"
               id="testimonials-heading"
               className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight"
               style={{ fontFamily: "var(--font-display)" }}
-              stagger={80}
+              speed={3}
             >
               Real shops. Real results.
-            </SplitTextReveal>
+            </TextScramble>
             <p className="text-sm text-muted mt-2 italic reveal" style={{ fontFamily: "var(--font-display)", transitionDelay: "300ms" }}>
               From Shrewsbury to Framingham, along Route 9.
             </p>

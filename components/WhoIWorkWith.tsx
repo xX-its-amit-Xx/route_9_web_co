@@ -1,7 +1,7 @@
 "use client";
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { SplitTextReveal } from "./SplitTextReveal";
+import { TextScramble } from "./TextScramble";
 import { BarberPole } from "./BarberPole";
 import { VintageStamps } from "./VintageStamps";
 import { ShrewsburyMap } from "./ShrewsburyMap";
@@ -104,15 +104,15 @@ export function WhoIWorkWith() {
           <div ref={leftRef}>
             <div className="label-pill mb-4 reveal">Who I work with</div>
 
-            <SplitTextReveal
+            <TextScramble
               as="h2"
               id="who-heading"
               className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight mb-6"
               style={{ fontFamily: "var(--font-display)" }}
-              stagger={80}
+              speed={3}
             >
               {WHO.heading}
-            </SplitTextReveal>
+            </TextScramble>
 
             <p
               className="text-muted text-lg leading-relaxed mb-10 reveal max-w-md"

@@ -41,7 +41,21 @@ export function Pricing() {
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
         >
           {PRICING.map((tier, i) => (
-            <div key={tier.name} className="reveal" style={{ transitionDelay: `${i * 110}ms` }}>
+            <div key={tier.name} className={`reveal${tier.highlighted ? " relative" : ""}`} style={{ transitionDelay: `${i * 110}ms` }}>
+            {tier.highlighted && (
+              <div
+                aria-hidden
+                className="absolute pointer-events-none"
+                style={{
+                  inset: "-2px",
+                  borderRadius: "18px",
+                  background: "conic-gradient(from 0deg, transparent 0%, transparent 36%, rgba(212,104,42,0.55) 47%, rgba(240,160,80,0.95) 52%, rgba(212,104,42,0.55) 57%, transparent 68%, transparent 100%)",
+                  animation: "pro-ring-spin 3.8s linear infinite",
+                  zIndex: 0,
+                }}
+              />
+            )}
+            <div className={tier.highlighted ? "relative" : undefined} style={tier.highlighted ? { zIndex: 1 } : undefined}>
             <TiltCard intensity={tier.highlighted ? 5 : 7}>
               <article
                 aria-labelledby={`tier-${tier.name}`}
@@ -167,6 +181,7 @@ export function Pricing() {
                 </a>
               </article>
             </TiltCard>
+            </div>
             </div>
           ))}
         </div>

@@ -145,6 +145,40 @@ export function Nav() {
     return () => observer.disconnect();
   }, []);
 
+  const spawnCtaSparkles = useCallback((e: React.MouseEvent) => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const count = 14;
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("span");
+      const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
+      const dist = 34 + Math.random() * 46;
+      const size = 2.5 + Math.random() * 3.5;
+      const hue = 18 + Math.random() * 18;
+      const delay = Math.round(Math.random() * 70);
+      el.style.cssText = [
+        `position:fixed`,
+        `left:${cx}px`,
+        `top:${cy}px`,
+        `width:${size}px`,
+        `height:${size}px`,
+        `border-radius:50%`,
+        `background:hsl(${hue},90%,62%)`,
+        `box-shadow:0 0 ${Math.ceil(size * 2)}px hsl(${hue},90%,62%)`,
+        `pointer-events:none`,
+        `z-index:99999`,
+        `--tx:${(Math.cos(angle) * dist).toFixed(1)}px`,
+        `--ty:${(Math.sin(angle) * dist).toFixed(1)}px`,
+        `animation:sparkle-burst 0.65s cubic-bezier(0.22,0.5,0.36,1) ${delay}ms forwards`,
+      ].join(";");
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 780 + delay);
+    }
+  }, []);
+
   const scrollToTop = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     if (lenis) lenis.scrollTo(0, { duration: 1.4 });
@@ -237,6 +271,7 @@ export function Nav() {
             <a
               href="#contact"
               aria-keyshortcuts="k"
+              onClick={spawnCtaSparkles}
               className="nav-cta-shimmer group hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03]"
               style={{
                 background:

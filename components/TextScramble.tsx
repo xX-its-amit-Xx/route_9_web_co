@@ -7,6 +7,7 @@ const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#
 type Props = {
   children: string;
   className?: string;
+  style?: React.CSSProperties;
   as?: "h1" | "h2" | "h3" | "h4" | "p" | "span" | "div";
   id?: string;
   delay?: number;
@@ -16,6 +17,7 @@ type Props = {
 export function TextScramble({
   children,
   className,
+  style,
   as: Tag = "span",
   id,
   delay = 0,
@@ -85,7 +87,7 @@ export function TextScramble({
 
   return (
     // @ts-expect-error polymorphic ref
-    <Tag ref={spanRef} id={id} className={className} aria-label={children}>
+    <Tag ref={spanRef} id={id} className={className} style={style} aria-label={children}>
       <span aria-hidden>{display}</span>
     </Tag>
   );
