@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
+import Groq from "groq-sdk";
 import { NextRequest } from "next/server";
 
 const SYSTEM_PROMPT = `You are the AI assistant for Route 9 Web, a local web design business run by Amit in Shrewsbury, Massachusetts. You help potential clients learn about services, pricing, and get questions answered.
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     return new Response("Rate limited — please wait a moment.", { status: 429 });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GROQ_API_KEY) {
     return new Response(
       JSON.stringify({
         error:
@@ -96,7 +96,9 @@ export async function POST(req: NextRequest) {
     return new Response("Bad request", { status: 400 });
   }
 
-  const messages: Anthropic.MessageParam[] = (body.messages as unknown[])
+  const messages: Groq.Chat.ChatCompletionMessageParam[] = (
+    body.messages as unknown[]
+  )
     .filter((m): m is { role: string; content: string } => {
       if (typeof m !== "object" || m === null) return false;
       const msg = m as Record<string, unknown>;
@@ -111,17 +113,17 @@ export async function POST(req: NextRequest) {
       content: String(m.content).slice(0, 2000),
     }));
 
-  if (!messages.length || messages[messages.length - 1].role !== "user") {
+  if (!messages.length || messages[messages.length - 1]?.role !== "user") {
     return new Response("Bad request", { status: 400 });
   }
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-  const stream = client.messages.stream({
-    model: "claude-haiku-4-5-20251001",
+  const stream = await client.chat.completions.create({
+    model: "llama-3.1-8b-instant",
     max_tokens: 400,
-    system: SYSTEM_PROMPT,
-    messages,
+    messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+    stream: true,
   });
 
   const encoder = new TextEncoder();
@@ -129,12 +131,10 @@ export async function POST(req: NextRequest) {
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        for await (const event of stream) {
-          if (
-            event.type === "content_block_delta" &&
-            event.delta.type === "text_delta"
-          ) {
-            controller.enqueue(encoder.encode(event.delta.text));
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content;
+          if (text) {
+            controller.enqueue(encoder.encode(text));
           }
         }
         controller.close();
