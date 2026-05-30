@@ -79,16 +79,16 @@ export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: "Route 9 Web <hello@route9web.com>",
-    to: "hello@route9web.com",
+    to: "ashenoybuilds@gmail.com",
     replyTo: email,
     subject,
     html,
   });
 
   if (error) {
-    console.error("Resend error:", error);
+    console.error("Resend error full:", JSON.stringify(error));
     return NextResponse.json(
-      { error: "Failed to send message. Please email us directly." },
+      { error: `Send failed: ${(error as { message?: string }).message ?? JSON.stringify(error)}` },
       { status: 500 }
     );
   }
