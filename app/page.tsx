@@ -104,6 +104,7 @@ import { CooperShop } from "@/components/CooperShop";
 import { WeaverLoom } from "@/components/WeaverLoom";
 import { PrintshopCase } from "@/components/PrintshopCase";
 import { DyeWorks } from "@/components/DyeWorks";
+import { CiderMill } from "@/components/CiderMill";
 import { WhalingShip } from "@/components/WhalingShip";
 import { ShipLaunch } from "@/components/ShipLaunch";
 import { SummerPicnic } from "@/components/SummerPicnic";
@@ -202,6 +203,7 @@ export default function Home() {
         <WeaverLoom />
         <PrintshopCase />
         <DyeWorks />
+        <CiderMill />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
