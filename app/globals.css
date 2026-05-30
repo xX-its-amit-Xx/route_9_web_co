@@ -1109,45 +1109,19 @@ svg text, svg tspan {
   position: fixed;
   top: 0;
   left: 0;
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #D4682A;
   pointer-events: none;
   z-index: 99999;
   will-change: transform;
-  box-shadow: 0 0 8px rgba(212, 104, 42, 0.7);
+  box-shadow: 0 0 10px rgba(212, 104, 42, 0.8), 0 0 20px rgba(212, 104, 42, 0.35);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 body.cursor-active .cursor-dot {
   opacity: 1;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(212, 104, 42, 0.55);
-  pointer-events: none;
-  z-index: 99998;
-  will-change: transform, width, height;
-  opacity: 0;
-  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              height 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.2s ease,
-              opacity 0.2s ease;
-}
-body.cursor-active .cursor-ring {
-  opacity: 1;
-}
-
-.cursor-ring.cursor-ring-hover {
-  border-color: rgba(212, 104, 42, 0.9);
-  background: rgba(212, 104, 42, 0.06);
 }
 
 body.cursor-active,
@@ -1962,7 +1936,6 @@ body.cursor-active * {
 
   /* Custom cursor elements become solid blobs in HCM — hide them */
   .cursor-dot,
-  .cursor-ring,
   .cursor-glow {
     display: none !important;
   }
@@ -1986,7 +1959,7 @@ body.cursor-active * {
 
   /* Hide chrome and interactive-only elements */
   header, footer, nav,
-  .cursor-dot, .cursor-ring, .cursor-glow,
+  .cursor-dot, .cursor-glow,
   .skip-link, [aria-hidden="true"] > svg, svg[aria-hidden="true"],
   [data-floating-cta],
   [data-scroll-progress] { display: none !important; }

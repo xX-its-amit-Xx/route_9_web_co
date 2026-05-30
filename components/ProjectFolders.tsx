@@ -157,17 +157,17 @@ export function ProjectFolders({ size = 260 }: { size?: number }) {
             </g>
 
             {/* Tilted "IN PROGRESS" stamp — bottom-right */}
-            <g transform="translate(140 122) rotate(-12)">
-              <rect x="-30" y="-9" width="60" height="18" rx="1"
-                fill="none" stroke="#A84818" strokeWidth="1.4" opacity="0.75" />
-              <text x="0" y="3" textAnchor="middle"
+            <g transform="translate(136 122) rotate(-12)">
+              <rect x="-42" y="-10" width="84" height="20" rx="2"
+                fill="rgba(248,228,180,0.18)" stroke="#A84818" strokeWidth="1.5" opacity="0.85" />
+              <text x="0" y="4" textAnchor="middle"
                 fontFamily="Georgia, serif"
                 fontStyle="italic"
                 fontWeight="900"
-                fontSize="9"
+                fontSize="8.5"
                 fill="#A84818"
-                letterSpacing="0.18em"
-                opacity="0.85">
+                letterSpacing="0.10em"
+                opacity="0.9">
                 IN PROGRESS
               </text>
             </g>
