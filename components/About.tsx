@@ -88,14 +88,14 @@ export function About() {
           </div>
           </div>
 
-          {/* Matchbook artifact — tucked into the bottom-left corner of
-              the banner. Desktop only; would crowd narrow viewports. */}
+          {/* Matchbook artifact — peeks below the banner's bottom-left corner.
+              Kept small so it doesn't crowd the headline text overlay. */}
           <div
             aria-hidden
             className="hidden md:block absolute pointer-events-none"
-            style={{ left: "-12px", bottom: "-22px", zIndex: 2 }}
+            style={{ left: "12px", bottom: "-36px", zIndex: 2 }}
           >
-            <Matchbook size={156} />
+            <Matchbook size={88} />
           </div>
         </div>
 

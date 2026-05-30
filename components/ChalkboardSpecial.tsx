@@ -221,12 +221,12 @@ export function ChalkboardSpecial() {
 
         {/* ── Tag line at the very bottom ── */}
         <text
-          x="140" y="297"
+          x="140" y="296"
           textAnchor="middle"
           fontFamily="monospace"
-          fontSize="7.5"
+          fontSize="6"
           fill="rgba(243,233,213,0.5)"
-          letterSpacing="0.2em"
+          letterSpacing="0.13em"
         >
           FOR ROUTE 9 SHOPS · MENTION WHEN WE TALK
         </text>

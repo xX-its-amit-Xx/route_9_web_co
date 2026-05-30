@@ -317,6 +317,33 @@ export function SceneCarousel() {
         overflow: "hidden",
       }}
     >
+      {/* Experimental badge — top-left corner */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "14px",
+          left: "14px",
+          zIndex: 10,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "5px",
+          padding: "4px 10px",
+          borderRadius: "4px",
+          background: "rgba(212,104,42,0.12)",
+          border: "1px solid rgba(212,104,42,0.32)",
+          fontSize: "8px",
+          fontWeight: 700,
+          letterSpacing: "0.20em",
+          color: "rgba(212,104,42,0.70)",
+          textTransform: "uppercase",
+          fontFamily: "monospace",
+        }}
+      >
+        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(212,104,42,0.65)", display: "inline-block", flexShrink: 0 }} />
+        Experimental
+      </div>
+
       {/* Section header */}
       <div
         style={{

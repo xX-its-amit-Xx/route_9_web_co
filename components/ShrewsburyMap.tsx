@@ -14,10 +14,10 @@ export function ShrewsburyMap() {
   // Five shop pins with hand-written labels positioned along the route.
   const PINS = [
     { x: 130, y: 178, label: "Pizzeria",  align: "above" },
-    { x: 250, y: 154, label: "Barber",    align: "above" },
+    { x: 248, y: 154, label: "Barber",    align: "above" },
     { x: 360, y: 188, label: "Bakery",    align: "below" },
-    { x: 480, y: 162, label: "Café",      align: "above" },
-    { x: 520, y: 184, label: "Salon",     align: "above" },
+    { x: 460, y: 162, label: "Café",      align: "above" },
+    { x: 510, y: 182, label: "Salon",     align: "above" },
   ];
 
   return (
@@ -112,13 +112,13 @@ export function ShrewsburyMap() {
           <path d="M 595 170 q 20 -3 40 1 q 20 4 30 -1" stroke="rgba(255,255,255,0.45)" strokeWidth="0.45" fill="none" />
           <path d="M 595 192 q 20 -3 40 1 q 20 4 30 -1" stroke="rgba(255,255,255,0.4)" strokeWidth="0.4" fill="none" />
           <path d="M 595 214 q 20 -3 40 1 q 20 3 30 -1" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" fill="none" />
-          {/* Lake label — angled across the water */}
-          <text x="620" y="180" textAnchor="middle"
+          {/* Lake label — angled across the water, kept smaller to stay inside the blob */}
+          <text x="622" y="174" textAnchor="middle"
             fontFamily="Georgia, serif" fontStyle="italic"
-            fontSize="11" fontWeight="700" fill="#1C1209"
+            fontSize="9" fontWeight="700" fill="#1C1209"
             opacity="0.88"
-            transform="rotate(-12 620 180)"
-            letterSpacing="0.06em">
+            transform="rotate(-9 622 174)"
+            letterSpacing="0.04em">
             Lake Quinsigamond
           </text>
         </g>

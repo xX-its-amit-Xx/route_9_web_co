@@ -97,14 +97,14 @@ export function ProjectFolders({ size = 260 }: { size?: number }) {
             />
             <rect x="6" y="24" width="188" height="110" fill={`url(#pf-fiber-${idx})`} opacity="0.45" />
 
-            {/* Subtle horizontal rule lines like ruled paper */}
-            {[42, 56, 70, 84, 98, 112].map((y) => (
-              <line key={y} x1="14" y1={y} x2="186" y2={y}
-                stroke="rgba(74,40,8,0.16)" strokeWidth="0.5" />
+            {/* Subtle ruled lines only in the blank zone — not near text */}
+            {[66, 116].map((y) => (
+              <line key={y} x1="28" y1={y} x2="184" y2={y}
+                stroke="rgba(74,40,8,0.13)" strokeWidth="0.5" />
             ))}
 
             {/* Hole reinforcement rings down the left edge */}
-            {[42, 76, 110].map((y) => (
+            {[40, 80, 118].map((y) => (
               <g key={y} transform={`translate(18 ${y})`}>
                 <circle r="3.5" fill="#1C0E04" />
                 <circle r="2.6" fill={`url(#pf-paper-${idx})`} />
@@ -114,46 +114,57 @@ export function ProjectFolders({ size = 260 }: { size?: number }) {
 
             {/* Hand-written project label */}
             <text
-              x="80" y="44" textAnchor="middle"
+              x="100" y="43" textAnchor="middle"
               fontFamily="Georgia, 'Times New Roman', serif"
               fontStyle="italic"
               fontWeight="800"
-              fontSize="14"
+              fontSize="13"
               fill="#3A1408"
               letterSpacing="0.04em"
             >
               {f.project}
             </text>
+
+            {/* Underline below project name — hand-drawn */}
+            <path
+              d="M 52 48 q 16 -2 32 0 q 16 2 32 -1 q 10 -1 20 0"
+              stroke="#A84818"
+              strokeWidth="0.9"
+              fill="none"
+              strokeLinecap="round"
+              opacity="0.65"
+            />
+
             {/* Location */}
             <text
-              x="80" y="60" textAnchor="middle"
+              x="100" y="59" textAnchor="middle"
               fontFamily="monospace"
               fontWeight="700"
-              fontSize="8"
-              fill="rgba(58,20,8,0.78)"
-              letterSpacing="0.32em"
+              fontSize="7"
+              fill="rgba(58,20,8,0.72)"
+              letterSpacing="0.28em"
             >
               {f.location}
             </text>
 
-            {/* Underline below project name — hand-drawn */}
-            <path
-              d="M 42 50 q 18 -2 38 0 q 18 2 38 -1"
-              stroke="#A84818"
-              strokeWidth="1"
-              fill="none"
-              strokeLinecap="round"
-              opacity="0.7"
-            />
+            {/* Subtle background for info table */}
+            <rect x="28" y="68" width="156" height="44" rx="1"
+              fill="rgba(212,168,90,0.10)" />
 
-            {/* Mini "project info" lines — like form fields filled in */}
-            <g fontFamily="monospace" fontSize="6.5" fill="rgba(58,20,8,0.7)" letterSpacing="0.12em">
-              <text x="40" y="76">STATUS</text>
-              <text x="186" y="76" textAnchor="end" fill="#A84818" fontWeight="800">IN PROGRESS</text>
-              <text x="40" y="90">SCOPE</text>
-              <text x="186" y="90" textAnchor="end" fontWeight="700">5 PAGES · MOBILE-FIRST</text>
-              <text x="40" y="104">START</text>
-              <text x="186" y="104" textAnchor="end" fontWeight="700">SPRING 2026</text>
+            {/* Mini "project info" rows */}
+            <g fontFamily="monospace" fontSize="7" fill="rgba(58,20,8,0.68)" letterSpacing="0.10em">
+              {/* Row dividers */}
+              <line x1="28" y1="83" x2="184" y2="83" stroke="rgba(74,40,8,0.08)" strokeWidth="0.5" />
+              <line x1="28" y1="97" x2="184" y2="97" stroke="rgba(74,40,8,0.08)" strokeWidth="0.5" />
+
+              <text x="36" y="79">STATUS</text>
+              <text x="180" y="79" textAnchor="end" fill="#A84818" fontWeight="800">IN PROGRESS</text>
+
+              <text x="36" y="93">SCOPE</text>
+              <text x="180" y="93" textAnchor="end" fontWeight="700">5 PG · MOBILE</text>
+
+              <text x="36" y="107">START</text>
+              <text x="180" y="107" textAnchor="end" fontWeight="700">SPRING 2026</text>
             </g>
 
             {/* Tilted "IN PROGRESS" stamp — bottom-right */}
