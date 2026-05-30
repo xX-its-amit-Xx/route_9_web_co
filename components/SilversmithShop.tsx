@@ -165,8 +165,10 @@ export function SilversmithShop() {
 
   useEffect(() => {
     if (!visible) return;
-    const id = setInterval(() => setPhase(p => p + 1), 16);
-    return () => clearInterval(id);
+    let _raf: number = 0, _last = 0;
+    const _tick = (ts: number) => { if (ts - _last >= 33) { setPhase(p => p + 1); _last = ts; } _raf = requestAnimationFrame(_tick); };
+    _raf = requestAnimationFrame(_tick);
+    return () => cancelAnimationFrame(_raf);
   }, [visible]);
 
   /* ── Animation ─────────────────────────────────────────── */

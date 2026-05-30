@@ -90,8 +90,10 @@ export function CheesePress() {
 
   useEffect(() => {
     if (!vis) return;
-    rafRef.current = setInterval(() => setPhase(p => p + 0.016), 16);
-    return () => { if (rafRef.current) clearInterval(rafRef.current); };
+    let _raf: number = 0, _last = 0;
+    const _tick = (ts: number) => { if (ts - _last >= 33) { setPhase(p => p + 0.033); _last = ts; } _raf = requestAnimationFrame(_tick); };
+    _raf = requestAnimationFrame(_tick);
+    return () => cancelAnimationFrame(_raf);
   }, [vis]);
 
   // Animated press beam descends slowly (screw turning)

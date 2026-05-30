@@ -120,13 +120,13 @@ export function TobogganRun() {
     let t = 0;
     const PERIOD = 3.0;
     const tick = setInterval(() => {
-      t += 0.016;
+      t += 0.033;
       const tMod = t % PERIOD;
       const u    = tMod / PERIOD;
       // smoothstep for ease-in acceleration
       setSledT(u * u * (3 - 2 * u));
       setSnowPh(t);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

@@ -147,9 +147,9 @@ export function CranberryBog() {
     if (!active) return;
     let t = 0;
     const tick = setInterval(() => {
-      t += 0.018;
+      t += 0.037;
       setWavePhase(t);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

@@ -234,9 +234,9 @@ export function SpringThaw() {
     if (!active) return;
     let f = 0;
     const tick = setInterval(() => {
-      f = (f + 1.2) % 360;
+      f = (f + 2.475) % 360;
       setBrookFlow(f);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

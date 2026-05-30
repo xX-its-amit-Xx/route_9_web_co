@@ -130,13 +130,13 @@ export function TrainDepot() {
     let t = 0;
     let nextFlip = 6.0;
     const tick = setInterval(() => {
-      t += 0.016;
+      t += 0.033;
       setPhase(t);
       if (t >= nextFlip) {
         setBoardRow(r => (r + 1) % DEPARTURES.length);
         nextFlip = t + 5.5 + (Math.floor(t * 3) % 4) * 1.2;
       }
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

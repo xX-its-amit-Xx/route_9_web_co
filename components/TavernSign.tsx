@@ -170,10 +170,10 @@ export function TavernSign() {
     if (!active) return;
     let t = 0;
     const tick = setInterval(() => {
-      t += 0.028;
+      t += 0.058;
       setSignAngle(Math.sin(t) * 9 + Math.sin(t * 1.7) * 3);
       setLeafPhase(t);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

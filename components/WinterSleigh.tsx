@@ -170,10 +170,10 @@ export function WinterSleigh() {
     if (!active) return;
     let x = -280;
     const tick = setInterval(() => {
-      x += 0.7;
+      x += 1.444;
       if (x > W + 100) x = -280;
       setSleighX(x);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

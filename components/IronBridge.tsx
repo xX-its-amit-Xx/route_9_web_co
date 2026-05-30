@@ -236,10 +236,10 @@ export function IronBridge() {
     if (!active) return;
     let x = BL - 180;
     const tick = setInterval(() => {
-      x += 0.55;
+      x += 1.134;
       if (x > BR + 200) x = BL - 180;
       setCartX(x);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

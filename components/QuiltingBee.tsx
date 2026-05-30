@@ -221,10 +221,10 @@ export function QuiltingBee() {
     if (!active) return;
     let t = 0;
     const tick = setInterval(() => {
-      t += 0.025;
+      t += 0.051;
       setStovePhase(t);
       setNeedlePhase(t);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

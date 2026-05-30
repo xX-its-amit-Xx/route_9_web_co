@@ -179,10 +179,10 @@ export function SummerPicnic() {
     if (!active) return;
     let t = 0;
     const tick = setInterval(() => {
-      t += 0.022;
+      t += 0.045;
       setKitePhase(t);
       setFireflyPhase(t);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

@@ -190,9 +190,9 @@ export function MillPond() {
     if (!active) return;
     let a = 0;
     const tick = setInterval(() => {
-      a = (a - 0.5) % 360;   // clockwise = negative for overshot (water pours over top)
+      a = (a - 1.031) % 360;   // clockwise = negative for overshot (water pours over top)
       setWheelAngle(a);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

@@ -617,6 +617,29 @@ h1, h2, h3, h4, h5, h6 {
   95%, 100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); border-color: #e5e7eb; }
 }
 
+/* ═══════════════════════════════════════════════
+   SVG RENDERING QUALITY
+   Fix "vectory/jagged" appearance on inline SVG illustrations
+══════════════════════════════════════════════ */
+
+/* Smooth anti-aliased curves and text on all inline SVG illustrations */
+svg {
+  shape-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth SVG text */
+svg text, svg tspan {
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Each illustrated scene is an independent compositing layer.
+   Isolates repaints so one animating scene doesn't dirty its neighbors. */
+.scene-outer {
+  contain: layout style paint;
+  isolation: isolate;
+}
+
 /* Maintainable: old text struck through */
 @keyframes demo-text-strike {
   0%, 38%   { text-decoration: none; color: #6b7280; }

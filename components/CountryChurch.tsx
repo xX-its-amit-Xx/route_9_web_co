@@ -162,10 +162,10 @@ export function CountryChurch() {
     if (!active) return;
     let t = 0;
     const tick = setInterval(() => {
-      t += 0.06;
+      t += 0.124;
       const phase = (t % (Math.PI * 4)) - Math.PI * 2;
       setBellAngle(Math.sin(t) * 18 * Math.exp(-(phase * phase) / 8));
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

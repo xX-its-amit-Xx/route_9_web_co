@@ -175,9 +175,9 @@ export function HarvestFair() {
     if (!active) return;
     let a = 0;
     const tick = setInterval(() => {
-      a = (a + 0.35) % 360;
+      a = (a + 0.722) % 360;
       setCarAngle(a);
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 

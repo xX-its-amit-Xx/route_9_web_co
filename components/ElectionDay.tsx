@@ -69,8 +69,10 @@ export function ElectionDay() {
 
   useEffect(() => {
     if (!active) return;
-    const id = setInterval(() => setPhase(p => p + 0.016), 16);
-    return () => clearInterval(id);
+    let _raf: number = 0, _last = 0;
+    const _tick = (ts: number) => { if (ts - _last >= 33) { setPhase(p => p + 0.033); _last = ts; } _raf = requestAnimationFrame(_tick); };
+    _raf = requestAnimationFrame(_tick);
+    return () => cancelAnimationFrame(_raf);
   }, [active]);
 
   const bellAngle = Math.sin(phase * 4.8) * 28;

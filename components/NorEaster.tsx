@@ -162,7 +162,7 @@ export function NorEaster() {
     let t = 0;
     let nextLightningAt = 4.0;
     const tick = setInterval(() => {
-      t += 0.016;
+      t += 0.033;
       setPhase(t);
 
       // Trigger lightning flash at irregular intervals
@@ -172,7 +172,7 @@ export function NorEaster() {
         // Next strike: 3.5–7 seconds from now (deterministic)
         nextLightningAt = t + 3.5 + ((Math.floor(t * 10) % 7) * 0.5);
       }
-    }, 16);
+    }, 33);
     return () => clearInterval(tick);
   }, [active]);
 
