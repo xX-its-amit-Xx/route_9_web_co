@@ -121,6 +121,7 @@ import { ClamBake } from "@/components/ClamBake";
 import { WoolMill } from "@/components/WoolMill";
 import { OysterBed } from "@/components/OysterBed";
 import { CandleWorks } from "@/components/CandleWorks";
+import { TanneryShop } from "@/components/TanneryShop";
 
 export default function Home() {
   return (
@@ -208,6 +209,7 @@ export default function Home() {
         <CiderMill />
         <SilversmithShop />
         <CandleWorks />
+        <TanneryShop />
         <MillPond />
         <PrintshopBroadside />
         <CiderPressScene />
