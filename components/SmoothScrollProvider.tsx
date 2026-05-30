@@ -15,11 +15,13 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Skip Lenis for users who prefer reduced motion — use native scroll instead
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Skip Lenis on touch/mobile — native scroll is already smooth there,
+    // and Lenis's touch interception fights iOS momentum scroll causing snap-back
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const instance = new Lenis({
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 2,
       infinite: false,
     });
 
