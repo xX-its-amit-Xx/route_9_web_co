@@ -122,7 +122,6 @@ export function Contact() {
 
   return (
     <section
-      id="contact"
       className="py-24 md:py-32 border-t border-border-subtle relative overflow-hidden"
       style={{ background: "var(--section-warm-b)" }}
       aria-labelledby="contact-heading"
@@ -172,6 +171,9 @@ export function Contact() {
         <div className="flex justify-center mb-14 reveal">
           <Postcard />
         </div>
+
+        {/* Invisible scroll target — "Get in touch" / "Let's talk" links land here */}
+        <div id="contact" style={{ scrollMarginTop: "96px" }} />
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
           {/* Left */}
