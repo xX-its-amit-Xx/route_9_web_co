@@ -16,8 +16,8 @@ export function ShrewsburyMap() {
     { x: 130, y: 178, label: "Pizzeria",  align: "above" },
     { x: 248, y: 154, label: "Barber",    align: "above" },
     { x: 360, y: 188, label: "Bakery",    align: "below" },
-    { x: 460, y: 162, label: "Café",      align: "above" },
-    { x: 510, y: 182, label: "Salon",     align: "above" },
+    { x: 455, y: 164, label: "Café",      align: "above" },
+    { x: 500, y: 184, label: "Salon",     align: "above" },
   ];
 
   return (
@@ -112,31 +112,22 @@ export function ShrewsburyMap() {
           <path d="M 595 170 q 20 -3 40 1 q 20 4 30 -1" stroke="rgba(255,255,255,0.45)" strokeWidth="0.45" fill="none" />
           <path d="M 595 192 q 20 -3 40 1 q 20 4 30 -1" stroke="rgba(255,255,255,0.4)" strokeWidth="0.4" fill="none" />
           <path d="M 595 214 q 20 -3 40 1 q 20 3 30 -1" stroke="rgba(255,255,255,0.35)" strokeWidth="0.4" fill="none" />
-          {/* Lake label — angled across the water, kept smaller to stay inside the blob */}
-          <text x="622" y="174" textAnchor="middle"
+          {/* Lake label — centered in the water body, well clear of the road */}
+          <text x="628" y="182" textAnchor="middle"
             fontFamily="Georgia, serif" fontStyle="italic"
             fontSize="9" fontWeight="700" fill="#1C1209"
             opacity="0.88"
-            transform="rotate(-9 622 174)"
+            transform="rotate(-8 628 182)"
             letterSpacing="0.04em">
             Lake Quinsigamond
           </text>
         </g>
 
-        {/* ── Side streets ── */}
-        <g stroke="rgba(94,34,8,0.55)" strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray="2 2.5">
-          <path d="M 130 178 L 120 240" />
-          <path d="M 250 154 L 240 90" />
-          <path d="M 360 188 L 380 270" />
-          <path d="M 360 188 L 320 250" />
-          <path d="M 480 162 L 510 100" />
-        </g>
-
-        {/* ── Route 9 main road ── */}
+        {/* ── Route 9 main road — ends at x=555 to leave a clear gap before the lake ── */}
         <g>
           {/* Asphalt body */}
           <path
-            d="M 30 190 Q 180 168 360 184 Q 530 198 580 174"
+            d="M 30 190 Q 180 168 360 184 Q 510 196 555 180"
             stroke="#1C1209"
             strokeWidth="14"
             fill="none"
@@ -144,7 +135,7 @@ export function ShrewsburyMap() {
           />
           {/* Warm orange highlight stripe (the brand color) */}
           <path
-            d="M 30 190 Q 180 168 360 184 Q 530 198 580 174"
+            d="M 30 190 Q 180 168 360 184 Q 510 196 555 180"
             stroke="#D4682A"
             strokeWidth="9"
             fill="none"
@@ -153,7 +144,7 @@ export function ShrewsburyMap() {
           />
           {/* Center yellow dashed line */}
           <path
-            d="M 30 190 Q 180 168 360 184 Q 530 198 580 174"
+            d="M 30 190 Q 180 168 360 184 Q 510 196 555 180"
             stroke="rgba(255,220,140,0.92)"
             strokeWidth="1.3"
             fill="none"
