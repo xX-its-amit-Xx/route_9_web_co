@@ -17,8 +17,8 @@ export function About() {
   const bannerRef = useScrollReveal<HTMLDivElement>();
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)");
-    if (!mq.matches) return;
+    if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const onScroll = () => {
       const banner = bannerRef.current;
       const img    = photoRef.current;

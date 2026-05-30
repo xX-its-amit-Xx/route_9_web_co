@@ -71,7 +71,6 @@ export function AIChatWidget() {
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [streamText, setStreamText] = useState("");
-  const [hasStarted, setHasStarted] = useState(false);
   const [showPing, setShowPing] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -94,7 +93,6 @@ export function AIChatWidget() {
       const trimmed = text.trim();
       if (!trimmed || streaming) return;
 
-      setHasStarted(true);
       const newMessages: Message[] = [
         ...messages,
         { role: "user", content: trimmed },
@@ -396,7 +394,8 @@ export function AIChatWidget() {
             display: "flex",
             flexDirection: "column",
             gap: "10px",
-            scrollbarWidth: "none",
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(212,104,42,0.30) transparent",
           }}
         >
           {messages.map((msg, i) => (
@@ -482,52 +481,52 @@ export function AIChatWidget() {
           )}
         </div>
 
-        {/* Quick questions */}
-        {!hasStarted && (
-          <div
-            style={{
-              padding: "4px 14px 8px",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "5px",
-              flexShrink: 0,
-            }}
-          >
-            {QUICK_QUESTIONS.map((q) => (
-              <button
-                key={q}
-                onClick={() => sendMessage(q)}
-                style={{
-                  padding: "4px 10px",
-                  borderRadius: "9999px",
-                  background: "rgba(212,104,42,0.07)",
-                  border: "1px solid rgba(212,104,42,0.18)",
-                  color: "rgba(243,233,213,0.70)",
-                  fontSize: "10.5px",
-                  cursor: "pointer",
-                  transition: "all 0.14s ease",
-                  fontWeight: 500,
-                  letterSpacing: "0.01em",
-                  fontFamily: "inherit",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = "rgba(212,104,42,0.16)";
-                  el.style.borderColor = "rgba(212,104,42,0.36)";
-                  el.style.color = "rgba(243,233,213,0.95)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = "rgba(212,104,42,0.07)";
-                  el.style.borderColor = "rgba(212,104,42,0.18)";
-                  el.style.color = "rgba(243,233,213,0.70)";
-                }}
-              >
-                {q}
-              </button>
-            ))}
-          </div>
-        )}
+        {/* Quick questions — always visible so users can keep tapping follow-up prompts */}
+        <div
+          style={{
+            padding: "4px 14px 8px",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "5px",
+            flexShrink: 0,
+          }}
+        >
+          {QUICK_QUESTIONS.map((q) => (
+            <button
+              key={q}
+              onClick={() => sendMessage(q)}
+              disabled={streaming}
+              style={{
+                padding: "4px 10px",
+                borderRadius: "9999px",
+                background: "rgba(212,104,42,0.07)",
+                border: "1px solid rgba(212,104,42,0.18)",
+                color: "rgba(243,233,213,0.70)",
+                fontSize: "10.5px",
+                cursor: streaming ? "not-allowed" : "pointer",
+                transition: "all 0.14s ease",
+                fontWeight: 500,
+                letterSpacing: "0.01em",
+                fontFamily: "inherit",
+              }}
+              onMouseEnter={(e) => {
+                if (streaming) return;
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "rgba(212,104,42,0.16)";
+                el.style.borderColor = "rgba(212,104,42,0.36)";
+                el.style.color = "rgba(243,233,213,0.95)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "rgba(212,104,42,0.07)";
+                el.style.borderColor = "rgba(212,104,42,0.18)";
+                el.style.color = "rgba(243,233,213,0.70)";
+              }}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
 
         {/* Input */}
         <div

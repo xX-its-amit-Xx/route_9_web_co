@@ -239,8 +239,8 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)");
-    if (!mq.matches) return;
+    if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const onScroll = () => {
       if (contentRef.current)
         contentRef.current.style.transform = `translateY(${window.scrollY * 0.03}px)`;
