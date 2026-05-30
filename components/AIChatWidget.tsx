@@ -396,6 +396,7 @@ export function AIChatWidget() {
             gap: "10px",
             scrollbarWidth: "thin",
             scrollbarColor: "rgba(212,104,42,0.30) transparent",
+            overscrollBehavior: "contain",
           }}
         >
           {messages.map((msg, i) => (
