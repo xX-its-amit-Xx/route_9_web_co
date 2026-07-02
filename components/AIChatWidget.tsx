@@ -143,13 +143,23 @@ export function AIChatWidget() {
 
         const decoder = new TextDecoder();
         let full = "";
+        // rAF-throttle streaming updates: network chunks can arrive far
+        // faster than 60fps — re-rendering + re-layouting the message list
+        // per chunk causes visible stutter. Coalesce to one update per frame.
+        let raf = 0;
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
           full += decoder.decode(value, { stream: true });
-          setStreamText(full);
+          if (!raf) {
+            raf = requestAnimationFrame(() => {
+              raf = 0;
+              setStreamText(full);
+            });
+          }
         }
+        if (raf) cancelAnimationFrame(raf);
 
         setMessages((prev) => [
           ...prev,
@@ -293,10 +303,11 @@ export function AIChatWidget() {
           zIndex: 9988,
           display: "flex",
           flexDirection: "column",
+          // Background is ~98% opaque — the old blur(28px) backdrop-filter
+          // was invisible behind it but forced an expensive re-blur of the
+          // page on every frame of the open/close animation and on scroll.
           background:
             "linear-gradient(145deg, rgba(10,6,3,0.98) 0%, rgba(18,11,6,0.97) 100%)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
           border: "1px solid rgba(212,104,42,0.16)",
           borderRadius: "20px",
           boxShadow:
@@ -505,7 +516,8 @@ export function AIChatWidget() {
                 color: "rgba(243,233,213,0.70)",
                 fontSize: "10.5px",
                 cursor: streaming ? "not-allowed" : "pointer",
-                transition: "all 0.14s ease",
+                transition:
+                  "background 0.14s ease, border-color 0.14s ease, color 0.14s ease",
                 fontWeight: 500,
                 letterSpacing: "0.01em",
                 fontFamily: "inherit",

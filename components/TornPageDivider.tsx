@@ -79,6 +79,19 @@ const SPARKS: { x: number; y: number; r: number; d: string }[] = [
   { x: 1330, y: 72, r: 0.8, d: "0.9s"  },
 ];
 
+// Opacity-only twinkle for the ember sparks. Replaces the global
+// `torn-spark-pulse` keyframes, which also animated the SVG `r` attribute —
+// geometry changes that forced repaint every frame, forever. The inline
+// animation overrides the class's keyframes; the reduced-motion override in
+// globals.css (`.torn-spark { animation: none !important }`) still wins.
+const SPARK_CSS = `
+@keyframes torn-spark-fade {
+  0%, 100% { opacity: 0.65; }
+  40%      { opacity: 1; }
+  70%      { opacity: 0.30; }
+}
+`;
+
 export function TornPageDivider() {
   return (
     <div
@@ -91,6 +104,7 @@ export function TornPageDivider() {
         overflow  : "visible",
       }}
     >
+      <style>{SPARK_CSS}</style>
       <svg
         viewBox="0 0 1440 80"
         preserveAspectRatio="none"
@@ -135,7 +149,7 @@ export function TornPageDivider() {
             cx={x} cy={y} r={r}
             fill="rgba(212,104,42,0.65)"
             className="torn-spark"
-            style={{ animationDelay: d } as React.CSSProperties}
+            style={{ animation: `torn-spark-fade 2.8s ease-in-out ${d} infinite` } as React.CSSProperties}
           />
         ))}
 

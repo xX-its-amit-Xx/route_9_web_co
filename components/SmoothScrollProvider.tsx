@@ -19,9 +19,12 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     // and Lenis's touch interception fights iOS momentum scroll causing snap-back
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
+    // Lerp-based smoothing tracks the wheel far more responsively than the
+    // old duration/easing config (1.4s exponential), which felt laggy —
+    // the page kept gliding long after the finger stopped.
     const instance = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.14,
+      wheelMultiplier: 1,
       infinite: false,
     });
 
@@ -49,7 +52,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       const el = document.querySelector(hash);
       if (!el) return;
       e.preventDefault();
-      instance.scrollTo(el as HTMLElement, { offset: -72, duration: 1.6 });
+      instance.scrollTo(el as HTMLElement, { offset: -72, duration: 1.1 });
     }
 
     document.addEventListener("click", handleClick);

@@ -20,7 +20,6 @@ const META_BADGES: Record<number, { label: string; hint: string }> = {
 export function DesignLens() {
   const lenis = useLenis();
   const [on, setOn] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [view, setView] = useState<View>("intro");
   const [pins, setPins] = useState<PinPos[]>([]);
   const rafRef = useRef<number>(0);
@@ -109,73 +108,53 @@ export function DesignLens() {
 
   return (
     <>
-      {/* ── Toggle — vertical tab docked to the left screen edge.
+      {/* ── Toggle — small pill centered at the bottom edge.
              Bottom-left belongs to the AI chat button, bottom-right to the
-             floating CTA; the mid-edge tab is the one spot nothing owns.
-             Icon-only at rest so it doesn't occlude left-edge content
-             (Portfolio's pinned track passes under it); the label slides
-             out on hover/focus. ── */}
+             floating CTA; bottom-center is clear of content and doesn't
+             obstruct reading like the old side tab did. ── */}
       <button
         ref={toggleRef}
         onClick={toggle}
-        onMouseEnter={() => setExpanded(true)}
-        onMouseLeave={() => setExpanded(false)}
-        onFocus={() => setExpanded(true)}
-        onBlur={() => setExpanded(false)}
         aria-pressed={on}
         aria-label={on ? "Turn off the Design Lens" : "Turn on the Design Lens — see the design decisions behind this page"}
-        className="fixed z-[75] flex flex-col items-center font-bold"
+        className="fixed z-[75] inline-flex items-center gap-2 font-bold rounded-full"
         style={{
-          left: 0,
-          top: "52%",
-          transform: "translateY(-50%)",
-          padding: "12px 7px 10px",
-          gap: "7px",
-          fontSize: "9px",
-          letterSpacing: "0.2em",
-          writingMode: "vertical-rl",
-          borderRadius: "0 12px 12px 0",
-          color: on ? "#1C1209" : "rgba(243,233,213,0.85)",
+          left: "50%",
+          bottom: "calc(14px + env(safe-area-inset-bottom, 0px))",
+          transform: "translateX(-50%)",
+          padding: "8px 14px",
+          fontSize: "10px",
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: on ? "#1C1209" : "rgba(243,233,213,0.82)",
           background: on
-            ? "linear-gradient(180deg, #F0A060 0%, #D4682A 55%, #B05020 100%)"
-            : "linear-gradient(180deg, rgba(36,24,16,0.92), rgba(20,12,6,0.9))",
-          border: on ? "1px solid rgba(255,210,150,0.5)" : "1px solid rgba(212,104,42,0.4)",
-          borderLeft: "none",
+            ? "linear-gradient(145deg, #F0A060 0%, #D4682A 55%, #B05020 100%)"
+            : "linear-gradient(145deg, rgba(36,24,16,0.9), rgba(20,12,6,0.88))",
+          border: on ? "1px solid rgba(255,210,150,0.5)" : "1px solid rgba(212,104,42,0.35)",
           boxShadow: on
-            ? "0 0 0 1px rgba(212,104,42,0.35), 4px 0 20px rgba(212,104,42,0.4), 0 1px 0 rgba(255,230,180,0.3) inset"
-            : "4px 0 14px rgba(0,0,0,0.35), 0 1px 0 rgba(255,200,120,0.07) inset",
+            ? "0 0 0 1px rgba(212,104,42,0.3), 0 4px 18px rgba(212,104,42,0.4), 0 1px 0 rgba(255,230,180,0.3) inset"
+            : "0 4px 14px rgba(0,0,0,0.3), 0 1px 0 rgba(255,200,120,0.06) inset",
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
-          transition: "background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease",
+          transition: "background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1)",
         }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateX(-50%) translateY(-2px)"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateX(-50%)"; }}
       >
-        <Search size={12} strokeWidth={2.5} aria-hidden style={{ transform: "rotate(90deg)", flexShrink: 0 }} />
-        <span
-          style={{
-            textTransform: "uppercase",
-            overflow: "hidden",
-            maxHeight: expanded ? "120px" : "0px",
-            opacity: expanded ? 1 : 0,
-            transition: "max-height 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.22s ease",
-          }}
-        >
-          {DESIGN_LENS.toggleLabel}
-        </span>
+        <Search size={11} strokeWidth={2.5} aria-hidden />
+        {DESIGN_LENS.toggleLabel}
         {!on && (
           <span
             aria-hidden
             className="flex items-center justify-center rounded-full font-extrabold"
             style={{
-              writingMode: "horizontal-tb",
-              width: "16px",
-              height: "16px",
+              width: "15px",
+              height: "15px",
               fontSize: "8px",
               letterSpacing: "0",
-              flexShrink: 0,
               background: "#D4682A",
               color: "#110B07",
-              boxShadow: "0 0 8px rgba(212,104,42,0.7)",
-              animation: "lens-badge-pulse 2.6s ease-in-out infinite",
+              boxShadow: "0 0 8px rgba(212,104,42,0.6)",
             }}
           >
             {NOTES.length}

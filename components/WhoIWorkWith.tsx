@@ -54,6 +54,36 @@ function IconNeighborhood() {
 
 const REASON_ICONS = [IconSameDay, IconInPerson, IconNeighborhood];
 
+// rAF-throttled cursor-spotlight updater — at most one style write + one
+// getBoundingClientRect per frame per tile, instead of per mousemove event.
+const spotFrames = new WeakMap<HTMLElement, number>();
+function handleMosaicSpot(e: React.MouseEvent<HTMLDivElement>) {
+  const el = e.currentTarget;
+  if (spotFrames.has(el)) return;
+  const { clientX, clientY } = e;
+  spotFrames.set(
+    el,
+    requestAnimationFrame(() => {
+      spotFrames.delete(el);
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--spot-x", `${((clientX - r.left) / r.width) * 100}%`);
+      el.style.setProperty("--spot-y", `${((clientY - r.top) / r.height) * 100}%`);
+    })
+  );
+}
+
+// Transform-based replacement for the old `road-car-travel` keyframes, which
+// animated `left` (layout every frame, forever). The wrapper spans the full
+// strip, so translateX(100%) === left:100%. Compositor-only.
+const CAR_TRAVEL_CSS = `
+@keyframes who-car-travel-x {
+  0%   { transform: translateX(0);    opacity: 0; }
+  4%   { transform: translateX(2%);   opacity: 0.85; }
+  96%  { transform: translateX(100%); opacity: 0.85; }
+  100% { transform: translateX(102%); opacity: 0; }
+}
+`;
+
 // Bento mosaic: first item spans 2 cols × 2 rows, rest fill 3×3 grid
 const MOSAIC = [
   { id: "1517248135467-4c7edcad34c4", label: "Restaurants & Pizzerias" },
@@ -75,6 +105,7 @@ export function WhoIWorkWith() {
       style={{ background: "var(--section-warm-b)" }}
       aria-labelledby="who-heading"
     >
+      <style>{CAR_TRAVEL_CSS}</style>
       {/* Subtle warm glow top-right */}
       <div
         aria-hidden
@@ -128,11 +159,11 @@ export function WhoIWorkWith() {
                 return (
                   <div
                     key={heading}
-                    className="flex gap-4 p-4 rounded-2xl reveal group transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] border border-transparent hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.04)] hover:border-[rgba(212,104,42,0.12)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_8px_24px_rgba(28,18,9,0.06)]"
+                    className="flex gap-4 p-4 rounded-2xl reveal group transition-[opacity,transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] border border-transparent hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.04)] hover:border-[rgba(212,104,42,0.12)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_8px_24px_rgba(28,18,9,0.06)]"
                     style={{ transitionDelay: `${420 + i * 110}ms` }}
                   >
                     <div
-                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:bg-accent group-hover:text-white group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)]"
+                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-[transform,background-color,color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:bg-accent group-hover:text-white group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)]"
                       aria-hidden
                     >
                       <Icon />
@@ -159,31 +190,43 @@ export function WhoIWorkWith() {
               <div className="relative flex items-center gap-0 mb-3 overflow-hidden">
                 {/* Road line */}
                 <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-px" style={{ background: "repeating-linear-gradient(90deg, rgba(212,104,42,0.3) 0px, rgba(212,104,42,0.3) 6px, transparent 6px, transparent 10px)" }} aria-hidden />
-                {/* Traveling car dot */}
+                {/* Traveling car dot — full-width wrapper animates transform
+                    (compositor-only) instead of the old `left` keyframes */}
                 <div
                   aria-hidden
                   className="absolute pointer-events-none"
                   style={{
                     top: "50%",
+                    left: 0,
+                    right: 0,
+                    height: 0,
                     /* Resting state matches keyframe 0% — off-screen left + invisible.
                        Under reduced-motion the animation reverts here instead of
-                       left:auto / opacity:1 (visible dot stuck at start of strip). */
-                    left: "-2%",
+                       transform:none / opacity:1 (visible dot stuck at start of strip). */
                     opacity: 0,
-                    transform: "translateY(-50%)",
-                    width: "5px",
-                    height: "5px",
-                    borderRadius: "50%",
-                    background: "#D4682A",
-                    boxShadow: "0 0 6px rgba(212,104,42,0.8)",
-                    animation: "road-car-travel 8s linear infinite",
+                    transform: "translateX(0)",
+                    animation: "who-car-travel-x 8s linear infinite",
                   }}
-                />
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: "-5px",
+                      transform: "translateY(-50%)",
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      background: "#D4682A",
+                      boxShadow: "0 0 6px rgba(212,104,42,0.8)",
+                    }}
+                  />
+                </div>
                 <div className="relative flex items-center justify-between w-full py-3">
                   {WHO.towns.map((town, i) => (
                     <div key={town} className="flex flex-col items-center gap-1.5 group cursor-default">
                       <span
-                        className="relative flex items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110"
+                        className="relative flex items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110"
                         style={{
                           width: town === "Shrewsbury" ? "14px" : "10px",
                           height: town === "Shrewsbury" ? "14px" : "10px",
@@ -235,7 +278,7 @@ export function WhoIWorkWith() {
               ].map(({ to, suffix, label }) => (
                 <div
                   key={label}
-                  className="flex flex-col items-center text-center p-3 rounded-xl border border-[rgba(212,104,42,0.1)] bg-[rgba(212,104,42,0.03)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.06)] hover:border-[rgba(212,104,42,0.2)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_6px_16px_rgba(28,18,9,0.05)]"
+                  className="flex flex-col items-center text-center p-3 rounded-xl border border-[rgba(212,104,42,0.1)] bg-[rgba(212,104,42,0.03)] transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.06)] hover:border-[rgba(212,104,42,0.2)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_6px_16px_rgba(28,18,9,0.05)]"
                 >
                   <dt
                     className="font-extrabold leading-none mb-1"
@@ -277,11 +320,7 @@ export function WhoIWorkWith() {
                   className={`relative overflow-hidden rounded-2xl group cursor-default${
                     i === 0 ? " col-span-2 row-span-2 shine" : ""
                   }`}
-                  onMouseMove={(e) => {
-                    const r = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty("--spot-x", `${((e.clientX - r.left) / r.width) * 100}%`);
-                    e.currentTarget.style.setProperty("--spot-y", `${((e.clientY - r.top) / r.height) * 100}%`);
-                  }}
+                  onMouseMove={handleMosaicSpot}
                 >
                   <img
                     src={`https://images.unsplash.com/photo-${id}?w=${i === 0 ? 500 : 280}&auto=format&fit=crop&q=80`}
@@ -308,7 +347,7 @@ export function WhoIWorkWith() {
                     </div>
                   </div>
                   {/* Resting hairline + hover accent ring */}
-                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 group-hover:ring-[#D4682A]/35 rounded-2xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] z-20" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 group-hover:ring-[#D4682A]/35 rounded-2xl transition-shadow duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] z-20" />
                 </div>
               ))}
             </div>

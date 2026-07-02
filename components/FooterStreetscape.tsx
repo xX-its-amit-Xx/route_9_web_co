@@ -1,9 +1,11 @@
+"use client";
+
 // FooterStreetscape ──────────────────────────────────────────────────────────
 //
 // Full-width golden-hour Route 9 streetscape (SVG viewBox 1440×320).
 // Purely decorative — aria-hidden. Placed between Contact and Footer
 // as a cinematic send-off scene: eleven New England storefronts at dusk,
-// street lamps flickering on, the Route 9 shield on its post.
+// street lamps glowing warm, the Route 9 shield on its post.
 //
 // Layers (back to front):
 //   1. Deep dusk sky gradient + sun-glow radial
@@ -12,12 +14,34 @@
 //   4. Eleven building facades with brick/wood/glass detail
 //   5. Street trees (dark silhouettes between buildings)
 //   6. Sidewalk + Route 9 asphalt road with center-line dashes
-//   7. Seven street lamps with SVG-animated warm glow halos
+//   7. Seven street lamps with static warm glow halos
 //   8. US Route 9 shield sign on post
-//   9. Animated warm window lights (SVG animate opacity)
+//   9. Warm window lights (a third of them twinkle via SVG animate opacity)
 //
 // All positions are deterministic (no Math.random).
 // No new CSS classes — all animation via SVG-native <animate>.
+//
+// PERF: SMIL <animate> loops tick forever — even when the scene is scrolled
+// far off screen, and they ignore prefers-reduced-motion. So the <animate>
+// nodes are only mounted while the SVG is intersecting the viewport (and
+// motion is allowed), and the number of concurrently animating elements is
+// cut down: ~1/3 of the windows twinkle, ~1/2 of the stars, and the seven
+// lamp glows are fully static.
+
+import { useSyncExternalStore } from "react";
+import { useVisible } from "@/hooks/useVisible";
+
+// prefers-reduced-motion as an external-store subscription (SSR-safe:
+// server snapshot reports motion NOT ok, so no <animate> nodes are
+// serialized; the client corrects after hydration if motion is allowed).
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+function subscribeMotion(onChange: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+const getMotionOK = () => !window.matchMedia(REDUCED_MOTION_QUERY).matches;
+const getMotionOKServer = () => false;
 
 const LAMP_X: number[] = [110, 310, 510, 715, 910, 1110, 1330];
 
@@ -57,9 +81,15 @@ const STARS: [number, number][] = [
 ];
 
 export function FooterStreetscape() {
+  const { ref, visible } = useVisible(0.05);
+  const motionOK = useSyncExternalStore(subscribeMotion, getMotionOK, getMotionOKServer);
+
+  const animate = visible && motionOK;
+
   return (
     <div aria-hidden="true" style={{ lineHeight: 0, overflow: "hidden" }}>
       <svg
+        ref={ref}
         viewBox="0 0 1440 320"
         preserveAspectRatio="xMidYMax slice"
         fill="none"
@@ -118,18 +148,20 @@ export function FooterStreetscape() {
         <rect x="0" y="0" width="1440" height="320" fill="url(#fs-sky)" />
         <rect x="0" y="0" width="1440" height="320" fill="url(#fs-sun)" />
 
-        {/* ── DUSK STARS ── */}
+        {/* ── DUSK STARS — every other one twinkles, only while visible ── */}
         {STARS.map(([sx, sy], i) => {
           const op = 0.34 + (i % 5) * 0.10;
           return (
             <circle key={i} cx={sx} cy={sy}
               r={i % 3 === 0 ? 1.2 : 0.85}
               fill={`rgba(220,232,255,${op.toFixed(2)})`}>
-              <animate attributeName="opacity"
-                values={`${op.toFixed(2)};${Math.min(0.88, op + 0.30).toFixed(2)};${op.toFixed(2)}`}
-                dur={`${3.2 + (i % 7) * 0.44}s`}
-                begin={`${((i * 0.43) % 2.8).toFixed(1)}s`}
-                repeatCount="indefinite" />
+              {animate && i % 2 === 0 && (
+                <animate attributeName="opacity"
+                  values={`${op.toFixed(2)};${Math.min(0.88, op + 0.30).toFixed(2)};${op.toFixed(2)}`}
+                  dur={`${3.2 + (i % 7) * 0.44}s`}
+                  begin={`${((i * 0.43) % 2.8).toFixed(1)}s`}
+                  repeatCount="indefinite" />
+              )}
             </circle>
           );
         })}
@@ -295,33 +327,23 @@ export function FooterStreetscape() {
         <rect x="0" y="256" width="1440" height="64" fill="url(#fs-vignette)" />
         <rect x="0" y="316" width="1440" height="4" fill="#030210" />
 
-        {/* ════════════════ STREET LAMPS ════════════════ */}
-        {LAMP_X.map((lx, i) => {
-          const glowDur = `${3.9 + (i * 0.62) % 2.0}s`;
-          const glowBegin = `${((i * 0.51) % 2.1).toFixed(1)}s`;
-          return (
-            <g key={i}>
-              <line x1={lx} y1="242" x2={lx} y2="158" stroke="#13103a" strokeWidth="3.5" />
-              <path d={`M ${lx},160 Q ${lx + 20},152 ${lx + 20},144`}
-                stroke="#13103a" strokeWidth="2.5" fill="none" />
-              {/* Cap */}
-              <rect x={lx + 10} y="138" width="20" height="8" rx="3" fill="#1c1644" />
-              {/* Halo */}
-              <circle cx={lx + 20} cy="142" r="36" fill="url(#fs-lamp-halo)" opacity="0.36">
-                <animate attributeName="opacity"
-                  values="0.26;0.50;0.26" dur={glowDur} begin={glowBegin}
-                  repeatCount="indefinite" />
-              </circle>
-              {/* Bulb */}
-              <circle cx={lx + 20} cy="142" r="5.5"
-                fill="rgba(255,219,98,0.96)" filter="url(#fs-glow)">
-                <animate attributeName="opacity"
-                  values="0.86;1;0.86" dur={glowDur} begin={glowBegin}
-                  repeatCount="indefinite" />
-              </circle>
-            </g>
-          );
-        })}
+        {/* ════════════════ STREET LAMPS — static warm glow ════════════════
+            (was: 14 indefinite SMIL opacity loops; the flicker also re-ran the
+            fs-glow blur filter every frame) */}
+        {LAMP_X.map((lx, i) => (
+          <g key={i}>
+            <line x1={lx} y1="242" x2={lx} y2="158" stroke="#13103a" strokeWidth="3.5" />
+            <path d={`M ${lx},160 Q ${lx + 20},152 ${lx + 20},144`}
+              stroke="#13103a" strokeWidth="2.5" fill="none" />
+            {/* Cap */}
+            <rect x={lx + 10} y="138" width="20" height="8" rx="3" fill="#1c1644" />
+            {/* Halo */}
+            <circle cx={lx + 20} cy="142" r="36" fill="url(#fs-lamp-halo)" opacity="0.36" />
+            {/* Bulb */}
+            <circle cx={lx + 20} cy="142" r="5.5"
+              fill="rgba(255,219,98,0.96)" filter="url(#fs-glow)" opacity="0.93" />
+          </g>
+        ))}
 
         {/* ════════════════ ROUTE 9 SHIELD ════════════════ */}
         <g transform="translate(693,170)">
@@ -337,15 +359,21 @@ export function FooterStreetscape() {
             fontSize="26" fontFamily="Georgia, serif" fontWeight="bold">9</text>
         </g>
 
-        {/* ════════════════ WINDOW LIGHTS ════════════════ */}
+        {/* ════════════════ WINDOW LIGHTS ════════════════
+            Every window stays lit; only a third of them twinkle, and only
+            while the scene is on screen (was: 26 indefinite SMIL loops, each
+            re-running the fs-wglow blur filter every frame). */}
         {WINDOWS.map(([wx, wy, ww, wh, wdur], i) => (
           <rect key={i} x={wx} y={wy} width={ww} height={wh} rx="1"
-            fill="rgba(255,208,76,0.50)" filter="url(#fs-wglow)">
-            <animate attributeName="opacity"
-              values="0.40;0.63;0.40"
-              dur={wdur}
-              begin={`${((i * 0.38) % 3.1).toFixed(1)}s`}
-              repeatCount="indefinite" />
+            fill="rgba(255,208,76,0.50)" filter="url(#fs-wglow)"
+            opacity="0.52">
+            {animate && i % 3 === 0 && (
+              <animate attributeName="opacity"
+                values="0.40;0.63;0.40"
+                dur={wdur}
+                begin={`${((i * 0.38) % 3.1).toFixed(1)}s`}
+                repeatCount="indefinite" />
+            )}
           </rect>
         ))}
       </svg>

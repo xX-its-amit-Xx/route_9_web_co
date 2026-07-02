@@ -64,11 +64,30 @@ const STEP_ILLUSTRATIONS = [
   ),
 ];
 
+// rAF-throttled step-spotlight updater — one layout read + two style writes
+// per frame per card (max), instead of on every mousemove event.
+const spotFrames = new WeakMap<HTMLElement, number>();
+function handleSpotMove(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  if (spotFrames.has(el)) return;
+  const { clientX, clientY } = e;
+  spotFrames.set(
+    el,
+    requestAnimationFrame(() => {
+      spotFrames.delete(el);
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty("--spot-x", `${clientX - rect.left}px`);
+      el.style.setProperty("--spot-y", `${clientY - rect.top}px`);
+    })
+  );
+}
+
 export function Process() {
   const headingRef = useScrollReveal();
   const stepsRef = useScrollReveal(0.05);
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const allowMag = useRef(false);
+  const magFrame = useRef(0);
 
   useEffect(() => {
     allowMag.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -105,19 +124,30 @@ export function Process() {
     return () => cleanup?.();
   }, []);
 
+  // Magnetic CTA — rAF-throttled so the layout read (getBoundingClientRect)
+  // and transform write happen at most once per frame, not per mousemove.
   const handleMagMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const el = ctaRef.current;
     if (!el || !allowMag.current) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
-    const y = (e.clientY - (r.top + r.height / 2)) * 0.2;
-    el.style.transform = `translate(${x}px, ${y}px)`;
-    el.style.transition = "transform 0.1s ease-out, box-shadow 0.15s";
+    if (magFrame.current) return;
+    const { clientX, clientY } = e;
+    magFrame.current = requestAnimationFrame(() => {
+      magFrame.current = 0;
+      const r = el.getBoundingClientRect();
+      const x = (clientX - (r.left + r.width / 2)) * 0.25;
+      const y = (clientY - (r.top + r.height / 2)) * 0.2;
+      el.style.transform = `translate(${x}px, ${y}px)`;
+      el.style.transition = "transform 0.1s ease-out, box-shadow 0.15s";
+    });
   };
 
   const handleMagLeave = () => {
     const el = ctaRef.current;
     if (!el || !allowMag.current) return;
+    if (magFrame.current) {
+      cancelAnimationFrame(magFrame.current);
+      magFrame.current = 0;
+    }
     el.style.transform = "translate(0px, 0px)";
     el.style.transition = "transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.15s";
   };
@@ -178,16 +208,12 @@ export function Process() {
                 aria-labelledby={`step-${step.step}`}
                 className="shine card-light relative flex flex-col gap-4 p-6 group h-full"
                 style={{ isolation: "isolate" }}
-                onMouseMove={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
-                  e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
-                }}
+                onMouseMove={handleSpotMove}
               >
                 <div className="step-spotlight" aria-hidden />
                 {/* Time estimate chip — slides in on hover */}
                 <div
-                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 translate-y-1"
+                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 translate-y-1"
                   aria-hidden
                 >
                   <span
@@ -205,7 +231,7 @@ export function Process() {
                 {/* Step illustration + connector */}
                 <div className="flex items-center gap-3">
                   <div
-                    className="relative flex-shrink-0 w-14 h-14 group-hover:scale-105 group-hover:rotate-[-3deg] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-2xl group-hover:bg-[rgba(212,104,42,0.06)] group-hover:shadow-[0_4px_16px_rgba(212,104,42,0.14)]"
+                    className="relative flex-shrink-0 w-14 h-14 group-hover:scale-105 group-hover:rotate-[-3deg] transition-[transform,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-2xl group-hover:bg-[rgba(212,104,42,0.06)] group-hover:shadow-[0_4px_16px_rgba(212,104,42,0.14)]"
                   >
                     <Illustration />
                     {/* Step number badge — 3D sphere */}

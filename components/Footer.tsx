@@ -2,11 +2,15 @@
 
 import { SITE, ABOUT } from "@/lib/content";
 import { useLenis } from "./SmoothScrollProvider";
+import { useVisible } from "@/hooks/useVisible";
 import { BrandSeal } from "./BrandSeal";
 import { CompassRose } from "./CompassRose";
 
 // ── Route 9 Corridor Map — Framingham → Worcester along MA-9 ─────────────────
 function Route9CorridorMap() {
+  // SMIL <animate> loops run forever, even with the footer scrolled far off
+  // screen — only mount them while the map is actually visible.
+  const { ref, visible } = useVisible(0.05);
   const towns = [
     { name: "Framingham", x: 54 },
     { name: "Westborough", x: 190 },
@@ -29,6 +33,7 @@ function Route9CorridorMap() {
         Serving the Route 9 corridor
       </p>
       <svg
+        ref={ref}
         viewBox="0 0 652 48"
         fill="none"
         role="img"
@@ -48,23 +53,27 @@ function Route9CorridorMap() {
         <rect x="309" y="13" width="34" height="16" rx="2.5" fill="rgba(212,104,42,0.12)" stroke="rgba(212,104,42,0.28)" strokeWidth="0.8" />
         <text x="326" y="24" textAnchor="middle" fontSize="7" fill="rgba(212,104,42,0.65)" fontWeight="700" fontFamily="monospace" letterSpacing="0.03em">MA 9</text>
 
-        {/* Traveling car dot — animates along Route 9 */}
-        <circle cx="0" cy="21" r="2.5" fill="rgba(212,104,42,0.75)" className="route-map-car">
-          <animate
-            attributeName="cx"
-            values="30;622;622;30;30"
-            keyTimes="0;0.45;0.5;0.95;1"
-            dur="9s"
-            repeatCount="indefinite"
-            calcMode="linear"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.75;0.75;0;0;0.75"
-            keyTimes="0;0.45;0.5;0.95;1"
-            dur="9s"
-            repeatCount="indefinite"
-          />
+        {/* Traveling car dot — animates along Route 9 (only while visible) */}
+        <circle cx="0" cy="21" r="2.5" opacity="0" fill="rgba(212,104,42,0.75)" className="route-map-car">
+          {visible && (
+            <>
+              <animate
+                attributeName="cx"
+                values="30;622;622;30;30"
+                keyTimes="0;0.45;0.5;0.95;1"
+                dur="9s"
+                repeatCount="indefinite"
+                calcMode="linear"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.75;0.75;0;0;0.75"
+                keyTimes="0;0.45;0.5;0.95;1"
+                dur="9s"
+                repeatCount="indefinite"
+              />
+            </>
+          )}
         </circle>
 
         {/* Towns */}
@@ -72,10 +81,14 @@ function Route9CorridorMap() {
           <g key={name}>
             {home ? (
               <>
-                {/* Pinging outer ring */}
+                {/* Pinging outer ring (only animates while visible) */}
                 <circle cx={x} cy={21} r="9" fill="rgba(212,104,42,0.08)" stroke="rgba(212,104,42,0.22)" strokeWidth="1" className="route-map-ping">
-                  <animate attributeName="r" values="9;14;9" dur="2.5s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="1;0;1" dur="2.5s" repeatCount="indefinite" />
+                  {visible && (
+                    <>
+                      <animate attributeName="r" values="9;14;9" dur="2.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="1;0;1" dur="2.5s" repeatCount="indefinite" />
+                    </>
+                  )}
                 </circle>
                 {/* Static ring */}
                 <circle cx={x} cy={21} r="9" fill="none" stroke="rgba(212,104,42,0.25)" strokeWidth="1" />

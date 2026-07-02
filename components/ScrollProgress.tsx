@@ -9,16 +9,27 @@ export function ScrollProgress() {
     const bar = barRef.current;
     if (!bar) return;
 
-    const onScroll = () => {
+    // rAF-throttled: scroll events can fire faster than the frame rate, and
+    // each update reads scrollHeight (a layout query). One pending frame max.
+    let raf = 0;
+    const update = () => {
+      raf = 0;
       const total = document.documentElement.scrollHeight - window.innerHeight;
       const pct = total > 0 ? window.scrollY / total : 0;
       bar.style.transform = `scaleX(${pct})`;
       bar.style.opacity = window.scrollY > 48 && pct > 0.01 ? "1" : "0";
     };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (

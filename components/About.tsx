@@ -17,10 +17,14 @@ export function About() {
   const photoRef  = useRef<HTMLImageElement>(null);
   const bannerRef = useScrollReveal<HTMLDivElement>();
 
+  // Banner parallax — rAF-throttled (one pending frame max) so scroll events
+  // never trigger more than one layout read + style write per frame.
   useEffect(() => {
     if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
-    const onScroll = () => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
       const banner = bannerRef.current;
       const img    = photoRef.current;
       if (!banner || !img) return;
@@ -28,9 +32,16 @@ export function About() {
       const progress = -rect.top / (window.innerHeight + rect.height);
       img.style.transform = `scale(1.08) translateY(${progress * 28}px)`;
     };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -136,7 +147,7 @@ export function About() {
               ].map(({ value, label }) => (
                 <div
                   key={label}
-                  className="flex flex-col items-center text-center px-2 py-3 rounded-xl border transition-all duration-200 border-[rgba(212,104,42,0.12)] bg-[rgba(212,104,42,0.03)] hover:bg-[rgba(212,104,42,0.07)] hover:border-[rgba(212,104,42,0.22)] hover:shadow-[0_4px_16px_rgba(212,104,42,0.1)]"
+                  className="flex flex-col items-center text-center px-2 py-3 rounded-xl border transition-[background-color,border-color,box-shadow] duration-200 border-[rgba(212,104,42,0.12)] bg-[rgba(212,104,42,0.03)] hover:bg-[rgba(212,104,42,0.07)] hover:border-[rgba(212,104,42,0.22)] hover:shadow-[0_4px_16px_rgba(212,104,42,0.1)]"
                 >
                   <dt
                     className="font-extrabold leading-none mb-1"
@@ -152,7 +163,7 @@ export function About() {
             </dl>
 
             {/* Route 9 sign element — now featuring the official brand seal */}
-            <div className="inline-flex items-center gap-4 p-4 rounded-2xl border border-border bg-surface reveal float-after-reveal transition-all duration-200 hover:border-[rgba(212,104,42,0.28)] hover:shadow-[0_4px_20px_rgba(212,104,42,0.1)]" style={{ transitionDelay: "300ms" }}>
+            <div className="inline-flex items-center gap-4 p-4 rounded-2xl border border-border bg-surface reveal float-after-reveal transition-[opacity,transform,border-color,box-shadow] duration-200 hover:border-[rgba(212,104,42,0.28)] hover:shadow-[0_4px_20px_rgba(212,104,42,0.1)]" style={{ transitionDelay: "300ms" }}>
               <BrandSeal size={72} tilt={-8} className="flex-shrink-0" />
               <div>
                 <p className="text-sm font-bold text-fg" style={{ fontFamily: "var(--font-display)" }}>{SITE.name}</p>

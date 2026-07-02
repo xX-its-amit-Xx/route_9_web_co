@@ -25,14 +25,23 @@ export function Nav() {
   const firstMobileLinkRef        = useRef<HTMLAnchorElement>(null);
   const hamburgerRef              = useRef<HTMLButtonElement>(null);
 
-  // Scroll detection
+  // Scroll detection (rAF-throttled — at most one state check per frame)
   useEffect(() => {
-    const onScroll = () => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
       setScrolled(window.scrollY > 48);
     };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // Track dark/light mode (set by ThemeToggle on document.documentElement)
@@ -192,7 +201,7 @@ export function Nav() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 inset-x-0 z-50 transition-[background-color,box-shadow] duration-500 ${
           scrolled || !isDark ? "nav-glass" : "bg-transparent"
         }`}
       >
@@ -245,7 +254,7 @@ export function Nav() {
                   <a
                     href={href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative px-3.5 py-1.5 text-sm rounded-lg transition-all duration-200 border ${
+                    className={`relative px-3.5 py-1.5 text-sm rounded-lg transition-[color,background-color,border-color] duration-200 border ${
                       isActive
                         ? ""
                         : "text-[rgba(243,233,213,0.48)] border-transparent hover:text-[rgba(243,233,213,0.82)] hover:bg-[rgba(243,233,213,0.07)] hover:border-[rgba(243,233,213,0.08)]"
@@ -324,13 +333,14 @@ export function Nav() {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
-        className={`fixed inset-0 z-40 flex flex-col pt-20 px-6 md:hidden transition-all duration-250 ${
+        className={`fixed inset-0 z-40 flex flex-col pt-20 px-6 md:hidden transition-opacity duration-250 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{
-          background: "rgba(9,6,3,0.97)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
+          // Background is 97% opaque — the old blur(28px) backdrop-filter was
+          // visually invisible but forced a full-viewport re-blur while the
+          // overlay faded. Dropped for a near-identical solid tint.
+          background: "rgba(9,6,3,0.98)",
         }}
         aria-hidden={open ? undefined : true}
       >
@@ -345,7 +355,7 @@ export function Nav() {
                   onClick={close}
                   tabIndex={open ? undefined : -1}
                   aria-current={isActive ? "page" : undefined}
-                  className="flex items-center justify-between px-4 py-4 text-lg font-medium rounded-2xl transition-all duration-150"
+                  className="flex items-center justify-between px-4 py-4 text-lg font-medium rounded-2xl transition-[color,background-color,border-color] duration-150"
                   style={{
                     color: isActive ? "#D4682A" : "#F3E9D5",
                     background: isActive

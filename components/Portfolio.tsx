@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { PORTFOLIO } from "@/lib/content";
@@ -16,89 +15,17 @@ const PORTFOLIO_PHOTOS = [
 
 export function Portfolio() {
   const headingRef = useScrollReveal();
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    // Mobile: native horizontal scroll handles layout — skip GSAP
-    if (window.innerWidth < 1024) return;
-
-    // Reduced motion: skip GSAP pinning; CSS fallback enables native scroll
-    if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
-
-    // Load GSAP dynamically (client only)
-    let cleanup: (() => void) | undefined;
-
-    import("gsap").then(({ gsap }) => {
-      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        const cards = track.querySelectorAll<HTMLElement>(".portfolio-card");
-        if (cards.length === 0) return;
-
-        const totalScroll = track.scrollWidth - window.innerWidth + 96;
-
-        const tween = gsap.to(track, {
-          x: () => -totalScroll,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${totalScroll}`,
-            pin: true,
-            scrub: 1.2,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        // Subtle y-axis stagger on cards as they scroll into view
-        cards.forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 40 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: section,
-                start: `top+=${i * 100} top`,
-                toggleActions: "play none none none",
-              },
-            }
-          );
-        });
-
-        cleanup = () => {
-          tween.kill();
-          ScrollTrigger.getAll().forEach((t) => {
-            if (t.trigger === section) t.kill();
-          });
-        };
-      });
-    });
-
-    return () => cleanup?.();
-  }, []);
 
   return (
     <section
-      ref={sectionRef}
       id="portfolio"
       className="h-scroll-section"
       style={{ background: "var(--section-warm-b)" }}
       aria-labelledby="portfolio-heading"
     >
       <div
-        ref={trackRef}
-        className="h-scroll-track items-stretch min-h-screen"
-        style={{ padding: "0 48px" }}
+        className="h-scroll-track"
+        style={{ paddingLeft: "48px", paddingRight: "48px" }}
       >
         {/* ── Heading card (first "card" is the section title) ── */}
         <div

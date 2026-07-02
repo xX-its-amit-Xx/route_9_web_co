@@ -256,8 +256,23 @@ export function SceneCarousel() {
   const [displayIdx, setDisplayIdx] = useState(0);
   const [fading, setFading] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(true);
   const busyRef = useRef(false);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Gate the auto-advance timer (and progress-bar animation) on visibility —
+  // no reason to keep swapping scenes and re-rendering while the section is
+  // scrolled offscreen.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "80px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const navigate = useCallback((next: number) => {
     if (busyRef.current) return;
@@ -271,15 +286,18 @@ export function SceneCarousel() {
   }, []);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || !inView) return;
     const t = setTimeout(() => {
       navigate((displayIdx + 1) % TOTAL);
     }, INTERVAL_MS);
     return () => clearTimeout(t);
-  }, [displayIdx, paused, navigate]);
+  }, [displayIdx, paused, inView, navigate]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      // Bail before touching layout — getBoundingClientRect on every
+      // keystroke (typing in forms, etc.) forces a synchronous layout read.
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       const section = sectionRef.current;
       if (!section) return;
       const rect = section.getBoundingClientRect();
@@ -392,7 +410,10 @@ export function SceneCarousel() {
         </p>
       </div>
 
-      {/* Progress bar */}
+      {/* Progress bar — animates transform: scaleX (compositor-only) instead
+          of the old `width` keyframes, which forced layout + paint on every
+          frame for the full 6s of every scene. */}
+      <style>{`@keyframes carousel-progress-scale { from { transform: scaleX(0); } to { transform: scaleX(1); } }`}</style>
       <div
         style={{
           height: "2px",
@@ -405,11 +426,17 @@ export function SceneCarousel() {
           key={`pb-${displayIdx}`}
           style={{
             height: "100%",
+            width: "100%",
+            transformOrigin: "left",
+            // Matches the old resting state: full bar when paused (the old
+            // `animation: none` left the div at its natural 100% width).
+            transform: paused || !inView ? "scaleX(1)" : "scaleX(0)",
             background:
               "linear-gradient(90deg, rgba(212,104,42,0.7), rgba(240,160,80,0.9))",
-            animation: paused
-              ? "none"
-              : `carousel-progress ${INTERVAL_MS}ms linear forwards`,
+            animation:
+              paused || !inView
+                ? "none"
+                : `carousel-progress-scale ${INTERVAL_MS}ms linear forwards`,
           }}
         />
       </div>

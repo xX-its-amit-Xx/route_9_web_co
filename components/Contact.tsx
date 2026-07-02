@@ -24,14 +24,30 @@ const MSG_PLACEHOLDERS = [
 export function Contact() {
   const headingRef = useScrollReveal();
   const formRef = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
 
   const [fields, setFields] = useState({ name: "", shop: "", email: "", message: "", website: "" });
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [msgPlaceholder, setMsgPlaceholder] = useState(MSG_PLACEHOLDERS[0]);
+  const [inView, setInView] = useState(false);
+
+  // Only run the placeholder typewriter (a 20–36ms setTimeout/re-render loop)
+  // while the section is actually on screen.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(!!entry?.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   // Typewriter cycling placeholder for the message textarea
   useEffect(() => {
+    if (!inView) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let phraseIdx = 0;
     let charIdx = MSG_PLACEHOLDERS[0].length;
@@ -61,7 +77,7 @@ export function Contact() {
     };
     timerId = setTimeout(tick, 3200);
     return () => clearTimeout(timerId);
-  }, []);
+  }, [inView]);
   const successRef = useRef<HTMLHeadingElement>(null);
 
   // Move focus to success heading when form submits successfully so keyboard
@@ -122,6 +138,7 @@ export function Contact() {
 
   return (
     <section
+      ref={sectionRef}
       className="py-24 md:py-32 border-t border-border-subtle relative overflow-hidden"
       style={{ background: "var(--section-warm-b)" }}
       aria-labelledby="contact-heading"
@@ -134,25 +151,18 @@ export function Contact() {
         className="absolute bottom-0 left-0 pointer-events-none select-none"
         style={{ width: "min(460px, 52vw)", opacity: 0.035, transform: "translate(-14%, 22%)" }}
       >
-        {/* lake-ripple-ellipses: SMIL <animate> bypasses CSS animation-duration,
-            so this group is hidden via CSS under prefers-reduced-motion */}
+        {/* Ripples are static now — the whole watermark renders at 0.035
+            opacity, so the old 8 indefinite SMIL stroke-opacity loops were
+            imperceptible yet repainted the area every frame, forever.
+            (Group class kept: reduced-motion CSS still hides it.) */}
         <g className="lake-ripple-ellipses">
           {[12, 34, 62, 96, 138, 188, 246, 312].map((r, i) => {
             const baseOpacity = Math.max(0, 1 - i * 0.1);
-            const lowOpacity  = Math.max(0, baseOpacity * 0.35);
             return (
               <ellipse key={i} cx="250" cy="170" rx={r * 1.85} ry={r * 0.8}
                 stroke="#D4682A" strokeWidth={i === 0 ? "2" : "1"}
                 strokeOpacity={baseOpacity}
-              >
-                <animate
-                  attributeName="stroke-opacity"
-                  values={`${baseOpacity};${lowOpacity};${baseOpacity}`}
-                  dur={`${2.8 + i * 0.28}s`}
-                  begin={`${i * 0.22}s`}
-                  repeatCount="indefinite"
-                />
-              </ellipse>
+              />
             );
           })}
         </g>

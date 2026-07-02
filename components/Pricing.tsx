@@ -8,25 +8,46 @@ import { WaxSeal } from "./WaxSeal";
 import { ChalkboardSpecial } from "./ChalkboardSpecial";
 import { PRICING, FOUNDING_OFFER } from "@/lib/content";
 
+// rAF-throttled magnetic-CTA updater — one layout read + transform write per
+// frame max (was: getBoundingClientRect on every mousemove event).
+const magFrames = new WeakMap<HTMLElement, number>();
+
 export function Pricing() {
   const headingRef = useScrollReveal();
   const cardsRef = useScrollReveal(0.05);
   const offerRef = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
   const allowMotion = useRef(false);
   const URGENCY_MSGS = ["1 spot left", "Filling fast", "Claim yours"] as const;
   const [urgencyIdx, setUrgencyIdx] = useState(0);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     allowMotion.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
+  // Only tick the urgency rotator (and run the decorative infinite
+  // animations) while the section is actually on screen.
   useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(!!entry?.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
     const id = setInterval(() => setUrgencyIdx((i) => (i + 1) % URGENCY_MSGS.length), 4000);
     return () => clearInterval(id);
-  }, []);
+  }, [inView, URGENCY_MSGS.length]);
 
   return (
     <section
+      ref={sectionRef}
       id="pricing"
       className="py-24 md:py-32 border-t border-border-subtle"
       aria-labelledby="pricing-heading"
@@ -70,6 +91,7 @@ export function Pricing() {
                     inset: "-35%",
                     background: "conic-gradient(from 0deg, transparent 0%, transparent 36%, rgba(212,104,42,0.45) 47%, rgba(240,160,80,0.8) 52%, rgba(212,104,42,0.45) 57%, transparent 68%, transparent 100%)",
                     animation: "pro-ring-spin 5.2s linear infinite",
+                    animationPlayState: inView ? "running" : "paused",
                   }}
                 />
               </div>
@@ -192,14 +214,26 @@ export function Pricing() {
                   }}
                   onMouseMove={(e) => {
                     if (!allowMotion.current) return;
-                    const r = e.currentTarget.getBoundingClientRect();
-                    const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
-                    const dy = (e.clientY - (r.top + r.height / 2)) * 0.18;
-                    e.currentTarget.style.transform = `translate(${dx}px, ${dy}px)`;
+                    const el = e.currentTarget as HTMLElement;
+                    if (magFrames.has(el)) return;
+                    const { clientX, clientY } = e;
+                    magFrames.set(el, requestAnimationFrame(() => {
+                      magFrames.delete(el);
+                      const r = el.getBoundingClientRect();
+                      const dx = (clientX - (r.left + r.width / 2)) * 0.22;
+                      const dy = (clientY - (r.top + r.height / 2)) * 0.18;
+                      el.style.transform = `translate(${dx}px, ${dy}px)`;
+                    }));
                   }}
                   onMouseLeave={(e) => {
                     if (!allowMotion.current) return;
-                    e.currentTarget.style.transform = "";
+                    const el = e.currentTarget as HTMLElement;
+                    const pending = magFrames.get(el);
+                    if (pending !== undefined) {
+                      cancelAnimationFrame(pending);
+                      magFrames.delete(el);
+                    }
+                    el.style.transform = "";
                   }}
                   className={`flex items-center justify-center h-11 rounded-xl font-semibold text-sm transition-[box-shadow,border-color,background] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     tier.highlighted
@@ -257,6 +291,7 @@ export function Pricing() {
                 opacity: 0.18,
                 transform: "translate(-30%, -30%)",
                 animation: "pricing-glow-pulse 3.5s ease-in-out infinite",
+                animationPlayState: inView ? "running" : "paused",
               }}
             />
 

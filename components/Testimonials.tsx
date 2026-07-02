@@ -26,6 +26,7 @@ export function Testimonials() {
   const isDragging = useRef(false);
   const mapleRef = useRef<SVGSVGElement>(null);
   const sectionInView = useRef(false);
+  const [inView, setInView] = useState(false);
   const allowMotion = useRef(false);
   const headingRef = useScrollReveal();
 
@@ -33,18 +34,28 @@ export function Testimonials() {
     allowMotion.current = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
+  // Maple-leaf parallax — rAF-throttled (one pending frame max) so scroll
+  // events never do layout reads/style writes more than once per frame.
   useEffect(() => {
     const el = mapleRef.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
     const onScroll = () => {
-      const rect = el.parentElement?.getBoundingClientRect();
-      if (!rect) return;
-      const progress = -rect.top / (window.innerHeight + rect.height);
-      el.style.transform = `translateY(${progress * 40}px)`;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const rect = el.parentElement?.getBoundingClientRect();
+        if (!rect) return;
+        const progress = -rect.top / (window.innerHeight + rect.height);
+        el.style.transform = `translateY(${progress * 40}px)`;
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   const advance = useCallback(
@@ -56,19 +67,25 @@ export function Testimonials() {
     [items.length]
   );
 
+  // Auto-advance — only ticks while the section is on screen (inView),
+  // not hovered/focused (paused), and motion is allowed.
   useEffect(() => {
-    if (paused || items.length <= 1) return;
+    if (paused || !inView || items.length <= 1) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => advance(1), 5500);
     return () => clearInterval(id);
-  }, [paused, advance, items.length]);
+  }, [paused, inView, advance, items.length]);
 
-  // Track section visibility — arrow keys only fire when testimonials are in view
+  // Track section visibility — arrow keys only fire when testimonials are in
+  // view, and the auto-advance timer + progress bar stop entirely off screen.
   useEffect(() => {
     const section = document.getElementById("testimonials");
     if (!section) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { sectionInView.current = entry.isIntersecting; },
+      ([entry]) => {
+        sectionInView.current = entry.isIntersecting;
+        setInView(entry.isIntersecting);
+      },
       { threshold: 0.2 }
     );
     obs.observe(section);
@@ -213,14 +230,14 @@ export function Testimonials() {
             <button
               onClick={() => advance(-1)}
               aria-label="Previous testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-[transform,box-shadow,border-color,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
             >
               <ChevronLeft size={18} aria-hidden />
             </button>
             <button
               onClick={() => advance(1)}
               aria-label="Next testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-[transform,box-shadow,border-color,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
             >
               <ChevronRight size={18} aria-hidden />
             </button>
@@ -287,7 +304,7 @@ export function Testimonials() {
                 opacity: 0.8,
                 transformOrigin: "left center",
                 animation: "testimonial-progress 5.5s linear forwards",
-                animationPlayState: paused ? "paused" : "running",
+                animationPlayState: paused || !inView ? "paused" : "running",
               }}
             />
           </div>
@@ -383,7 +400,7 @@ export function Testimonials() {
               className="flex items-center justify-center p-[9px]"
             >
               <span
-                className={`block h-1.5 rounded-full transition-all duration-300 ${
+                className={`block h-1.5 rounded-full transition-[width,background-color] duration-300 ${
                   i === current
                     ? "w-6 bg-[#D4682A]"
                     : "w-1.5 bg-[rgba(212,104,42,0.3)] hover:bg-[rgba(212,104,42,0.5)]"

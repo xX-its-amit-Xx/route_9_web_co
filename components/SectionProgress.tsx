@@ -36,10 +36,24 @@ export function SectionProgress() {
     setActiveIdx(best);
   }, []);
 
+  // rAF-throttled: findActive does 9× getElementById + getBoundingClientRect,
+  // so running it on every raw scroll event (which can fire faster than the
+  // frame rate) hammered layout reads. One pending frame max.
   useEffect(() => {
-    window.addEventListener("scroll", findActive, { passive: true });
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        findActive();
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     findActive();
-    return () => window.removeEventListener("scroll", findActive);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [findActive]);
 
   return (

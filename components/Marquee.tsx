@@ -59,8 +59,10 @@ export function Marquee({ items, className = "" }: Props) {
                   "0 4px 14px rgba(0,0,0,0.45)",
                   "0 1px 3px rgba(0,0,0,0.4)",
                 ].join(", "),
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
+                // No backdrop-filter here: the pill background is >90% opaque
+                // so blur(10px) was invisible, but every pill re-blurred its
+                // backdrop on every frame of the marquee scroll — a constant
+                // paint cost across dozens of moving elements.
               }}
             >
               {/* Emoji icon */}

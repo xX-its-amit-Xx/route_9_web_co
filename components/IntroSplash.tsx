@@ -21,9 +21,11 @@ export function IntroSplash() {
 
     setPhase("in");
 
-    // Animate progress bar 0 → 100% over 1.85s with easeOutCubic
+    // Animate progress bar 0 → 100% over 0.9s with easeOutCubic —
+    // long enough to register as a brand moment, short enough that the
+    // site never feels like it's making you wait.
     const start = performance.now();
-    const DURATION = 1850;
+    const DURATION = 900;
 
     const animProgress = (now: number) => {
       const t = Math.min((now - start) / DURATION, 1);
@@ -33,8 +35,8 @@ export function IntroSplash() {
     };
     rafRef.current = requestAnimationFrame(animProgress);
 
-    const outTimer = setTimeout(() => setPhase("out"), 2100);
-    const doneTimer = setTimeout(() => setPhase("done"), 2900);
+    const outTimer = setTimeout(() => setPhase("out"), 1050);
+    const doneTimer = setTimeout(() => setPhase("done"), 1800);
 
     return () => {
       cancelAnimationFrame(rafRef.current);

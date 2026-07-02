@@ -408,36 +408,30 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ═══════════════════════════════════════════════
    HORIZONTAL SCROLL PORTFOLIO
+   Native scroll-snap on every viewport — the old GSAP
+   pin/scrub hijacked the wheel and felt clunky.
 ══════════════════════════════════════════════ */
 .h-scroll-section {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212,104,42,0.3) transparent;
 }
 
 .h-scroll-track {
   display: flex;
   width: max-content;
-  will-change: transform;
+  align-items: center;
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
-/* Mobile: native swipe — GSAP is skipped on <lg */
-@media (max-width: 1023px) {
-  .h-scroll-section {
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-  }
-  .h-scroll-track {
-    width: max-content;
-    min-height: auto !important;
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-    align-items: center;
-  }
-  .h-scroll-track > * {
-    scroll-snap-align: start;
-  }
+.h-scroll-track > * {
+  scroll-snap-align: start;
+  scroll-margin-left: 48px;
 }
 
 /* ═══════════════════════════════════════════════

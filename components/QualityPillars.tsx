@@ -81,6 +81,69 @@ function IconMaintain() {
 // DEMO INFRASTRUCTURE COMPONENTS
 // ══════════════════════════════════════════════
 
+// Compositor-friendly replacements for demo keyframes that animated layout
+// (width/top/left) or paint (box-shadow) properties on an infinite loop.
+// Everything below is transform/opacity only.
+const DEMO_PERF_CSS = `
+@keyframes qp-bar-slow {
+  0%        { transform: scaleX(0); }
+  90%, 100% { transform: scaleX(0.62); }
+}
+@keyframes qp-bar-fast {
+  0%        { transform: scaleX(0); }
+  12%, 100% { transform: scaleX(1); }
+}
+@keyframes qp-cursor-wander {
+  0%   { transform: translate(18%, 12%); }
+  20%  { transform: translate(62%, 52%); }
+  40%  { transform: translate(42%, 22%); }
+  60%  { transform: translate(12%, 62%); }
+  80%  { transform: translate(58%, 38%); }
+  100% { transform: translate(18%, 12%); }
+}
+@keyframes qp-cursor-direct {
+  0%       { transform: translate(10%, 82%); opacity: 0; }
+  6%       { transform: translate(10%, 82%); opacity: 1; }
+  55%, 76% { transform: translate(47%, 51%); opacity: 1; }
+  88%      { transform: translate(47%, 51%); opacity: 0; }
+  100%     { transform: translate(10%, 82%); opacity: 0; }
+}
+@keyframes qp-cursor-click {
+  0%, 55%   { transform: scale(1); }
+  62%       { transform: scale(0.6); }
+  69%       { transform: scale(1.2); }
+  76%, 100% { transform: scale(1); }
+}
+@keyframes qp-btn-click {
+  0%, 54%   { transform: scale(1); }
+  60%       { transform: scale(0.96); }
+  67%       { transform: scale(1.04); }
+  78%, 100% { transform: scale(1); }
+}
+@keyframes qp-focus-ring1 { 0%, 22% { opacity: 1; } 30%, 100% { opacity: 0; } }
+@keyframes qp-focus-ring2 { 0%, 30% { opacity: 0; } 35%, 55% { opacity: 1; } 63%, 100% { opacity: 0; } }
+@keyframes qp-focus-ring3 { 0%, 63% { opacity: 0; } 68%, 88% { opacity: 1; } 95%, 100% { opacity: 0; } }
+`;
+
+// rAF-throttled pillar-spotlight updater — one layout read + two style writes
+// per frame per card (max), instead of on every mousemove event. Only runs
+// while the pointer is over a card (React only attaches it there).
+const spotFrames = new WeakMap<HTMLElement, number>();
+function handleSpotMove(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  if (spotFrames.has(el)) return;
+  const { clientX, clientY } = e;
+  spotFrames.set(
+    el,
+    requestAnimationFrame(() => {
+      spotFrames.delete(el);
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty("--spot-x", `${clientX - rect.left}px`);
+      el.style.setProperty("--spot-y", `${clientY - rect.top}px`);
+    })
+  );
+}
+
 function DemoShell({ children }: { children: React.ReactNode }) {
   return (
     <div
@@ -365,7 +428,7 @@ function MobileFirstDemo() {
                   fontSize: "7px",
                   color: "white",
                   fontWeight: 700,
-                  animation: "demo-btn-pulse 2.2s ease-in-out infinite",
+                  /* was: demo-btn-pulse — infinite box-shadow paint loop; static now */
                   boxShadow: "0 3px 10px rgba(212,104,42,0.5), inset 0 1.5px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.12)",
                 }}
               >
@@ -422,8 +485,10 @@ function SpeedDemo() {
                   height: "100%",
                   background: "linear-gradient(90deg, #f87171, #ef4444)",
                   borderRadius: "9999px",
-                  width: "0%",
-                  animation: "demo-slow-bar 5s ease-out infinite",
+                  width: "100%",
+                  transform: "scaleX(0)",
+                  transformOrigin: "left center",
+                  animation: "qp-bar-slow 5s ease-out infinite",
                 }}
               />
             </div>
@@ -486,8 +551,10 @@ function SpeedDemo() {
                   height: "100%",
                   background: "linear-gradient(90deg, #34d399, #10b981)",
                   borderRadius: "9999px",
-                  width: "0%",
-                  animation: "demo-fast-bar 5s ease-out infinite",
+                  width: "100%",
+                  transform: "scaleX(0)",
+                  transformOrigin: "left center",
+                  animation: "qp-bar-fast 5s ease-out infinite",
                 }}
               />
             </div>
@@ -578,12 +645,15 @@ function ConvertDemo() {
               ))}
             </div>
           </div>
-          {/* Wandering cursor */}
+          {/* Wandering cursor — full-panel wrapper animates transform (was
+              top/left keyframes: layout every frame, forever) */}
           <div
-            className="absolute pointer-events-none"
-            style={{ width: "14px", height: "14px", animation: "demo-cursor-wander 5.5s linear infinite", top: "10%", left: "15%", zIndex: 10 }}
+            className="absolute inset-0 pointer-events-none"
+            style={{ zIndex: 10, transform: "translate(18%, 12%)", animation: "qp-cursor-wander 5.5s linear infinite" }}
           >
-            <Cursor />
+            <div className="absolute top-0 left-0" style={{ width: "14px", height: "14px" }}>
+              <Cursor />
+            </div>
           </div>
           <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(239,68,68,0.04)" }} />
         </div>
@@ -637,7 +707,10 @@ function ConvertDemo() {
                   color: "white",
                   fontWeight: 700,
                   letterSpacing: "0.01em",
-                  animation: "demo-btn-click 4.5s ease-out infinite",
+                  /* was: demo-btn-click (box-shadow + scale). Shadow is static
+                     now; the press still reads via scale + ripple. */
+                  boxShadow: "0 3px 12px rgba(212,104,42,0.45), inset 0 1.5px 0 rgba(255,255,255,0.22)",
+                  animation: "qp-btn-click 4.5s ease-out infinite",
                 }}
               >
                 📅 Book Appointment →
@@ -668,12 +741,18 @@ function ConvertDemo() {
             </div>
           </div>
 
-          {/* Cursor moves straight to button and clicks */}
+          {/* Cursor moves straight to button and clicks — wrapper translates
+              (compositor), inner element scales for the click */}
           <div
-            className="absolute pointer-events-none"
-            style={{ width: "14px", height: "14px", animation: "demo-cursor-direct 4.5s ease-in-out infinite", top: "82%", left: "10%", zIndex: 10 }}
+            className="absolute inset-0 pointer-events-none"
+            style={{ zIndex: 10, opacity: 0, transform: "translate(10%, 82%)", animation: "qp-cursor-direct 4.5s ease-in-out infinite" }}
           >
-            <Cursor dark />
+            <div
+              className="absolute top-0 left-0"
+              style={{ width: "14px", height: "14px", animation: "qp-cursor-click 4.5s ease-in-out infinite" }}
+            >
+              <Cursor dark />
+            </div>
           </div>
           <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(16,185,129,0.018)" }} />
         </div>
@@ -747,8 +826,9 @@ function LocalSEODemo() {
                 marginBottom: "3px",
                 border: "1.5px solid rgba(212,104,42,0.38)",
                 background: "linear-gradient(135deg, rgba(212,104,42,0.1) 0%, rgba(212,104,42,0.04) 100%)",
+                /* was: demo-result-glow — infinite background-color paint loop;
+                   the static gradient + shadow already carry the highlight */
                 boxShadow: "0 2px 10px rgba(212,104,42,0.18), 0 0 0 3px rgba(212,104,42,0.06), inset 0 1px 0 rgba(255,220,140,0.12)",
-                animation: "demo-result-glow 3s ease-in-out infinite",
               }}
             >
               <div className="flex items-center gap-1.5">
@@ -849,13 +929,29 @@ function AccessibleDemo() {
                 <div style={{ fontSize: "5.5px", color: "#9CA3AF", marginBottom: "2px" }}>{label}</div>
                 <div
                   style={{
+                    position: "relative",
                     height: "12px",
                     borderRadius: "3px",
                     border: "1px solid #E5E7EB",
                     background: "#FFFFFF",
-                    animation: `demo-focus-el${i + 1} 4.2s ease-in-out infinite`,
                   }}
-                />
+                >
+                  {/* Focus ring overlay — static shadow, opacity-only loop
+                      (was: demo-focus-el* animating box-shadow + border-color) */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      inset: "-1px",
+                      borderRadius: "3px",
+                      border: "1px solid rgba(59,130,246,0.5)",
+                      boxShadow: "0 0 0 2px rgba(59,130,246,0.7)",
+                      opacity: 0,
+                      animation: `qp-focus-ring${i + 1} 4.2s ease-in-out infinite`,
+                      pointerEvents: "none",
+                    }}
+                  />
+                </div>
               </div>
             ))}
             <div
@@ -1038,6 +1134,7 @@ export function QualityPillars() {
       style={{ background: "var(--section-warm-a)" }}
       aria-labelledby="pillars-heading"
     >
+      <style>{DEMO_PERF_CSS}</style>
       {/* Top-right warm glow */}
       <div
         aria-hidden
@@ -1096,11 +1193,7 @@ export function QualityPillars() {
                   aria-labelledby={`pillar-${pillar.icon}`}
                   className="group card-light h-full flex flex-col cursor-default overflow-hidden relative"
                   style={{ isolation: "isolate" }}
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
-                    e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
-                  }}
+                  onMouseMove={handleSpotMove}
                 >
                   <div className="pillar-spotlight" aria-hidden />
 
@@ -1130,7 +1223,7 @@ export function QualityPillars() {
                   <div className="flex flex-col gap-3 p-5 md:p-6 flex-1">
                     <div className="flex items-center justify-between">
                       <div
-                        className="flex items-center justify-center w-10 h-10 rounded-xl text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)] group-hover:text-white group-hover:bg-accent group-hover:scale-105 group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        className="flex items-center justify-center w-10 h-10 rounded-xl text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)] group-hover:text-white group-hover:bg-accent group-hover:scale-105 group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] transition-[color,background-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                       >
                         <Icon />
                       </div>

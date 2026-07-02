@@ -118,7 +118,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg grain">
+      <body className="min-h-full flex flex-col bg-bg text-fg">
         <SmoothScrollProvider>
           <ScrollProgress />
           <RevealObserver />
