@@ -272,6 +272,142 @@ export const TESTIMONIALS = [
   },
 ] as const;
 
+// ─── Arcade ───────────────────────────────────────────────────────────────────
+// Three thirty-second games. Each one is a sales argument wearing a costume.
+export const ARCADE = {
+  label: "The Route 9 Arcade",
+  heading: "Play the games.\nLearn the trade.",
+  subhead:
+    "Three tiny games, thirty seconds each. Every one is secretly a lesson about why some shop websites bring in customers and some just sit there. That's the deal: you have fun, I make a point.",
+  games: [
+    {
+      key: "speed",
+      title: "The 3-Second Test",
+      tagline: "How long do customers really wait?",
+      lesson:
+        "You were staring at the screen, waiting for it — and it still took you a moment. A real customer gives your site about 3 seconds before they hit back and call your competitor. Every site I build loads in under 2 seconds.",
+      pillar: "Speed",
+    },
+    {
+      key: "bugs",
+      title: "Bug Squash",
+      tagline: "Keep the site alive for 25 seconds.",
+      lesson:
+        "Exhausting, right? Broken links, expired certificates, plugin updates — every website collects bugs. The care plan means I'm the one holding the flyswatter: 24/7 uptime monitoring and same-day fixes, so your customers never meet a single one.",
+      pillar: "Maintainable",
+    },
+    {
+      key: "stacker",
+      title: "Storefront Stacker",
+      tagline: "Build a shop site in the right order.",
+      lesson:
+        "There is a right order, and nobody teaches it to shop owners — customers just quietly leave when it's wrong. Name first, phone number where a thumb can reach it, menu before the glamour shots. That's the hidden curriculum of web design.",
+      pillar: "Built to convert",
+    },
+  ],
+  footnote:
+    "Yes — the games are a sales pitch. The good websites always are. They just make you glad you played.",
+} as const;
+
+// ─── Design Lens ──────────────────────────────────────────────────────────────
+// The hidden-curriculum overlay. Meta levels:
+//   1 — the site demonstrates the craft it sells
+//   2 — the annotation reveals the trick while the trick is working on you
+//   3 — the annotation about the annotations
+export const DESIGN_LENS = {
+  toggleLabel: "Design Lens",
+  intro:
+    "X-ray mode. Every page like this one is full of quiet decisions doing quiet work. The numbered pins show you mine — while they're working on you.",
+  outro:
+    "One more thing: this lens is also a trick. Showing you my tricks makes you trust me with yours — and now that I've told you that, we're three layers deep. That's the hidden curriculum: on a good website, every honest thing is also doing a job.",
+  notes: [
+    {
+      target: "hero",
+      title: "The first three seconds",
+      body:
+        "Six words in the headline, one glowing button, everything else dimmed. You knew where to look because I decided where you'd look. Your customers can get the same treatment.",
+      meta: 1,
+    },
+    {
+      target: "who",
+      title: "Mirror, not megaphone",
+      body:
+        "This section is about you, not me — your shop, your town, your customers. The oldest rule in the curriculum: people don't buy from the loudest voice, they buy from the best listener.",
+      meta: 1,
+    },
+    {
+      target: "scene-gallery",
+      title: "Patience, on display",
+      body:
+        "A hundred-plus hand-built scenes that serve no business purpose at all — except one: proving that the person who made this will sweat the details on your site too. It's a portfolio disguised as decoration.",
+      meta: 2,
+    },
+    {
+      target: "pillars",
+      title: "The demo is the pitch",
+      body:
+        "The speed demo up there isn't explaining fast — it's making you feel the difference between fast and slow. Show, don't tell. That's the entire hidden curriculum in four words.",
+      meta: 2,
+    },
+    {
+      target: "pricing",
+      title: "Anchoring, admitted",
+      body:
+        "Three tiers, middle one glowing. You looked at Pro first — everyone does. Restaurants do this on menus too. Second layer: telling you this and still charging it is a transparency play, and transparency converts.",
+      meta: 2,
+    },
+    {
+      target: "maintenance",
+      title: "Naming the fear",
+      body:
+        "Every question here is one you had but weren't going to say out loud — 'what if he disappears?', 'what if I want out?'. Answering the unspoken objection beats hoping you wouldn't think of it.",
+      meta: 1,
+    },
+    {
+      target: "arcade",
+      title: "You're being taught",
+      body:
+        "Each game is one of my sales arguments wearing a costume. Fun is the best delivery mechanism ever invented for a pitch — you're reading this pin, aren't you?",
+      meta: 2,
+    },
+    {
+      target: "portfolio",
+      title: "The honest empty shelf",
+      body:
+        "'Coming soon' instead of fake client logos. A weakness stated plainly reads as strength. Besides — you're scrolling the real portfolio right now. It's this site.",
+      meta: 2,
+    },
+    {
+      target: "testimonials",
+      title: "Full disclosure",
+      body:
+        "These quotes are placeholders until the first clients ship — it says so right in the code. Here's the lesson: social proof works so well that even sample social proof made this page feel safer. You felt it. That's why I'm telling you.",
+      meta: 3,
+    },
+    {
+      target: "process",
+      title: "Shrinking the risk",
+      body:
+        "Four steps, the first one free, a working preview before any money moves. Every step exists to shrink the scariest question — 'what if I waste money?' — down to a 20-minute coffee.",
+      meta: 1,
+    },
+    {
+      target: "about",
+      title: "The 'I'm a person' section",
+      body:
+        "One person, a real town, and an honest note about using AI tools. Specificity is credibility — vague bios hide things, specific ones don't have to.",
+      meta: 1,
+    },
+    {
+      target: "contact",
+      title: "One field short of annoying",
+      body:
+        "The form asks for the bare minimum. Every extra field costs roughly a tenth of your submissions. And the button tells you what happens next — 'Submit' is a word for court filings, not for neighbors.",
+      meta: 1,
+    },
+  ],
+} as const;
+
 // ─── About ────────────────────────────────────────────────────────────────────
 export const ABOUT = {
   paragraphs: [

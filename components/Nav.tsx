@@ -9,6 +9,7 @@ import { SITE } from "@/lib/content";
 const NAV_LINKS = [
   { label: "How I Build",       href: "#pillars", section: "pillars"  },
   { label: "Services & Pricing", href: "#pricing",  section: "pricing"  },
+  { label: "Arcade",            href: "#arcade",   section: "arcade"   },
   { label: "Process",           href: "#process",  section: "process"  },
   { label: "About",             href: "#about",    section: "about"    },
 ] as const;

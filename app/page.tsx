@@ -16,6 +16,8 @@ import { IntroSplash } from "@/components/IntroSplash";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
+import { Arcade } from "@/components/Arcade";
+import { DesignLens } from "@/components/DesignLens";
 import { CursorSparks } from "@/components/CursorSparks";
 import { SectionProgress } from "@/components/SectionProgress";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
@@ -40,6 +42,7 @@ export default function Home() {
         <Pricing />
         <MaintenanceFAQ />
         <Portfolio />
+        <Arcade />
         <Testimonials />
         <Process />
         <About />
@@ -49,6 +52,7 @@ export default function Home() {
       <Footer />
       <FloatingCTA />
       <AIChatWidget />
+      <DesignLens />
     </>
   );
 }

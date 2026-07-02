@@ -110,6 +110,17 @@
 html {
   scroll-behavior: auto; /* Lenis handles this */
   color-scheme: light;
+  /* `clip` (not `hidden`) prevents Chrome-on-Android from expanding the
+     layout viewport ("zooming out") when wide decorative elements overflow —
+     scene glows and the 560px cursor halo were making the mobile viewport
+     fluctuate between ~390px and ~540px as the carousel rotated. */
+  overflow-x: clip;
+}
+
+/* Desktop-only cursor layers serve no purpose on touch and their 560px
+   fixed-position halo widens the mobile layout viewport. */
+@media (pointer: coarse) {
+  .cursor-glow, .cursor-dot { display: none !important; }
 }
 
 .dark {
@@ -2424,3 +2435,122 @@ body.cursor-active * {
   to   { width: 100%; }
 }
 
+
+/* ═══════════════════════════════════════════════
+   ROUTE 9 ARCADE
+   Three minigame cabinets — each one a sales
+   argument wearing a costume.
+══════════════════════════════════════════════ */
+
+/* Skeleton blocks while the "slow site" loads */
+.arcade-skeleton {
+  background: linear-gradient(90deg, rgba(243,233,213,0.06) 25%, rgba(243,233,213,0.13) 50%, rgba(243,233,213,0.06) 75%);
+  background-size: 200% 100%;
+  animation: arcade-skeleton-sweep 1.3s ease-in-out infinite;
+}
+
+@keyframes arcade-skeleton-sweep {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* Generic result/state pop-in */
+@keyframes arcade-pop {
+  0%   { opacity: 0; transform: scale(0.92) translateY(8px); }
+  60%  { transform: scale(1.02) translateY(-1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.arcade-pop-in { animation: arcade-pop 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* CALL NOW button urgency pulse (Speed Test "ready" state) */
+@keyframes arcade-call-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.045); }
+}
+
+/* Bug idle wiggle — makes them feel alive and squashable */
+@keyframes arcade-bug-wiggle {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  25%      { transform: rotate(10deg)  translateY(-2px); }
+  50%      { transform: rotate(-8deg)  translateY(1px); }
+  75%      { transform: rotate(12deg)  translateY(-1px); }
+}
+.arcade-bug-wiggle { animation: arcade-bug-wiggle 0.5s ease-in-out infinite; }
+
+/* Squash splat — burst out then fade */
+@keyframes arcade-splat-burst {
+  0%   { opacity: 1; transform: scale(0.3); }
+  55%  { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+.arcade-splat { animation: arcade-splat-burst 0.38s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Stacker block dropping into the phone */
+@keyframes stacker-drop-in {
+  0%   { opacity: 0; transform: translateY(-14px) scale(0.96); }
+  70%  { transform: translateY(2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.stacker-drop { animation: stacker-drop-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Cabinet marquee title — warm neon glow with an occasional flicker */
+.arcade-marquee-text {
+  text-shadow:
+    0 0 8px rgba(212,104,42,0.55),
+    0 0 22px rgba(212,104,42,0.28),
+    0 1px 0 rgba(0,0,0,0.4);
+  animation: arcade-marquee-flicker 7s linear infinite;
+}
+
+@keyframes arcade-marquee-flicker {
+  0%, 91%, 93.5%, 100% { opacity: 1; }
+  92%                   { opacity: 0.55; }
+  93%                   { opacity: 0.85; }
+}
+
+/* ═══════════════════════════════════════════════
+   DESIGN LENS — the hidden-curriculum X-ray
+══════════════════════════════════════════════ */
+
+/* Dashed inspector outlines on every annotated section while the lens is on */
+.lens-on #hero,
+.lens-on #who,
+.lens-on #scene-gallery,
+.lens-on #pillars,
+.lens-on #pricing,
+.lens-on #maintenance,
+.lens-on #arcade,
+.lens-on #portfolio,
+.lens-on #testimonials,
+.lens-on #process,
+.lens-on #about {
+  outline: 1px dashed rgba(212,104,42,0.4);
+  outline-offset: -10px;
+}
+
+@keyframes lens-grid-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.lens-grid-fade { animation: lens-grid-in 0.5s ease both; }
+
+/* Pin entrance — pops like a pushpin going into cork */
+@keyframes lens-pin-in {
+  0%   { opacity: 0; transform: scale(0.4); }
+  65%  { transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.lens-pin-pop { animation: lens-pin-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Note card slide-up */
+@keyframes lens-card-up {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.lens-card-in { animation: lens-card-up 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Notes-count badge on the toggle — gentle heartbeat to invite discovery */
+@keyframes lens-badge-pulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 8px rgba(212,104,42,0.8); }
+  50%      { transform: scale(1.18); box-shadow: 0 0 14px rgba(212,104,42,1); }
+}

@@ -28,6 +28,10 @@ export const viewport: Viewport = {
   ],
   width: "device-width",
   initialScale: 1,
+  // Wide fixed-position decorations (scene glows, cursor halo) were letting
+  // Chrome-on-Android zoom the page out below 1× as the carousel rotated.
+  // minimum-scale pins the floor; pinch-zoom IN stays available.
+  minimumScale: 1,
 };
 
 export const metadata: Metadata = {
