@@ -101,8 +101,8 @@ export function TornPageDivider() {
         {/* ── 1. Wide diffuse amber glow (below the tear) ── */}
         <path
           d={EDGE_D}
-          stroke="rgba(212,104,42,0.14)"
-          strokeWidth="18"
+          stroke="rgba(212,104,42,0.10)"
+          strokeWidth="16"
           strokeLinecap="round"
           style={{ filter: "blur(5px)" }}
         />
@@ -110,7 +110,7 @@ export function TornPageDivider() {
         {/* ── 2. Medium glow halo ── */}
         <path
           d={EDGE_D}
-          stroke="rgba(212,104,42,0.22)"
+          stroke="rgba(212,104,42,0.16)"
           strokeWidth="8"
           strokeLinecap="round"
           style={{ filter: "blur(2.5px)" }}

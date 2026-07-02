@@ -116,7 +116,7 @@ export function IntroSplash() {
             background:
               "linear-gradient(145deg, #E07838 0%, #C05A20 55%, #A04010 100%)",
             boxShadow:
-              "0 0 0 1px rgba(212,104,42,0.45), 0 12px 48px rgba(212,104,42,0.60), inset 0 2px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.18)",
+              "0 0 0 1px rgba(212,104,42,0.45), 0 8px 24px rgba(0,0,0,0.5), 0 14px 44px rgba(212,104,42,0.32), inset 0 2px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.18)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -217,18 +217,18 @@ export function IntroSplash() {
               width: `${progress}%`,
               background: "linear-gradient(90deg, #D4682A, #F09050)",
               borderRadius: "9999px",
-              boxShadow: "0 0 10px rgba(212,104,42,0.7)",
+              boxShadow: "0 0 8px rgba(212,104,42,0.5)",
             }}
           />
         </div>
         <p
           style={{
             textAlign: "right",
-            fontSize: "8px",
-            color: "rgba(212,104,42,0.38)",
-            marginTop: "5px",
+            fontSize: "10px",
+            color: "rgba(212,104,42,0.45)",
+            marginTop: "6px",
             fontFamily: "monospace",
-            letterSpacing: "0.06em",
+            letterSpacing: "0.08em",
           }}
         >
           {Math.round(progress)}%

@@ -202,25 +202,25 @@ export function Testimonials() {
             >
               <span
                 className="font-bold tabular-nums"
-                style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "20px", color: "#D4682A", lineHeight: 1 }}
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "20px", color: "var(--accent)", lineHeight: 1 }}
               >
                 {String(current + 1).padStart(2, "0")}
               </span>
-              <span style={{ fontSize: "10px", color: "#D4B090", fontWeight: 600, letterSpacing: "0.06em", alignSelf: "flex-end", marginBottom: "2px" }}>
+              <span style={{ fontSize: "10px", color: "var(--muted)", fontWeight: 600, letterSpacing: "0.06em", alignSelf: "flex-end", marginBottom: "2px" }}>
                 &thinsp;/&thinsp;{String(items.length).padStart(2, "0")}
               </span>
             </div>
             <button
               onClick={() => advance(-1)}
               aria-label="Previous testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.4)] hover:bg-[rgba(212,104,42,0.06)] text-muted hover:text-accent transition-all duration-150 shadow-sm"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
             >
               <ChevronLeft size={18} aria-hidden />
             </button>
             <button
               onClick={() => advance(1)}
               aria-label="Next testimonial"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.4)] hover:bg-[rgba(212,104,42,0.06)] text-muted hover:text-accent transition-all duration-150 shadow-sm"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface-raised hover:border-[rgba(212,104,42,0.35)] hover:bg-[rgba(212,104,42,0.05)] text-muted hover:text-accent hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm"
             >
               <ChevronRight size={18} aria-hidden />
             </button>
@@ -257,7 +257,7 @@ export function Testimonials() {
             touchAction: "pan-y",
             boxShadow:
               "0 2px 4px rgba(28,18,9,0.04), 0 8px 32px rgba(28,18,9,0.09), 0 32px 80px rgba(28,18,9,0.06), 0 64px 120px rgba(212,104,42,0.04), inset 0 1px 0 var(--card-inset-top), inset 0 -1px 0 rgba(212,104,42,0.06)",
-            borderLeft: "4px solid #D4682A",
+            borderLeft: "3px solid var(--accent)",
           }}
         >
           {/* Route 9 shield letterhead watermark — fades in on hover */}
@@ -276,26 +276,15 @@ export function Testimonials() {
             </svg>
           </div>
 
-          {/* Warm glow behind quote */}
-          <div
-            aria-hidden
-            className="absolute pointer-events-none"
-            style={{
-              top: "-20px",
-              left: "-20px",
-              width: "200px",
-              height: "200px",
-              background: "radial-gradient(circle, rgba(212,104,42,0.06) 0%, transparent 70%)",
-            }}
-          />
           {/* Auto-advance progress bar */}
-          <div aria-hidden className="testimonial-progress-track absolute bottom-0 left-0 right-0 h-[3px] rounded-b-3xl overflow-hidden">
+          <div aria-hidden className="testimonial-progress-track absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl overflow-hidden">
             <div
               key={`pb-${key}`}
               style={{
                 height: "100%",
                 width: "100%",
                 background: "linear-gradient(90deg, #D4682A, #F08040)",
+                opacity: 0.8,
                 transformOrigin: "left center",
                 animation: "testimonial-progress 5.5s linear forwards",
                 animationPlayState: paused ? "paused" : "running",
@@ -348,19 +337,19 @@ export function Testimonials() {
           </div>
 
           <blockquote
-            className="relative text-xl md:text-2xl text-fg font-medium leading-relaxed mb-8 italic pr-20"
+            className="relative text-xl md:text-[1.65rem] text-fg font-normal leading-relaxed md:leading-[1.55] mb-7 italic pr-20"
             style={{ fontFamily: "var(--font-display)" }}
           >
             &ldquo;{t.quote}&rdquo;
           </blockquote>
 
-          <div className="flex items-center gap-4 relative">
+          <div className="flex items-center gap-4 relative pt-6 border-t border-border-subtle">
             <div
               aria-hidden
               className="flex items-center justify-center w-12 h-12 rounded-full text-white font-bold text-sm flex-shrink-0"
               style={{
                 background: "linear-gradient(145deg, #E07838 0%, #D4682A 50%, #C05A20 100%)",
-                boxShadow: "0 2px 8px rgba(212,104,42,0.4), inset 0 1px 0 rgba(255,255,255,0.2)",
+                boxShadow: "0 2px 8px rgba(212,104,42,0.3), inset 0 1px 0 rgba(255,255,255,0.2)",
                 fontFamily: "var(--font-display)",
                 fontStyle: "italic",
               }}

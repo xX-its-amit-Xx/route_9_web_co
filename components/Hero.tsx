@@ -35,9 +35,9 @@ function CyclingShopNames() {
   return (
     <p
       aria-hidden="true"
-      className="text-[10px] italic mb-3"
+      className="text-[11px] italic mb-3"
       style={{
-        color: "rgba(243,233,213,0.2)",
+        color: "rgba(243,233,213,0.22)",
         fontFamily: "var(--font-display)",
         lineHeight: 1.7,
         animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.88s both",
@@ -156,10 +156,10 @@ function HeroPhotoCollage() {
             <div className="absolute bottom-0 left-0 right-0 p-3.5">
               <span
                 style={{
-                  fontSize: "9px",
-                  fontWeight: 700,
-                  color: "rgba(243,233,213,0.7)",
-                  letterSpacing: "0.14em",
+                  fontSize: "10px",
+                  fontWeight: 600,
+                  color: "rgba(243,233,213,0.72)",
+                  letterSpacing: "0.16em",
                   textTransform: "uppercase",
                 }}
               >
@@ -191,17 +191,17 @@ function HeroPhotoCollage() {
           padding: "5px 11px 5px 8px",
           borderRadius: "9999px",
           background: "linear-gradient(145deg, rgba(20,12,5,0.95), rgba(14,9,5,0.92))",
-          border: "1px solid rgba(212,104,42,0.50)",
+          border: "1px solid rgba(212,104,42,0.35)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           boxShadow: "0 4px 16px rgba(0,0,0,0.5), 0 1px 0 rgba(255,200,100,0.06) inset, 0 -1px 0 rgba(0,0,0,0.3) inset",
         }}
       >
-        <MapPin size={9} color="#D4682A" />
-        <span style={{ fontSize: "9px", fontWeight: 700, color: "rgba(212,104,42,0.92)", letterSpacing: "0.12em" }}>
+        <MapPin size={10} color="#D4682A" />
+        <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(212,104,42,0.92)", letterSpacing: "0.14em" }}>
           ROUTE 9
         </span>
-        <span style={{ fontSize: "8px", color: "rgba(243,233,213,0.35)", fontFamily: "monospace" }}>MA</span>
+        <span style={{ fontSize: "10px", color: "rgba(243,233,213,0.35)", fontFamily: "monospace" }}>MA</span>
       </div>
 
       {/* "Independent shops" floating badge */}
@@ -213,15 +213,17 @@ function HeroPhotoCollage() {
           zIndex: 10,
           padding: "8px 14px",
           borderRadius: "11px",
-          background: "linear-gradient(145deg, #E07838 0%, #D4682A 50%, #C05A20 100%)",
+          background: "linear-gradient(145deg, rgba(26,15,7,0.94), rgba(14,9,5,0.92))",
+          border: "1px solid rgba(212,104,42,0.35)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           boxShadow:
-            "0 8px 28px rgba(212,104,42,0.60), 0 2px 8px rgba(0,0,0,0.3), inset 0 1.5px 0 rgba(255,220,140,0.28), inset 0 -1.5px 0 rgba(0,0,0,0.2)",
-          color: "white",
-          fontSize: "9.5px",
-          fontWeight: 700,
-          letterSpacing: "0.04em",
+            "0 8px 24px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,200,100,0.10)",
+          color: "rgba(243,233,213,0.78)",
+          fontSize: "10px",
+          fontWeight: 600,
+          letterSpacing: "0.06em",
           whiteSpace: "nowrap",
-          animation: "float-subtle 4s ease-in-out infinite",
         }}
       >
         Independent shops · Shrewsbury &amp; beyond
@@ -409,15 +411,15 @@ export function Hero() {
                 style={{
                   fontSize: "11px",
                   fontWeight: 600,
-                  color: "rgba(243,233,213,0.6)",
+                  color: "rgba(243,233,213,0.62)",
                   letterSpacing: "0.08em",
                 }}
               >
                 {HERO.label}
               </span>
               <span
-                className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
-                style={{ background: "#D4682A", boxShadow: "0 0 6px rgba(212,104,42,0.9), 0 0 12px rgba(212,104,42,0.4)" }}
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{ background: "#D4682A", boxShadow: "0 0 6px rgba(212,104,42,0.5)" }}
                 aria-hidden
               />
             </div>
@@ -495,8 +497,8 @@ export function Hero() {
                   height: "52px",
                   background: "linear-gradient(145deg, #F08040 0%, #D4682A 40%, #A84818 100%)",
                   boxShadow:
-                    "0 0 0 1px rgba(212,104,42,0.55), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.25) inset, 0 6px 20px rgba(212,104,42,0.55), 0 16px 48px rgba(212,104,42,0.2)",
-                  transition: "transform 0.18s cubic-bezier(0.22,1,0.36,1), box-shadow 0.18s cubic-bezier(0.22,1,0.36,1)",
+                    "0 0 0 1px rgba(212,104,42,0.55), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.25) inset, 0 6px 20px rgba(212,104,42,0.45), 0 16px 48px rgba(212,104,42,0.16)",
+                  transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1)",
                 }}
                 onMouseMove={e => {
                   if (!allowMotion.current) return;
@@ -505,13 +507,13 @@ export function Hero() {
                   const dy = (e.clientY - (r.top + r.height / 2)) * 0.22;
                   (e.currentTarget as HTMLElement).style.transform = `translate(${dx}px, ${dy}px) scale(1.018)`;
                   (e.currentTarget as HTMLElement).style.boxShadow =
-                    "0 0 0 1px rgba(212,104,42,0.65), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.3) inset, 0 8px 28px rgba(212,104,42,0.65), 0 24px 60px rgba(212,104,42,0.28)";
+                    "0 0 0 1px rgba(212,104,42,0.65), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.3) inset, 0 8px 28px rgba(212,104,42,0.55), 0 24px 60px rgba(212,104,42,0.22)";
                 }}
                 onMouseLeave={e => {
                   if (!allowMotion.current) return;
                   (e.currentTarget as HTMLElement).style.transform = "";
                   (e.currentTarget as HTMLElement).style.boxShadow =
-                    "0 0 0 1px rgba(212,104,42,0.55), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.25) inset, 0 6px 20px rgba(212,104,42,0.55), 0 16px 48px rgba(212,104,42,0.2)";
+                    "0 0 0 1px rgba(212,104,42,0.55), 0 2px 0 rgba(0,0,0,0.35) inset, 0 1.5px 0 rgba(255,220,160,0.25) inset, 0 6px 20px rgba(212,104,42,0.45), 0 16px 48px rgba(212,104,42,0.16)";
                 }}
               >
                 {HERO.ctaPrimary.text}
@@ -531,7 +533,7 @@ export function Hero() {
                     "0 4px 16px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.08) inset, 0 -1px 0 rgba(0,0,0,0.18) inset",
                   backdropFilter: "blur(10px)",
                   WebkitBackdropFilter: "blur(10px)",
-                  transition: "transform 0.18s cubic-bezier(0.22,1,0.36,1), box-shadow 0.18s cubic-bezier(0.22,1,0.36,1), border-color 0.18s ease",
+                  transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s cubic-bezier(0.22,1,0.36,1), border-color 0.25s ease",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;
@@ -575,9 +577,6 @@ export function Hero() {
                   Now accepting new clients
                 </span>
               </div>
-              <span style={{ fontSize: "10px", color: "rgba(243,233,213,0.22)" }}>
-                · Shrewsbury &amp; Route 9
-              </span>
             </div>
 
             {/* Shop proof strip — avatar stack */}
@@ -624,7 +623,7 @@ export function Hero() {
 
             {/* Mini stats row */}
             <dl
-              className="flex items-center py-4 mb-1 border-t border-b border-[rgba(255,255,255,0.055)]"
+              className="flex items-center pt-5 pb-4 border-t border-[rgba(255,255,255,0.06)]"
               style={{ animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.90s both" }}
             >
               {[
@@ -647,7 +646,7 @@ export function Hero() {
                         ? <CountUp to={48} suffix="hr" duration={1200} delay={200} />
                         : val}
                     </dt>
-                    <dd className="text-[9px] uppercase tracking-widest mt-0.5" style={{ color: "rgba(243,233,213,0.3)" }}>
+                    <dd className="text-[10px] uppercase tracking-[0.16em] mt-1" style={{ color: "rgba(243,233,213,0.35)" }}>
                       {label}
                     </dd>
                   </div>
@@ -667,7 +666,7 @@ export function Hero() {
 
             {/* Trust badge strip — icon pills */}
             <div
-              className="flex flex-wrap items-center gap-2"
+              className="flex flex-wrap items-center gap-2 pb-5 border-b border-[rgba(255,255,255,0.06)]"
               style={{ animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.96s both" }}
               aria-label="Key features"
             >
@@ -711,11 +710,12 @@ export function Hero() {
               ] as { label: string; icon: React.ReactNode }[]).map(({ label, icon }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase"
                   style={{
-                    background: "rgba(243,233,213,0.06)",
+                    background: "rgba(243,233,213,0.05)",
                     border: "1px solid rgba(243,233,213,0.10)",
-                    color: "rgba(243,233,213,0.52)",
+                    color: "rgba(243,233,213,0.55)",
+                    letterSpacing: "0.08em",
                   }}
                 >
                   {icon}

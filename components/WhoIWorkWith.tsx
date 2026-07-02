@@ -128,18 +128,18 @@ export function WhoIWorkWith() {
                 return (
                   <div
                     key={heading}
-                    className="flex gap-4 p-4 rounded-2xl reveal group transition-all duration-200 border border-transparent hover:bg-[rgba(212,104,42,0.04)] hover:border-[rgba(212,104,42,0.14)]"
+                    className="flex gap-4 p-4 rounded-2xl reveal group transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] border border-transparent hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.04)] hover:border-[rgba(212,104,42,0.12)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_8px_24px_rgba(28,18,9,0.06)]"
                     style={{ transitionDelay: `${420 + i * 110}ms` }}
                   >
                     <div
-                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:bg-[#D4682A] group-hover:text-white group-hover:shadow-[0_4px_14px_rgba(212,104,42,0.45)] text-[#D4682A] bg-[rgba(212,104,42,0.1)] border border-[rgba(212,104,42,0.2)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)]"
+                      className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:bg-accent group-hover:text-white group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)]"
                       aria-hidden
                     >
                       <Icon />
                     </div>
                     <div>
                       <h3
-                        className="font-semibold text-fg mb-1"
+                        className="font-semibold text-fg text-[17px] tracking-tight mb-1"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {heading}
@@ -152,7 +152,7 @@ export function WhoIWorkWith() {
             </div>
 
             <div className="border-t border-border-subtle pt-6 reveal" style={{ transitionDelay: "760ms" }}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-muted mb-4">
+              <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted mb-4">
                 Currently serving
               </p>
               {/* Mini Route 9 inline road strip */}
@@ -205,10 +205,10 @@ export function WhoIWorkWith() {
                       <span
                         className="text-center leading-tight transition-colors duration-200 group-hover:text-accent whitespace-nowrap"
                         style={{
-                          fontSize: "9px",
-                          fontWeight: town === "Shrewsbury" ? 700 : 500,
-                          color: town === "Shrewsbury" ? "#D4682A" : "var(--muted)",
-                          letterSpacing: "0.04em",
+                          fontSize: "10px",
+                          fontWeight: town === "Shrewsbury" ? 700 : 600,
+                          color: town === "Shrewsbury" ? "var(--accent)" : "var(--muted)",
+                          letterSpacing: "0.06em",
                         }}
                       >
                         {town}
@@ -235,15 +235,15 @@ export function WhoIWorkWith() {
               ].map(({ to, suffix, label }) => (
                 <div
                   key={label}
-                  className="flex flex-col items-center text-center p-3 rounded-xl border border-[rgba(212,104,42,0.1)] bg-[rgba(212,104,42,0.03)] hover:bg-[rgba(212,104,42,0.07)] hover:border-[rgba(212,104,42,0.22)] transition-all duration-200"
+                  className="flex flex-col items-center text-center p-3 rounded-xl border border-[rgba(212,104,42,0.1)] bg-[rgba(212,104,42,0.03)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[rgba(212,104,42,0.06)] hover:border-[rgba(212,104,42,0.2)] hover:shadow-[0_1px_2px_rgba(28,18,9,0.04),0_6px_16px_rgba(28,18,9,0.05)]"
                 >
                   <dt
                     className="font-extrabold leading-none mb-1"
-                    style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "20px", color: "#D4682A" }}
+                    style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "20px", color: "var(--accent)" }}
                   >
                     <CountUp to={to} suffix={suffix} duration={1100} delay={150} />
                   </dt>
-                  <dd className="text-[9px] font-semibold tracking-wide uppercase text-muted" style={{ letterSpacing: "0.1em" }}>
+                  <dd className="text-[10px] font-semibold uppercase text-muted" style={{ letterSpacing: "0.12em" }}>
                     {label}
                   </dd>
                 </div>
@@ -256,7 +256,7 @@ export function WhoIWorkWith() {
             {/* Neighborhood label */}
             <div className="flex items-center gap-2 mb-3">
               <span
-                className="text-[9px] font-semibold tracking-[0.18em] uppercase"
+                className="text-[10px] font-semibold tracking-[0.16em] uppercase"
                 style={{ color: "var(--muted)" }}
               >
                 Route 9 shops, Shrewsbury &amp; beyond
@@ -265,7 +265,7 @@ export function WhoIWorkWith() {
             </div>
 
             <div
-              className="grid grid-cols-3 gap-2"
+              className="grid grid-cols-3 gap-2.5"
               style={{
                 gridTemplateRows: "repeat(3, 1fr)",
                 height: "clamp(340px, 55vw, 520px)",
@@ -287,7 +287,7 @@ export function WhoIWorkWith() {
                     src={`https://images.unsplash.com/photo-${id}?w=${i === 0 ? 500 : 280}&auto=format&fit=crop&q=80`}
                     alt={label}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -302,13 +302,13 @@ export function WhoIWorkWith() {
                   {/* Label — slides up from below on hover */}
                   <div className="absolute bottom-0 left-0 right-0 z-20">
                     <div className="overflow-hidden px-2.5 pb-2.5">
-                      <span className="block text-[10px] font-semibold text-white tracking-wide leading-tight translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                      <span className="block text-[10px] font-semibold text-white/95 uppercase tracking-[0.08em] leading-tight translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
                         {label}
                       </span>
                     </div>
                   </div>
-                  {/* Hover accent ring */}
-                  <div className="absolute inset-0 ring-2 ring-inset ring-[#D4682A]/0 group-hover:ring-[#D4682A]/40 rounded-2xl transition-all duration-300 z-20" />
+                  {/* Resting hairline + hover accent ring */}
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 group-hover:ring-[#D4682A]/35 rounded-2xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] z-20" />
                 </div>
               ))}
             </div>

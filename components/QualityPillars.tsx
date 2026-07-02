@@ -235,9 +235,8 @@ function VSDivider() {
           height: "20px",
           background: "linear-gradient(145deg, #E87C3E 0%, #D4682A 50%, #B85520 100%)",
           boxShadow: [
-            "0 0 18px rgba(212,104,42,0.8)",
-            "0 0 6px rgba(212,104,42,0.55)",
-            "0 3px 10px rgba(0,0,0,0.7)",
+            "0 0 12px rgba(212,104,42,0.5)",
+            "0 3px 10px rgba(0,0,0,0.6)",
             "inset 0 1.5px 0 rgba(255,220,140,0.3)",
             "inset 0 -1px 0 rgba(0,0,0,0.25)",
           ].join(", "),
@@ -1050,17 +1049,6 @@ export function QualityPillars() {
           zIndex: 0,
         }}
       />
-      {/* Bottom-left echo glow */}
-      <div
-        aria-hidden
-        className="absolute pointer-events-none"
-        style={{
-          bottom: "-40px", left: "-40px",
-          width: "320px", height: "320px",
-          background: "radial-gradient(circle, rgba(212,104,42,0.04) 0%, transparent 65%)",
-          zIndex: 0,
-        }}
-      />
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
         {/* Heading — with a spinning vinyl record off to the right */}
@@ -1096,7 +1084,7 @@ export function QualityPillars() {
         {/* Grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6"
         >
           {PILLARS.map((pillar, i) => {
             const Icon = ICON_MAP[pillar.icon];
@@ -1106,7 +1094,7 @@ export function QualityPillars() {
               <TiltCard>
                 <article
                   aria-labelledby={`pillar-${pillar.icon}`}
-                  className="group card-light h-full flex flex-col cursor-default overflow-hidden relative transition-[box-shadow] duration-300 group-hover:shadow-[0_0_0_1.5px_rgba(212,104,42,0.45),0_0_30px_rgba(212,104,42,0.2),0_8px_32px_rgba(212,104,42,0.12)]"
+                  className="group card-light h-full flex flex-col cursor-default overflow-hidden relative"
                   style={{ isolation: "isolate" }}
                   onMouseMove={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
@@ -1139,16 +1127,16 @@ export function QualityPillars() {
                   </div>
 
                   {/* ── Card content ── */}
-                  <div className="flex flex-col gap-3 p-5 flex-1">
+                  <div className="flex flex-col gap-3 p-5 md:p-6 flex-1">
                     <div className="flex items-center justify-between">
                       <div
-                        className="flex items-center justify-center w-10 h-10 rounded-xl text-[#D4682A] bg-[rgba(212,104,42,0.1)] group-hover:text-white group-hover:bg-[#D4682A] group-hover:scale-110 group-hover:shadow-[0_4px_14px_rgba(212,104,42,0.45)] transition-all duration-300"
+                        className="flex items-center justify-center w-10 h-10 rounded-xl text-accent bg-[rgba(212,104,42,0.08)] border border-[rgba(212,104,42,0.16)] shadow-[inset_0_1px_0_rgba(255,210,140,0.12)] group-hover:text-white group-hover:bg-accent group-hover:scale-105 group-hover:shadow-[0_3px_10px_rgba(212,104,42,0.3)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                       >
                         <Icon />
                       </div>
                       <span
-                        className="text-[11px] font-bold tabular-nums opacity-20 group-hover:opacity-70 transition-opacity duration-200 select-none"
-                        style={{ fontFamily: "var(--font-display)", color: "#D4682A", fontStyle: "italic" }}
+                        className="text-[11px] font-bold tabular-nums tracking-[0.12em] opacity-25 group-hover:opacity-60 transition-opacity duration-300 select-none"
+                        style={{ fontFamily: "var(--font-display)", color: "var(--accent)", fontStyle: "italic" }}
                         aria-hidden
                       >
                         {String(i + 1).padStart(2, "0")}
@@ -1157,7 +1145,7 @@ export function QualityPillars() {
                     <div>
                       <h3
                         id={`pillar-${pillar.icon}`}
-                        className="font-bold text-fg mb-1.5"
+                        className="font-bold text-fg text-lg tracking-tight mb-1.5"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {pillar.heading}

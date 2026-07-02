@@ -19,10 +19,10 @@ function Route9CorridorMap() {
     <div className="flex flex-col items-center gap-2">
       <p
         style={{
-          fontSize: "8.5px",
-          letterSpacing: "0.22em",
+          fontSize: "10px",
+          letterSpacing: "0.2em",
           textTransform: "uppercase",
-          color: "rgba(212,104,42,0.4)",
+          color: "rgba(212,104,42,0.45)",
           fontWeight: 600,
         }}
       >
@@ -148,17 +148,17 @@ export function Footer() {
               <p className="text-xs leading-relaxed max-w-[230px]" style={{ color: "rgba(155,140,125,0.88)" }}>
                 Custom websites for independent shops along Route 9. Mobile-first, fast, and maintained by someone who actually answers.
               </p>
-              <div className="flex flex-col gap-1.5 mt-4">
+              <div className="flex flex-col items-start gap-1.5 mt-4">
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#D4682A]"
+                  className="underline-grow text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-200 hover:text-[#D4682A]"
                 >
                   {SITE.email}
                 </a>
                 {(SITE.phone as string) !== "PLACEHOLDER_PHONE" && (
                   <a
                     href={`tel:+1${SITE.phone.replace(/\D/g, "")}`}
-                    className="text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#D4682A]"
+                    className="underline-grow text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-200 hover:text-[#D4682A]"
                   >
                     {SITE.phone}
                   </a>
@@ -170,7 +170,7 @@ export function Footer() {
             <div>
               <p
                 className="mb-4 font-semibold"
-                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
+                style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
               >
                 Navigation
               </p>
@@ -180,12 +180,8 @@ export function Footer() {
                   <li key={href}>
                     <a
                       href={href}
-                      className="group text-xs flex items-center gap-1.5 text-[rgba(155,140,125,0.85)] transition-colors duration-150 hover:text-[#F3E9D5]"
+                      className="underline-grow inline-block text-xs text-[rgba(155,140,125,0.85)] transition-colors duration-200 hover:text-[#F3E9D5]"
                     >
-                      <span
-                        className="block h-px w-0 group-hover:w-3 rounded-full transition-all duration-250 bg-[#D4682A]"
-                        aria-hidden
-                      />
                       {label}
                     </a>
                   </li>
@@ -198,16 +194,15 @@ export function Footer() {
             <div>
               <p
                 className="mb-4 font-semibold"
-                style={{ fontSize: "8.5px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
+                style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(155,140,125,0.85)" }}
               >
                 Get in touch
               </p>
               <a
                 href="#contact"
-                className="nav-cta-shimmer inline-flex items-center h-9 px-5 rounded-xl text-xs font-semibold text-[#1C1209] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(212,104,42,0.45)] mb-5"
+                className="nav-cta-shimmer inline-flex items-center h-9 px-5 rounded-xl text-xs font-semibold text-[#1C1209] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 shadow-[0_4px_14px_rgba(212,104,42,0.28),inset_0_1px_0_rgba(255,255,255,0.18)] hover:shadow-[0_8px_24px_rgba(212,104,42,0.4),inset_0_1px_0_rgba(255,255,255,0.18)] mb-5"
                 style={{
                   background: "linear-gradient(135deg, #D4682A 0%, #C05A20 100%)",
-                  boxShadow: "0 4px 16px rgba(212,104,42,0.3), inset 0 1px 0 rgba(255,255,255,0.18)",
                 }}
               >
                 Start a conversation
@@ -253,7 +248,7 @@ export function Footer() {
                   href={SITE.personalSite}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#9B8C7D] transition-colors duration-150"
+                  className="underline-grow transition-colors duration-200 hover:text-[#F3E9D5]"
                 >
                   {ABOUT.moreLinkText}
                 </a>
@@ -263,7 +258,7 @@ export function Footer() {
                   href={`https://github.com/${SITE.github}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#9B8C7D] transition-colors duration-150"
+                  className="underline-grow transition-colors duration-200 hover:text-[#F3E9D5]"
                 >
                   GitHub →
                 </a>
@@ -294,7 +289,7 @@ export function Footer() {
               <button
                 onClick={scrollToTop}
                 aria-label="Back to top"
-                className="flex items-center gap-1.5 transition-colors duration-150 hover:text-[#D4682A] group"
+                className="flex items-center gap-1.5 transition-colors duration-200 hover:text-[#D4682A] group"
                 style={{ color: "rgba(90,75,60,0.5)" }}
               >
                 <span

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TextScramble } from "./TextScramble";
 import { BrandSeal } from "./BrandSeal";
@@ -74,7 +75,7 @@ export function About() {
             className="absolute right-7 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 border-white/20"
             style={{
               background: "linear-gradient(145deg, #F08040 0%, #D4682A 45%, #A84818 100%)",
-              boxShadow: "0 0 0 3px rgba(212,104,42,0.25), 0 8px 28px rgba(212,104,42,0.7), 0 16px 48px rgba(212,104,42,0.35), inset 0 2px 0 rgba(255,220,140,0.35), inset 0 -2px 0 rgba(0,0,0,0.25)",
+              boxShadow: "0 0 0 3px rgba(212,104,42,0.2), 0 8px 24px rgba(212,104,42,0.45), 0 16px 40px rgba(212,104,42,0.2), inset 0 2px 0 rgba(255,220,140,0.35), inset 0 -2px 0 rgba(0,0,0,0.25)",
             }}
             aria-hidden
           >
@@ -139,7 +140,7 @@ export function About() {
                 >
                   <dt
                     className="font-extrabold leading-none mb-1"
-                    style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "18px", color: "#D4682A" }}
+                    style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "18px", color: "var(--accent)" }}
                   >
                     {value}
                   </dt>
@@ -230,19 +231,22 @@ export function About() {
 
             {ABOUT.paragraphs.map((p, i) => (
               <div key={i} className="reveal" style={{ transitionDelay: `${i * 90}ms` }}>
-                <p className="text-muted leading-relaxed">{p}</p>
+                <p className="text-muted leading-relaxed max-w-[65ch]">{p}</p>
               </div>
             ))}
 
-            {/* AI transparency */}
-            <div
-              className="reveal mt-6 p-5 rounded-2xl border border-border-subtle bg-surface"
-              style={{ transitionDelay: `${ABOUT.paragraphs.length * 90}ms` }}
+            {/* AI transparency — quiet editorial aside */}
+            <aside
+              className="reveal mt-6 pl-5 py-1 max-w-[65ch]"
+              style={{
+                transitionDelay: `${ABOUT.paragraphs.length * 90}ms`,
+                borderLeft: "2px solid rgba(212,104,42,0.35)",
+              }}
             >
               <p className="text-sm text-muted leading-relaxed italic" style={{ fontFamily: "var(--font-display)" }}>
                 &ldquo;{ABOUT.aiNote}&rdquo;
               </p>
-            </div>
+            </aside>
 
             {(SITE.personalSite as string) !== "PLACEHOLDER_PERSONAL_SITE" && (
               <div className="reveal" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 1) * 90}ms` }}>
@@ -250,9 +254,14 @@ export function About() {
                   href={SITE.personalSite}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-accent hover:text-accent-hover underline-grow underline-offset-4 transition-colors duration-150"
+                  className="group inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover underline-grow underline-offset-4 transition-colors duration-300"
                 >
                   {ABOUT.moreLinkText}
+                  <ArrowUpRight
+                    size={14}
+                    aria-hidden
+                    className="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
                 </a>
               </div>
             )}

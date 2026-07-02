@@ -57,33 +57,35 @@ export function SectionProgress() {
         >
           {/* Dot */}
           <div
+            className="group-hover:scale-125"
             style={{
-              width: i === activeIdx ? "8px" : "5px",
-              height: i === activeIdx ? "8px" : "5px",
+              width: i === activeIdx ? "7px" : "5px",
+              height: i === activeIdx ? "7px" : "5px",
               borderRadius: "50%",
               background: i === activeIdx
                 ? "#D4682A"
-                : "rgba(212,104,42,0.28)",
+                : "rgba(212,104,42,0.3)",
               boxShadow: i === activeIdx
-                ? "0 0 8px rgba(212,104,42,0.75), 0 0 16px rgba(212,104,42,0.35)"
+                ? "0 0 0 3px rgba(212,104,42,0.14), 0 0 10px rgba(212,104,42,0.45)"
                 : "none",
-              transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)",
+              transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), background 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1)",
             }}
           />
           {/* Tooltip */}
           <span
-            className="absolute right-6 whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150"
+            className="absolute right-6 whitespace-nowrap opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 pointer-events-none transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{
               fontSize: "9px",
-              fontWeight: 700,
-              color: "rgba(212,104,42,0.8)",
-              letterSpacing: "0.1em",
+              fontWeight: 600,
+              color: "rgba(212,104,42,0.85)",
+              letterSpacing: "0.14em",
               textTransform: "uppercase",
-              background: "rgba(14,9,5,0.88)",
-              border: "1px solid rgba(212,104,42,0.18)",
-              padding: "3px 8px",
-              borderRadius: "4px",
+              background: "rgba(14,9,5,0.92)",
+              border: "1px solid rgba(212,104,42,0.2)",
+              padding: "4px 9px",
+              borderRadius: "6px",
               backdropFilter: "blur(8px)",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
             }}
           >
             {s.label}

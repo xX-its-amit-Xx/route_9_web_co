@@ -39,10 +39,10 @@ export function SocialProofTicker() {
 
   return (
     <div
-      className="overflow-hidden py-2.5 border-y relative"
+      className="overflow-hidden py-3 border-y relative"
       style={{
-        background: "linear-gradient(90deg, rgba(212,104,42,0.04) 0%, rgba(212,104,42,0.07) 50%, rgba(212,104,42,0.04) 100%)",
-        borderColor: "rgba(212,104,42,0.1)",
+        background: "linear-gradient(90deg, rgba(212,104,42,0.03) 0%, rgba(212,104,42,0.06) 50%, rgba(212,104,42,0.03) 100%)",
+        borderColor: "rgba(212,104,42,0.12)",
       }}
       aria-hidden
     >
@@ -66,7 +66,8 @@ export function SocialProofTicker() {
                 fontWeight: 500,
                 color: "var(--muted)",
                 whiteSpace: "nowrap",
-                letterSpacing: "0.02em",
+                letterSpacing: "0.03em",
+                lineHeight: "14px",
               }}
             >
               {item.text}

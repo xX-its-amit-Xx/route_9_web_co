@@ -15,7 +15,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const btnId = `faq-btn-${uid}`;
   const panelId = `faq-panel-${uid}`;
   return (
-    <div className="border-b border-border-subtle last:border-0">
+    <div>
       {/* ARIA APG accordion pattern: wrap the button in a heading so
           screen-reader users can jump between FAQ questions via the
           heading list. The h3 itself is unstyled — the button keeps
@@ -25,25 +25,29 @@ function FAQItem({ q, a }: { q: string; a: string }) {
           id={btnId}
           type="button"
           onClick={() => setOpen(!open)}
-          className="flex items-start justify-between w-full py-5 text-left gap-4 group"
+          className="flex items-center justify-between w-full py-5 text-left gap-4 group"
           aria-expanded={open}
           aria-controls={panelId}
         >
           <span
-            className="font-medium text-sm md:text-base transition-colors duration-150 group-hover:text-accent"
+            className="font-medium text-sm md:text-base transition-colors duration-200 group-hover:text-accent"
             style={{ color: open ? "var(--accent)" : "var(--fg)" }}
           >
             {q}
           </span>
           <span
             aria-hidden
-            className="flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:text-accent"
+            className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border"
             style={{
-              color: open ? "var(--accent)" : "var(--muted)",
+              color: open ? "var(--accent-fg)" : "var(--muted)",
+              background: open ? "var(--accent)" : "transparent",
+              borderColor: open ? "var(--accent)" : "var(--border)",
               transform: open ? "rotate(45deg)" : "rotate(0deg)",
+              transition:
+                "transform 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease",
             }}
           >
-            <Plus size={16} />
+            <Plus size={13} strokeWidth={2.25} />
           </span>
         </button>
       </h3>
@@ -181,14 +185,14 @@ export function MaintenanceFAQ() {
               {STATS.map((stat, i) => (
                 <div key={stat.label} className="reveal" style={{ transitionDelay: `${i * 80}ms` }}>
                 <div
-                  className="group p-5 rounded-2xl border border-border transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(212,104,42,0.3)] shadow-[0_2px_8px_rgba(28,18,9,0.05),0_8px_24px_rgba(28,18,9,0.03),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_4px_24px_rgba(212,104,42,0.14),0_1px_0_rgba(255,220,160,0.06)_inset]"
+                  className="group p-5 rounded-2xl border border-border transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-[rgba(212,104,42,0.24)] shadow-[0_2px_8px_rgba(28,18,9,0.05),0_8px_24px_rgba(28,18,9,0.03),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_2px_6px_rgba(28,18,9,0.05),0_12px_32px_rgba(28,18,9,0.07),inset_0_1px_0_rgba(255,255,255,0.08)]"
                   style={{
                     background: "linear-gradient(160deg, var(--surface-raised) 0%, var(--surface) 100%)",
                   }}
                 >
                   {/* Icon */}
                   <div
-                    className="flex items-center justify-center w-8 h-8 rounded-xl mb-3 transition-all duration-200 group-hover:scale-110"
+                    className="flex items-center justify-center w-8 h-8 rounded-xl mb-3 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                     style={{
                       background: `rgba(${stat.color === "#059669" ? "5,150,105" : "212,104,42"},0.1)`,
                       border: `1px solid rgba(${stat.color === "#059669" ? "5,150,105" : "212,104,42"},0.2)`,
@@ -220,9 +224,16 @@ export function MaintenanceFAQ() {
           </div>
 
           {/* Right: FAQ */}
-          <div ref={faqRef}>
+          <div
+            ref={faqRef}
+            className="self-start rounded-2xl border border-border bg-surface-raised px-6 md:px-7 py-1.5 shadow-[0_1px_2px_rgba(28,18,9,0.04),0_8px_28px_rgba(28,18,9,0.04)]"
+          >
             {FAQ.map((item, i) => (
-              <div key={item.q} className="reveal" style={{ transitionDelay: `${i * 70}ms` }}>
+              <div
+                key={item.q}
+                className="reveal border-b border-border-subtle last:border-0"
+                style={{ transitionDelay: `${i * 70}ms` }}
+              >
                 <FAQItem q={item.q} a={item.a} />
               </div>
             ))}

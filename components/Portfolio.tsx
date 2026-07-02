@@ -151,13 +151,13 @@ export function Portfolio() {
             <article
               key={item.label}
               aria-labelledby={`portfolio-${idx}`}
-              className="portfolio-card flex-shrink-0 flex flex-col rounded-2xl border border-border bg-surface-raised overflow-hidden hover:border-[rgba(212,104,42,0.4)] hover:shadow-2xl transition-all duration-500 group"
+              className="portfolio-card flex-shrink-0 flex flex-col rounded-2xl border border-border bg-surface-raised overflow-hidden shadow-[0_1px_2px_rgba(28,18,9,0.03),0_6px_18px_rgba(28,18,9,0.04)] hover:border-[rgba(212,104,42,0.3)] hover:shadow-[0_2px_8px_rgba(28,18,9,0.06),0_16px_40px_rgba(28,18,9,0.1),0_32px_72px_rgba(28,18,9,0.06)] transition-[box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group"
               style={{
                 width: "min(340px, 82vw)",
                 marginLeft: "24px",
                 marginTop: "auto",
                 marginBottom: "auto",
-                height: "460px",
+                height: "470px",
               }}
             >
               {/* Browser chrome + real photo */}
@@ -181,11 +181,12 @@ export function Portfolio() {
                     src={PORTFOLIO_PHOTOS[idx % PORTFOLIO_PHOTOS.length]}
                     alt={item.label}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-[1.1] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Persistent editorial scrim — deepens slightly on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1209]/45 via-[#1C1209]/10 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                   <div aria-hidden="true" className="absolute bottom-3 left-3 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="px-2.5 py-1 rounded-full bg-[rgba(212,104,42,0.85)] backdrop-blur-sm text-[10px] font-semibold text-white tracking-wide">
+                    <span className="px-2.5 py-1 rounded-full bg-[rgba(212,104,42,0.85)] backdrop-blur-sm text-[10px] font-semibold text-white uppercase tracking-[0.12em]">
                       Preview coming soon
                     </span>
                   </div>
@@ -193,6 +194,17 @@ export function Portfolio() {
               </div>
 
               <div className="flex flex-col flex-1 p-6 gap-3">
+                {/* Editorial index rule */}
+                <div className="flex items-center gap-3" aria-hidden>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">
+                    No. 0{idx + 1}
+                  </span>
+                  <span className="h-px flex-1 bg-border-subtle" />
+                  <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-muted-light">
+                    In production
+                  </span>
+                </div>
+
                 <div>
                   <h3
                     id={`portfolio-${idx}`}
@@ -209,7 +221,7 @@ export function Portfolio() {
                   {["Custom Design", "Mobile First", "SEO Ready"].slice(0, 2 + (idx % 2)).map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-surface text-muted border border-border-subtle"
+                      className="px-2.5 py-1 rounded-full text-[9px] font-semibold uppercase tracking-[0.12em] bg-surface text-muted border border-border-subtle"
                     >
                       {tag}
                     </span>
@@ -223,7 +235,7 @@ export function Portfolio() {
                 >
                   <ExternalLink size={12} aria-hidden />
                   View Live
-                  <span className="ml-1 px-1.5 py-0.5 rounded bg-surface text-muted-light text-[10px] border border-border-subtle">
+                  <span className="ml-1 px-1.5 py-0.5 rounded bg-surface text-muted-light text-[9px] font-semibold uppercase tracking-[0.12em] border border-border-subtle">
                     Soon
                   </span>
                 </button>
@@ -244,7 +256,7 @@ export function Portfolio() {
             </p>
             <a
               href="#contact"
-              className="nav-cta-shimmer inline-flex items-center gap-2 h-12 px-7 rounded-xl text-[#1C1209] text-sm font-semibold transition-all duration-150 hover:-translate-y-0.5"
+              className="nav-cta-shimmer inline-flex items-center gap-2 h-12 px-7 rounded-xl text-[#1C1209] text-sm font-semibold transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
                 boxShadow: "0 0 0 1px rgba(212,104,42,0.4), 0 4px 18px rgba(212,104,42,0.42), 0 1px 0 rgba(255,220,160,0.18) inset",

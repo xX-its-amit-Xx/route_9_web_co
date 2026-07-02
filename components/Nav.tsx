@@ -202,7 +202,7 @@ export function Nav() {
           className="absolute bottom-0 inset-x-0 h-px pointer-events-none transition-opacity duration-500"
           style={{
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(212,104,42,0.35) 20%, rgba(212,104,42,0.65) 50%, rgba(212,104,42,0.35) 80%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(212,104,42,0.22) 20%, rgba(212,104,42,0.45) 50%, rgba(212,104,42,0.22) 80%, transparent 100%)",
             opacity: scrolled ? 1 : 0,
           }}
         />
@@ -217,7 +217,7 @@ export function Nav() {
             aria-label="Back to top"
           >
             <span
-              className="flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg]"
+              className="flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[-3deg]"
               style={{
                 fontFamily: "var(--font-display)",
                 fontStyle: "italic",
@@ -225,13 +225,13 @@ export function Nav() {
                 letterSpacing: "0.02em",
                 background: "linear-gradient(145deg, #E07838 0%, #C05A20 55%, #A04010 100%)",
                 boxShadow:
-                  "0 0 0 1px rgba(212,104,42,0.55), 0 0 20px rgba(212,104,42,0.38), 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.15)",
+                  "0 0 0 1px rgba(212,104,42,0.45), 0 2px 6px rgba(0,0,0,0.45), 0 6px 18px rgba(0,0,0,0.30), 0 0 14px rgba(212,104,42,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.15)",
               }}
             >
               R9
             </span>
             <div className="hidden sm:flex flex-col leading-none gap-[1px] transition-opacity duration-200 group-hover:opacity-90">
-              <span style={{ fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(243,233,213,0.48)" }}>Route 9</span>
+              <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(243,233,213,0.48)" }}>Route 9</span>
               <span style={{ fontSize: "14px", fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 400, color: "#F3E9D5", letterSpacing: "-0.01em" }}>Web</span>
             </div>
           </a>
@@ -252,9 +252,9 @@ export function Nav() {
                     }`}
                     style={isActive ? {
                       color: "#F3E9D5",
-                      background: "linear-gradient(135deg, rgba(212,104,42,0.18) 0%, rgba(160,64,12,0.1) 100%)",
-                      borderColor: "rgba(212,104,42,0.25)",
-                      boxShadow: "0 1px 8px rgba(212,104,42,0.15), inset 0 1px 0 rgba(255,210,140,0.1)",
+                      background: "linear-gradient(135deg, rgba(212,104,42,0.14) 0%, rgba(160,64,12,0.08) 100%)",
+                      borderColor: "rgba(212,104,42,0.22)",
+                      boxShadow: "inset 0 1px 0 rgba(255,210,140,0.08)",
                     } : undefined}
                   >
                     {label}
@@ -273,18 +273,18 @@ export function Nav() {
               href="#contact"
               aria-keyshortcuts="k"
               onClick={spawnCtaSparkles}
-              className="nav-cta-shimmer group hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-xl text-[#1C1209] text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03]"
+              className="nav-cta-shimmer group hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-xl text-[#1C1209] text-xs font-bold transition-transform duration-200 hover:-translate-y-0.5"
               style={{
                 background:
                   "linear-gradient(135deg, #D4682A 0%, #C05A20 55%, #B04C18 100%)",
                 boxShadow:
-                  "0 0 0 1px rgba(212,104,42,0.45), 0 4px 16px rgba(212,104,42,0.38), 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)",
+                  "0 0 0 1px rgba(212,104,42,0.45), 0 4px 14px rgba(212,104,42,0.28), 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)",
                 letterSpacing: "0.025em",
               }}
             >
               <span
-                className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
-                style={{ background: "rgba(255,220,140,0.9)", boxShadow: "0 0 5px rgba(255,200,80,0.85)" }}
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{ background: "rgba(255,220,140,0.9)", boxShadow: "0 0 4px rgba(255,200,80,0.6)" }}
                 aria-hidden
               />
               Get in touch

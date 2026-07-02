@@ -20,13 +20,13 @@ export function FloatingCTA() {
       <a
         href="#contact"
         aria-label="Get in touch"
-        className="nav-cta-shimmer relative inline-flex items-center gap-2 rounded-full text-[#1C1209] font-bold"
+        className="nav-cta-shimmer relative inline-flex items-center gap-2 rounded-full text-[#1C1209] font-bold transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(212,104,42,0.4),0_6px_20px_rgba(212,104,42,0.32),inset_0_1px_0_rgba(255,220,160,0.2),inset_0_-1px_0_rgba(0,0,0,0.15)] hover:shadow-[0_0_0_1px_rgba(212,104,42,0.45),0_10px_28px_rgba(212,104,42,0.4),inset_0_1px_0_rgba(255,220,160,0.25),inset_0_-1px_0_rgba(0,0,0,0.15)]"
         style={{
           height: "42px",
           padding: "0 14px 0 12px",
           fontSize: "12px",
+          letterSpacing: "0.01em",
           background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
-          boxShadow: "0 0 0 1px rgba(212,104,42,0.45), 0 8px 24px rgba(212,104,42,0.45), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
           pointerEvents: "auto",
           overflow: "hidden",
         }}
@@ -37,8 +37,8 @@ export function FloatingCTA() {
           aria-hidden
           className="cta-pulse-ring absolute inset-0 rounded-full pointer-events-none"
           style={{
-            border: "1.5px solid rgba(255,220,160,0.55)",
-            animation: "cta-ring-ping 2.4s ease-out 1.2s infinite",
+            border: "1px solid rgba(255,220,160,0.4)",
+            animation: "cta-ring-ping 3.6s ease-out 1.6s infinite",
           }}
         />
         <span
@@ -50,8 +50,8 @@ export function FloatingCTA() {
         </span>
         <span className="relative z-10">Let&apos;s talk</span>
         <span
-          className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse relative z-10"
-          style={{ background: "rgba(255,220,160,0.9)", boxShadow: "0 0 6px rgba(255,200,100,0.8)" }}
+          className="w-1.5 h-1.5 rounded-full flex-shrink-0 relative z-10"
+          style={{ background: "rgba(255,220,160,0.9)", boxShadow: "0 0 5px rgba(255,200,100,0.6)" }}
           aria-hidden
         />
       </a>

@@ -118,7 +118,7 @@ export function Contact() {
   };
 
   const inputClass =
-    "contact-field w-full h-11 px-4 rounded-xl border border-border bg-surface-raised text-fg text-sm placeholder:text-muted focus:outline-none transition-all duration-200";
+    "contact-field w-full h-11 px-4 rounded-xl border border-border bg-surface-raised text-fg text-sm placeholder:text-muted shadow-[0_1px_2px_rgba(28,18,9,0.04)] focus:outline-none transition-[border-color,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
   return (
     <section
@@ -182,7 +182,7 @@ export function Contact() {
             <TextScramble
               as="h2"
               id="contact-heading"
-              className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-tight mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight mb-4"
               style={{ fontFamily: "var(--font-display)" }}
               speed={3}
             >
@@ -209,20 +209,20 @@ export function Contact() {
               <span className="text-xs font-semibold text-accent">Shrewsbury, MA</span>
               <span className="text-accent/30">·</span>
               <span className="text-xs text-muted">Replies in ≤ 2 hrs</span>
-              <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4682A] animate-pulse" aria-hidden />
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4682A]" style={{ boxShadow: "0 0 6px rgba(212,104,42,0.4)" }} aria-hidden />
                 <span className="text-xs text-muted">Usually less</span>
               </span>
             </div>
 
             <div className="space-y-4 reveal" style={{ transitionDelay: "320ms" }}>
               <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 group">
-                <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-150 shadow-sm">
+                <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl border border-[rgba(212,104,42,0.14)] bg-[rgba(212,104,42,0.08)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_16px_rgba(212,104,42,0.25)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm">
                   <Mail size={17} />
                 </div>
                 <div>
-                  <p className="text-xs text-muted mb-0.5">Email</p>
-                  <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-150">
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-muted mb-0.5">Email</p>
+                  <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-200">
                     {SITE.email}
                   </p>
                 </div>
@@ -238,12 +238,12 @@ export function Contact() {
                     />
                   </div>
                   <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="flex items-center gap-3 group">
-                    <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(212,104,42,0.1)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white transition-all duration-150 shadow-sm">
+                    <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl border border-[rgba(212,104,42,0.14)] bg-[rgba(212,104,42,0.08)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_16px_rgba(212,104,42,0.25)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm">
                       <MessageCircle size={17} />
                     </div>
                     <div>
-                      <p className="text-xs text-muted mb-0.5">Text (fastest)</p>
-                      <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-150">
+                      <p className="text-[11px] uppercase tracking-[0.12em] text-muted mb-0.5">Text (fastest)</p>
+                      <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-200">
                         {SITE.phone}
                       </p>
                     </div>
@@ -291,7 +291,7 @@ export function Contact() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-xs font-medium text-muted mb-1.5">
+                    <label htmlFor="name" className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-1.5">
                       Your name <span className="text-accent">*</span>
                     </label>
                     <input id="name" name="name" type="text" required autoComplete="name"
@@ -301,7 +301,7 @@ export function Contact() {
                       className={inputClass} />
                   </div>
                   <div>
-                    <label htmlFor="shop" className="block text-xs font-medium text-muted mb-1.5">
+                    <label htmlFor="shop" className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-1.5">
                       Shop name
                     </label>
                     <input id="shop" name="shop" type="text" autoComplete="organization"
@@ -313,7 +313,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-medium text-muted mb-1.5">
+                  <label htmlFor="email" className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-1.5">
                     Email address <span className="text-accent">*</span>
                   </label>
                   <input id="email" name="email" type="email" required autoComplete="email"
@@ -324,7 +324,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-xs font-medium text-muted mb-1.5">
+                  <label htmlFor="message" className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-1.5">
                     Message
                   </label>
                   <textarea id="message" name="message" rows={5}
@@ -347,10 +347,9 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="nav-cta-shimmer flex items-center justify-center gap-2 w-full h-12 rounded-xl disabled:opacity-60 disabled:cursor-not-allowed text-[#1C1209] text-sm font-bold transition-all duration-150 hover:-translate-y-0.5"
+                  className="nav-cta-shimmer flex items-center justify-center gap-2 w-full h-12 rounded-xl disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 text-[#1C1209] text-sm font-bold transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_0_0_1px_rgba(212,104,42,0.4),0_4px_14px_rgba(212,104,42,0.32),inset_0_1px_0_rgba(255,220,160,0.2),inset_0_-1px_0_rgba(0,0,0,0.15)] hover:shadow-[0_0_0_1px_rgba(212,104,42,0.45),0_10px_28px_rgba(212,104,42,0.38),inset_0_1px_0_rgba(255,220,160,0.25),inset_0_-1px_0_rgba(0,0,0,0.15)]"
                   style={{
                     background: "linear-gradient(145deg, #E07838 0%, #D4682A 45%, #B05020 100%)",
-                    boxShadow: "0 0 0 1px rgba(212,104,42,0.4), 0 4px 16px rgba(212,104,42,0.4), 0 1px 0 rgba(255,220,160,0.2) inset, 0 -1px 0 rgba(0,0,0,0.15) inset",
                   }}
                 >
                   {status === "loading" ? (
@@ -363,9 +362,9 @@ export function Contact() {
                 <p className="text-xs text-center text-muted">
                   Prefer to just text?{" "}
                   {(SITE.phone as string) !== "PLACEHOLDER_PHONE" ? (
-                    <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="text-accent hover:underline">{SITE.phone}</a>
+                    <a href={`sms:+1${SITE.phone.replace(/\D/g, "")}`} className="underline-grow text-accent font-medium">{SITE.phone}</a>
                   ) : (
-                    <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a>
+                    <a href={`mailto:${SITE.email}`} className="underline-grow text-accent font-medium">{SITE.email}</a>
                   )}
                 </p>
               </form>

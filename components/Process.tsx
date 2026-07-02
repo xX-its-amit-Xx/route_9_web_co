@@ -129,19 +129,6 @@ export function Process() {
       style={{ background: "var(--section-warm-b)" }}
       aria-labelledby="process-heading"
     >
-      {/* Subtle bottom-left glow */}
-      <div
-        aria-hidden
-        className="absolute pointer-events-none"
-        style={{
-          bottom: "-60px",
-          left: "-60px",
-          width: "420px",
-          height: "420px",
-          background: "radial-gradient(circle, rgba(212,104,42,0.055) 0%, transparent 65%)",
-          zIndex: 0,
-        }}
-      />
       {/* Ambient falling maple leaves — New England autumn backdrop */}
       <MapleLeafFall />
 
@@ -200,16 +187,16 @@ export function Process() {
                 <div className="step-spotlight" aria-hidden />
                 {/* Time estimate chip — slides in on hover */}
                 <div
-                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-y-0 translate-y-1"
+                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 translate-y-1"
                   aria-hidden
                 >
                   <span
-                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold"
+                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase"
                     style={{
-                      background: "rgba(212,104,42,0.1)",
-                      border: "1px solid rgba(212,104,42,0.22)",
+                      background: "rgba(212,104,42,0.08)",
+                      border: "1px solid rgba(212,104,42,0.2)",
                       color: "rgba(212,104,42,0.9)",
-                      letterSpacing: "0.04em",
+                      letterSpacing: "0.12em",
                     }}
                   >
                     {timeHints[i]}
@@ -218,16 +205,16 @@ export function Process() {
                 {/* Step illustration + connector */}
                 <div className="flex items-center gap-3">
                   <div
-                    className="relative flex-shrink-0 w-14 h-14 group-hover:scale-110 group-hover:rotate-[-5deg] transition-all duration-300 rounded-2xl group-hover:bg-[rgba(212,104,42,0.06)] group-hover:shadow-[0_4px_18px_rgba(212,104,42,0.18)]"
+                    className="relative flex-shrink-0 w-14 h-14 group-hover:scale-105 group-hover:rotate-[-3deg] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-2xl group-hover:bg-[rgba(212,104,42,0.06)] group-hover:shadow-[0_4px_16px_rgba(212,104,42,0.14)]"
                   >
                     <Illustration />
                     {/* Step number badge — 3D sphere */}
                     <div
-                      className="step-badge absolute -bottom-1 -right-1 w-5 h-5 rounded-full text-[#1C1209] text-[10px] font-bold flex items-center justify-center"
+                      className="step-badge absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-full text-[#1C1209] text-[11px] font-bold flex items-center justify-center"
                       style={{
                         fontFamily: "var(--font-display)",
                         background: "linear-gradient(145deg, #E07838 0%, #D4682A 50%, #B05020 100%)",
-                        boxShadow: "0 2px 8px rgba(212,104,42,0.55), inset 0 1px 0 rgba(255,220,140,0.28), inset 0 -1px 0 rgba(0,0,0,0.2)",
+                        boxShadow: "0 2px 8px rgba(212,104,42,0.4), inset 0 1px 0 rgba(255,220,140,0.28), inset 0 -1px 0 rgba(0,0,0,0.2)",
                       }}
                     >
                       {step.step}
@@ -238,7 +225,7 @@ export function Process() {
                       className="hidden lg:block flex-1 h-px flow-line"
                       style={{
                         background:
-                          "repeating-linear-gradient(90deg, rgba(212,104,42,0.5) 0px, rgba(212,104,42,0.5) 4px, transparent 4px, transparent 8px)",
+                          "repeating-linear-gradient(90deg, rgba(212,104,42,0.38) 0px, rgba(212,104,42,0.38) 4px, transparent 4px, transparent 8px)",
                         backgroundSize: "12px 1px",
                       }}
                       aria-hidden
