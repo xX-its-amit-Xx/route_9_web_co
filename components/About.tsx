@@ -9,6 +9,7 @@ import { HandwrittenSignature } from "./HandwrittenSignature";
 import { Matchbook } from "./Matchbook";
 import { NewspaperClipping } from "./NewspaperClipping";
 import { Mailcarrier } from "./Mailcarrier";
+import { LandmarkBadge } from "./LandmarkBadge";
 import { ABOUT, SITE } from "@/lib/content";
 
 export function About() {
@@ -310,6 +311,18 @@ export function About() {
             <div className="reveal mt-8" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 1.5) * 90}ms` }}>
               <NewspaperClipping />
             </div>
+
+            {/* Main Street keepsake medallion — a little framed snapshot of
+                the neighborhood, pinned above the sign-off */}
+            <LandmarkBadge
+              src="https://images.unsplash.com/photo-1782556987577-8f6efdfdf9f3?w=240&auto=format&fit=crop&q=80"
+              alt="A quaint New England main street with a church steeple"
+              caption="Main St"
+              size={88}
+              tilt={-3}
+              delay={(ABOUT.paragraphs.length + 2) * 90}
+              className="hidden md:inline-block mt-6 ml-1"
+            />
 
             {/* Hand-drawn ink signature — draws on when scrolled into view */}
             <div className="mt-8 reveal" style={{ transitionDelay: `${(ABOUT.paragraphs.length + 2) * 90}ms` }}>

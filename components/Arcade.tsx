@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Gamepad2 } from "lucide-react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
@@ -14,23 +15,73 @@ const GAME_COMPONENTS = {
   stacker: ArcadeStacker,
 } as const;
 
-function Cabinet({ game, index }: { game: (typeof ARCADE.games)[number]; index: number }) {
+// Chasing marquee bulbs — one shared keyframe, per-bulb negative delay so the
+// chase is already mid-pattern on first paint. Slow and classy, not Vegas.
+const BULB_COUNT = 12;
+const BULB_CYCLE_S = 3;
+
+function Cabinet({ game, index, inView }: { game: (typeof ARCADE.games)[number]; index: number; inView: boolean }) {
   const Game = GAME_COMPONENTS[game.key as keyof typeof GAME_COMPONENTS];
   return (
     <div className="reveal" style={{ transitionDelay: `${index * 130}ms` }}>
       <TiltCard intensity={3.5} className="h-full">
+        {/* Plinth shadow — grounds the cabinet on the dot-grid floor */}
+        <div
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{
+            left: "7%",
+            right: "7%",
+            bottom: "-14px",
+            height: "22px",
+            background: "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.6) 0%, transparent 70%)",
+            filter: "blur(7px)",
+          }}
+        />
+        {/* Left side face — folds back in 3D; revealed when the cabinet tilts */}
+        <div
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{
+            top: "10px",
+            bottom: "6px",
+            left: 0,
+            width: "14px",
+            transformOrigin: "left center",
+            transform: "rotateY(62deg)",
+            background: "linear-gradient(180deg, #2B1A0D 0%, #1A1008 55%, #0E0904 100%)",
+            borderRadius: "10px 0 0 10px",
+            boxShadow: "inset -3px 0 5px rgba(0,0,0,0.65), inset 1px 0 0 rgba(255,200,120,0.05)",
+          }}
+        />
+        {/* Right side face */}
+        <div
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{
+            top: "10px",
+            bottom: "6px",
+            right: 0,
+            width: "14px",
+            transformOrigin: "right center",
+            transform: "rotateY(-62deg)",
+            background: "linear-gradient(180deg, #2B1A0D 0%, #1A1008 55%, #0E0904 100%)",
+            borderRadius: "0 10px 10px 0",
+            boxShadow: "inset 3px 0 5px rgba(0,0,0,0.65), inset -1px 0 0 rgba(255,200,120,0.05)",
+          }}
+        />
         <div
           className="relative flex flex-col h-full rounded-2xl overflow-hidden"
           style={{
             background: "linear-gradient(180deg, #241810 0%, #1A1008 55%, #15100A 100%)",
             border: "1px solid rgba(212,104,42,0.22)",
             boxShadow:
-              "0 0 0 1px rgba(0,0,0,0.4), 0 12px 40px rgba(0,0,0,0.5), 0 2px 0 rgba(255,200,120,0.06) inset, 0 -8px 24px rgba(0,0,0,0.35) inset",
+              "0 0 0 1px rgba(0,0,0,0.4), 0 12px 40px rgba(0,0,0,0.5), 0 20px 26px -14px rgba(0,0,0,0.7), 0 2px 0 rgba(255,200,120,0.06) inset, 0 -8px 24px rgba(0,0,0,0.35) inset",
           }}
         >
           {/* Marquee header */}
           <div
-            className="relative px-4 pt-4 pb-3 text-center flex-shrink-0"
+            className="relative px-4 pt-5 pb-3 text-center flex-shrink-0"
             style={{
               background: "linear-gradient(180deg, rgba(212,104,42,0.14) 0%, rgba(212,104,42,0.03) 100%)",
               borderBottom: "1px solid rgba(212,104,42,0.18)",
@@ -42,6 +93,19 @@ function Cabinet({ game, index }: { game: (typeof ARCADE.games)[number]; index: 
               className="absolute inset-x-8 top-0 h-8 pointer-events-none"
               style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(212,104,42,0.28), transparent 70%)", filter: "blur(6px)" }}
             />
+            {/* Chasing marquee bulbs */}
+            <div aria-hidden className="absolute inset-x-5 top-1.5 flex justify-between pointer-events-none">
+              {Array.from({ length: BULB_COUNT }, (_, b) => (
+                <span
+                  key={b}
+                  className="arcade-bulb"
+                  style={{
+                    animationDelay: `${(-(b * BULB_CYCLE_S) / BULB_COUNT).toFixed(2)}s`,
+                    animationPlayState: inView ? "running" : "paused",
+                  }}
+                />
+              ))}
+            </div>
             <h3
               className="relative text-lg font-bold tracking-wide arcade-marquee-text"
               style={{ fontFamily: "var(--font-display)", color: "#F3E9D5" }}
@@ -71,7 +135,10 @@ function Cabinet({ game, index }: { game: (typeof ARCADE.games)[number]; index: 
             className="flex items-center justify-between px-4 py-2.5 flex-shrink-0"
             style={{ borderTop: "1px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.25)" }}
           >
-            <span className="text-[9px] font-bold tracking-[0.2em]" style={{ color: "rgba(243,233,213,0.28)" }}>
+            <span
+              className="text-[9px] font-bold tracking-[0.2em] arcade-freeplay-pulse"
+              style={{ color: "rgba(243,233,213,0.28)", animationPlayState: inView ? "running" : "paused" }}
+            >
               FREE PLAY · NO QUARTERS
             </span>
             <span
@@ -86,8 +153,31 @@ function Cabinet({ game, index }: { game: (typeof ARCADE.games)[number]; index: 
             </span>
           </div>
 
-          {/* Coin slot */}
-          <div aria-hidden className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-5 h-1 rounded-full" style={{ background: "rgba(0,0,0,0.55)", boxShadow: "0 1px 0 rgba(255,255,255,0.05)" }} />
+          {/* Coin plate — brushed metal, slot, and the "25¢ → FREE" engraving */}
+          <div
+            aria-hidden
+            className="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none rounded-[3px] px-1.5 pt-[3px] pb-[2px]"
+            style={{
+              background: "linear-gradient(160deg, #6E6156 0%, #3E362D 42%, #57493B 68%, #2B241D 100%)",
+              border: "1px solid rgba(0,0,0,0.65)",
+              boxShadow:
+                "inset 0 1px 0 rgba(255,235,200,0.22), inset 0 -1px 2px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.6)",
+            }}
+          >
+            <div
+              className="w-4 h-[5px] rounded-[1px]"
+              style={{
+                background: "#070402",
+                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9), 0 1px 0 rgba(255,235,200,0.14)",
+              }}
+            />
+            <span
+              className="text-[5px] font-bold tracking-[0.08em] leading-[8px] whitespace-nowrap"
+              style={{ color: "rgba(18,11,5,0.85)", textShadow: "0 1px 0 rgba(255,230,190,0.3)" }}
+            >
+              25¢ → FREE
+            </span>
+          </div>
         </div>
       </TiltCard>
     </div>
@@ -98,10 +188,26 @@ export function Arcade() {
   const headingRef = useScrollReveal();
   const cabinetsRef = useScrollReveal(0.05);
   const footRef = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
   const [headlineA, headlineB] = ARCADE.heading.split("\n");
+
+  // Run the decorative infinite animations (bulb chase, free-play pulse)
+  // only while the section is actually on screen — same pattern as Pricing.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(!!entry?.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="arcade"
       className="relative py-24 md:py-32 overflow-hidden"
       style={{ background: "#0E0905" }}
@@ -170,7 +276,7 @@ export function Arcade() {
         {/* Cabinets */}
         <div ref={cabinetsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
           {ARCADE.games.map((game, i) => (
-            <Cabinet key={game.key} game={game} index={i} />
+            <Cabinet key={game.key} game={game} index={i} inView={inView} />
           ))}
         </div>
 
@@ -183,6 +289,32 @@ export function Arcade() {
           {ARCADE.footnote}
         </p>
       </div>
+
+      {/* Component-scoped keyframes. Opacity-only animations; resting values
+          match the keyframe end state so the global reduced-motion kill-switch
+          (animation-iteration-count: 1) lands cleanly. */}
+      <style>{`
+        @keyframes arcade-bulb-chase {
+          0%, 8%    { opacity: 1; }
+          30%, 100% { opacity: 0.22; }
+        }
+        .arcade-bulb {
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: #FFB769;
+          box-shadow: 0 0 6px rgba(255,183,105,0.75), 0 0 2px rgba(255,220,170,0.9);
+          opacity: 0.22;
+          animation: arcade-bulb-chase ${BULB_CYCLE_S}s linear infinite;
+        }
+        @keyframes arcade-freeplay-pulse {
+          0%, 100% { opacity: 1; }
+          50%      { opacity: 0.4; }
+        }
+        .arcade-freeplay-pulse {
+          animation: arcade-freeplay-pulse 3.2s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

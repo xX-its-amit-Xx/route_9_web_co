@@ -6,6 +6,7 @@ import { CountUp } from "./CountUp";
 import { BarberPole } from "./BarberPole";
 import { VintageStamps } from "./VintageStamps";
 import { ShrewsburyMap } from "./ShrewsburyMap";
+import { LandmarkBadge } from "./LandmarkBadge";
 import { WHO } from "@/lib/content";
 
 // ── Custom icons for the three reasons ───────────────────────────────────────
@@ -364,8 +365,18 @@ export function WhoIWorkWith() {
 
         </div>
 
-        {/* Welcome mat — hand-drawn doorstep rug with Route 9 motif */}
+        {/* Welcome mat — hand-drawn doorstep rug with Route 9 motif,
+            flanked by two landmark keepsake medallions on md+ */}
         <div className="flex justify-center mt-14 mb-6 reveal" style={{ transitionDelay: "200ms" }}>
+          <LandmarkBadge
+            src="https://images.unsplash.com/photo-1533757879476-8f4a3cb1ae4b?w=240&auto=format&fit=crop&q=80"
+            alt="Lake Quinsigamond at golden hour"
+            caption="Lake Quinsig"
+            size={78}
+            tilt={-4}
+            delay={120}
+            className="hidden md:inline-block self-center mr-12"
+          />
           <svg
             viewBox="0 0 320 90"
             fill="none"
@@ -412,6 +423,15 @@ export function WhoIWorkWith() {
                 fontFamily="Georgia, serif" fontStyle="italic" fontWeight="700">9</text>
             </g>
           </svg>
+          <LandmarkBadge
+            src="https://images.unsplash.com/photo-1509290228487-f5ed6f220494?w=240&auto=format&fit=crop&q=80"
+            alt="White-steeple church on a New England town common"
+            caption="The Common"
+            size={78}
+            tilt={3}
+            delay={220}
+            className="hidden md:inline-block self-center ml-12"
+          />
         </div>
 
         {/* Hand-drawn aerial map of the Route 9 corridor — sits below

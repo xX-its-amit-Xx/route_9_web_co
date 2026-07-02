@@ -325,8 +325,8 @@ export const DESIGN_LENS = {
       target: "hero",
       title: "The first three seconds",
       body:
-        "Six words in the headline, one glowing button, everything else dimmed. You knew where to look because I decided where you'd look. Your customers can get the same treatment.",
-      meta: 1,
+        "Six words in the headline, one glowing button, and a finished example site already cycling on the right. It rotates through three shops because you were always going to wait for the one that looks like yours. Go ahead — nobody skips their own storefront.",
+      meta: 2,
     },
     {
       target: "who",
@@ -369,6 +369,13 @@ export const DESIGN_LENS = {
       body:
         "Each game is one of my sales arguments wearing a costume. Fun is the best delivery mechanism ever invented for a pitch — you're reading this pin, aren't you?",
       meta: 2,
+    },
+    {
+      target: "neighborhood",
+      title: "Faces before facts",
+      body:
+        "Six strangers smiling at their work, and the page suddenly feels trustworthy. Humans rate pages with faces as warmer and more credible before reading a single word — which is why every good local site leads with the person, not the product. One more: open a different tab for a second, then look at this one's title.",
+      meta: 3,
     },
     {
       target: "portfolio",

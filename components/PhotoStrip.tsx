@@ -1,11 +1,15 @@
 "use client";
 
+import { useEffect, useRef, type MouseEvent, type RefObject } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 
 // ── The neighborhood photo strip ──────────────────────────────────────────────
 // A warm, human band of Route 9 shop life: real faces, real counters. Photos
 // are hotlinked from Unsplash (all URLs verified 200), staggered and slightly
-// tilted like prints laid out on a table. Hovering straightens + lifts a card.
+// tilted like prints laid out on a table. On fine pointers, hovering lifts a
+// card and tilts it in 3D toward the cursor (rAF-throttled, TiltCard pattern);
+// on leave it springs back to its resting tilt. Touch devices keep the plain
+// scroll-snap row — no tilt.
 
 const PHOTOS: {
   id: string;
@@ -58,12 +62,141 @@ const PHOTOS: {
   },
 ];
 
+const MAX_TILT_DEG = 8;
+const REST_SHADOW =
+  "0 1px 2px rgba(28,18,9,0.06), 0 8px 24px rgba(28,18,9,0.10), 0 24px 48px rgba(212,104,42,0.08)";
+const HOVER_SHADOW =
+  "0 2px 4px rgba(28,18,9,0.06), 0 16px 40px rgba(28,18,9,0.14), 0 40px 80px rgba(212,104,42,0.12)";
+
+function PhotoCard({
+  photo,
+  index,
+  allowTilt,
+}: {
+  photo: (typeof PHOTOS)[number];
+  index: number;
+  allowTilt: RefObject<boolean>;
+}) {
+  const { id, alt, chip, tilt, lift } = photo;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const pointRef = useRef({ x: 0, y: 0 });
+
+  const restTransform = `perspective(700px) rotate(${tilt}) translateY(${lift})`;
+
+  useEffect(
+    () => () => {
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    },
+    []
+  );
+
+  // Applied at most once per frame — mousemove only stashes coordinates.
+  const applyTilt = () => {
+    frameRef.current = null;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (pointRef.current.x - rect.left) / rect.width - 0.5;
+    const y = (pointRef.current.y - rect.top) / rect.height - 0.5;
+    card.style.transform =
+      `perspective(700px) rotate(0deg) translateY(${lift}) translateY(-8px) ` +
+      `rotateX(${(-y * MAX_TILT_DEG).toFixed(2)}deg) rotateY(${(x * MAX_TILT_DEG).toFixed(2)}deg) ` +
+      `scale3d(1.02,1.02,1.02)`;
+    card.style.boxShadow = HOVER_SHADOW;
+  };
+
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!allowTilt.current) return;
+    pointRef.current = { x: e.clientX, y: e.clientY };
+    const card = cardRef.current;
+    // Instant tracking during movement — no transition lag on transform.
+    if (card) card.style.transition = "box-shadow 0.3s cubic-bezier(0.22,1,0.36,1)";
+    if (frameRef.current === null) frameRef.current = requestAnimationFrame(applyTilt);
+  };
+
+  const handleLeave = () => {
+    if (!allowTilt.current) return;
+    if (frameRef.current !== null) {
+      cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
+    }
+    const card = cardRef.current;
+    if (!card) return;
+    // Spring back to the resting tilt.
+    card.style.transition =
+      "transform 0.55s cubic-bezier(0.22,1,0.36,1), box-shadow 0.55s cubic-bezier(0.22,1,0.36,1)";
+    card.style.transform = restTransform;
+    card.style.boxShadow = REST_SHADOW;
+  };
+
+  return (
+    <figure
+      className="reveal group flex-shrink-0 w-52 sm:w-56 md:w-auto md:flex-1 md:min-w-0 snap-center m-0"
+      style={{ transitionDelay: `${120 + index * 90}ms` }}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+        className="relative aspect-[4/5] rounded-2xl transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style={{
+          transform: restTransform,
+          transformStyle: "preserve-3d",
+          willChange: "transform",
+          boxShadow: REST_SHADOW,
+        }}
+      >
+        {/* Photo layer — overflow clipping lives here so the preserve-3d card
+            above can still raise the caption chip on the Z axis */}
+        <div className="absolute inset-0 rounded-2xl overflow-hidden">
+          <img
+            src={`https://images.unsplash.com/photo-${id}?w=600&auto=format&fit=crop&q=80`}
+            alt={alt}
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
+          {/* Soft warm bottom gradient so the chip always reads */}
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#1C1209]/45 to-transparent"
+          />
+        </div>
+        {/* Caption chip — floats 20px above the photo plane while tilting */}
+        <figcaption
+          className="absolute bottom-3 left-3"
+          style={{ transform: "translateZ(20px)" }}
+        >
+          <span
+            className="inline-block px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase text-[#1C1209]"
+            style={{
+              background: "rgba(254,251,245,0.92)",
+              boxShadow: "0 1px 4px rgba(28,18,9,0.18)",
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            {chip}
+          </span>
+        </figcaption>
+      </div>
+    </figure>
+  );
+}
+
 export function PhotoStrip() {
   const headingRef = useScrollReveal();
   const stripRef = useScrollReveal();
+  const allowTilt = useRef(false);
+
+  useEffect(() => {
+    allowTilt.current =
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   return (
     <section
+      id="neighborhood"
       className="py-20 border-t border-border-subtle overflow-hidden"
       style={{ background: "var(--section-warm-a)" }}
       aria-labelledby="photostrip-heading"
@@ -95,57 +228,9 @@ export function PhotoStrip() {
             className="flex gap-4 md:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-6 md:pb-2 pt-2 -mx-6 px-6 md:mx-0 md:px-0"
             style={{ scrollbarWidth: "none" }}
           >
-          {PHOTOS.map(({ id, alt, chip, tilt, lift }, i) => (
-            <figure
-              key={chip}
-              className="reveal group flex-shrink-0 w-52 sm:w-56 md:w-auto md:flex-1 md:min-w-0 snap-center m-0"
-              style={{ transitionDelay: `${120 + i * 90}ms` }}
-            >
-              <div
-                className="relative aspect-[4/5] rounded-2xl overflow-hidden transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{
-                  transform: `rotate(${tilt}) translateY(${lift})`,
-                  boxShadow:
-                    "0 1px 2px rgba(28,18,9,0.06), 0 8px 24px rgba(28,18,9,0.10), 0 24px 48px rgba(212,104,42,0.08)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = `rotate(0deg) translateY(${lift}) translateY(-8px) scale(1.02)`;
-                  e.currentTarget.style.boxShadow =
-                    "0 2px 4px rgba(28,18,9,0.06), 0 16px 40px rgba(28,18,9,0.14), 0 40px 80px rgba(212,104,42,0.12)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = `rotate(${tilt}) translateY(${lift})`;
-                  e.currentTarget.style.boxShadow =
-                    "0 1px 2px rgba(28,18,9,0.06), 0 8px 24px rgba(28,18,9,0.10), 0 24px 48px rgba(212,104,42,0.08)";
-                }}
-              >
-                <img
-                  src={`https://images.unsplash.com/photo-${id}?w=600&auto=format&fit=crop&q=80`}
-                  alt={alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-                {/* Soft warm bottom gradient so the chip always reads */}
-                <div
-                  aria-hidden
-                  className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#1C1209]/45 to-transparent"
-                />
-                {/* Caption chip */}
-                <figcaption className="absolute bottom-3 left-3">
-                  <span
-                    className="inline-block px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase text-[#1C1209]"
-                    style={{
-                      background: "rgba(254,251,245,0.92)",
-                      boxShadow: "0 1px 4px rgba(28,18,9,0.18)",
-                      backdropFilter: "blur(4px)",
-                    }}
-                  >
-                    {chip}
-                  </span>
-                </figcaption>
-              </div>
-            </figure>
-          ))}
+            {PHOTOS.map((photo, i) => (
+              <PhotoCard key={photo.chip} photo={photo} index={i} allowTilt={allowTilt} />
+            ))}
           </div>
 
           {/* Footnote */}

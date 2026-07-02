@@ -5,6 +5,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { HERO, WHO } from "@/lib/content";
 import { Marquee } from "./Marquee";
 import { CountUp } from "./CountUp";
+import { HeroShowcase } from "./HeroShowcase";
 
 const SHOP_NAME_SETS = [
   "Arturo's Pizzeria · Lake Shore Barbers · Town Common Bakery",
@@ -47,187 +48,6 @@ function CyclingShopNames() {
     >
       {SHOP_NAME_SETS[idx]}
     </p>
-  );
-}
-
-// ── Real shop photo collage — editorial right column ──────────────────────────
-function HeroPhotoCollage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)");
-    if (!mq.matches) return;
-    const el = containerRef.current;
-    if (!el) return;
-    const hero = document.getElementById("hero");
-    if (!hero) return;
-
-    let tx = 0, ty = 0, cx = 0, cy = 0, rafId: number;
-
-    const onMove = (e: MouseEvent) => {
-      const r = hero.getBoundingClientRect();
-      cx = ((e.clientX - r.left)  / r.width  - 0.5) * 2;
-      cy = ((e.clientY - r.top)   / r.height - 0.5) * 2;
-    };
-    const onLeave = () => { cx = 0; cy = 0; };
-
-    const tick = () => {
-      tx += (cx - tx) * 0.055;
-      ty += (cy - ty) * 0.055;
-      el.style.transform = `perspective(920px) rotateY(${tx * 7}deg) rotateX(${-ty * 4}deg)`;
-      rafId = requestAnimationFrame(tick);
-    };
-
-    hero.addEventListener("mousemove", onMove);
-    hero.addEventListener("mouseleave", onLeave);
-    rafId = requestAnimationFrame(tick);
-    return () => {
-      hero.removeEventListener("mousemove", onMove);
-      hero.removeEventListener("mouseleave", onLeave);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  const photos = [
-    { id: "1517248135467-4c7edcad34c4", label: "Restaurants", col: "1", row: "1 / -1", w: 600 },
-    { id: "1585747860715-2ba37e788b70", label: "Barbershops",  col: "2", row: "1",     w: 400 },
-    { id: "1554118811-1e0d58224f24",   label: "Cafés",        col: "2", row: "2",     w: 400 },
-  ];
-
-  return (
-    <div ref={containerRef} className="relative" aria-hidden style={{ willChange: "transform" }}>
-      {/* Deep ambient glow behind photos */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          inset: "-60px",
-          background:
-            "radial-gradient(ellipse at 55% 45%, rgba(180,80,18,0.28) 0%, rgba(100,40,8,0.10) 40%, transparent 65%)",
-          zIndex: 0,
-        }}
-      />
-
-      {/* Photo grid */}
-      <div
-        className="relative"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.45fr 1fr",
-          gridTemplateRows: "1fr 1fr",
-          gap: "10px",
-          height: "clamp(380px, 48vw, 540px)",
-          zIndex: 1,
-        }}
-      >
-        {photos.map(({ id, label, col, row, w }, idx) => (
-          <div
-            key={id}
-            className="relative overflow-hidden group"
-            style={{
-              gridColumn: col,
-              gridRow: row,
-              borderRadius: "18px",
-              boxShadow:
-                "0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.5), 0 24px 72px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.45)",
-            }}
-          >
-            <img
-              src={`https://images.unsplash.com/photo-${id}?w=${w}&auto=format&fit=crop&q=80`}
-              alt={label}
-              loading="eager"
-              fetchPriority={idx === 0 ? "high" : "auto"}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-            />
-            {/* Multi-stop vignette */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(14,9,5,0.08) 0%, transparent 30%, rgba(14,9,5,0.65) 85%, rgba(14,9,5,0.82) 100%)",
-              }}
-            />
-            {/* Subtle top gloss line */}
-            <div
-              className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" }}
-            />
-            {/* Category label */}
-            <div className="absolute bottom-0 left-0 right-0 p-3.5">
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 600,
-                  color: "rgba(243,233,213,0.72)",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                }}
-              >
-                {label}
-              </span>
-            </div>
-            {/* Hover ring */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
-              style={{
-                borderRadius: "18px",
-                boxShadow: "inset 0 0 0 1.5px rgba(212,104,42,0.45)",
-              }}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Route 9 pill badge */}
-      <div
-        className="absolute"
-        style={{
-          top: "14px",
-          right: "14px",
-          zIndex: 10,
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "5px",
-          padding: "5px 11px 5px 8px",
-          borderRadius: "9999px",
-          background: "linear-gradient(145deg, rgba(20,12,5,0.95), rgba(14,9,5,0.92))",
-          border: "1px solid rgba(212,104,42,0.35)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.5), 0 1px 0 rgba(255,200,100,0.06) inset, 0 -1px 0 rgba(0,0,0,0.3) inset",
-        }}
-      >
-        <MapPin size={10} color="#D4682A" />
-        <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(212,104,42,0.92)", letterSpacing: "0.14em" }}>
-          ROUTE 9
-        </span>
-        <span style={{ fontSize: "10px", color: "rgba(243,233,213,0.35)", fontFamily: "monospace" }}>MA</span>
-      </div>
-
-      {/* "Independent shops" floating badge */}
-      <div
-        className="absolute"
-        style={{
-          bottom: "18%",
-          left: "-14px",
-          zIndex: 10,
-          padding: "8px 14px",
-          borderRadius: "11px",
-          background: "linear-gradient(145deg, rgba(26,15,7,0.94), rgba(14,9,5,0.92))",
-          border: "1px solid rgba(212,104,42,0.35)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          boxShadow:
-            "0 8px 24px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,200,100,0.10)",
-          color: "rgba(243,233,213,0.78)",
-          fontSize: "10px",
-          fontWeight: 600,
-          letterSpacing: "0.06em",
-          whiteSpace: "nowrap",
-        }}
-      >
-        Independent shops · Shrewsbury &amp; beyond
-      </div>
-    </div>
   );
 }
 
@@ -512,6 +332,14 @@ export function Hero() {
               </a>
             </div>
 
+            {/* Mobile-only example-site showcase — visible immediately below CTAs */}
+            <div
+              className="lg:hidden mb-10"
+              style={{ animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.70s both" }}
+            >
+              <HeroShowcase variant="phone" />
+            </div>
+
             {/* Availability status badge */}
             <div
               className="flex items-center gap-2.5 mb-7"
@@ -683,14 +511,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* ── Right: photo collage (desktop only) ── */}
-          <div
-            className="hidden lg:block"
-            style={{
-              animation: "hero-line-up 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s both",
-            }}
-          >
-            <HeroPhotoCollage />
+          {/* ── Right: live example-site showcase (desktop only) ── */}
+          <div className="hidden lg:block">
+            <HeroShowcase />
           </div>
 
         </div>

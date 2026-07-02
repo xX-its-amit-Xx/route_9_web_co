@@ -200,6 +200,20 @@ export function Nav() {
 
   return (
     <>
+      {/* Scoped: 3D coin-flip on the R9 mark itself (hover the mark, not the
+          whole link) — transform-only, so click/scroll-to-top and layout are
+          untouched. Reverses smoothly on mouse-out. */}
+      <style>{`
+        .nav-logo-coin {
+          transform: perspective(520px) rotateY(0deg);
+          transform-style: preserve-3d;
+          transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: transform;
+        }
+        .nav-logo-coin:hover {
+          transform: perspective(520px) rotateY(360deg) scale(1.04);
+        }
+      `}</style>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-[background-color,box-shadow] duration-500 ${
           scrolled || !isDark ? "nav-glass" : "bg-transparent"
@@ -226,7 +240,7 @@ export function Nav() {
             aria-label="Back to top"
           >
             <span
-              className="flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[-3deg]"
+              className="nav-logo-coin flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold select-none"
               style={{
                 fontFamily: "var(--font-display)",
                 fontStyle: "italic",

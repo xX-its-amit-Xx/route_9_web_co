@@ -18,6 +18,7 @@ import { AIChatWidget } from "@/components/AIChatWidget";
 import { Arcade } from "@/components/Arcade";
 import { PhotoStrip } from "@/components/PhotoStrip";
 import { DesignLens } from "@/components/DesignLens";
+import { MetaTricks } from "@/components/MetaTricks";
 import { SectionProgress } from "@/components/SectionProgress";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
 import { SceneCarousel } from "@/components/SceneCarousel";
@@ -51,6 +52,7 @@ export default function Home() {
       <FloatingCTA />
       <AIChatWidget />
       <DesignLens />
+      <MetaTricks />
     </>
   );
 }

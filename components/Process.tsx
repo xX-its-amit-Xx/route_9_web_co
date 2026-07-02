@@ -5,6 +5,7 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { MapleLeafFall } from "./MapleLeafFall";
 import { VintageTypewriter } from "./VintageTypewriter";
+import { LandmarkBadge } from "./LandmarkBadge";
 import { PROCESS } from "@/lib/content";
 
 // Custom artisan step illustrations
@@ -285,6 +286,17 @@ export function Process() {
               I can meet you at your shop on Route 9 — Shrewsbury Center, near the lake, wherever you are.
             </p>
           </div>
+          {/* Route 9 keepsake medallion — sits in the CTA row's open middle
+              on large screens; hidden below lg where the row stacks */}
+          <LandmarkBadge
+            src="https://images.unsplash.com/photo-1571415822965-c563f4535eaf?w=240&auto=format&fit=crop&q=80"
+            alt="A two-lane road between orange autumn trees"
+            caption="Route 9"
+            size={84}
+            tilt={4}
+            delay={60}
+            className="hidden lg:inline-block flex-shrink-0"
+          />
           <div className="reveal flex-shrink-0" style={{ transitionDelay: "100ms" }}>
             <a
               ref={ctaRef}

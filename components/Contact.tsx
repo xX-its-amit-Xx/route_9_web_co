@@ -8,6 +8,8 @@ import { Postcard } from "./Postcard";
 import { RotaryPhone } from "./RotaryPhone";
 import { ServiceBell } from "./ServiceBell";
 import { VintageReceipt } from "./VintageReceipt";
+import { LandmarkBadge } from "./LandmarkBadge";
+import { BusinessCard3D } from "./BusinessCard3D";
 import { SITE } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -225,6 +227,11 @@ export function Contact() {
               </span>
             </div>
 
+            {/* Flippable 3D business card — the one pinned behind the register */}
+            <div className="mb-8 reveal" style={{ transitionDelay: "280ms" }}>
+              <BusinessCard3D />
+            </div>
+
             <div className="space-y-4 reveal" style={{ transitionDelay: "320ms" }}>
               <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 group">
                 <div aria-hidden className="flex items-center justify-center w-11 h-11 rounded-xl border border-[rgba(212,104,42,0.14)] bg-[rgba(212,104,42,0.08)] text-[#D4682A] group-hover:bg-[#D4682A] group-hover:text-white group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_16px_rgba(212,104,42,0.25)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm">
@@ -266,6 +273,17 @@ export function Contact() {
                 </>
               )}
             </div>
+
+            {/* Shrewsbury keepsake medallion — closes out the info column */}
+            <LandmarkBadge
+              src="https://images.unsplash.com/photo-1668588778641-372a33b43d39?w=240&auto=format&fit=crop&q=80"
+              alt="A white-steeple New England town amid autumn foliage"
+              caption="Shrewsbury"
+              size={92}
+              tilt={-4}
+              delay={420}
+              className="hidden md:inline-block mt-10 ml-1"
+            />
           </div>
 
           {/* Right: form */}
