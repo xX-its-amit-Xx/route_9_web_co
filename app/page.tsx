@@ -16,6 +16,7 @@ import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { Arcade } from "@/components/Arcade";
+import { PhotoStrip } from "@/components/PhotoStrip";
 import { DesignLens } from "@/components/DesignLens";
 import { SectionProgress } from "@/components/SectionProgress";
 import { FooterStreetscape } from "@/components/FooterStreetscape";
@@ -39,6 +40,7 @@ export default function Home() {
         <MaintenanceFAQ />
         <Portfolio />
         <Arcade />
+        <PhotoStrip />
         <Testimonials />
         <Process />
         <About />

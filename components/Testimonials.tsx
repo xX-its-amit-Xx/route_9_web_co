@@ -16,6 +16,17 @@ const SHOP_PHOTOS: Record<string, string> = {
   "Tony's Auto & Tire":     "1517248135467-4c7edcad34c4",
 };
 
+// Maps business names → Unsplash portrait IDs for the author avatar.
+// The initials circle renders underneath as the fallback if a photo
+// is missing from this map or fails to load.
+const CLIENT_PORTRAITS: Record<string, string> = {
+  "Tony's Auto & Tire":     "1628577478162-d4d00467c627", // man at the wheel in his auto shop
+  "Westborough Bakery":     "1549057188-efd70413345e",    // smiling baker in her bakery
+  "Dave's Barbershop":      "1605497788245-3c047575d789", // barber at work behind the chair
+  "The Pressed Bloom":      "1560453497-fdcb351a0c55",    // florist holding a fresh bouquet
+  "Framingham Framing Co.": "1543764477-646365e11da3",    // craftsman in his workshop
+};
+
 export function Testimonials() {
   const items = TESTIMONIALS;
   const [current, setCurrent] = useState(0);
@@ -362,8 +373,7 @@ export function Testimonials() {
 
           <div className="flex items-center gap-4 relative pt-6 border-t border-border-subtle">
             <div
-              aria-hidden
-              className="flex items-center justify-center w-12 h-12 rounded-full text-white font-bold text-sm flex-shrink-0"
+              className="relative flex items-center justify-center w-12 h-12 rounded-full text-white font-bold text-sm flex-shrink-0 overflow-hidden"
               style={{
                 background: "linear-gradient(145deg, #E07838 0%, #D4682A 50%, #C05A20 100%)",
                 boxShadow: "0 2px 8px rgba(212,104,42,0.3), inset 0 1px 0 rgba(255,255,255,0.2)",
@@ -371,7 +381,16 @@ export function Testimonials() {
                 fontStyle: "italic",
               }}
             >
-              {t.initials}
+              {/* Initials render underneath as the fallback */}
+              <span aria-hidden>{t.initials}</span>
+              {CLIENT_PORTRAITS[t.business] && (
+                <img
+                  src={`https://images.unsplash.com/photo-${CLIENT_PORTRAITS[t.business]}?w=96&auto=format&fit=crop&q=80`}
+                  alt={`${t.initials} — ${t.author}, ${t.business}`}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover rounded-full"
+                />
+              )}
             </div>
             <div>
               <p className="font-semibold text-fg" style={{ fontFamily: "var(--font-display)" }}>{t.author}</p>

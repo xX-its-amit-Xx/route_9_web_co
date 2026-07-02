@@ -20,6 +20,7 @@ const META_BADGES: Record<number, { label: string; hint: string }> = {
 export function DesignLens() {
   const lenis = useLenis();
   const [on, setOn] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [view, setView] = useState<View>("intro");
   const [pins, setPins] = useState<PinPos[]>([]);
   const rafRef = useRef<number>(0);
@@ -64,6 +65,29 @@ export function DesignLens() {
       window.removeEventListener("keydown", onKey);
     };
   }, [on]);
+
+  // Classic floating-bar behavior: hide when scrolling down (so the pill
+  // never sits over content you're reading toward), reveal on any scroll
+  // up. Never hidden while the lens itself is on.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const y = window.scrollY;
+        if (y > lastY + 4 && y > 400) setHidden(true);
+        else if (y < lastY - 4) setHidden(false);
+        lastY = y;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   const scrollToNote = useCallback(
     (idx: number) => {
@@ -121,7 +145,8 @@ export function DesignLens() {
         style={{
           left: "50%",
           bottom: "calc(14px + env(safe-area-inset-bottom, 0px))",
-          transform: "translateX(-50%)",
+          transform: hidden && !on ? "translateX(-50%) translateY(64px)" : "translateX(-50%)",
+          pointerEvents: hidden && !on ? "none" : "auto",
           padding: "8px 14px",
           fontSize: "10px",
           letterSpacing: "0.14em",

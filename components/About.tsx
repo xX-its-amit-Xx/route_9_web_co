@@ -228,6 +228,35 @@ export function About() {
                 <text x="67" y="98" textAnchor="middle" fontSize="4.5" fill="rgba(212,104,42,0.4)" fontFamily="monospace" fontWeight="700">ERASER</text>
               </svg>
             </div>
+
+            {/* Polaroid snapshot — where the work actually happens */}
+            <figure
+              className="mt-8 reveal inline-block m-0"
+              style={{ transitionDelay: "520ms" }}
+            >
+              <div
+                className="bg-white p-2.5 pb-3 rounded-lg rotate-[-2.5deg] hover:rotate-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  boxShadow:
+                    "0 1px 2px rgba(28,18,9,0.06), 0 10px 28px rgba(28,18,9,0.12), 0 28px 56px rgba(212,104,42,0.08)",
+                }}
+              >
+                <div className="w-56 sm:w-64 aspect-[4/3] rounded-md overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1759435194622-22924891c367?w=600&auto=format&fit=crop&q=80"
+                    alt="Working on a laptop at a sunny café counter — a typical Route 9 workday"
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <figcaption
+                  className="text-[11px] text-muted italic mt-2 text-center"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Most sites get built from a café stool on Route 9.
+                </figcaption>
+              </div>
+            </figure>
           </div>
 
           {/* Right: body */}

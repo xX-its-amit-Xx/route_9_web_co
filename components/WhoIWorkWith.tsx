@@ -84,14 +84,15 @@ const CAR_TRAVEL_CSS = `
 }
 `;
 
-// Bento mosaic: first item spans 2 cols × 2 rows, rest fill 3×3 grid
+// Bento mosaic: first item spans 2 cols × 2 rows, rest fill 3×3 grid.
+// Bright, people-forward shots — owners and staff at work, not empty rooms.
 const MOSAIC = [
-  { id: "1517248135467-4c7edcad34c4", label: "Restaurants & Pizzerias" },
-  { id: "1493857671505-72967e2e2760", label: "Cafes & Coffee" },
-  { id: "1509440159596-0249088772ff", label: "Bakeries" },
-  { id: "1585747860715-2ba37e788b70", label: "Barbershops" },
-  { id: "1522337360788-8b13dee7a37e", label: "Salons & Spas" },
-  { id: "1472851294608-062f824d29cc", label: "Specialty Retail" },
+  { id: "1757621788643-395dc581dc6d", label: "Restaurants & Pizzerias" }, // chef at the pizza oven
+  { id: "1742863683169-07a6a7d5286a", label: "Cafes & Coffee" },          // barista greeting a customer
+  { id: "1579005007697-75b2fe2c88e7", label: "Bakeries" },                // baker at the counter with fresh loaves
+  { id: "1593702295094-aea22597af65", label: "Barbershops" },             // barber mid-cut in daylight
+  { id: "1634449571010-02389ed0f9b0", label: "Salons & Spas" },           // stylist working with a client
+  { id: "1742957464657-381bd6b3f054", label: "Specialty Retail" },        // smiling clerk at the register
 ];
 
 export function WhoIWorkWith() {
