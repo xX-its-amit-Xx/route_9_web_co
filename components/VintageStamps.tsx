@@ -1,14 +1,23 @@
 "use client";
 
+import { useId } from "react";
+
 /**
  * Vintage postage-stamp strip — six hand-drawn stamps representing
  * Route 9 business archetypes. Each stamp has:
- *   - Perforated edge (radial-gradient dot pattern around the rim)
+ *   - True die-cut perforated edges (SVG mask of half-punched holes)
+ *     with a die-cut shadow layer offset beneath the paper so the
+ *     scalloped silhouette reads as physically cut
+ *   - Paper-curl shading (light catch top-left, warm shade falling off
+ *     to the lower-right corner) so each stamp sits slightly bowed
+ *   - Engraved-print texture: fine horizontal intaglio hairlines
+ *     clipped inside the frame line
  *   - Inner illustration (line-art) for the trade
  *   - "ROUTE 9 MASS" curved-feel banner + "9¢" denomination
  *   - Small "POST CARD" cancellation marks
- *   - Slight rotation per stamp (varies -3° to +3°) so they read as
- *     pasted by hand
+ *   - Staggered stacked tilts (alternating drop + rotation per stamp)
+ *     with layered inter-stamp shadows so the strip reads as pasted by
+ *     hand, one stamp after another
  *
  * Pure SVG. Decorative (aria-hidden). No animations to worry about
  * under prefers-reduced-motion.
@@ -115,7 +124,14 @@ const STAMPS: Stamp[] = [
   { label: "AUTO",    glyph: Auto,     tilt: -3 },
 ];
 
+// Perforation-hole centers, half-punched along each edge (60 × 76 stamp,
+// hole r = 2). Eight across, ten down — classic line-perf gauge.
+const PERF_X = Array.from({ length: 8 }, (_, k) => 3.75 + k * 7.5);
+const PERF_Y = Array.from({ length: 10 }, (_, k) => 3.8 + k * 7.6);
+
 export function VintageStamps() {
+  const uid = useId().replace(/:/g, "");
+
   return (
     <div
       aria-hidden
@@ -128,25 +144,85 @@ export function VintageStamps() {
           style={{
             width: 60,
             height: 76,
-            transform: `rotate(${tilt}deg)`,
-            filter: "drop-shadow(0 2px 4px rgba(28,18,9,0.18))",
+            // Staggered stack: alternating drop + tilt, later stamps layer
+            // slightly under earlier ones so the shadows fall between them.
+            transform: `translateY(${i % 2 === 0 ? 0 : 3}px) rotate(${tilt}deg)`,
+            zIndex: STAMPS.length - i,
+            filter:
+              "drop-shadow(1.5px 2.5px 1.5px rgba(28,18,9,0.22)) drop-shadow(0 6px 9px rgba(28,18,9,0.14))",
           }}
         >
-          {/* Stamp paper background */}
-          <div
+          {/* Stamp paper — SVG with a true perforated (die-cut) silhouette */}
+          <svg
+            viewBox="0 0 60 76"
+            xmlns="http://www.w3.org/2000/svg"
             className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, #FBF4E2 0%, #F0E0BD 100%)",
-              borderRadius: "1.5px",
-              // Perforated edge via radial-gradient holes around each side
-              boxShadow:
-                "inset 0 0 0 1px rgba(28,18,9,0.18), 0 1px 0 rgba(255,255,255,0.4)",
-              WebkitMaskImage:
-                "radial-gradient(circle 2.4px at 0% 50%, transparent 2.4px, black 2.5px), radial-gradient(circle 2.4px at 100% 50%, transparent 2.4px, black 2.5px), radial-gradient(circle 2.4px at 50% 0%, transparent 2.4px, black 2.5px), radial-gradient(circle 2.4px at 50% 100%, transparent 2.4px, black 2.5px), linear-gradient(black, black)",
-              WebkitMaskComposite: "source-over",
-            }}
-          />
+            style={{ overflow: "visible" }}
+          >
+            <defs>
+              {/* Die-cut mask: paper rect minus half-punched perf holes */}
+              <mask
+                id={`stamp-perf-${uid}-${i}`}
+                maskUnits="userSpaceOnUse"
+                x="-4" y="-4" width="68" height="84"
+              >
+                <rect x="0" y="0" width="60" height="76" rx="1" fill="white" />
+                {PERF_X.map((x) => (
+                  <g key={`px${x}`}>
+                    <circle cx={x} cy="0" r="2" fill="black" />
+                    <circle cx={x} cy="76" r="2" fill="black" />
+                  </g>
+                ))}
+                {PERF_Y.map((y) => (
+                  <g key={`py${y}`}>
+                    <circle cx="0" cy={y} r="2" fill="black" />
+                    <circle cx="60" cy={y} r="2" fill="black" />
+                  </g>
+                ))}
+              </mask>
+              {/* Aged-paper base, lit from the upper-left */}
+              <linearGradient id={`stamp-paper-${uid}-${i}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stopColor="#FEFAEE" />
+                <stop offset="40%"  stopColor="#FBF4E2" />
+                <stop offset="100%" stopColor="#EBD9B2" />
+              </linearGradient>
+              {/* Paper-curl shading — bright catch top-left corner, warm
+                  occluded shade rolling under the bottom-right */}
+              <linearGradient id={`stamp-curl-${uid}-${i}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stopColor="rgba(255,255,255,0.6)" />
+                <stop offset="20%"  stopColor="rgba(255,255,255,0)" />
+                <stop offset="72%"  stopColor="rgba(122,84,40,0)" />
+                <stop offset="100%" stopColor="rgba(122,84,40,0.24)" />
+              </linearGradient>
+              {/* Engraved-print texture — fine intaglio hairlines */}
+              <pattern id={`stamp-etch-${uid}-${i}`} width="2" height="2" patternUnits="userSpaceOnUse">
+                <path d="M0 0.5 H2" stroke="rgba(122,84,40,0.09)" strokeWidth="0.4" />
+              </pattern>
+            </defs>
+
+            {/* Die-cut shadow — the scalloped silhouette repeated, offset
+                to the lower-right, so the perf edge itself casts depth */}
+            <g transform="translate(1.1 1.6)">
+              <rect width="60" height="76" fill="rgba(58,36,16,0.30)" mask={`url(#stamp-perf-${uid}-${i})`} />
+            </g>
+
+            {/* Paper body, punched by the perforation mask */}
+            <rect width="60" height="76" fill={`url(#stamp-paper-${uid}-${i})`} mask={`url(#stamp-perf-${uid}-${i})`} />
+
+            {/* Perf-edge definition — hugs the outline AND each hole rim,
+                selling the die-cut depth */}
+            <rect x="0.35" y="0.35" width="59.3" height="75.3" fill="none"
+              stroke="rgba(28,18,9,0.18)" strokeWidth="0.7"
+              mask={`url(#stamp-perf-${uid}-${i})`} />
+
+            {/* Engraved texture field inside the frame line */}
+            <rect x="4" y="4" width="52" height="68" fill={`url(#stamp-etch-${uid}-${i})`} />
+            {/* Frame line */}
+            <rect x="4.5" y="4.5" width="51" height="67" fill="none" stroke="rgba(28,18,9,0.26)" strokeWidth="0.6" />
+
+            {/* Paper-curl light/shade overlay */}
+            <rect width="60" height="76" fill={`url(#stamp-curl-${uid}-${i})`} mask={`url(#stamp-perf-${uid}-${i})`} />
+          </svg>
 
           {/* Glyph illustration */}
           <svg

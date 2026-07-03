@@ -78,7 +78,7 @@ export function Postcard() {
               "linear-gradient(135deg, #FAF0DC 0%, #F0DDB8 70%, #E8C99A 100%)",
             borderRadius: "10px",
             boxShadow:
-              "0 1px 0 rgba(255,255,255,0.5) inset, 0 18px 36px rgba(28,18,9,0.32), 0 6px 14px rgba(28,18,9,0.18)",
+              "0 1px 0 rgba(255,255,255,0.5) inset, 1px 0 0 rgba(255,255,255,0.25) inset, 0 18px 36px rgba(28,18,9,0.32), 0 6px 14px rgba(28,18,9,0.18)",
             border: "1px solid rgba(168,72,24,0.25)",
             overflow: "hidden",
             padding: "10px",
@@ -91,6 +91,8 @@ export function Postcard() {
             style={{
               background:
                 "radial-gradient(ellipse at 50% 130%, #E8923A 0%, #B85040 40%, #5A2440 75%, #2A1432 100%)",
+              boxShadow:
+                "inset 0 0 42px rgba(16,6,20,0.55), inset 0 2px 6px rgba(16,6,20,0.5)",
             }}
           >
             <div
@@ -103,6 +105,34 @@ export function Postcard() {
                 height: "260px",
                 background:
                   "radial-gradient(circle, rgba(255,220,140,0.65) 0%, rgba(232,146,58,0.25) 35%, transparent 65%)",
+              }}
+            />
+            {/* Setting sun — crisp disc inside the glow, behind the letters */}
+            <div
+              className="absolute"
+              style={{
+                top: "16%",
+                left: "50%",
+                width: "42px",
+                height: "42px",
+                transform: "translateX(-50%)",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle at 36% 30%, #FFF6D2 0%, #FFDC94 42%, #F0A048 100%)",
+                boxShadow:
+                  "0 0 22px 8px rgba(255,200,120,0.45), 0 0 60px 24px rgba(232,146,58,0.25)",
+              }}
+            />
+            {/* Haze band sitting on the horizon — layered depth */}
+            <div
+              className="absolute"
+              style={{
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "34%",
+                background:
+                  "linear-gradient(180deg, rgba(232,146,58,0) 0%, rgba(255,180,100,0.18) 55%, rgba(255,196,120,0.30) 100%)",
               }}
             />
           </div>
@@ -154,6 +184,49 @@ export function Postcard() {
                   </pattern>
                 ))}
               </defs>
+              {/* Soft cast shadow thrown down-right onto the sky */}
+              {[
+                { dx: 6.5, dy: 8, o: 0.16 },
+                { dx: 5, dy: 6.2, o: 0.26 },
+                { dx: 3.8, dy: 4.8, o: 0.3 },
+              ].map(({ dx, dy, o }, i) => (
+                <text
+                  key={`sh-${i}`}
+                  x={180 + dx} y={68 + dy}
+                  textAnchor="middle"
+                  fontFamily="Georgia, 'Times New Roman', serif"
+                  fontWeight="900"
+                  fontSize="50"
+                  letterSpacing="-2"
+                  fill={`rgba(10,4,12,${o})`}
+                >
+                  GREETINGS
+                </text>
+              ))}
+              {/* Extruded letterpress sides — stacked offsets, deepest darkest */}
+              {[
+                { d: 3.2, c: "#0E0703" },
+                { d: 2.55, c: "#1A0E06" },
+                { d: 1.9, c: "#28150A" },
+                { d: 1.25, c: "#38200E" },
+                { d: 0.6, c: "#4A2C14" },
+              ].map(({ d, c }, i) => (
+                <text
+                  key={`ext-${i}`}
+                  x={180 + d} y={68 + d * 1.15}
+                  textAnchor="middle"
+                  fontFamily="Georgia, 'Times New Roman', serif"
+                  fontWeight="900"
+                  fontSize="50"
+                  letterSpacing="-2"
+                  fill={c}
+                  stroke={c}
+                  strokeWidth="1.4"
+                >
+                  GREETINGS
+                </text>
+              ))}
+              {/* Photo-filled faces sit on top of the extrusion */}
               <text
                 x="180" y="68"
                 textAnchor="middle"
@@ -180,6 +253,20 @@ export function Postcard() {
                 fill="none"
                 stroke="rgba(255,255,255,0.45)"
                 strokeWidth="0.4"
+              >
+                GREETINGS
+              </text>
+              {/* Sun-kissed top edge — thin light stroke offset toward the light */}
+              <text
+                x="179.6" y="67.4"
+                textAnchor="middle"
+                fontFamily="Georgia, 'Times New Roman', serif"
+                fontWeight="900"
+                fontSize="50"
+                letterSpacing="-2"
+                fill="none"
+                stroke="rgba(255,232,180,0.35)"
+                strokeWidth="0.5"
               >
                 GREETINGS
               </text>
@@ -244,6 +331,37 @@ export function Postcard() {
           >
             FLIP →
           </div>
+
+          {/* Paper thickness — dark card edge along the bottom */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "4px",
+              borderRadius: "0 0 10px 10px",
+              background:
+                "linear-gradient(180deg, rgba(58,28,10,0) 0%, rgba(120,66,26,0.20) 45%, rgba(58,28,10,0.45) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+          {/* Corner curl shadow — bottom-right lifts off the table */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              right: 0,
+              bottom: 0,
+              width: "96px",
+              height: "48px",
+              borderRadius: "0 0 10px 0",
+              background:
+                "radial-gradient(120% 135% at 100% 100%, rgba(28,18,9,0.32) 0%, rgba(28,18,9,0.12) 45%, rgba(28,18,9,0) 70%)",
+              pointerEvents: "none",
+            }}
+          />
         </div>
 
         {/* ── BACK ─────────────────────────────────────────────────── */}
@@ -259,7 +377,7 @@ export function Postcard() {
             background: "linear-gradient(135deg, #FBF4E2 0%, #F2E3C2 100%)",
             borderRadius: "10px",
             boxShadow:
-              "0 1px 0 rgba(255,255,255,0.55) inset, 0 18px 36px rgba(28,18,9,0.32), 0 6px 14px rgba(28,18,9,0.18)",
+              "0 1px 0 rgba(255,255,255,0.55) inset, 1px 0 0 rgba(255,255,255,0.3) inset, 0 18px 36px rgba(28,18,9,0.32), 0 6px 14px rgba(28,18,9,0.18)",
             border: "1px solid rgba(168,72,24,0.25)",
             overflow: "hidden",
           }}
@@ -363,9 +481,11 @@ export function Postcard() {
               width: "64px",
               height: "76px",
               padding: "3px",
-              background: "#FFF6E2",
+              background:
+                "linear-gradient(145deg, #FFFAEC 0%, #FFF6E2 55%, #F4E6C8 100%)",
               border: "1px dashed rgba(168,72,24,0.55)",
-              boxShadow: "0 1px 2px rgba(28,18,9,0.18)",
+              boxShadow:
+                "0 2px 4px rgba(28,18,9,0.25), 0 1px 1px rgba(28,18,9,0.18), inset 0 1px 0 rgba(255,255,255,0.85), inset 1px 0 0 rgba(255,255,255,0.5), inset 0 -1px 2px rgba(168,72,24,0.28), inset -1px 0 1px rgba(168,72,24,0.18)",
               zIndex: 2,
             }}
           >
@@ -437,6 +557,37 @@ export function Postcard() {
               <div style={{ height: "1px", background: "rgba(168,72,24,0.45)", marginTop: "2px" }} />
             </div>
           </div>
+
+          {/* Paper thickness — dark card edge along the bottom */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "4px",
+              borderRadius: "0 0 10px 10px",
+              background:
+                "linear-gradient(180deg, rgba(58,28,10,0) 0%, rgba(120,66,26,0.18) 45%, rgba(58,28,10,0.40) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+          {/* Corner curl shadow */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              left: 0,
+              bottom: 0,
+              width: "96px",
+              height: "48px",
+              borderRadius: "0 0 0 10px",
+              background:
+                "radial-gradient(120% 135% at 0% 100%, rgba(28,18,9,0.26) 0%, rgba(28,18,9,0.10) 45%, rgba(28,18,9,0) 70%)",
+              pointerEvents: "none",
+            }}
+          />
         </div>
       </div>
     </div>

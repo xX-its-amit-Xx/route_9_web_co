@@ -38,18 +38,15 @@ export function VinylRecord({ size = 220, spinning = false }: Props) {
         style={{ width: "100%", height: "100%", overflow: "visible" }}
       >
         <defs>
-          {/* Vinyl body — deep black with a hint of warmth at the rim */}
+          {/* Vinyl body — deep black wax with tonal bands (dead wax, groove
+              area, raised outer bead) modeled by the radial stops */}
           <radialGradient id="vinyl-body" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor="#181410" />
-            <stop offset="60%"  stopColor="#0E0805" />
-            <stop offset="100%" stopColor="#1C1209" />
-          </radialGradient>
-
-          {/* Soft specular catch — top-left sheen */}
-          <radialGradient id="vinyl-sheen" cx="32%" cy="28%" r="55%">
-            <stop offset="0%"   stopColor="rgba(255,225,170,0.25)" />
-            <stop offset="40%"  stopColor="rgba(255,200,140,0.08)" />
-            <stop offset="100%" stopColor="rgba(255,200,140,0)" />
+            <stop offset="0%"   stopColor="#1A1410" />
+            <stop offset="22%"  stopColor="#100A06" />
+            <stop offset="55%"  stopColor="#0C0704" />
+            <stop offset="82%"  stopColor="#150E08" />
+            <stop offset="95%"  stopColor="#221610" />
+            <stop offset="100%" stopColor="#080401" />
           </radialGradient>
 
           {/* Label paper — warm cream radial */}
@@ -59,6 +56,12 @@ export function VinylRecord({ size = 220, spinning = false }: Props) {
             <stop offset="100%" stopColor="#9B6840" />
           </radialGradient>
 
+          {/* Label paper grain — fine two-tone stipple */}
+          <pattern id="vinyl-paper" width="3" height="3" patternUnits="userSpaceOnUse">
+            <circle cx="0.8" cy="0.8" r="0.35" fill="rgba(155,104,64,0.1)" />
+            <circle cx="2.2" cy="2.1" r="0.28" fill="rgba(255,250,235,0.16)" />
+          </pattern>
+
           {/* Center label text path — top arc */}
           <path id="vinyl-arc-top" d="M 110 110 m -40 0 a 40 40 0 1 1 80 0" fill="none" />
           <path id="vinyl-arc-bot" d="M 110 110 m -36 0 a 36 36 0 1 0 72 0" fill="none" />
@@ -66,29 +69,38 @@ export function VinylRecord({ size = 220, spinning = false }: Props) {
 
         {/* ── Vinyl body ── */}
         <circle cx="110" cy="110" r="108" fill="url(#vinyl-body)" stroke="#000" strokeWidth="0.8" />
+        {/* Machined edge — thin ambient ring right at the rim */}
+        <circle cx="110" cy="110" r="107.3" fill="none" stroke="rgba(255,240,205,0.07)" strokeWidth="0.7" />
+        <circle cx="110" cy="110" r="106.2" fill="none" stroke="rgba(0,0,0,0.6)" strokeWidth="0.8" />
 
         {/* Concentric groove rings — multiple thin near-black circles */}
         {[
-          100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56, 52,
+          104, 102, 100, 98, 96, 94, 92, 90, 88, 86, 84, 82, 80, 78,
+          76, 74, 72, 70, 68, 66, 64, 62, 60, 58, 56, 54, 52, 50, 48,
         ].map((r, i) => (
           <circle
             key={r}
             cx="110" cy="110" r={r}
             fill="none"
-            stroke="rgba(0,0,0,0.55)"
+            stroke={i % 2 === 0 ? "rgba(0,0,0,0.55)" : "rgba(255,235,195,0.028)"}
             strokeWidth={i % 3 === 0 ? 0.45 : 0.25}
             opacity={i % 5 === 0 ? 0.9 : 0.65}
           />
         ))}
 
-        {/* Subtle wider groove "band" at outer edge */}
+        {/* Subtle wider groove "band" at outer edge + track separations */}
         <circle cx="110" cy="110" r="103" fill="none" stroke="rgba(0,0,0,0.4)" strokeWidth="2" opacity="0.4" />
-
-        {/* Sheen catch */}
-        <circle cx="110" cy="110" r="108" fill="url(#vinyl-sheen)" />
+        <circle cx="110" cy="110" r="87" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="1.4" opacity="0.5" />
+        <circle cx="110" cy="110" r="67" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="1.4" opacity="0.5" />
 
         {/* ── Center paper label ── */}
+        {/* Occlusion trench where the wax meets the label edge */}
+        <circle cx="110" cy="110" r="43.8" fill="none" stroke="rgba(0,0,0,0.55)" strokeWidth="1.8" opacity="0.7" />
         <circle cx="110" cy="110" r="42" fill="url(#vinyl-label)" stroke="#A84818" strokeWidth="0.6" />
+        {/* Paper grain texture (spins with the label — physically correct) */}
+        <circle cx="110" cy="110" r="41.7" fill="url(#vinyl-paper)" opacity="0.8" />
+        {/* Label edge catching light — raised paper lip */}
+        <circle cx="110" cy="110" r="42.6" fill="none" stroke="rgba(255,235,195,0.14)" strokeWidth="0.5" />
         <circle cx="110" cy="110" r="38" fill="none" stroke="rgba(168,72,24,0.45)" strokeWidth="0.5" />
 
         {/* Curved label text — top (arc r=40, ~126 units long) */}
@@ -136,24 +148,58 @@ export function VinylRecord({ size = 220, spinning = false }: Props) {
           fill="#A84818"
         />
 
-        {/* ── Spindle hole ── */}
-        <circle cx="110" cy="110" r="4" fill="#0E0805" stroke="#1C1209" strokeWidth="0.5" />
-        <circle cx="110" cy="110" r="4" fill="rgba(255,225,170,0.15)" />
-
-        {/* A few faint reflective highlights radiating across the body */}
-        <path
-          d="M 16 80 q 90 -30 188 30"
-          stroke="rgba(255,225,170,0.06)"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M 22 150 q 90 30 180 -20"
-          stroke="rgba(255,225,170,0.04)"
-          strokeWidth="1.2"
-          fill="none"
-        />
+        {/* ── Spindle hole — punched through with real depth ── */}
+        {/* Pressed-paper occlusion around the hole */}
+        <circle cx="110" cy="110" r="4.7" fill="none" stroke="rgba(90,50,20,0.3)" strokeWidth="1.3" />
+        <circle cx="110" cy="110" r="4" fill="#070402" />
+        {/* Inner-bore shadow at the top, light catch on the lower lip */}
+        <path d="M 106.8 108.2 A 4 4 0 0 1 113.2 108.2" stroke="rgba(0,0,0,0.8)" strokeWidth="0.7" fill="none" />
+        <path d="M 106.6 111.6 A 4 4 0 0 0 113.4 111.6" stroke="rgba(255,235,200,0.4)" strokeWidth="0.5" fill="none" />
       </svg>
+
+      {/* ── Fixed lighting rig — sits OUTSIDE .vinyl-spinner so the light
+             stays anchored to the room while the record spins under it ── */}
+      {/* Key-light bloom from the upper-left */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          pointerEvents: "none",
+          background:
+            "radial-gradient(circle at 32% 28%, rgba(255,225,170,0.2) 0%, rgba(255,200,140,0.06) 34%, rgba(255,200,140,0) 62%)",
+        }}
+      />
+      {/* Anisotropic groove sheen — the classic twin light bands across the
+          groove area (10:30 / 4:30), masked to a donut so the label stays matte */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          pointerEvents: "none",
+          background:
+            "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 116deg, rgba(255,225,175,0.045) 127deg, rgba(255,230,185,0.12) 136deg, rgba(255,225,175,0.045) 145deg, transparent 156deg, transparent 294deg, rgba(255,240,205,0.06) 305deg, rgba(255,244,214,0.2) 315deg, rgba(255,240,205,0.06) 325deg, transparent 336deg, transparent 360deg)",
+          WebkitMaskImage:
+            "radial-gradient(circle at 50% 50%, transparent 0%, transparent 20%, black 22%, black 48%, transparent 49.5%)",
+          maskImage:
+            "radial-gradient(circle at 50% 50%, transparent 0%, transparent 20%, black 22%, black 48%, transparent 49.5%)",
+        }}
+      />
+      {/* Rim light (upper-left crescent) + edge occlusion (lower-right) */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          pointerEvents: "none",
+          boxShadow:
+            "inset 1.5px 2px 2px rgba(255,235,195,0.16), inset -2px -2.5px 3px rgba(0,0,0,0.55)",
+        }}
+      />
     </div>
   );
 }

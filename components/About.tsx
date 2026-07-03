@@ -82,15 +82,42 @@ export function About() {
               Lake Quinsigamond · Shrewsbury Center · Route 9
             </p>
           </div>
-          {/* MA·9 badge */}
+          {/* MA·9 badge — embossed medallion: raised outer rim, recessed
+              center dish, metallic thread edge stitched inside the rim */}
           <div
             className="absolute right-7 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 border-white/20"
             style={{
-              background: "linear-gradient(145deg, #F08040 0%, #D4682A 45%, #A84818 100%)",
-              boxShadow: "0 0 0 3px rgba(212,104,42,0.2), 0 8px 24px rgba(212,104,42,0.45), 0 16px 40px rgba(212,104,42,0.2), inset 0 2px 0 rgba(255,220,140,0.35), inset 0 -2px 0 rgba(0,0,0,0.25)",
+              background:
+                "radial-gradient(circle at 34% 28%, #F08040 0%, #D4682A 52%, #96431A 100%)",
+              boxShadow:
+                "0 0 0 3px rgba(212,104,42,0.2), 0 8px 24px rgba(212,104,42,0.45), 0 16px 40px rgba(212,104,42,0.2), inset 0 2px 1px rgba(255,220,140,0.45), inset 0 -2px 2px rgba(0,0,0,0.3), inset 0 0 10px 2px rgba(0,0,0,0.22)",
             }}
             aria-hidden
           >
+            {/* Metallic thread edge + recessed center dish */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-[3px] rounded-full"
+              style={{
+                border: "1px dashed rgba(255,228,160,0.6)",
+                boxShadow:
+                  "inset 0 2px 4px rgba(0,0,0,0.28), inset 0 -1px 1px rgba(255,220,140,0.28), 0 1px 0 rgba(255,230,170,0.3)",
+              }}
+            />
+            {/* Rim specular — light kisses the upper-left of the raised edge */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute rounded-full"
+              style={{
+                top: "3px",
+                left: "8px",
+                width: "22px",
+                height: "9px",
+                transform: "rotate(-24deg)",
+                background:
+                  "radial-gradient(ellipse at center, rgba(255,244,214,0.55) 0%, rgba(255,244,214,0) 70%)",
+              }}
+            />
             <span className="text-[8px] font-bold text-white/80 tracking-widest leading-none">MA</span>
             <span
               className="text-2xl font-bold text-white italic leading-none"

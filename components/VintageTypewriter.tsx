@@ -59,6 +59,17 @@ export function VintageTypewriter({ size = 240 }: { size?: number }) {
             <stop offset="50%"  stopColor="#1C0E04" />
             <stop offset="100%" stopColor="#3A2818" />
           </linearGradient>
+          {/* Brushed brass/steel — carriage rail, lever, trim */}
+          <linearGradient id="tw-metal" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#EAD6A4" />
+            <stop offset="45%"  stopColor="#9A7840" />
+            <stop offset="100%" stopColor="#4A3418" />
+          </linearGradient>
+          {/* Key stem — small metal collar under each cap */}
+          <linearGradient id="tw-stem" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#6A4A22" />
+            <stop offset="100%" stopColor="#241205" />
+          </linearGradient>
         </defs>
 
         {/* Ground shadow */}
@@ -111,6 +122,14 @@ export function VintageTypewriter({ size = 240 }: { size?: number }) {
           </text>
           {/* Paper top edge highlight */}
           <path d="M 76 12 L 164 12" stroke="rgba(255,255,255,0.55)" strokeWidth="0.4" />
+          {/* Curl shading — sheet bows toward the viewer: soft shadow down
+              the right margin, bright crest down the left */}
+          <path d="M 170 76 Q 170 24 165.5 13.5 L 160 13.5 Q 165 24 165 76 Z"
+            fill="rgba(120,70,20,0.14)" />
+          <path d="M 70 76 Q 70 24 74.5 13.5 L 79 13.5 Q 75 24 75 76 Z"
+            fill="rgba(255,252,238,0.35)" />
+          {/* Cast shadow of the sheet onto the platen below */}
+          <path d="M 70 72 L 170 72 L 172 78 L 68 78 Z" fill="rgba(0,0,0,0.28)" />
         </g>
 
         {/* ── Platen / paper roll ── */}
@@ -138,20 +157,34 @@ export function VintageTypewriter({ size = 240 }: { size?: number }) {
               );
             })
           )}
-          {/* Highlight strip across the platen */}
+          {/* Highlight strip across the platen — long rubber specular */}
           <line x1="56" y1="78" x2="184" y2="78" stroke="rgba(255,225,170,0.18)" strokeWidth="1" />
+          <line x1="60" y1="77" x2="120" y2="77" stroke="rgba(255,240,200,0.3)" strokeWidth="0.5" />
+          {/* Knob specular dots (upper-left of each dome) */}
+          <ellipse cx="45.5" cy="78" rx="2" ry="1.4" fill="rgba(255,235,190,0.28)" />
+          <ellipse cx="189.5" cy="78" rx="2" ry="1.4" fill="rgba(255,235,190,0.28)" />
+          {/* Metallic carriage rail under the platen */}
+          <rect x="42" y="88" width="156" height="3.4" rx="1.7" fill="url(#tw-metal)" stroke="rgba(0,0,0,0.5)" strokeWidth="0.5" />
+          <line x1="48" y1="89" x2="192" y2="89" stroke="rgba(255,244,214,0.55)" strokeWidth="0.5" />
+          {/* Occlusion where the rail tucks under the platen */}
+          <line x1="52" y1="88.1" x2="188" y2="88.1" stroke="rgba(0,0,0,0.4)" strokeWidth="0.8" />
         </g>
 
-        {/* ── Return lever on the right ── */}
+        {/* ── Return lever on the right — polished steel arm ── */}
         <g>
           <line x1="195" y1="80" x2="222" y2="58" stroke="#1C0E04" strokeWidth="2.5" strokeLinecap="round" />
+          {/* Specular running along the arm's lit edge */}
+          <line x1="196" y1="79" x2="221" y2="58.5" stroke="rgba(255,235,190,0.5)" strokeWidth="0.7" strokeLinecap="round" />
           <circle cx="222" cy="58" r="3.6" fill="url(#tw-key)" stroke="#1C0E04" strokeWidth="0.6" />
+          <circle cx="220.9" cy="56.9" r="0.9" fill="rgba(255,252,240,0.8)" />
         </g>
 
         {/* ── Bell on top-right (rings on carriage return) ── */}
         <g className="tw-bell" style={{ transformOrigin: "208px 96px" }}>
           <circle cx="208" cy="96" r="5" fill="url(#tw-key)" stroke="#1C0E04" strokeWidth="0.7" />
           <circle cx="208" cy="96" r="2" fill="#1C0E04" />
+          {/* Dome specular */}
+          <circle cx="206.4" cy="94.4" r="1" fill="rgba(255,252,240,0.7)" />
         </g>
 
         {/* ── Main body shell ── */}
@@ -175,9 +208,47 @@ export function VintageTypewriter({ size = 240 }: { size?: number }) {
             fill="url(#tw-sheen)"
             opacity="0.7"
           />
+          {/* Long enamel specular — sweeps across the curved shoulder */}
+          <path
+            d="M 36 106 Q 120 98 204 106 L 204 109 Q 120 101 36 109 Z"
+            fill="rgba(255,240,205,0.22)"
+          />
+          <path
+            d="M 46 103 Q 90 99.5 130 101.5"
+            stroke="rgba(255,250,230,0.45)"
+            strokeWidth="1.1"
+            strokeLinecap="round"
+            fill="none"
+          />
+          {/* Rim light down the left flank; shadow-side falloff on the right */}
+          <path
+            d="M 26.5 196 L 23.2 124 Q 23.2 94 50 93.4"
+            stroke="rgba(255,225,170,0.22)"
+            strokeWidth="1"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <path
+            d="M 213.5 196 L 216.8 126 Q 216.8 96 192 93.8"
+            stroke="rgba(0,0,0,0.5)"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            fill="none"
+          />
+          {/* Occlusion shadow where the keybed recesses into the shell */}
+          <path
+            d="M 30 132 Q 120 126 210 132"
+            stroke="rgba(0,0,0,0.4)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            fill="none"
+            opacity="0.55"
+          />
 
-          {/* Front face plate / nameplate */}
+          {/* Front face plate / nameplate — recessed with brass bevel */}
           <rect x="92" y="182" width="56" height="14" rx="2" fill="#0E0805" stroke="rgba(212,104,42,0.6)" strokeWidth="0.7" />
+          <path d="M 93.5 195 L 146.5 195" stroke="rgba(255,225,170,0.22)" strokeWidth="0.6" />
+          <path d="M 93.5 183 L 146.5 183" stroke="rgba(0,0,0,0.7)" strokeWidth="0.8" />
           <text x="120" y="192" textAnchor="middle"
             fontFamily="Georgia, serif" fontStyle="italic"
             fontWeight="900" fontSize="9"
@@ -189,32 +260,41 @@ export function VintageTypewriter({ size = 240 }: { size?: number }) {
           <line x1="26" y1="200" x2="214" y2="200" stroke="rgba(212,104,42,0.18)" strokeWidth="0.5" />
         </g>
 
-        {/* ── Keys — three staggered rows ── */}
+        {/* ── Keys — three staggered rows of domed caps.
+              Each key: cast shadow on the body, metal stem collar,
+              chrome ring, domed ivory cap, specular glint. ── */}
         <g>
-          {/* Row 1 (top) — 10 keys */}
-          {[...Array(10)].map((_, i) => {
-            const x = 36 + i * 17;
-            return (
-              <circle key={`r1-${i}`} cx={x} cy="142" r="6"
-                fill="url(#tw-key)" stroke="#000" strokeWidth="0.6" />
-            );
-          })}
-          {/* Row 2 (middle) — 9 keys, offset half */}
-          {[...Array(9)].map((_, i) => {
-            const x = 44.5 + i * 17;
-            return (
-              <circle key={`r2-${i}`} cx={x} cy="158" r="6"
-                fill="url(#tw-key)" stroke="#000" strokeWidth="0.6" />
-            );
-          })}
-          {/* Row 3 (bottom) — 8 keys */}
-          {[...Array(8)].map((_, i) => {
-            const x = 53 + i * 17;
-            return (
-              <circle key={`r3-${i}`} cx={x} cy="174" r="6"
-                fill="url(#tw-key)" stroke="#000" strokeWidth="0.6" />
-            );
-          })}
+          {[
+            { row: "r1", count: 10, startX: 36,   cy: 142 },
+            { row: "r2", count: 9,  startX: 44.5, cy: 158 },
+            { row: "r3", count: 8,  startX: 53,   cy: 174 },
+          ].map(({ row, count, startX, cy }) =>
+            [...Array(count)].map((_, i) => {
+              const x = startX + i * 17;
+              return (
+                <g key={`${row}-${i}`}>
+                  {/* Per-key cast shadow onto the enamel body */}
+                  <ellipse cx={x + 0.8} cy={cy + 5.4} rx="5.8" ry="1.9"
+                    fill="rgba(0,0,0,0.42)" />
+                  {/* Stem collar peeking below the cap */}
+                  <rect x={x - 2} y={cy + 2} width="4" height="4" rx="1"
+                    fill="url(#tw-stem)" />
+                  {/* Chrome ring around the cap */}
+                  <circle cx={x} cy={cy} r="6.8" fill="#241205"
+                    stroke="rgba(255,230,180,0.3)" strokeWidth="0.5" />
+                  {/* Domed ivory cap */}
+                  <circle cx={x} cy={cy} r="6"
+                    fill="url(#tw-key)" stroke="#000" strokeWidth="0.6" />
+                  {/* Upper-left glint + crescent rim light */}
+                  <circle cx={x - 2} cy={cy - 2.2} r="1.1"
+                    fill="rgba(255,252,240,0.75)" />
+                  <path
+                    d={`M ${x - 4.6} ${cy + 2.4} A 5.2 5.2 0 0 0 ${x + 4.2} ${cy + 3}`}
+                    stroke="rgba(90,56,24,0.55)" strokeWidth="0.7" fill="none" />
+                </g>
+              );
+            })
+          )}
 
           {/* Tiny key-top letters in the top row */}
           {["Q","W","E","R","T","Y","U","I","O","P"].map((ch, i) => {

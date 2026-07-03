@@ -78,23 +78,44 @@ export function HandwrittenSignature() {
         height="96"
         style={{ overflow: "visible" }}
       >
-        <defs>
-          {/* Slight ink-on-paper bleed: a tiny blur on a duplicate stroke */}
-          <filter id={`ink-bleed-${uid}`} x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="0.4" />
-          </filter>
-        </defs>
+        {/* Paper-press shadow — the nib dents the paper; a faint dark
+            duplicate sits just below-right of the ink line. Shares the
+            sig-bleed draw timing so it appears with the pen. (No blur
+            filters here — this layer animates.) */}
+        <path
+          d={sigPath}
+          fill="none"
+          stroke="#1C1209"
+          strokeOpacity="0.08"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          transform="translate(0.6 1.3)"
+          className="sig-path sig-bleed"
+        />
 
-        {/* Bottom ink-bleed shadow */}
+        {/* Ink bleed — two stacked low-opacity duplicates at different
+            widths and hairline offsets fake capillary feathering, so the
+            stroke width reads as varying pen pressure */}
         <path
           d={sigPath}
           fill="none"
           stroke="#D4682A"
-          strokeOpacity="0.22"
+          strokeOpacity="0.14"
           strokeWidth="3.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          filter={`url(#ink-bleed-${uid})`}
+          className="sig-path sig-bleed"
+        />
+        <path
+          d={sigPath}
+          fill="none"
+          stroke="#A84818"
+          strokeOpacity="0.16"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          transform="translate(0.35 0.3)"
           className="sig-path sig-bleed"
         />
 

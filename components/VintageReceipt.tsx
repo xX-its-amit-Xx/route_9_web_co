@@ -69,10 +69,10 @@ export function VintageReceipt({ onReset }: Props) {
           width: "min(360px, 92%)",
           height: "22px",
           background:
-            "linear-gradient(180deg, #2A1810 0%, #1C1209 60%, #0E0805 100%)",
+            "linear-gradient(90deg, rgba(255,196,128,0) 0%, rgba(255,196,128,0.07) 16%, rgba(255,196,128,0) 38%), linear-gradient(180deg, #3A2414 0%, #241409 45%, #140A05 100%)",
           borderRadius: "6px 6px 0 0",
           boxShadow:
-            "inset 0 -3px 6px rgba(0,0,0,0.7), 0 -2px 0 rgba(255,255,255,0.04) inset",
+            "inset 0 -4px 7px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,196,128,0.14), inset 1px 0 0 rgba(255,196,128,0.06), 0 2px 6px rgba(0,0,0,0.35)",
         }}
       >
         <div
@@ -84,35 +84,63 @@ export function VintageReceipt({ onReset }: Props) {
             height: "5px",
             background: "#000",
             borderRadius: "3px",
-            boxShadow: "inset 0 2px 3px rgba(0,0,0,0.9)",
+            boxShadow:
+              "inset 0 2px 3px rgba(0,0,0,0.95), 0 1px 0 rgba(255,196,128,0.10)",
           }}
         />
       </div>
 
+      {/*
+        Two layers: the outer div carries the elevation shadow (shadows get
+        clipped by CSS masks, so it can't live on the masked element), the
+        inner div carries the thermal-paper gradients and the zigzag
+        perforated tear edge cut with a conic-gradient mask.
+      */}
       <div
         className="receipt-paper mx-auto"
         style={{
           width: "min(360px, 92%)",
-          padding: "16px 18px 8px",
-          background:
-            "repeating-linear-gradient(180deg, #FDF6E8 0px, #FDF6E8 22px, #F9F0DE 22px, #F9F0DE 23px)",
-          color: "#1C1209",
-          fontFamily:
-            "'Courier New', 'Courier', ui-monospace, SFMono-Regular, Menlo, monospace",
-          fontSize: "12px",
-          lineHeight: "22px",
-          letterSpacing: "0.04em",
-          borderLeft: "1px dashed rgba(28,18,9,0.18)",
-          borderRight: "1px dashed rgba(28,18,9,0.18)",
-          borderTop: "1px solid rgba(28,18,9,0.22)",
           boxShadow:
-            "0 16px 36px rgba(28,18,9,0.32), 0 4px 12px rgba(28,18,9,0.22), inset 0 1px 0 rgba(255,255,255,0.4)",
-          maskImage:
-            "linear-gradient(to bottom, black 0%, black 96%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 0%, black 96%, transparent 100%)",
+            "0 18px 34px rgba(28,18,9,0.34), 0 6px 12px rgba(28,18,9,0.22)",
         }}
       >
+        <div
+          style={{
+            padding: "16px 18px 16px",
+            background: [
+              // tooth shadows peeking above the torn edge — sells thickness
+              "conic-gradient(from -45deg at 50% 100%, rgba(28,18,9,0.16) 90deg, rgba(28,18,9,0) 90deg) 0 calc(100% - 5px) / 16px 10px repeat-x",
+              // bottom curl — paper darkens as it bends toward the tear
+              "linear-gradient(180deg, rgba(28,18,9,0) 82%, rgba(28,18,9,0.05) 92%, rgba(28,18,9,0.15) 100%)",
+              // faint thermal print-feed lines
+              "repeating-linear-gradient(180deg, rgba(28,18,9,0) 0px, rgba(28,18,9,0) 22px, rgba(28,18,9,0.05) 22px, rgba(28,18,9,0.05) 23px)",
+              // thermal-paper sheen — brighter down the middle of the roll
+              "linear-gradient(90deg, #F0E4C8 0%, #FAF2E0 12%, #FFFCF2 48%, #FAF2E0 85%, #EFE2C6 100%)",
+            ].join(", "),
+            color: "#1C1209",
+            fontFamily:
+              "'Courier New', 'Courier', ui-monospace, SFMono-Regular, Menlo, monospace",
+            fontSize: "12px",
+            lineHeight: "22px",
+            letterSpacing: "0.04em",
+            textRendering: "optimizeLegibility",
+            borderLeft: "1px dashed rgba(28,18,9,0.18)",
+            borderRight: "1px dashed rgba(28,18,9,0.18)",
+            borderTop: "1px solid rgba(28,18,9,0.28)",
+            // Zigzag perforation: full paper minus the bottom 10px, plus a
+            // repeating row of down-pointing triangle teeth along the bottom.
+            WebkitMaskImage:
+              "linear-gradient(#000 0 0), conic-gradient(from -45deg at 50% 100%, #000 90deg, rgba(0,0,0,0) 90deg)",
+            WebkitMaskSize: "100% calc(100% - 10px), 16px 10px",
+            WebkitMaskPosition: "0 0, 0 100%",
+            WebkitMaskRepeat: "no-repeat, repeat-x",
+            maskImage:
+              "linear-gradient(#000 0 0), conic-gradient(from -45deg at 50% 100%, #000 90deg, rgba(0,0,0,0) 90deg)",
+            maskSize: "100% calc(100% - 10px), 16px 10px",
+            maskPosition: "0 0, 0 100%",
+            maskRepeat: "no-repeat, repeat-x",
+          }}
+        >
         {lines.map((line, i) => {
           const style: React.CSSProperties = {
             opacity: reduced ? 1 : 0,
@@ -120,6 +148,8 @@ export function VintageReceipt({ onReset }: Props) {
               ? "none"
               : `receipt-row 0.42s ease-out ${0.4 + i * 0.085}s forwards`,
             transform: "translateY(-2px)",
+            // slightly denser "ink" so the monospace rows read crisper
+            textShadow: "0 0 0.5px rgba(28,18,9,0.55)",
           };
 
           if (line.emphasis === "header") {
@@ -231,6 +261,7 @@ export function VintageReceipt({ onReset }: Props) {
           }}
         >
           PAID
+        </div>
         </div>
       </div>
 

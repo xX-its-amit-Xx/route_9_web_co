@@ -381,16 +381,57 @@ export function WhoIWorkWith() {
             viewBox="0 0 320 90"
             fill="none"
             aria-hidden
-            style={{ width: "min(320px, 72%)", opacity: 0.72 }}
+            style={{
+              width: "min(320px, 72%)",
+              opacity: 0.72,
+              // Lay the mat back onto the ground plane — true perspective
+              // trapezoid via CSS 3D (static; no animation).
+              transform: "perspective(520px) rotateX(16deg)",
+              transformOrigin: "50% 100%",
+            }}
           >
+            <defs>
+              {/* Soft elliptical contact shadow pooling under the mat */}
+              <radialGradient id="who-mat-shadow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"  stopColor="rgba(90,40,12,0.28)" />
+                <stop offset="65%" stopColor="rgba(90,40,12,0.12)" />
+                <stop offset="100%" stopColor="rgba(90,40,12,0)" />
+              </radialGradient>
+              {/* Mat face form — light hits the far (top) edge, the near
+                  edge rolls into gentle shade */}
+              <linearGradient id="who-mat-face" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stopColor="rgba(255,246,228,0.3)" />
+                <stop offset="30%"  stopColor="rgba(255,246,228,0)" />
+                <stop offset="80%"  stopColor="rgba(140,58,16,0)" />
+                <stop offset="100%" stopColor="rgba(140,58,16,0.12)" />
+              </linearGradient>
+            </defs>
+            {/* Ground contact shadow — under the mat + fringe */}
+            <ellipse cx="160" cy="83" rx="152" ry="6.5" fill="url(#who-mat-shadow)" />
             {/* Outer mat frame */}
             <rect x="6" y="10" width="308" height="70" rx="7" fill="rgba(212,104,42,0.06)" stroke="rgba(212,104,42,0.32)" strokeWidth="1.5" />
+            {/* Bound-edge highlight — light catching the top of the binding */}
+            <rect x="7.6" y="11.6" width="304.8" height="66.8" rx="6" fill="none" stroke="rgba(255,246,228,0.5)" strokeWidth="0.9" />
+            {/* Bound-edge underside shade along the near (bottom) edge */}
+            <path d="M 12 79.2 H 308" stroke="rgba(140,58,16,0.28)" strokeWidth="1.1" strokeLinecap="round" />
             {/* Inner border bevel */}
             <rect x="12" y="16" width="296" height="58" rx="5" fill="none" stroke="rgba(212,104,42,0.13)" strokeWidth="1" />
-            {/* Horizontal ribs — woven texture */}
+            {/* Bevel occlusion just inside the inner border */}
+            <rect x="13.2" y="17.2" width="293.6" height="55.6" rx="4.5" fill="none" stroke="rgba(140,58,16,0.09)" strokeWidth="1" />
+            {/* Horizontal ribs — woven fiber texture, each rib modeled as a
+                lit crown (highlight above) over an occluded groove (shadow) */}
             {[24, 32, 40, 48, 56, 64, 72].map((y) => (
-              <line key={y} x1="14" y1={y} x2="306" y2={y} stroke="rgba(212,104,42,0.07)" strokeWidth="2.5" />
+              <g key={y}>
+                {/* rib crown highlight */}
+                <line x1="14" y1={y - 2} x2="306" y2={y - 2} stroke="rgba(255,246,228,0.4)" strokeWidth="1" />
+                {/* rib body */}
+                <line x1="14" y1={y} x2="306" y2={y} stroke="rgba(212,104,42,0.09)" strokeWidth="2.5" />
+                {/* groove shadow tucked under the rib */}
+                <line x1="14" y1={y + 1.7} x2="306" y2={y + 1.7} stroke="rgba(140,58,16,0.1)" strokeWidth="1" />
+              </g>
             ))}
+            {/* Mat face form shading over the ribs */}
+            <rect x="6" y="10" width="308" height="70" rx="7" fill="url(#who-mat-face)" />
             {/* Left fringe */}
             {[0,1,2,3,4,5,6,7].map((i) => (
               <line key={i} x1={14 + i * 7} y1="10" x2={14 + i * 7} y2="2" stroke="rgba(212,104,42,0.3)" strokeWidth="1.2" strokeLinecap="round" />

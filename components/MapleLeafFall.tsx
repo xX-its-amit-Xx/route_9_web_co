@@ -28,6 +28,17 @@ const LEAVES = [
   { left: "94%", scale: 0.75, dur: 23, delay: -16, variant: 2, fill: "#D4682A" },
 ];
 
+// Two-tone autumn shading per brand fill — [sunlit face, shadowed underside].
+// The gradient models a leaf tilted toward the light; the dark stop doubles
+// as the curled-under edge so each leaf reads as a 3D flake, not a cutout.
+const TONES: Record<string, [string, string]> = {
+  "#D4682A": ["#EE8B45", "#A84818"],
+  "#A84818": ["#C86228", "#7E3210"],
+  "#E07838": ["#F49B58", "#B85520"],
+  "#C05A20": ["#DE7836", "#94420F"],
+  "#8E3A0E": ["#B25522", "#67280A"],
+};
+
 // Three hand-drawn maple leaf silhouettes — five-lobed, ribbed
 const VARIANTS = [
   // Classic five-lobe symmetric
@@ -45,7 +56,12 @@ export function MapleLeafFall() {
       className="absolute inset-0 pointer-events-none overflow-hidden"
       style={{ zIndex: 0 }}
     >
-      {LEAVES.map((l, i) => (
+      {LEAVES.map((l, i) => {
+        const [lit, shade] = TONES[l.fill] ?? [l.fill, l.fill];
+        // Vary the light angle per leaf so each one reads as tilted at a
+        // slightly different attitude while it flutters
+        const lightAngle = (i * 47) % 360;
+        return (
         <span
           key={i}
           className="maple-leaf"
@@ -66,8 +82,40 @@ export function MapleLeafFall() {
             height="22"
             style={{ overflow: "visible" }}
           >
+            <defs>
+              {/* Two-tone autumn gradient — sunlit face into shadowed edge */}
+              <linearGradient
+                id={`mlf-g-${i}`}
+                x1="0" y1="0" x2="1" y2="1"
+                gradientTransform={`rotate(${lightAngle} 0.5 0.5)`}
+              >
+                <stop offset="0%" stopColor={lit} />
+                <stop offset="55%" stopColor={l.fill} />
+                <stop offset="100%" stopColor={shade} />
+              </linearGradient>
+              <clipPath id={`mlf-c-${i}`}>
+                <path d={VARIANTS[l.variant]} />
+              </clipPath>
+            </defs>
+            {/* Curled-under edge — a dark duplicate peeking below-right
+                gives the flake physical thickness */}
+            <path
+              d={VARIANTS[l.variant]}
+              fill={shade}
+              opacity="0.5"
+              transform="translate(0.5 0.7)"
+            />
             {/* Leaf body */}
-            <path d={VARIANTS[l.variant]} fill={l.fill} opacity="0.85" />
+            <path d={VARIANTS[l.variant]} fill={`url(#mlf-g-${i})`} opacity="0.9" />
+            {/* Sheen — soft light pooling on the lobe facing the sun,
+                clipped to the silhouette */}
+            <g clipPath={`url(#mlf-c-${i})`}>
+              <ellipse
+                cx="-3.5" cy="-5" rx="4.5" ry="5.5"
+                fill="rgba(255,236,190,0.28)"
+                transform={`rotate(${-24 + ((i * 31) % 20)} -3.5 -5)`}
+              />
+            </g>
             {/* Subtle inner rib */}
             <path
               d="M 0 -12 L 0 9"
@@ -83,11 +131,20 @@ export function MapleLeafFall() {
               strokeLinecap="round"
               opacity="0.4"
             />
-            {/* Stem */}
-            <line x1="0" y1="9" x2="0" y2="13" stroke="#5A2A10" strokeWidth="0.7" strokeLinecap="round" />
+            {/* Vein relief — hairline light echo beside the main rib */}
+            <path
+              d="M 0.5 -11.5 L 0.5 8.5"
+              stroke="rgba(255,236,190,0.35)"
+              strokeWidth="0.3"
+              strokeLinecap="round"
+            />
+            {/* Stem — shaded round twig */}
+            <line x1="0" y1="9" x2="0" y2="13" stroke="#3A1C0A" strokeWidth="0.9" strokeLinecap="round" />
+            <line x1="-0.2" y1="9" x2="-0.2" y2="12.6" stroke="#8E5A30" strokeWidth="0.35" strokeLinecap="round" />
           </svg>
         </span>
-      ))}
+        );
+      })}
     </div>
   );
 }

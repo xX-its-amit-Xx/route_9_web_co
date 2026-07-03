@@ -7,17 +7,48 @@ import { VinylRecord } from "./VinylRecord";
 import { PILLARS } from "@/lib/content";
 
 // ── Custom artisan SVG icons ──────────────────────────────────────────────────
+// Rendered as dimensional mini-objects: enamel/brass gradient fills, one shared
+// lighting model (key light upper-left), specular highlights, occlusion edges
+// and soft contact shadows so the six read as a matched cast-metal set.
 
 function IconMobile() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <rect x="5.5" y="1.5" width="13" height="21" rx="2.5" stroke="currentColor" strokeWidth="1.5" />
-      <line x1="5.5" y1="4.5" x2="18.5" y2="4.5" stroke="currentColor" strokeWidth="0.75" />
-      <line x1="5.5" y1="19.5" x2="18.5" y2="19.5" stroke="currentColor" strokeWidth="0.75" />
-      <rect x="7.5" y="6.5" width="9" height="10.5" rx="0.75" stroke="currentColor" strokeWidth="1" />
-      <path d="M7.5 9.5L12 7.5L16.5 9.5" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" />
-      <rect x="10" y="12" width="1.75" height="2.75" rx="0.25" stroke="currentColor" strokeWidth="0.75" />
-      <rect x="12.5" y="12" width="1.75" height="2.75" rx="0.25" stroke="currentColor" strokeWidth="0.75" />
+      <defs>
+        <linearGradient id="qpi-mob-body" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#4A3018" />
+          <stop offset="45%" stopColor="#241609" />
+          <stop offset="100%" stopColor="#120A04" />
+        </linearGradient>
+        <linearGradient id="qpi-mob-scr" x1="0" y1="0" x2="0.65" y2="1">
+          <stop offset="0%" stopColor="#F49A52" />
+          <stop offset="50%" stopColor="#D4682A" />
+          <stop offset="100%" stopColor="#8F3F12" />
+        </linearGradient>
+      </defs>
+      {/* Soft contact shadow */}
+      <ellipse cx="12" cy="22.6" rx="6.2" ry="0.9" fill="rgba(0,0,0,0.3)" />
+      {/* Chassis */}
+      <rect x="5.5" y="1.5" width="13" height="21" rx="2.6" fill="url(#qpi-mob-body)" />
+      {/* Rim light (upper-left) + occlusion edge (lower-right) */}
+      <rect x="5.8" y="1.8" width="12.4" height="20.4" rx="2.3" fill="none" stroke="rgba(255,225,170,0.32)" strokeWidth="0.5" />
+      <path d="M6.1 5V18.5" stroke="rgba(255,235,190,0.3)" strokeWidth="0.5" strokeLinecap="round" />
+      <path d="M18 5V19" stroke="rgba(0,0,0,0.5)" strokeWidth="0.6" strokeLinecap="round" />
+      {/* Speaker slot — recessed */}
+      <rect x="10.2" y="2.9" width="3.6" height="0.9" rx="0.45" fill="rgba(0,0,0,0.6)" />
+      <path d="M10.4 3.95H13.6" stroke="rgba(255,225,170,0.18)" strokeWidth="0.3" />
+      {/* Screen — warm enamel glow */}
+      <rect x="7.2" y="5.2" width="9.6" height="12.6" rx="0.9" fill="url(#qpi-mob-scr)" />
+      <rect x="7.2" y="5.2" width="9.6" height="12.6" rx="0.9" fill="none" stroke="rgba(0,0,0,0.4)" strokeWidth="0.5" />
+      {/* Screen content — cream storefront */}
+      <path d="M8.8 9.4L12 7.6L15.2 9.4" stroke="#FBF2DC" strokeWidth="0.9" strokeLinejoin="round" strokeLinecap="round" />
+      <rect x="9.4" y="11" width="5.2" height="0.9" rx="0.45" fill="rgba(251,242,220,0.85)" />
+      <rect x="9.4" y="12.9" width="3.6" height="0.9" rx="0.45" fill="rgba(251,242,220,0.55)" />
+      <rect x="9.4" y="15" width="5.2" height="1.4" rx="0.7" fill="#1C1209" opacity="0.8" />
+      {/* Glass glare sweep */}
+      <path d="M7.6 5.6L11.4 5.6L8.6 17.4L7.6 17.4Z" fill="rgba(255,246,226,0.22)" />
+      {/* Home button */}
+      <circle cx="12" cy="20.1" r="1" fill="#0B0603" stroke="rgba(255,225,170,0.35)" strokeWidth="0.4" />
     </svg>
   );
 }
@@ -25,7 +56,27 @@ function IconMobile() {
 function IconSpeed() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path d="M13 2L4 14h7l-1 8 10-12h-7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <defs>
+        <linearGradient id="qpi-spd-bolt" x1="0.1" y1="0" x2="0.6" y2="1">
+          <stop offset="0%" stopColor="#FFDF9E" />
+          <stop offset="32%" stopColor="#F0904A" />
+          <stop offset="65%" stopColor="#D4682A" />
+          <stop offset="100%" stopColor="#8F3F12" />
+        </linearGradient>
+      </defs>
+      {/* Soft contact shadow */}
+      <ellipse cx="11.5" cy="22.6" rx="4.6" ry="0.9" fill="rgba(0,0,0,0.28)" />
+      {/* Cast shadow bolt (offset toward lower-right) */}
+      <path d="M13.7 2.9L4.7 14.9h7l-1 8 10-12h-7z" fill="rgba(0,0,0,0.3)" />
+      {/* Enamel bolt */}
+      <path d="M13 2L4 14h7l-1 8 10-12h-7z" fill="url(#qpi-spd-bolt)" stroke="rgba(70,26,4,0.5)" strokeWidth="0.5" strokeLinejoin="round" />
+      {/* Bevel — lit upper-left edge, shaded lower-right edge */}
+      <path d="M12.6 2.9L4.9 13.2" stroke="rgba(255,244,214,0.8)" strokeWidth="0.7" strokeLinecap="round" />
+      <path d="M19.2 10.6L11 20.4" stroke="rgba(50,18,2,0.45)" strokeWidth="0.6" strokeLinecap="round" />
+      {/* Specular core glint */}
+      <path d="M11.9 4.6L7.2 10.9" stroke="rgba(255,250,232,0.55)" strokeWidth="1.1" strokeLinecap="round" />
+      {/* Occlusion in the notch */}
+      <path d="M11 14h-4" stroke="rgba(0,0,0,0.3)" strokeWidth="0.7" strokeLinecap="round" />
     </svg>
   );
 }
@@ -33,9 +84,30 @@ function IconSpeed() {
 function IconConvert() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M14 7L21 12L14 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M21 12H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <defs>
+        <linearGradient id="qpi-cnv-pan" x1="0" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stopColor="#4A3018" />
+          <stop offset="100%" stopColor="#160D05" />
+        </linearGradient>
+        <linearGradient id="qpi-cnv-arr" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFDF9E" />
+          <stop offset="45%" stopColor="#D4682A" />
+          <stop offset="100%" stopColor="#7E3810" />
+        </linearGradient>
+      </defs>
+      {/* Soft contact shadow */}
+      <ellipse cx="12" cy="22.4" rx="7.2" ry="0.9" fill="rgba(0,0,0,0.26)" />
+      {/* Doorway bracket — dark ember metal */}
+      <path d="M10 3H5.6C4.2 3 3 4.2 3 5.6V18.4C3 19.8 4.2 21 5.6 21H10" stroke="url(#qpi-cnv-pan)" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+      {/* Bracket rim light */}
+      <path d="M9.6 3.9H5.8C4.75 3.9 3.9 4.75 3.9 5.8V12" stroke="rgba(255,235,190,0.35)" strokeWidth="0.5" strokeLinecap="round" fill="none" />
+      {/* Arrow cast shadow */}
+      <path d="M7.4 11.5H14.6V8.9L21.4 12.6L14.6 16.3V13.7H7.4Z" fill="rgba(0,0,0,0.3)" />
+      {/* Brass arrow */}
+      <path d="M7 10.9H14.2V8.2L21 12L14.2 15.8V13.1H7Z" fill="url(#qpi-cnv-arr)" stroke="rgba(70,26,4,0.5)" strokeWidth="0.5" strokeLinejoin="round" />
+      {/* Top-facet highlights */}
+      <path d="M7.5 11.35H14.1" stroke="rgba(255,246,222,0.75)" strokeWidth="0.55" strokeLinecap="round" />
+      <path d="M14.8 8.9L19.9 11.75" stroke="rgba(255,246,222,0.6)" strokeWidth="0.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -43,10 +115,35 @@ function IconConvert() {
 function IconMapPin() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <path d="M12 2C8.686 2 6 4.686 6 8C6 13 12 22 12 22C12 22 18 13 18 8C18 4.686 15.314 2 12 2Z" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.25" />
-      <path d="M20.5 4C21.8 5.8 22.5 8 22.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-      <path d="M3.5 4C2.2 5.8 1.5 8 1.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      <defs>
+        <radialGradient id="qpi-pin-body" cx="35%" cy="26%" r="80%">
+          <stop offset="0%" stopColor="#FFC488" />
+          <stop offset="45%" stopColor="#E07838" />
+          <stop offset="78%" stopColor="#B24E16" />
+          <stop offset="100%" stopColor="#6E2E0C" />
+        </radialGradient>
+        <radialGradient id="qpi-pin-hole" cx="42%" cy="36%" r="72%">
+          <stop offset="0%" stopColor="#3A2415" />
+          <stop offset="100%" stopColor="#0B0603" />
+        </radialGradient>
+      </defs>
+      {/* Contact shadow at the tip */}
+      <ellipse cx="12.4" cy="22.5" rx="3.2" ry="0.8" fill="rgba(0,0,0,0.32)" />
+      {/* Signal arcs — stay currentColor so the chip hover still tints them */}
+      <path d="M20.5 4C21.8 5.8 22.5 8 22.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.55" />
+      <path d="M3.5 4C2.2 5.8 1.5 8 1.5 10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.55" />
+      {/* Glossy enamel pin body */}
+      <path d="M12 2C8.686 2 6 4.686 6 8C6 13 12 22 12 22C12 22 18 13 18 8C18 4.686 15.314 2 12 2Z" fill="url(#qpi-pin-body)" stroke="rgba(70,26,4,0.45)" strokeWidth="0.5" />
+      {/* Rim light along the lit shoulder */}
+      <path d="M7.1 9.6C6.6 6.4 8 3.6 11 3" stroke="rgba(255,242,214,0.55)" strokeWidth="0.7" strokeLinecap="round" fill="none" />
+      {/* Occlusion toward the tip */}
+      <path d="M10 15.5C10.8 17.4 11.6 19 12 19.8" stroke="rgba(40,14,0,0.35)" strokeWidth="0.8" strokeLinecap="round" fill="none" />
+      {/* Recessed hole with inset shading */}
+      <circle cx="12" cy="8" r="2.5" fill="url(#qpi-pin-hole)" />
+      <path d="M9.8 7.4A2.5 2.5 0 0 1 13 5.7" stroke="rgba(0,0,0,0.5)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
+      <path d="M10.5 10A2.5 2.5 0 0 0 14.4 8.5" stroke="rgba(255,235,200,0.45)" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+      {/* Specular highlight */}
+      <ellipse cx="9.7" cy="4.9" rx="1" ry="1.7" fill="rgba(255,248,228,0.55)" transform="rotate(-27 9.7 4.9)" />
     </svg>
   );
 }
@@ -54,14 +151,63 @@ function IconMapPin() {
 function IconAccessible() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <circle cx="8" cy="4" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M8 8V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M5.5 10.5L4 14.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-      <path d="M10.5 10.5L12 14.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-      <circle cx="17" cy="5.5" r="1.5" stroke="currentColor" strokeWidth="1.25" />
-      <path d="M17 9V13.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-      <path d="M15 11L13.5 14.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-      <path d="M19 11L20.5 14.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      <defs>
+        <radialGradient id="qpi-acc-h1" cx="35%" cy="28%" r="80%">
+          <stop offset="0%" stopColor="#FFC488" />
+          <stop offset="55%" stopColor="#D4682A" />
+          <stop offset="100%" stopColor="#8F3F12" />
+        </radialGradient>
+        <linearGradient id="qpi-acc-b1" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="#F0904A" />
+          <stop offset="100%" stopColor="#A84818" />
+        </linearGradient>
+        <radialGradient id="qpi-acc-h2" cx="35%" cy="28%" r="80%">
+          <stop offset="0%" stopColor="#9B7040" />
+          <stop offset="55%" stopColor="#5A3A1E" />
+          <stop offset="100%" stopColor="#241206" />
+        </radialGradient>
+        <linearGradient id="qpi-acc-b2" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="#7E5630" />
+          <stop offset="100%" stopColor="#33200F" />
+        </linearGradient>
+      </defs>
+      {/* Soft contact shadows */}
+      <ellipse cx="8" cy="15.6" rx="4.6" ry="0.8" fill="rgba(0,0,0,0.26)" />
+      <ellipse cx="17" cy="15.4" rx="3.6" ry="0.7" fill="rgba(0,0,0,0.2)" />
+      {/* Primary figure — cast-shadow pass */}
+      <g stroke="rgba(0,0,0,0.28)" strokeLinecap="round" transform="translate(0.45 0.5)">
+        <path d="M8 8V14" strokeWidth="1.9" />
+        <path d="M5.5 10.5L4 14.5" strokeWidth="1.6" />
+        <path d="M10.5 10.5L12 14.5" strokeWidth="1.6" />
+      </g>
+      {/* Primary figure — enamel body */}
+      <g stroke="url(#qpi-acc-b1)" strokeLinecap="round">
+        <path d="M8 8V14" strokeWidth="1.9" />
+        <path d="M5.5 10.5L4 14.5" strokeWidth="1.6" />
+        <path d="M10.5 10.5L12 14.5" strokeWidth="1.6" />
+      </g>
+      {/* Rim light on the lit side */}
+      <g stroke="rgba(255,242,214,0.55)" strokeLinecap="round">
+        <path d="M7.55 8.4V13.4" strokeWidth="0.45" />
+        <path d="M5.15 10.9L4 13.9" strokeWidth="0.4" />
+      </g>
+      {/* Primary head — glossy sphere */}
+      <circle cx="8" cy="4" r="2.1" fill="url(#qpi-acc-h1)" stroke="rgba(70,26,4,0.4)" strokeWidth="0.4" />
+      <ellipse cx="7.3" cy="3.2" rx="0.7" ry="0.5" fill="rgba(255,248,228,0.7)" transform="rotate(-25 7.3 3.2)" />
+      {/* Secondary figure — dark bronze */}
+      <g stroke="rgba(0,0,0,0.25)" strokeLinecap="round" transform="translate(0.4 0.45)">
+        <path d="M17 9V13.5" strokeWidth="1.5" />
+        <path d="M15 11L13.5 14.5" strokeWidth="1.2" />
+        <path d="M19 11L20.5 14.5" strokeWidth="1.2" />
+      </g>
+      <g stroke="url(#qpi-acc-b2)" strokeLinecap="round">
+        <path d="M17 9V13.5" strokeWidth="1.5" />
+        <path d="M15 11L13.5 14.5" strokeWidth="1.2" />
+        <path d="M19 11L20.5 14.5" strokeWidth="1.2" />
+      </g>
+      <path d="M16.6 9.4V12.9" stroke="rgba(255,235,195,0.4)" strokeWidth="0.4" strokeLinecap="round" />
+      <circle cx="17" cy="5.5" r="1.6" fill="url(#qpi-acc-h2)" stroke="rgba(20,10,2,0.5)" strokeWidth="0.4" />
+      <ellipse cx="16.5" cy="4.9" rx="0.5" ry="0.38" fill="rgba(255,240,210,0.55)" transform="rotate(-25 16.5 4.9)" />
     </svg>
   );
 }
@@ -69,10 +215,41 @@ function IconAccessible() {
 function IconMaintain() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden>
-      <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M3 10H21" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M8 3V7M16 3V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M8 14.5L11 17.5L16 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <defs>
+        <linearGradient id="qpi-mnt-card" x1="0" y1="0" x2="0.7" y2="1">
+          <stop offset="0%" stopColor="#FDF6E3" />
+          <stop offset="100%" stopColor="#E2CFA6" />
+        </linearGradient>
+        <linearGradient id="qpi-mnt-hdr" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F0904A" />
+          <stop offset="100%" stopColor="#B24E16" />
+        </linearGradient>
+        <linearGradient id="qpi-mnt-ring" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#FFE0A0" />
+          <stop offset="55%" stopColor="#B87A2E" />
+          <stop offset="100%" stopColor="#6E4414" />
+        </linearGradient>
+      </defs>
+      {/* Soft contact shadow */}
+      <ellipse cx="12" cy="21.9" rx="8.4" ry="0.9" fill="rgba(0,0,0,0.28)" />
+      {/* Card body — cream paper */}
+      <rect x="3" y="5" width="18" height="16" rx="2" fill="url(#qpi-mnt-card)" stroke="rgba(70,36,12,0.45)" strokeWidth="0.5" />
+      {/* Enamel header band */}
+      <path d="M3 7C3 5.9 3.9 5 5 5H19C20.1 5 21 5.9 21 7V10H3Z" fill="url(#qpi-mnt-hdr)" />
+      <path d="M3.7 9.9H20.3" stroke="rgba(60,22,4,0.35)" strokeWidth="0.5" />
+      <rect x="3.7" y="5.5" width="16.6" height="1" rx="0.5" fill="rgba(255,240,205,0.4)" />
+      {/* Brass binder rings */}
+      <rect x="7.1" y="2.7" width="1.7" height="4.4" rx="0.85" fill="url(#qpi-mnt-ring)" stroke="rgba(40,20,4,0.4)" strokeWidth="0.35" />
+      <rect x="15.2" y="2.7" width="1.7" height="4.4" rx="0.85" fill="url(#qpi-mnt-ring)" stroke="rgba(40,20,4,0.4)" strokeWidth="0.35" />
+      <path d="M7.5 3.2V6.4M15.6 3.2V6.4" stroke="rgba(255,244,214,0.6)" strokeWidth="0.35" strokeLinecap="round" />
+      {/* Header drop occlusion onto the paper */}
+      <path d="M3.6 10.5H20.4" stroke="rgba(70,36,12,0.14)" strokeWidth="0.8" />
+      {/* Check — embossed enamel */}
+      <path d="M8.4 15L11 17.6L15.7 12.9" stroke="rgba(70,36,12,0.22)" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" transform="translate(0.35 0.45)" />
+      <path d="M8.4 15L11 17.6L15.7 12.9" stroke="url(#qpi-mnt-hdr)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.7 14.8L11 17.1L15.4 12.7" stroke="rgba(255,244,214,0.45)" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Card edge rim light */}
+      <path d="M3.5 19.5V7" stroke="rgba(255,250,235,0.5)" strokeWidth="0.4" strokeLinecap="round" />
     </svg>
   );
 }

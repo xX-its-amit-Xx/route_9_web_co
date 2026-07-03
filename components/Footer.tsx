@@ -41,16 +41,49 @@ function Route9CorridorMap() {
         aria-label="Route 9 corridor from Framingham to Worcester"
         style={{ width: "100%", maxWidth: "560px" }}
       >
-        {/* Road surface */}
-        <rect x="30" y="17" width="592" height="8" rx="4" fill="rgba(255,255,255,0.03)" />
+        <defs>
+          {/* Parchment sheet — faint top light falling to a shadowed base */}
+          <linearGradient id="r9map-parchment" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(243,233,213,0.05)" />
+            <stop offset="55%" stopColor="rgba(243,233,213,0.02)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0.14)" />
+          </linearGradient>
+          {/* Road groove — pressed into the parchment: dark upper wall,
+              light-catching lower wall */}
+          <linearGradient id="r9map-road" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(0,0,0,0.38)" />
+            <stop offset="45%" stopColor="rgba(255,255,255,0.03)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.075)" />
+          </linearGradient>
+          {/* Home-town pin — glossy sphere lit from the upper-left */}
+          <radialGradient id="r9map-pin" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stopColor="#FFB876" />
+            <stop offset="55%" stopColor="#D4682A" />
+            <stop offset="100%" stopColor="#8F3F12" />
+          </radialGradient>
+        </defs>
+
+        {/* Parchment sheet with soft depth */}
+        <rect x="14" y="1.5" width="624" height="45" rx="6" fill="url(#r9map-parchment)" />
+        <rect x="14" y="1.5" width="624" height="45" rx="6" fill="none" stroke="rgba(243,233,213,0.07)" strokeWidth="0.8" />
+        {/* Top sheen where the sheet catches the light */}
+        <rect x="16" y="2.4" width="620" height="1.1" rx="0.55" fill="rgba(255,245,225,0.05)" />
+
+        {/* Road surface — embossed groove */}
+        <rect x="30" y="17" width="592" height="8" rx="4" fill="url(#r9map-road)" />
+        {/* Groove lips: occluded top edge, lit bottom edge */}
+        <path d="M34 17.6 H618" stroke="rgba(0,0,0,0.35)" strokeWidth="0.8" strokeLinecap="round" />
+        <path d="M34 24.5 H618" stroke="rgba(255,235,200,0.09)" strokeWidth="0.8" strokeLinecap="round" />
         {/* Dashed center lane marking */}
         <line
           x1="30" y1="21" x2="622" y2="21"
           stroke="rgba(212,104,42,0.18)" strokeWidth="1.5"
           strokeDasharray="14 10" strokeLinecap="round"
         />
-        {/* MA-9 shield badge mid-road */}
+        {/* MA-9 shield badge mid-road — raised plate with lit top edge */}
+        <rect x="309.6" y="13.8" width="34" height="16" rx="2.5" fill="rgba(0,0,0,0.3)" />
         <rect x="309" y="13" width="34" height="16" rx="2.5" fill="rgba(212,104,42,0.12)" stroke="rgba(212,104,42,0.28)" strokeWidth="0.8" />
+        <path d="M311.5 14.2 H340.5" stroke="rgba(255,225,180,0.14)" strokeWidth="0.7" strokeLinecap="round" />
         <text x="326" y="24" textAnchor="middle" fontSize="7" fill="rgba(212,104,42,0.65)" fontWeight="700" fontFamily="monospace" letterSpacing="0.03em">MA 9</text>
 
         {/* Traveling car dot — animates along Route 9 (only while visible) */}
@@ -92,10 +125,14 @@ function Route9CorridorMap() {
                 </circle>
                 {/* Static ring */}
                 <circle cx={x} cy={21} r="9" fill="none" stroke="rgba(212,104,42,0.25)" strokeWidth="1" />
-                {/* Main dot */}
-                <circle cx={x} cy={21} r="5" fill="#D4682A" />
-                {/* Inner highlight */}
-                <circle cx={x - 1.5} cy={19} r="1.5" fill="rgba(255,210,140,0.5)" />
+                {/* Contact shadow under the dome */}
+                <ellipse cx={x + 0.8} cy={23.4} rx="4.6" ry="1.6" fill="rgba(0,0,0,0.4)" />
+                {/* Main dot — glossy dome */}
+                <circle cx={x} cy={21} r="5" fill="url(#r9map-pin)" />
+                <path d={`M ${x - 4.2} 22.8 A 4.6 4.6 0 0 0 ${x + 4.2} 22.8`} stroke="rgba(0,0,0,0.35)" strokeWidth="0.8" fill="none" strokeLinecap="round" />
+                {/* Specular highlight */}
+                <circle cx={x - 1.5} cy={19} r="1.5" fill="rgba(255,225,170,0.75)" />
+                <circle cx={x - 2} cy={18.6} r="0.6" fill="rgba(255,250,235,0.9)" />
                 {/* Name — bright */}
                 <text x={x} y={44} textAnchor="middle" fontSize="8" fill="rgba(212,104,42,0.75)" fontWeight="700" fontFamily="monospace" letterSpacing="0.06em">
                   {name.toUpperCase()} ★

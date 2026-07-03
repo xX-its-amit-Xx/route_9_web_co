@@ -295,10 +295,19 @@ export function Testimonials() {
             style={{ zIndex: 0 }}
           >
             <svg viewBox="0 0 120 148" fill="none" style={{ width: "210px", height: "auto" }}>
+              {/* Deboss: the shield is pressed INTO the card paper — the lower-right
+                  lip catches the light, the upper-left lip falls into shadow */}
+              <path d="M60 6 L114 26 L114 88 Q114 128 60 142 Q6 128 6 88 L6 26 Z"
+                transform="translate(0.9 0.9)" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" />
+              <path d="M60 6 L114 26 L114 88 Q114 128 60 142 Q6 128 6 88 L6 26 Z"
+                transform="translate(-0.7 -0.7)" fill="none" stroke="rgba(120,60,20,0.06)" strokeWidth="1.5" />
               <path d="M60 6 L114 26 L114 88 Q114 128 60 142 Q6 128 6 88 L6 26 Z"
                 fill="rgba(212,104,42,0.038)" stroke="rgba(212,104,42,0.045)" strokeWidth="1.5" />
               <text x="60" y="68" textAnchor="middle" fontSize="11" fill="rgba(212,104,42,0.042)"
                 fontFamily="monospace" fontWeight="700" letterSpacing="3">ROUTE</text>
+              {/* The big 9 gets the same pressed-in treatment */}
+              <text x="62.6" y="112.6" textAnchor="middle" fontSize="56" fontStyle="italic"
+                fill="rgba(255,255,255,0.4)" fontFamily="Georgia, serif" fontWeight="400">9</text>
               <text x="62" y="112" textAnchor="middle" fontSize="56" fontStyle="italic"
                 fill="rgba(212,104,42,0.048)" fontFamily="Georgia, serif" fontWeight="400">9</text>
             </svg>

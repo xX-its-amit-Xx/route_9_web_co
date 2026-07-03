@@ -298,9 +298,51 @@ export function Pricing() {
             {/* Route 9 shield icon */}
             <div className="relative flex-shrink-0">
               <svg viewBox="0 0 52 64" fill="none" className="w-12 h-14" aria-hidden>
+                <defs>
+                  {/* Brass/metal edge — mirror bands running the diagonal */}
+                  <linearGradient id="r9-shield-metal" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%"   stopColor="#F0C078" />
+                    <stop offset="26%"  stopColor="#D4682A" />
+                    <stop offset="52%"  stopColor="#8A3E14" />
+                    <stop offset="76%"  stopColor="#C9631F" />
+                    <stop offset="100%" stopColor="#5E2208" />
+                  </linearGradient>
+                  {/* Recessed field — lit top, sinking into ember shadow */}
+                  <linearGradient id="r9-shield-field" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"   stopColor="rgba(212,104,42,0.32)" />
+                    <stop offset="45%"  stopColor="rgba(212,104,42,0.16)" />
+                    <stop offset="100%" stopColor="rgba(94,34,8,0.34)" />
+                  </linearGradient>
+                  {/* Glass gloss — diagonal sheen sweeping across the face */}
+                  <linearGradient id="r9-shield-gloss" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%"   stopColor="rgba(255,236,200,0.28)" />
+                    <stop offset="46%"  stopColor="rgba(255,236,200,0.1)" />
+                    <stop offset="52%"  stopColor="rgba(255,236,200,0)" />
+                    <stop offset="100%" stopColor="rgba(255,236,200,0)" />
+                  </linearGradient>
+                  <clipPath id="r9-shield-clip">
+                    <path d="M26 3 L49 11 L49 38 Q49 54 26 61 Q3 54 3 38 L3 11 Z" />
+                  </clipPath>
+                </defs>
+                {/* Shield body — recessed field inside a metallic edge */}
                 <path d="M26 3 L49 11 L49 38 Q49 54 26 61 Q3 54 3 38 L3 11 Z"
-                  fill="rgba(212,104,42,0.18)" stroke="rgba(212,104,42,0.65)" strokeWidth="1.5" />
+                  fill="url(#r9-shield-field)" stroke="url(#r9-shield-metal)" strokeWidth="1.6" />
+                {/* Emboss step — inner plateau: dark cut edge, then a light
+                    anti-emboss kick offset toward the lower-right */}
+                <g clipPath="url(#r9-shield-clip)">
+                  <path d="M26 7 L45.5 13.8 L45.5 37 Q45.5 50.4 26 56.6 Q6.5 50.4 6.5 37 L6.5 13.8 Z"
+                    fill="rgba(20,8,2,0.2)" stroke="rgba(20,8,2,0.4)" strokeWidth="0.8" />
+                  <path d="M26 7 L45.5 13.8 L45.5 37 Q45.5 50.4 26 56.6 Q6.5 50.4 6.5 37 L6.5 13.8 Z"
+                    transform="translate(0 0.9)"
+                    fill="none" stroke="rgba(255,205,140,0.26)" strokeWidth="0.7" />
+                  {/* Glass gloss diagonal across the upper-left face */}
+                  <path d="M-4 6 L30 -6 L12 66 L-8 46 Z" fill="url(#r9-shield-gloss)" />
+                </g>
+                {/* Raised rim highlight — light raking the top edges */}
+                <path d="M4.5 11.6 L26 4.2 L47.5 11.6" stroke="rgba(255,220,170,0.5)" strokeWidth="1.1" strokeLinecap="round" fill="none" />
                 <path d="M26 3 L49 11" stroke="rgba(255,200,120,0.3)" strokeWidth="2" strokeLinecap="round" />
+                {/* Rim light along the dark lower-left curve */}
+                <path d="M5 40 Q6.5 51 17 56.5" stroke="rgba(255,180,110,0.22)" strokeWidth="0.9" strokeLinecap="round" fill="none" />
                 <text x="26" y="26" textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(212,104,42,0.55)" fontFamily="monospace" letterSpacing="2">ROUTE</text>
                 <text x="27" y="48" textAnchor="middle" fontSize="26" fontStyle="italic" fill="rgba(212,104,42,0.8)" fontFamily="Georgia, serif" fontWeight="400">9</text>
               </svg>

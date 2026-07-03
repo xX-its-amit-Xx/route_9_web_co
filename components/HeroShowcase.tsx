@@ -5,8 +5,9 @@ import { Clock, Lock, Phone } from "lucide-react";
 
 /* ────────────────────────────────────────────────────────────────────────────
    HeroShowcase — "you could have a site like this"
-   A live-rendered mini website inside a browser mockup + overlapping phone
-   mockup, cycling through three example local businesses with a crossfade.
+   A live-rendered mini website across a three-device family — browser
+   (back-center) + tablet (front-left) + phone (front-right) — cycling
+   through three example local businesses with a crossfade.
    Desktop: <HeroShowcase />  ·  Mobile: <HeroShowcase variant="phone" />
    ──────────────────────────────────────────────────────────────────────── */
 
@@ -100,13 +101,23 @@ const SCOPED_CSS = `
   50%      { transform: translateY(-5px); }
 }
 .hs-float { animation: hs-float 5.5s ease-in-out infinite; }
+@keyframes hs-float-tab {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.hs-float-tab { animation: hs-float-tab 6.4s ease-in-out -2.1s infinite; }
+@keyframes hs-float-desk {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+.hs-float-desk { animation: hs-float-desk 7.6s ease-in-out -3.4s infinite; }
 @keyframes hs-dot-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%      { transform: scale(1.35); opacity: 0.72; }
 }
 .hs-dot-active { animation: hs-dot-pulse 1.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .hs-float, .hs-dot-active { animation: none; }
+  .hs-float, .hs-float-tab, .hs-float-desk, .hs-dot-active { animation: none; }
 }
 `;
 
@@ -239,7 +250,10 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
         </div>
       </div>
 
-      {/* Site hero */}
+      {/* Site hero — headline + sub sit at the TOP of the photo, above the
+          region where the overlapping tablet/phone rise over the browser
+          (their tops never reach above ~y120 of the browser), so the copy
+          is never occluded at any column width */}
       <div className="relative flex-shrink-0 overflow-hidden" style={{ height: "47%" }}>
         <img
           src={`https://images.unsplash.com/photo-${biz.photo}?w=600&auto=format&fit=crop&q=80`}
@@ -252,10 +266,10 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(12,8,4,0.10) 0%, transparent 35%, rgba(12,8,4,0.68) 82%, rgba(12,8,4,0.82) 100%)",
+              "linear-gradient(to bottom, rgba(12,8,4,0.78) 0%, rgba(12,8,4,0.34) 46%, transparent 72%, rgba(12,8,4,0.30) 100%)",
           }}
         />
-        <div className="absolute left-3 right-3 bottom-2.5">
+        <div className="absolute left-3 right-3" style={{ top: "9px" }}>
           <div
             style={{
               fontFamily: "var(--font-display)",
@@ -271,27 +285,14 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
           <div style={{ fontSize: "9px", color: "rgba(255,248,238,0.82)", marginTop: "2px" }}>
             {biz.sub}
           </div>
-          <div
-            className="inline-flex items-center gap-1"
-            style={{
-              marginTop: "7px",
-              fontSize: "9px",
-              fontWeight: 700,
-              color: "#FFF8EE",
-              background: `linear-gradient(150deg, ${biz.accent}, ${biz.accentInk})`,
-              padding: "4.5px 11px",
-              borderRadius: "7px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.18) inset",
-            }}
-          >
-            {biz.cta} <span aria-hidden>→</span>
-          </div>
         </div>
       </div>
 
-      {/* Menu / services slice with prices — indented past the overlapping
-          phone mockup (left ~37% of the browser) so item names stay visible */}
-      <div className="flex-1 pr-3 pt-2 pb-1 overflow-hidden" style={{ paddingLeft: "39%" }}>
+      {/* Menu / services slice — lives in the clear center strip between the
+          overlapping tablet (front-left, covers ≤ ~38.5% of the browser) and
+          phone (front-right, covers from ~66%), so item names, prices, the
+          CTA and the phone number all stay fully visible */}
+      <div className="flex-1 pt-2 pb-1 overflow-hidden" style={{ paddingLeft: "41%", paddingRight: "35%" }}>
         <div
           style={{
             fontSize: "7.5px",
@@ -307,16 +308,40 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
         {biz.rows.map((r) => (
           <div
             key={r.item}
-            className="flex items-baseline gap-2"
-            style={{ padding: "4.5px 0", borderBottom: "1px dashed rgba(36,27,18,0.12)" }}
+            style={{ padding: "3.5px 0", borderBottom: "1px dashed rgba(36,27,18,0.12)" }}
           >
-            <span style={{ fontSize: "10px", fontWeight: 600, whiteSpace: "nowrap" }}>{r.item}</span>
-            <span className="truncate flex-1" style={{ fontSize: "8px", color: "rgba(36,27,18,0.48)" }}>
-              {r.note}
-            </span>
-            <span style={{ fontSize: "10px", fontWeight: 700, color: biz.accentInk }}>{r.price}</span>
+            <div className="truncate" style={{ fontSize: "9.5px", fontWeight: 600 }}>{r.item}</div>
+            <div className="flex items-baseline gap-2">
+              <span className="truncate flex-1" style={{ fontSize: "7.5px", color: "rgba(36,27,18,0.48)" }}>
+                {r.note}
+              </span>
+              <span className="flex-shrink-0" style={{ fontSize: "9.5px", fontWeight: 700, color: biz.accentInk }}>
+                {r.price}
+              </span>
+            </div>
           </div>
         ))}
+        <div
+          className="inline-flex items-center gap-1"
+          style={{
+            marginTop: "8px",
+            fontSize: "8.5px",
+            fontWeight: 700,
+            color: "#FFF8EE",
+            background: `linear-gradient(150deg, ${biz.accent}, ${biz.accentInk})`,
+            padding: "4px 10px",
+            borderRadius: "7px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.18) inset",
+          }}
+        >
+          {biz.cta} <span aria-hidden>→</span>
+        </div>
+        <div
+          className="flex items-center gap-1"
+          style={{ marginTop: "7px", fontSize: "8px", fontWeight: 600, color: "rgba(36,27,18,0.6)" }}
+        >
+          <Phone size={8} color={biz.accent} aria-hidden /> {biz.phone}
+        </div>
       </div>
     </div>
   );
@@ -411,6 +436,180 @@ function MiniPhoneSite({ biz, eager }: { biz: Business; eager: boolean }) {
   );
 }
 
+/* ── Tablet version of the same site — mid-size layout: photo header with
+      name overlay + a 2-column services grid, visually distinct from both
+      the desktop list and the phone action stack ─────────────────────────── */
+function MiniTabletSite({ biz, eager }: { biz: Business; eager: boolean }) {
+  return (
+    <div className="flex flex-col h-full" style={{ background: "#FBF8F2", color: "#241B12" }}>
+      {/* Photo header with name overlay */}
+      <div className="relative flex-shrink-0 overflow-hidden" style={{ height: "40%" }}>
+        <img
+          src={`https://images.unsplash.com/photo-${biz.photo}?w=400&auto=format&fit=crop&q=80`}
+          alt={biz.alt}
+          loading={eager ? "eager" : "lazy"}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(12,8,4,0.18) 0%, transparent 36%, rgba(12,8,4,0.74) 100%)",
+          }}
+        />
+        <div className="absolute left-2.5 right-2.5 bottom-2">
+          <div
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "13px",
+              fontWeight: 700,
+              lineHeight: 1.15,
+              color: "#FFF8EE",
+              textShadow: "0 1px 7px rgba(0,0,0,0.45)",
+            }}
+          >
+            {biz.name}
+          </div>
+          <div style={{ fontSize: "8px", color: "rgba(255,248,238,0.82)", marginTop: "1px" }}>
+            {biz.sub}
+          </div>
+        </div>
+      </div>
+
+      {/* 2-column services/menu grid + hours footer */}
+      <div className="flex-1 flex flex-col px-2.5 pt-2 pb-2 overflow-hidden">
+        <div
+          style={{
+            fontSize: "7px",
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: biz.accent,
+            fontWeight: 700,
+            marginBottom: "4px",
+          }}
+        >
+          {biz.menuTitle}
+        </div>
+        <div className="grid grid-cols-2 gap-1.5 flex-1 min-h-0">
+          {biz.rows.map((r) => (
+            <div
+              key={r.item}
+              className="flex flex-col justify-between min-w-0"
+              style={{
+                padding: "5px 6px",
+                borderRadius: "8px",
+                border: "1px solid rgba(36,27,18,0.10)",
+                background: "rgba(36,27,18,0.025)",
+              }}
+            >
+              <div className="truncate" style={{ fontSize: "8px", fontWeight: 600 }}>{r.item}</div>
+              <div style={{ fontSize: "9px", fontWeight: 700, color: biz.accentInk, marginTop: "2px" }}>
+                {r.price}
+              </div>
+            </div>
+          ))}
+          <div
+            className="flex items-center justify-center gap-1 text-center"
+            style={{
+              padding: "5px 6px",
+              borderRadius: "8px",
+              fontSize: "8px",
+              fontWeight: 700,
+              color: "#FFF8EE",
+              background: `linear-gradient(150deg, ${biz.accent}, ${biz.accentInk})`,
+              boxShadow: "0 2px 6px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.16) inset",
+            }}
+          >
+            {biz.cta} <span aria-hidden>→</span>
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-center gap-1 flex-shrink-0"
+          style={{ marginTop: "6px", fontSize: "7.5px", fontWeight: 600, color: "rgba(36,27,18,0.62)" }}
+        >
+          <Clock size={8} color={biz.accent} aria-hidden /> {biz.hours}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Tablet hardware frame (camera dot, glare, ground shadow) ───────────── */
+function TabletMock({
+  active,
+  reduced,
+  float,
+}: {
+  active: number;
+  reduced: boolean;
+  float?: boolean;
+}) {
+  return (
+    <div className="relative">
+      <div
+        className={`relative ${float ? "hs-float-tab" : ""}`}
+        style={{
+          borderRadius: "20px",
+          padding: "9px",
+          aspectRatio: "10 / 16.6",
+          background: "linear-gradient(155deg, #3A3A3E 0%, #18181B 30%, #0B0B0D 100%)",
+          boxShadow:
+            "0 0 0 1px rgba(255,255,255,0.09), 0 2px 5px rgba(0,0,0,0.45), 0 14px 36px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.10)",
+        }}
+      >
+        {/* Front camera dot, centered in the top bezel */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 -translate-x-1/2"
+          style={{
+            top: "3px",
+            width: "4px",
+            height: "4px",
+            borderRadius: "9999px",
+            background: "#050507",
+            boxShadow: "inset 0 0 1.5px rgba(130,160,255,0.7), 0 0 0 1px rgba(255,255,255,0.06)",
+          }}
+        />
+        <div
+          className="relative overflow-hidden h-full"
+          style={{ borderRadius: "12px", background: "#FBF8F2" }}
+        >
+          {BUSINESSES.map((b, i) => (
+            <FadeLayer key={b.name} show={i === active} reduced={reduced}>
+              <MiniTabletSite biz={b} eager={i === 0} />
+            </FadeLayer>
+          ))}
+          {/* Glare */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              zIndex: 30,
+              borderRadius: "12px",
+              background:
+                "linear-gradient(100deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 24%, transparent 38%)",
+            }}
+          />
+        </div>
+      </div>
+      {/* Ground shadow */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          left: "7%",
+          right: "7%",
+          bottom: "-14px",
+          height: "20px",
+          background: "radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%)",
+          filter: "blur(7px)",
+          zIndex: -1,
+        }}
+      />
+    </div>
+  );
+}
+
 /* ── Phone hardware frame (notch, glare, ground shadow) ─────────────────── */
 function PhoneMock({
   active,
@@ -494,12 +693,14 @@ function ShowcaseChips({
 }: {
   active: number;
   pick: (i: number) => void;
-  align: "start" | "end";
+  align: "start" | "center" | "end";
 }) {
+  const justify =
+    align === "end" ? "justify-end" : align === "center" ? "justify-center" : "justify-start";
   return (
     <>
       <div
-        className={`flex items-center gap-2 flex-wrap ${align === "end" ? "justify-end" : "justify-start"}`}
+        className={`flex items-center gap-2 flex-wrap ${justify}`}
         role="group"
         aria-label="Example website picker"
       >
@@ -540,7 +741,7 @@ function ShowcaseChips({
         })}
       </div>
       <p
-        className={align === "end" ? "text-right" : "text-left"}
+        className={align === "end" ? "text-right" : align === "center" ? "text-center" : "text-left"}
         style={{
           marginTop: "8px",
           fontSize: "10.5px",
@@ -610,7 +811,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
     );
   }
 
-  /* ── Desktop: browser + overlapping phone + chips ── */
+  /* ── Desktop: browser + overlapping tablet + phone + chips ── */
   return (
     <div ref={rootRef} className="relative">
       <style>{SCOPED_CSS}</style>
@@ -627,13 +828,19 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
         }}
       />
 
-      {/* Tilt wrapper — parallax transform target */}
-      <div ref={tiltRef} className="relative" style={{ zIndex: 1, willChange: "transform" }}>
+      {/* Tilt wrapper — parallax transform target; preserve-3d lets the
+          tablet/phone hold their own translateZ so mouse tilt gives the
+          family a real depth hierarchy */}
+      <div
+        ref={tiltRef}
+        className="relative"
+        style={{ zIndex: 1, willChange: "transform", transformStyle: "preserve-3d" }}
+      >
 
-        {/* Browser mockup */}
+        {/* Browser mockup — back-center of the device family */}
         <div style={{ animation: `hero-line-up 1s ${EASE} 0.25s both` }}>
           <div
-            className="overflow-hidden"
+            className="overflow-hidden hs-float-desk"
             style={{
               borderRadius: "16px",
               background: "#14100B",
@@ -694,32 +901,55 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
           </div>
         </div>
 
-        {/* Overlapping phone — lands slightly after the browser */}
+        {/* Tablet — overlapping front-left, mid depth; lands after the
+            browser. 42% wide at left:-20px → covers at most ~38.5% of the
+            browser's width, so the menu strip (padded to 41%) stays clear */}
         <div
           className="absolute"
           style={{
-            left: "-16px",
-            bottom: "-34px",
-            width: "37%",
-            zIndex: 6,
-            animation: `hero-line-up 0.9s ${EASE} 0.6s both`,
+            left: "-20px",
+            bottom: "-24px",
+            width: "42%",
+            zIndex: 5,
+            animation: `hero-line-up 0.95s ${EASE} 0.5s both`,
+            transformStyle: "preserve-3d",
           }}
         >
-          <PhoneMock active={active} reduced={reduced} float />
+          <div style={{ transform: "translateZ(22px)" }}>
+            <TabletMock active={active} reduced={reduced} float />
+          </div>
+        </div>
+
+        {/* Phone — overlapping front-right, closest to the viewer; lands
+            last. 36% wide at right:-12px → covers from ~66% of the browser's
+            width, clear of the menu strip (right-padded to 35%) */}
+        <div
+          className="absolute"
+          style={{
+            right: "-12px",
+            bottom: "-40px",
+            width: "36%",
+            zIndex: 6,
+            animation: `hero-line-up 0.9s ${EASE} 0.7s both`,
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <div style={{ transform: "translateZ(38px) scale(1.02)" }}>
+            <PhoneMock active={active} reduced={reduced} float />
+          </div>
         </div>
       </div>
 
-      {/* Chips + caption — clear of the overhanging phone */}
+      {/* Chips + caption — centered below, clear of both overhanging devices */}
       <div
         className="relative"
         style={{
           zIndex: 2,
-          marginTop: "20px",
-          paddingLeft: "38%",
-          animation: `hero-line-up 0.9s ${EASE} 0.85s both`,
+          marginTop: "56px",
+          animation: `hero-line-up 0.9s ${EASE} 0.9s both`,
         }}
       >
-        <ShowcaseChips active={active} pick={pick} align="end" />
+        <ShowcaseChips active={active} pick={pick} align="center" />
       </div>
     </div>
   );
