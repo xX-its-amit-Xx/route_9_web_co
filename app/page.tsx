@@ -17,6 +17,7 @@ import { TornPageDivider } from "@/components/TornPageDivider";
 import { AIChatWidget } from "@/components/AIChatWidget";
 import { Arcade } from "@/components/Arcade";
 import { PhotoStrip } from "@/components/PhotoStrip";
+import { BeforeAfter } from "@/components/BeforeAfter";
 import { DesignLens } from "@/components/DesignLens";
 import { MetaTricks } from "@/components/MetaTricks";
 import { SectionProgress } from "@/components/SectionProgress";
@@ -39,6 +40,7 @@ export default function Home() {
         <QualityPillars />
         <Pricing />
         <MaintenanceFAQ />
+        <BeforeAfter />
         <Portfolio />
         <Arcade />
         <PhotoStrip />

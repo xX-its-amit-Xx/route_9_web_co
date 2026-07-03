@@ -6,6 +6,7 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { TiltCard } from "./TiltCard";
 import { WaxSeal } from "./WaxSeal";
 import { ChalkboardSpecial } from "./ChalkboardSpecial";
+import { ROICalculator } from "./ROICalculator";
 import { PRICING, FOUNDING_OFFER } from "@/lib/content";
 
 // rAF-throttled magnetic-CTA updater — one layout read + transform write per
@@ -15,6 +16,7 @@ const magFrames = new WeakMap<HTMLElement, number>();
 export function Pricing() {
   const headingRef = useScrollReveal();
   const cardsRef = useScrollReveal(0.05);
+  const roiRef = useScrollReveal();
   const offerRef = useScrollReveal();
   const sectionRef = useRef<HTMLElement>(null);
   const allowMotion = useRef(false);
@@ -252,6 +254,11 @@ export function Pricing() {
             </div>
             </div>
           ))}
+        </div>
+
+        {/* ROI calculator — "what's being invisible costing you?" */}
+        <div ref={roiRef} className="reveal mb-14">
+          <ROICalculator />
         </div>
 
         {/* Hanging chalkboard "today's special" above the offer card */}

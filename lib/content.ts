@@ -325,7 +325,7 @@ export const DESIGN_LENS = {
       target: "hero",
       title: "The first three seconds",
       body:
-        "Six words in the headline, one glowing button, and a finished example site already cycling on the right. It rotates through three shops because you were always going to wait for the one that looks like yours. Go ahead — nobody skips their own storefront.",
+        "Six words in the headline, one glowing button, and a finished example site already cycling on the right. It rotates through three shops because you were always going to wait for the one that looks like yours. And if you typed your shop's name in — that wasn't a form. That was a fitting room.",
       meta: 2,
     },
     {
@@ -362,6 +362,20 @@ export const DESIGN_LENS = {
       body:
         "Every question here is one you had but weren't going to say out loud — 'what if he disappears?', 'what if I want out?'. Answering the unspoken objection beats hoping you wouldn't think of it.",
       meta: 1,
+    },
+    {
+      target: "before-after",
+      title: "Dragged out of 2009",
+      body:
+        "You laughed at the old site because you've seen it — maybe you own it. The slider isn't a comparison, it's a mirror with a handle: it makes your hand do the upgrading, so your gut gets there before your budget does.",
+      meta: 2,
+    },
+    {
+      target: "roi",
+      title: "Your numbers, my pencil",
+      body:
+        "The most persuasive copy on this page wasn't written by me — you just set it with three sliders. A calculator converts because nobody argues with their own arithmetic. (The honest footnote is doing work too: hedging a claim makes the claim believable.)",
+      meta: 3,
     },
     {
       target: "arcade",

@@ -6,6 +6,7 @@ import { HERO, WHO } from "@/lib/content";
 import { Marquee } from "./Marquee";
 import { CountUp } from "./CountUp";
 import { HeroShowcase } from "./HeroShowcase";
+import { LocalPulse } from "./LocalPulse";
 
 const SHOP_NAME_SETS = [
   "Arturo's Pizzeria · Lake Shore Barbers · Town Common Bakery",
@@ -363,6 +364,11 @@ export function Hero() {
                   Now accepting new clients
                 </span>
               </div>
+            </div>
+
+            {/* Live "Route 9 right now" local-awareness chip */}
+            <div style={{ animation: "hero-line-up 1s cubic-bezier(0.22,1,0.36,1) 0.78s both" }}>
+              <LocalPulse />
             </div>
 
             {/* Shop proof strip — avatar stack */}

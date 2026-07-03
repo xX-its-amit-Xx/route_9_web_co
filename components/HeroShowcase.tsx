@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Clock, Lock, Phone } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import { Clock, Lock, Phone, Sparkles, X } from "lucide-react";
 
 /* ────────────────────────────────────────────────────────────────────────────
    HeroShowcase — "you could have a site like this"
@@ -95,6 +95,108 @@ const CYCLE_MS = 4500;
 const MANUAL_HOLD_MS = 10000;
 const EASE = "cubic-bezier(0.22,1,0.36,1)";
 
+/* ── "See your shop" — visitor types their name, every device wears it ──── */
+const SHOP_KEY = "r9-your-shop";
+const SHOP_MAX = 26;
+const SHOP_DEBOUNCE_MS = 150;
+
+/** Trim, cap length, strip angle brackets. */
+function sanitizeShopName(v: string): string {
+  return v.replace(/[<>]/g, "").trim().slice(0, SHOP_MAX).trim();
+}
+
+/** "Tony's Auto" → "tonys-auto"; anything unusable → "yourshop". */
+function shopSlug(name: string): string {
+  const s = name
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return s || "yourshop";
+}
+
+/* Module-level store (same shape as the reduced-motion pattern below) so the
+   desktop showcase and the `variant="phone"` mobile export share one name —
+   typing in either input updates both, with no context or prop-drilling
+   across the two component instances. */
+type ShopState = { draft: string; name: string };
+const SHOP_EMPTY: ShopState = { draft: "", name: "" };
+let shopState: ShopState = SHOP_EMPTY;
+const shopListeners = new Set<() => void>();
+function emitShop(next: ShopState) {
+  shopState = next;
+  shopListeners.forEach((l) => l());
+}
+function subscribeShop(cb: () => void) {
+  shopListeners.add(cb);
+  return () => {
+    shopListeners.delete(cb);
+  };
+}
+const getShop = () => shopState;
+const getShopServer = () => SHOP_EMPTY;
+let shopHydrated = false;
+
+function useYourShop() {
+  const { draft, name } = useSyncExternalStore(subscribeShop, getShop, getShopServer);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Restore a previously typed name once per page load. Runs in an effect so
+     it never touches localStorage during SSR/hydration; writes go through the
+     external store, so no setState-in-effect. */
+  useEffect(() => {
+    if (shopHydrated) return;
+    shopHydrated = true;
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem(SHOP_KEY);
+    } catch {
+      /* storage blocked (private mode) — feature still works, just unsaved */
+    }
+    const clean = stored ? sanitizeShopName(stored) : "";
+    if (clean) emitShop({ draft: clean, name: clean });
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
+
+  /* The input echoes keystrokes instantly (draft); the name painted onto the
+     mockups is debounced ~150ms so the three stacked crossfade layers don't
+     re-render on every keypress. */
+  const setDraft = useCallback((v: string) => {
+    const raw = v.replace(/[<>]/g, "").slice(0, SHOP_MAX);
+    emitShop({ ...shopState, draft: raw });
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      const clean = sanitizeShopName(raw);
+      emitShop({ draft: shopState.draft, name: clean });
+      try {
+        if (clean) window.localStorage.setItem(SHOP_KEY, clean);
+        else window.localStorage.removeItem(SHOP_KEY);
+      } catch {
+        /* storage blocked — ignore */
+      }
+    }, SHOP_DEBOUNCE_MS);
+  }, []);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    emitShop(SHOP_EMPTY);
+    try {
+      window.localStorage.removeItem(SHOP_KEY);
+    } catch {
+      /* storage blocked — ignore */
+    }
+  }, []);
+
+  return { draft, name, setDraft, clear };
+}
+
 const SCOPED_CSS = `
 @keyframes hs-float {
   0%, 100% { transform: translateY(0); }
@@ -116,6 +218,24 @@ const SCOPED_CSS = `
   50%      { transform: scale(1.35); opacity: 0.72; }
 }
 .hs-dot-active { animation: hs-dot-pulse 1.8s ease-in-out infinite; }
+.hs-shop-pill {
+  background: rgba(243,233,213,0.05);
+  border: 1px solid rgba(212,104,42,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 14px rgba(0,0,0,0.25);
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.hs-shop-pill:focus-within {
+  border-color: #D4682A;
+  background: rgba(243,233,213,0.08);
+  box-shadow: 0 0 0 3px rgba(212,104,42,0.28), 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 14px rgba(0,0,0,0.25);
+}
+.hs-shop-input { background: transparent; border: none; }
+.hs-shop-input:focus-visible { outline: none; } /* the pill's focus-within ring is the visible indicator */
+.hs-shop-input::placeholder { color: rgba(243,233,213,0.35); }
+.hs-shop-clear { transition: color 0.2s ease, background 0.2s ease; }
+.hs-shop-clear:hover { color: #F3E9D5; background: rgba(243,233,213,0.12); }
 @media (prefers-reduced-motion: reduce) {
   .hs-float, .hs-float-tab, .hs-float-desk, .hs-dot-active { animation: none; }
 }
@@ -201,7 +321,16 @@ function FadeLayer({
 }
 
 /* ── The mini website rendered inside the browser viewport ──────────────── */
-function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
+function MiniSite({
+  biz,
+  eager,
+  shopName,
+}: {
+  biz: Business;
+  eager: boolean;
+  shopName?: string;
+}) {
+  const displayName = shopName || biz.name;
   return (
     <div className="flex flex-col h-full" style={{ background: "#FBF8F2", color: "#241B12" }}>
       {/* Sticky mini-nav */}
@@ -225,7 +354,7 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
             className="truncate"
             style={{ fontFamily: "var(--font-display)", fontSize: "11.5px", fontWeight: 700, letterSpacing: "-0.01em" }}
           >
-            {biz.name}
+            {displayName}
           </span>
         </div>
         <div className="flex items-center gap-2.5 flex-shrink-0">
@@ -348,7 +477,16 @@ function MiniSite({ biz, eager }: { biz: Business; eager: boolean }) {
 }
 
 /* ── Mobile version of the same site, shown on the phone screen ─────────── */
-function MiniPhoneSite({ biz, eager }: { biz: Business; eager: boolean }) {
+function MiniPhoneSite({
+  biz,
+  eager,
+  shopName,
+}: {
+  biz: Business;
+  eager: boolean;
+  shopName?: string;
+}) {
+  const displayName = shopName || biz.name;
   return (
     <div className="flex flex-col h-full" style={{ background: "#FBF8F2", color: "#241B12" }}>
       {/* Photo header */}
@@ -377,7 +515,7 @@ function MiniPhoneSite({ biz, eager }: { biz: Business; eager: boolean }) {
               textShadow: "0 1px 6px rgba(0,0,0,0.45)",
             }}
           >
-            {biz.name}
+            {displayName}
           </div>
           <div style={{ fontSize: "7.5px", color: "rgba(255,248,238,0.8)" }}>{biz.sub}</div>
         </div>
@@ -439,7 +577,16 @@ function MiniPhoneSite({ biz, eager }: { biz: Business; eager: boolean }) {
 /* ── Tablet version of the same site — mid-size layout: photo header with
       name overlay + a 2-column services grid, visually distinct from both
       the desktop list and the phone action stack ─────────────────────────── */
-function MiniTabletSite({ biz, eager }: { biz: Business; eager: boolean }) {
+function MiniTabletSite({
+  biz,
+  eager,
+  shopName,
+}: {
+  biz: Business;
+  eager: boolean;
+  shopName?: string;
+}) {
+  const displayName = shopName || biz.name;
   return (
     <div className="flex flex-col h-full" style={{ background: "#FBF8F2", color: "#241B12" }}>
       {/* Photo header with name overlay */}
@@ -468,7 +615,7 @@ function MiniTabletSite({ biz, eager }: { biz: Business; eager: boolean }) {
               textShadow: "0 1px 7px rgba(0,0,0,0.45)",
             }}
           >
-            {biz.name}
+            {displayName}
           </div>
           <div style={{ fontSize: "8px", color: "rgba(255,248,238,0.82)", marginTop: "1px" }}>
             {biz.sub}
@@ -539,10 +686,12 @@ function TabletMock({
   active,
   reduced,
   float,
+  shopName,
 }: {
   active: number;
   reduced: boolean;
   float?: boolean;
+  shopName?: string;
 }) {
   return (
     <div className="relative">
@@ -576,7 +725,7 @@ function TabletMock({
         >
           {BUSINESSES.map((b, i) => (
             <FadeLayer key={b.name} show={i === active} reduced={reduced}>
-              <MiniTabletSite biz={b} eager={i === 0} />
+              <MiniTabletSite biz={b} eager={i === 0} shopName={shopName} />
             </FadeLayer>
           ))}
           {/* Glare */}
@@ -615,10 +764,12 @@ function PhoneMock({
   active,
   reduced,
   float,
+  shopName,
 }: {
   active: number;
   reduced: boolean;
   float?: boolean;
+  shopName?: string;
 }) {
   return (
     <div className="relative">
@@ -639,7 +790,7 @@ function PhoneMock({
         >
           {BUSINESSES.map((b, i) => (
             <FadeLayer key={b.name} show={i === active} reduced={reduced}>
-              <MiniPhoneSite biz={b} eager={i === 0} />
+              <MiniPhoneSite biz={b} eager={i === 0} shopName={shopName} />
             </FadeLayer>
           ))}
           {/* Notch */}
@@ -685,15 +836,87 @@ function PhoneMock({
   );
 }
 
+/* ── "Try it on" input — glass pill above the chips ─────────────────────── */
+function ShopTryBar({
+  draft,
+  setDraft,
+  clear,
+  align,
+}: {
+  draft: string;
+  setDraft: (v: string) => void;
+  clear: () => void;
+  align: "start" | "center" | "end";
+}) {
+  const inputId = useId();
+  const justify =
+    align === "end" ? "justify-end" : align === "center" ? "justify-center" : "justify-start";
+  return (
+    <div className={`flex items-center gap-2 ${justify}`} style={{ marginBottom: "10px" }}>
+      <label
+        htmlFor={inputId}
+        style={{
+          fontSize: "9.5px",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "rgba(243,233,213,0.45)",
+        }}
+      >
+        Try it on:
+      </label>
+      <div
+        className="hs-shop-pill flex items-center gap-1.5 rounded-full"
+        style={{ width: "100%", maxWidth: "240px", padding: "6px 7px 6px 11px" }}
+      >
+        <Sparkles size={11} color="#D4682A" strokeWidth={2.25} aria-hidden className="flex-shrink-0" />
+        <input
+          id={inputId}
+          type="text"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder="Type your shop's name…"
+          aria-label="Your shop's name"
+          maxLength={SHOP_MAX}
+          autoComplete="off"
+          spellCheck={false}
+          className="hs-shop-input flex-1 min-w-0"
+          style={{ color: "#F3E9D5", fontSize: "11.5px", fontWeight: 600 }}
+        />
+        {draft && (
+          <button
+            type="button"
+            onClick={clear}
+            aria-label="Clear shop name"
+            className="hs-shop-clear flex-shrink-0 inline-flex items-center justify-center rounded-full cursor-pointer"
+            style={{
+              width: "16px",
+              height: "16px",
+              color: "rgba(243,233,213,0.55)",
+              background: "rgba(243,233,213,0.07)",
+              border: "none",
+              padding: 0,
+            }}
+          >
+            <X size={10} strokeWidth={2.5} aria-hidden />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ── Chips + caption ────────────────────────────────────────────────────── */
 function ShowcaseChips({
   active,
   pick,
   align,
+  shopName,
 }: {
   active: number;
   pick: (i: number) => void;
   align: "start" | "center" | "end";
+  shopName?: string;
 }) {
   const justify =
     align === "end" ? "justify-end" : align === "center" ? "justify-center" : "justify-start";
@@ -750,7 +973,29 @@ function ShowcaseChips({
           color: "rgba(243,233,213,0.38)",
         }}
       >
-        Built in 48 hours · yours could be next
+        {shopName ? (
+          <>
+            {"That's yours — built in 48 hours."}{" "}
+            <a
+              href="#contact"
+              onClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent("r9:contact-prefill", {
+                    detail: {
+                      message: `Hi! I tried "${shopName}" on the example site — let's build the real one.`,
+                    },
+                  }),
+                );
+              }}
+              className="whitespace-nowrap"
+              style={{ fontStyle: "normal", fontWeight: 700, color: "#E07838" }}
+            >
+              Make it real <span aria-hidden>→</span>
+            </a>
+          </>
+        ) : (
+          "Built in 48 hours · yours could be next"
+        )}
       </p>
     </>
   );
@@ -761,6 +1006,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
   const rootRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
   const { active, pick, reduced } = useShowcaseCycle(rootRef);
+  const { draft, name: shopName, setDraft, clear } = useYourShop();
 
   /* Mouse-tilt parallax — same pattern the hero photo collage used:
      listen on #hero, lerp with rAF, transform the wrapper only. */
@@ -804,9 +1050,10 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
       <div ref={rootRef} className="flex flex-col items-start">
         <style>{SCOPED_CSS}</style>
         <div style={{ width: "200px", marginBottom: "22px" }}>
-          <PhoneMock active={active} reduced={reduced} />
+          <PhoneMock active={active} reduced={reduced} shopName={shopName} />
         </div>
-        <ShowcaseChips active={active} pick={pick} align="start" />
+        <ShopTryBar draft={draft} setDraft={setDraft} clear={clear} align="start" />
+        <ShowcaseChips active={active} pick={pick} align="start" shopName={shopName} />
       </div>
     );
   }
@@ -884,7 +1131,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
               >
                 <Lock size={8} color="rgba(134,239,172,0.75)" aria-hidden />
                 <span style={{ fontSize: "10px", color: "rgba(243,233,213,0.55)", fontFamily: "monospace" }}>
-                  yourshop.route9web.com
+                  {shopSlug(shopName)}.route9web.com
                 </span>
               </div>
               <div style={{ width: "42px" }} aria-hidden />
@@ -894,7 +1141,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
             <div className="relative" style={{ height: "clamp(350px, 42vw, 440px)" }}>
               {BUSINESSES.map((b, i) => (
                 <FadeLayer key={b.name} show={i === active} reduced={reduced}>
-                  <MiniSite biz={b} eager={i === 0} />
+                  <MiniSite biz={b} eager={i === 0} shopName={shopName} />
                 </FadeLayer>
               ))}
             </div>
@@ -916,7 +1163,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
           }}
         >
           <div style={{ transform: "translateZ(22px)" }}>
-            <TabletMock active={active} reduced={reduced} float />
+            <TabletMock active={active} reduced={reduced} float shopName={shopName} />
           </div>
         </div>
 
@@ -935,7 +1182,7 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
           }}
         >
           <div style={{ transform: "translateZ(38px) scale(1.02)" }}>
-            <PhoneMock active={active} reduced={reduced} float />
+            <PhoneMock active={active} reduced={reduced} float shopName={shopName} />
           </div>
         </div>
       </div>
@@ -949,7 +1196,8 @@ export function HeroShowcase({ variant = "desktop" }: { variant?: "desktop" | "p
           animation: `hero-line-up 0.9s ${EASE} 0.9s both`,
         }}
       >
-        <ShowcaseChips active={active} pick={pick} align="center" />
+        <ShopTryBar draft={draft} setDraft={setDraft} clear={clear} align="center" />
+        <ShowcaseChips active={active} pick={pick} align="center" shopName={shopName} />
       </div>
     </div>
   );
